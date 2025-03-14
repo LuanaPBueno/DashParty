@@ -11,38 +11,53 @@ import CoreMotion
 struct ContentView: View {
     @State var user = User()
     @State var status: String = "Stopped"
-    @State var form: AnyView = AnyView(Rectangle().frame(width: 100, height: 100))
+    @State var form: AnyView = AnyView(Image("orangePerson"))
+    @State private var moveBackground = false
     
     @StateObject private var challengeManager = ChallengeManager.challengeInstance
 
     var body: some View {
-        VStack {
-            form
-                .foregroundColor(.blue)
-                .padding()
-
-            Text("Movement Intensity: \(AccelerationManager.accelerationInstance.motionIntensity, specifier: "%.2f")")
-                .font(.subheadline)
+        ZStack{
+            Image("matchBackground")
+                .resizable()
+                .scaledToFill()
+                .edgesIgnoringSafeArea(.all)
+            //MARK: Teoricamente era para movimentar a tela de fundo?:
+                .offset(y: moveBackground ? 20 : -20)
+                .animation(status == "form" ?
+                    Animation.easeInOut(duration: 1).repeatForever(autoreverses: true)
+                    : .default, value: moveBackground)
+            //MARK: --------------------------------------------------
             
-            Text("\(status)")
-                .font(.headline)
-                .padding()
-
-            Text("Challenge: \(challengeManager.currentChallenge.isEmpty ? "No challenge..." : challengeManager.currentChallenge)")
-                .font(.title)
-                .padding()
-        }
-        .onAppear {
-            checkAndStartAccelerometer()
-            ChallengeManager.challengeInstance.startChallengeLoop(form: $form, status: $status)
-        }
-        .onDisappear {
-            AccelerationManager.accelerationInstance.stopAccelerometer(form: $form, status: $status)
+            VStack {
+                Text("\(status)")
+                    .font(.system(size: status == "Jumping" ? 120 : 90))
+                    .padding()
+                
+                form
+                    .foregroundColor(.blue)
+                    .padding()
+                
+                Text("Movement Intensity: \(AccelerationManager.accelerationInstance.motionIntensity, specifier: "%.2f")")
+                    .font(.subheadline)
+                
+                Text("Challenge: \(challengeManager.currentChallenge.isEmpty ? "No challenge..." : challengeManager.currentChallenge)")
+                    .font(.title)
+                
+                    .padding()
+            }
+            .onAppear {
+                checkAndStartAccelerometer() //MARK: Inicia o acelerometro
+                ChallengeManager.challengeInstance.startChallengeLoop(form: $form, status: $status) //MARK: Inicia a func que vai dar desafios aleatórios para os usuários
+            }
+            .onDisappear {
+                AccelerationManager.accelerationInstance.stopAccelerometer(form: $form, status: $status) //MARK: Desliga o acelerometro
+            }
         }
     }
 
     func checkAndStartAccelerometer() {
-        if challengeManager.currentChallenge.isEmpty {
+        if challengeManager.currentChallenge.isEmpty { //MARK: Se não tem nenhum desafio no momento, começa o acelerômetro. Se não, para ele.
             AccelerationManager.accelerationInstance.startAccelerometer(form: $form, status: $status)
         } else {
             AccelerationManager.accelerationInstance.stopAccelerometer(form: $form, status: $status)
