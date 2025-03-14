@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User{
-    var name: String?
-    var challenges: [Challenge]?
+struct User: Identifiable, Hashable, Equatable {
+    var id = UUID()
+    var name: String
 }

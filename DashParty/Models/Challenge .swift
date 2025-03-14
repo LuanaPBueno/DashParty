@@ -6,10 +6,39 @@
 //
 
 import Foundation
-import SwiftUI
+import UIKit
 
-struct Challenge {
-    var name: String
-    var animation: UIImage?
-    var acelerator: Double? //MARK: Alterar isso de acordo com as minhas necessidades
+enum Challenge {
+    
+    case running
+    case jumping
+    case openingDoor
+    case balancing
+    
+    var name: String {
+        switch self {
+        case .running:
+            "Running"
+        case .jumping:
+            "Jumping"
+        case .openingDoor:
+            "OpeningDoor"
+        case .balancing:
+            "Balancing"
+        }
+    }
+    
+    var animation: UIImage {
+        switch self {
+        case .running:
+            UIImage(named: "orangePerson")!
+        case .jumping:
+            UIImage(named: "bluePerson")!
+        case .openingDoor:
+            UIImage(named: "greenPerson")!
+        case .balancing:
+            UIImage(named: "orangePerson")!
+
+        }
+    }
 }
