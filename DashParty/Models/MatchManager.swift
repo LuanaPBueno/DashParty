@@ -15,10 +15,13 @@ class MatchManager {
     
     var players: [Player] = []
     var currentPlayerIndex = 0
+    var tolerancia: Double = 0.03
     func getPlayer(forUser userID: UUID) -> Player? {
         players.first(where: { $0.user.id == userID })
     }
+    var balancingCount: [String: Double] = ["x": 0.0, "y": 0.0, "z": 0.0]
     var recentDeviceMotion: [CMDeviceMotion] = []
+    
     func startMatch(users: [User], myUserID: UUID) {
         self.players = users.map { user in
             Player(
@@ -33,8 +36,8 @@ class MatchManager {
                 
                 let accumulatedElementCount: Int =
                     switch players[currentPlayerIndex].currentChallenge {
-                    case .jumping: 8
-                    default: 4
+                    case .jumping: 10
+                    default: 15
                     }
                                 
                 //MARK: Ao invés de ser 4, vai ter que mudar pra jump
@@ -48,9 +51,9 @@ class MatchManager {
                     let z = deviceMotion.userAcceleration.z
                     return (x: x, y: y, z: z)
                 }.reduce(into: (x: 0.0, y: 0.0, z: 0.0)) { partialResult, acceleration in
-                    partialResult.x += acceleration.x
-                    partialResult.y += acceleration.y
-                    partialResult.z += acceleration.z
+                    partialResult.x += abs(acceleration.x)
+                    partialResult.y += abs(acceleration.y)
+                    partialResult.z += abs(acceleration.z)
                 }
                 let averageAcceleration = (
                     x: accumulatedAcceleration.0/Double(recentDeviceMotion.count),
@@ -69,18 +72,18 @@ class MatchManager {
             
             switch players[currentPlayerIndex].currentChallenge {
             case .running:
-                if abs(averageAcceleration.y) > 1
+                if abs(magnitude) > 0.8
                     && abs(averageAcceleration.y) > abs(averageAcceleration.x)
                     && abs(averageAcceleration.y) > abs(averageAcceleration.z) {
                     print("correndo")
-                    print(players[currentPlayerIndex].progress)
+//                    print(players[currentPlayerIndex].progress)
                     players[currentPlayerIndex].progress += magnitude
                 } else {
                     print("correndo ignorado") //TODO: muda a animação pra uma parada
                 }
                 
             case .jumping:
-                if abs(averageAcceleration.y) > 1.5
+                if abs(averageAcceleration.y) > 2
                     && abs(averageAcceleration.y) > abs(averageAcceleration.x)
                     && abs(averageAcceleration.y) > abs(averageAcceleration.z) {
                     print("pulando")
@@ -93,13 +96,22 @@ class MatchManager {
                     && abs(averageAcceleration.y) < abs(averageAcceleration.x)
                     && abs(averageAcceleration.y) < abs(averageAcceleration.z) {
                     print("abrindo a porta")
-                    players[currentPlayerIndex].progress += magnitude
+                    players[currentPlayerIndex].progress += 100
                 } else {
                     print("porta ignorada")
                 }
+                
             case .balancing:
-                print("Not implemented balancing")
-            
+                balancingCount["x"] = deviceMotion.attitude.roll
+                balancingCount["y"] = deviceMotion.attitude.pitch
+                balancingCount["z"] = deviceMotion.attitude.yaw
+                print("rotation x:\( balancingCount["x"]), rotation y: \( balancingCount["y"]), rotation z: \( balancingCount["z"])")
+                
+                if balancingCount["x"]! >= -0.01 && balancingCount["y"]! <= 0.2 {
+                    print("ZEROU")
+                   
+                }
+
             }
             
         })

@@ -31,6 +31,7 @@ class AccelerationManager: ObservableObject {
         }
         motionManager.deviceMotionUpdateInterval = 0.05
         motionManager.startDeviceMotionUpdates(to: .main) { deviceMotion, error in
+            
             if let error {
                 print(error.localizedDescription)
             }
