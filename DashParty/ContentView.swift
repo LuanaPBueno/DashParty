@@ -30,12 +30,12 @@ struct ContentView: View {
             if let myPlayer {
                 VStack {
                     Text(matchManager.debugText)
-                    Image(uiImage: myPlayer.currentChallenge.animation)
+//                    Image("oi")
                     
                     Text("Movement Intensity: \(AccelerationManager.accelerationInstance.motionIntensity, specifier: "%.2f")")
                         .font(.subheadline)
                     
-                    Text("Challenge: \(myPlayer.currentChallenge.name)")
+                    Text("Challenge: \(myPlayer.currentChallenge?.name)")
                         .font(.title)
                     
                         .padding()

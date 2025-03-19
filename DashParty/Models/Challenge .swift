@@ -14,6 +14,7 @@ enum Challenge {
     case jumping
     case openingDoor
     case balancing
+    case stopped
     
     var name: String {
         switch self {
@@ -25,7 +26,10 @@ enum Challenge {
             "OpeningDoor"
         case .balancing:
             "Balancing"
+        case .stopped:
+            "Stopped"
         }
+        
     }
     
     var animation: UIImage {
@@ -37,6 +41,8 @@ enum Challenge {
         case .openingDoor:
             UIImage(named: "greenPerson")!
         case .balancing:
+            UIImage(named: "orangePerson")!
+        case .stopped:
             UIImage(named: "orangePerson")!
 
         }

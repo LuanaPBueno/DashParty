@@ -26,9 +26,14 @@ class ChallengeManager {
         self.players = users.map { user in
             Player(
                 user: user,
-                challenges: [Challenge .running, .jumping, .running, .openingDoor, .running, .balancing, .running]
-            )
+                challenges: [Challenge .jumping, .openingDoor, .balancing]
+                    .flatMap { Array(repeating: $0, count: 4) }
+                    .shuffled()
+                    .flatMap { [$0, .running] }
+                )
+            
         }
+                
         self.currentPlayerIndex = self.players.firstIndex(where: { $0.user.id == myUserID })!
         AccelerationManager.accelerationInstance.startAccelerometer(
             action: { [weak self] deviceMotion in
@@ -76,10 +81,14 @@ class ChallengeManager {
                     && abs(averageAcceleration.y) > abs(averageAcceleration.x)
                     && abs(averageAcceleration.y) > abs(averageAcceleration.z) {
                     print("correndo")
-//                    print(players[currentPlayerIndex].progress)
                     players[currentPlayerIndex].progress += magnitude
+                    
                 } else {
-                    print("correndo ignorado") //TODO: muda a animação pra uma parada
+                    //TODO: muda a animação pra uma parada
+                    print("correndo ignorado")
+                   
+                    
+                    
                 }
                 
             case .jumping:
@@ -96,6 +105,8 @@ class ChallengeManager {
                         players[currentPlayerIndex].progress += 100
                     } else {
                         print("pulando ignorado")
+                        
+                        
                     }
                 }
 
@@ -107,13 +118,16 @@ class ChallengeManager {
                     players[currentPlayerIndex].progress += 100
                 } else {
                     print("porta ignorada")
+                   
+                    
                 }
                 
             case .balancing:
                 balancingCount["x"] = deviceMotion.attitude.roll
                 balancingCount["y"] = deviceMotion.attitude.pitch
                 balancingCount["z"] = deviceMotion.attitude.yaw
-                print("rotation x:\( balancingCount["x"]!), rotation y: \( balancingCount["y"]!), rotation z: \( balancingCount["z"]!)")
+               // print("rotation x:\( balancingCount["x"]!), rotation y: \( balancingCount["y"]!), rotation z: \( balancingCount["z"]!)")
+                print("balancing contando")
                 
                 if balancingCount["x"]! >= -0.01 && balancingCount["y"]! <= 0.2 {
                     balancingResult.append("true")
@@ -121,9 +135,16 @@ class ChallengeManager {
                 }
                
                 if balancingResult.count == 30{ //para dar 3 segundos, não necessariamente continuos.
+                    print("balancing done")
                     players[currentPlayerIndex].progress += 100
                 }
+            
+            case .stopped:
+                print("YOU WON")
+                players[currentPlayerIndex].progress += 100
 
+            case .none:
+                print("None")
             }
             
         })
