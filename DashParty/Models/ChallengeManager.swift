@@ -133,20 +133,26 @@ class ChallengeManager {
                 balancingCount["x"] = deviceMotion.attitude.roll
                 balancingCount["y"] = deviceMotion.attitude.pitch
                 balancingCount["z"] = deviceMotion.attitude.yaw
-                print("balancing contando")
-                currentSituation = .stopped
+                
                 
                 //MARK: REVISAR BALANCING
                 if balancingCount["x"]! >= -0.01 && balancingCount["y"]! <= 0.2 {
                     balancingResult.append("true")
+                    print("balancing contando")
                    
                 }
-               
+                else{
+                    print("balancing não detectado")
+                }
+                
                 if balancingResult.count == 30 { //para dar 3 segundos, não necessariamente continuos.
                     print("balancing done")
                     currentSituation = .balancing
+                    balancingResult = []
                     players[currentPlayerIndex].progress += 100
+                    
                 }
+                
             
             case .stopped:
                 print("YOU WON")
