@@ -16,6 +16,7 @@ class ChallengeManager {
     var players: [Player] = []
     var currentPlayerIndex = 0
     var tolerancia: Double = 0.03
+    var currentSituation: Challenge = .stopped
     func getPlayer(forUser userID: UUID) -> Player? {
         players.first(where: { $0.user.id == userID })
     }
@@ -81,11 +82,13 @@ class ChallengeManager {
                     && abs(averageAcceleration.y) > abs(averageAcceleration.x)
                     && abs(averageAcceleration.y) > abs(averageAcceleration.z) {
                     print("correndo")
+                    currentSituation = .running
                     players[currentPlayerIndex].progress += magnitude
                     
                 } else {
                     //TODO: muda a animação pra uma parada
                     print("correndo ignorado")
+                    currentSituation = .stopped
                    
                     
                     
@@ -101,10 +104,12 @@ class ChallengeManager {
                         && abs(averageAcceleration.y) > abs(averageAcceleration.z) {
                         
                         print("pulando detectado")
+                        currentSituation = .jumping
                         print(currentY, lastThreeY.min()!, lastThreeY.max()!)
                         players[currentPlayerIndex].progress += 100
                     } else {
                         print("pulando ignorado")
+                        currentSituation = .stopped
                         
                         
                     }
@@ -115,9 +120,11 @@ class ChallengeManager {
                     && abs(averageAcceleration.y) < abs(averageAcceleration.x)
                     && abs(averageAcceleration.y) < abs(averageAcceleration.z) {
                     print("abrindo a porta")
+                    currentSituation = .openingDoor
                     players[currentPlayerIndex].progress += 100
                 } else {
                     print("porta ignorada")
+                    currentSituation = .stopped
                    
                     
                 }
@@ -126,16 +133,18 @@ class ChallengeManager {
                 balancingCount["x"] = deviceMotion.attitude.roll
                 balancingCount["y"] = deviceMotion.attitude.pitch
                 balancingCount["z"] = deviceMotion.attitude.yaw
-               // print("rotation x:\( balancingCount["x"]!), rotation y: \( balancingCount["y"]!), rotation z: \( balancingCount["z"]!)")
                 print("balancing contando")
+                currentSituation = .stopped
                 
+                //MARK: REVISAR BALANCING
                 if balancingCount["x"]! >= -0.01 && balancingCount["y"]! <= 0.2 {
                     balancingResult.append("true")
                    
                 }
                
-                if balancingResult.count == 30{ //para dar 3 segundos, não necessariamente continuos.
+                if balancingResult.count == 30 { //para dar 3 segundos, não necessariamente continuos.
                     print("balancing done")
+                    currentSituation = .balancing
                     players[currentPlayerIndex].progress += 100
                 }
             

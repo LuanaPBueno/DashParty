@@ -29,16 +29,19 @@ struct ContentView: View {
             //MARK: --------------------------------------------------
             if let myPlayer {
                 VStack {
-                    Text(matchManager.debugText)
+//                    Text(matchManager.debugText)
 //                    Image("oi")
                     
-                    Text("Movement Intensity: \(AccelerationManager.accelerationInstance.motionIntensity, specifier: "%.2f")")
-                        .font(.subheadline)
+//                    Text("Movement Intensity: \(AccelerationManager.accelerationInstance.motionIntensity, specifier: "%.2f")")
+//                        .font(.subheadline)
                     
-                    Text("Challenge: \(myPlayer.currentChallenge?.name)")
+                    Text("Challenge: \(myPlayer.currentChallenge?.name ?? "Nenhum")")
                         .font(.title)
-                    
                         .padding()
+//                    
+//                    Text("Situation: \(String(matchManager.currentSituation) ?? "YOU WON")")
+//                        .font(.title)
+//                        .padding()
                 }
             } else {
                 Button {
