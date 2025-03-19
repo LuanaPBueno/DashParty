@@ -12,7 +12,7 @@ import CoreMotion
 class MatchManager {
     
     var debugText: String = ""
-    
+    var balancingResult : [String] = []
     var players: [Player] = []
     var currentPlayerIndex = 0
     var tolerancia: Double = 0.03
@@ -36,7 +36,7 @@ class MatchManager {
                 
                 let accumulatedElementCount: Int =
                     switch players[currentPlayerIndex].currentChallenge {
-                    case .jumping: 10
+                    case .jumping: 20
                     default: 15
                     }
                                 
@@ -60,9 +60,9 @@ class MatchManager {
                     y: accumulatedAcceleration.1/Double(recentDeviceMotion.count),
                     z: accumulatedAcceleration.2/Double(recentDeviceMotion.count)
                 )
-                print(averageAcceleration)
+              //  print(averageAcceleration)
             let magnitude = sqrt(pow(averageAcceleration.x, 2) + pow(averageAcceleration.y, 2) + pow(averageAcceleration.z, 2))
-                print(magnitude.formatted(.number.precision(.fractionLength(2))))
+               // print(magnitude.formatted(.number.precision(.fractionLength(2))))
             debugText = """
             \(averageAcceleration.x.formatted(.number.precision(.fractionLength(2))))\n
             \(averageAcceleration.y.formatted(.number.precision(.fractionLength(2))))\n
@@ -83,14 +83,22 @@ class MatchManager {
                 }
                 
             case .jumping:
-                if abs(averageAcceleration.y) > 2
-                    && abs(averageAcceleration.y) > abs(averageAcceleration.x)
-                    && abs(averageAcceleration.y) > abs(averageAcceleration.z) {
-                    print("pulando")
-                    players[currentPlayerIndex].progress += 100
-                } else {
-                    print("pulando ignorado")
+                if recentDeviceMotion.count >= 3 {
+                    let lastThreeY = recentDeviceMotion.suffix(7).map { $0.userAcceleration.y }
+                    let currentY = averageAcceleration.y
+
+                    if currentY - lastThreeY.max()! >= 1.5
+                        && abs(averageAcceleration.y) > abs(averageAcceleration.x)
+                        && abs(averageAcceleration.y) > abs(averageAcceleration.z) {
+                        
+                        print("pulando detectado")
+                        print(currentY, lastThreeY.min()!, lastThreeY.max()!)
+                        players[currentPlayerIndex].progress += 100
+                    } else {
+                        print("pulando ignorado")
+                    }
                 }
+
             case .openingDoor:
                 if abs(averageAcceleration.y) < 1
                     && abs(averageAcceleration.y) < abs(averageAcceleration.x)
@@ -105,11 +113,15 @@ class MatchManager {
                 balancingCount["x"] = deviceMotion.attitude.roll
                 balancingCount["y"] = deviceMotion.attitude.pitch
                 balancingCount["z"] = deviceMotion.attitude.yaw
-                print("rotation x:\( balancingCount["x"]), rotation y: \( balancingCount["y"]), rotation z: \( balancingCount["z"])")
+                print("rotation x:\( balancingCount["x"]!), rotation y: \( balancingCount["y"]!), rotation z: \( balancingCount["z"]!)")
                 
                 if balancingCount["x"]! >= -0.01 && balancingCount["y"]! <= 0.2 {
-                    print("ZEROU")
+                    balancingResult.append("true")
                    
+                }
+               
+                if balancingResult.count == 30{ //para dar 3 segundos, não necessariamente continuos.
+                    players[currentPlayerIndex].progress += 100
                 }
 
             }
