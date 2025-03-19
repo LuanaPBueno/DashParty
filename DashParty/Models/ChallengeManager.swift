@@ -9,7 +9,7 @@ import Foundation
 import CoreMotion
 
 @Observable
-class MatchManager {
+class ChallengeManager {
     
     var debugText: String = ""
     var balancingResult : [String] = []

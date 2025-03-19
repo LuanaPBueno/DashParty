@@ -15,7 +15,7 @@ struct ContentView: View {
 //    @State var form: AnyView = AnyView(Image("orangePerson"))
 //    @State private var moveBackground = false
     
-    @State var matchManager = MatchManager()
+    @State var matchManager = ChallengeManager()
     var myPlayer: Player? {
         matchManager.getPlayer(forUser: user.id)
     }
