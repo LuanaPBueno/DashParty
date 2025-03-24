@@ -48,21 +48,21 @@ struct ContentView: View {
                         }
                     } else {
                         VStack(alignment: .trailing, spacing: 18) {
-                            NavigationLink(destination: CharacterView()) {
+                            NavigationLink(destination: CharacterView(users: users, user: user, matchManager: matchManager)) {
                                 Image("easyMode")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 200)
                             }
 
-                            NavigationLink(destination: CharacterView()) {
+                            NavigationLink(destination: CharacterView(users: users, user: user, matchManager: matchManager)) {
                                 Image("normalMode")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 220)
                             }
 
-                            NavigationLink(destination: CharacterView()) {
+                            NavigationLink(destination: CharacterView(users: users, user: user, matchManager: matchManager)) {
                                 Image("hardMode")
                                     .resizable()
                                     .scaledToFit()
