@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         if session.role == .windowExternalDisplayNonInteractive{
             let window = UIWindow(windowScene: windowSecene)
-            window.rootViewController = UIHostingController(rootView: ExternalDisplayView())
+            window.rootViewController = UIHostingController(rootView: FirstHubView())
             self.window = window
             window.makeKeyAndVisible()
         }

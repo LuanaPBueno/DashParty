@@ -12,20 +12,26 @@ struct CharacterView: View {
     var users: [User]
     var user : User
     var matchManager: ChallengeManager
+    @State var navigateToShareScreen: Bool = false
     
     
     var body: some View{
         ZStack{
-            Image("blueBackground")
-            VStack{
-                Image("comandCharacter")
+                Image("start&tutorial")
+                    .resizable()
+                    .scaledToFill()
+                    .edgesIgnoringSafeArea(.all)
+
                 
                 Button {
                     matchManager.startMatch(users: [user, User(name: "A")], myUserID: user.id)
+                    navigateToShareScreen = true
                 } label: {
                     Image("startButton")
                 }
-            }
+                .navigationDestination(isPresented: $navigateToShareScreen) {
+                    ShareScreen() // Substitua por sua tela de destino
+                }
         }
     }
 }

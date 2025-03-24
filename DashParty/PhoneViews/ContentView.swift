@@ -9,7 +9,8 @@ import SwiftUI
 import CoreMotion
 
 struct ContentView: View {
-    
+    @State var changed: Bool = HUBPhoneManager.instance.changeScreem
+    @State private var isActive = false
     let user = User(name: "Eu")
     @State var matchManager = ChallengeManager()
     var users: [User] = [User(name: "A"), User(name: "B")]
@@ -22,7 +23,7 @@ struct ContentView: View {
         NavigationStack{
             GeometryReader { geometry in
                 ZStack {
-                    Image("titleScreen")
+                    Image("chooseLevelBackground")
                         .resizable()
                         .scaledToFill()
                         .edgesIgnoringSafeArea(.all)
@@ -40,20 +41,31 @@ struct ContentView: View {
                         .frame(width: geometry.size.width * 0.3)
                         .offset(x: geometry.size.width * 0.20, y: -geometry.size.height * 0.20)
 
-                    if let myPlayer {
-                        VStack {
-                            Text("Challenge: \(myPlayer.currentChallenge?.name ?? "Nenhum")")
-                                .font(.title)
-                                .padding()
-                        }
-                    } else {
+//                    if let myPlayer {
+//                        VStack {
+//                            Text("Challenge: \(myPlayer.currentChallenge?.name ?? "Nenhum")")
+//                                .font(.title)
+//                                .padding()
+//                        }
+//                    } else {
                         VStack(alignment: .trailing, spacing: 18) {
-                            NavigationLink(destination: CharacterView(users: users, user: user, matchManager: matchManager)) {
-                                Image("easyMode")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 200)
-                            }
+                                Button(action: {
+                                    HUBPhoneManager.instance.changeScreem = true
+                                    isActive = true
+                                }) {
+                                    Image("easyMode")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 200)
+                                }
+                                
+                                NavigationLink(
+                                    destination: CharacterView(users: users, user: user, matchManager: matchManager),
+                                    isActive: $isActive,
+                                    label: { EmptyView() } // Esconde o NavigationLink
+                                )
+                            
+
 
                             NavigationLink(destination: CharacterView(users: users, user: user, matchManager: matchManager)) {
                                 Image("normalMode")
@@ -86,7 +98,7 @@ struct ContentView: View {
                         .frame(maxWidth: .infinity, alignment: .trailing)
                         .padding(.trailing, 40)
                         .padding(.top, 120)
-                    }
+                  //  }
                 }
             }
         }
