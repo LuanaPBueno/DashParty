@@ -18,16 +18,20 @@ struct NarrativeView: View {
             
             VStack{
                 Image("narrativeSkipButton")
+                    .background(Color(.white))
+                    .frame(width: 100, height: 100)
                 
                 ZStack{
                     Image("narrativeTextBackground")
-                        
                     
                     VStack{
                         Text("A cada geração, a floresta Aru escolhe seu líder...")
+                            .foregroundColor(.black)
                         HStack{
                             Spacer()
                             Image("nextNarrativeButton")
+                                .background(Color(.white))
+                                .frame(width: 100, height: 100)
                         }
                     }
                 }
@@ -35,4 +39,8 @@ struct NarrativeView: View {
             
         }
     }
+}
+
+#Preview{
+    NarrativeView()
 }
