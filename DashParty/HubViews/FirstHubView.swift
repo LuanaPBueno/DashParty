@@ -13,7 +13,7 @@ struct FirstHubView: View {
 
     var body: some View {
         ZStack {
-            if !hubManager.changeScreem {
+            if !hubManager.changeScreen {
                 Image("chooseLevelHub")
                     .resizable()
                     .scaledToFill()

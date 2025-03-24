@@ -11,7 +11,7 @@ import SwiftUI
 class HUBPhoneManager: ObservableObject {
     static let instance = HUBPhoneManager()
     
-    @Published var changeScreem: Bool = false
+    @Published var changeScreen: Bool = false
     
-    private init() {} // Impede a criação de novas instâncias
+    private init() {}
 }

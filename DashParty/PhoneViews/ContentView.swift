@@ -9,7 +9,7 @@ import SwiftUI
 import CoreMotion
 
 struct ContentView: View {
-    @State var changed: Bool = HUBPhoneManager.instance.changeScreem
+    @State var changed: Bool = HUBPhoneManager.instance.changeScreen
     @State private var isActive = false
     let user = User(name: "Eu")
     @State var matchManager = ChallengeManager()
@@ -50,7 +50,7 @@ struct ContentView: View {
 //                    } else {
                         VStack(alignment: .trailing, spacing: 18) {
                                 Button(action: {
-                                    HUBPhoneManager.instance.changeScreem = true
+                                    HUBPhoneManager.instance.changeScreen = true
                                     isActive = true
                                 }) {
                                     Image("easyMode")
@@ -58,35 +58,32 @@ struct ContentView: View {
                                         .scaledToFit()
                                         .frame(width: 200)
                                 }
-                                
-                                NavigationLink(
-                                    destination: CharacterView(users: users, user: user, matchManager: matchManager),
-                                    isActive: $isActive,
-                                    label: { EmptyView() } // Esconde o NavigationLink
-                                )
-                            
 
-
-                            NavigationLink(destination: CharacterView(users: users, user: user, matchManager: matchManager)) {
+                            Button(action: {
+                                HUBPhoneManager.instance.changeScreen = true
+                                isActive = true
+                            }) {
                                 Image("normalMode")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 220)
+                                    .frame(width: 200)
                             }
-
-                            NavigationLink(destination: CharacterView(users: users, user: user, matchManager: matchManager)) {
+                            
+                            Button(action: {
+                                HUBPhoneManager.instance.changeScreen = true
+                                isActive = true
+                            }) {
                                 Image("hardMode")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 200)
                             }
-
-//                            NavigationLink(destination: OptionView()) {
-//                                Image("options")
-//                                    .resizable()
-//                                    .scaledToFit()
-//                                    .frame(width: 200)
-//                            }
+                            
+                            NavigationLink(
+                                destination: CharacterView(users: users, user: user, matchManager: matchManager),
+                                isActive: $isActive,
+                                label: { EmptyView() } 
+                            )
 
                             NavigationLink(destination: CreditsView()) {
                                 Image("credits")
@@ -98,7 +95,6 @@ struct ContentView: View {
                         .frame(maxWidth: .infinity, alignment: .trailing)
                         .padding(.trailing, 40)
                         .padding(.top, 120)
-                  //  }
                 }
             }
         }
