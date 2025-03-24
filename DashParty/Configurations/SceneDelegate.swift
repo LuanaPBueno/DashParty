@@ -23,18 +23,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 }
 
-struct ExternalDisplayView: View {
-    var body: some View {
-        ZStack{
-            Color(.white)
-            
-            
-            Text("Hello, world!")
-                .font(.system(size: 96, weight: .bold))
-                .foregroundStyle(.black)
-        }
-        .ignoresSafeArea()
-        .scaledToFill()
-    }
 
-}

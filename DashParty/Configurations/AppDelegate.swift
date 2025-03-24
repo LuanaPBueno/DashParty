@@ -17,7 +17,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                         configurationForConnecting connectingSceneSession: UISceneSession,
                         options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         let sceneConfiguration = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
-        sceneConfiguration.delegateClass = SceneDelegate.self // Here we specify the scene delegate we just created
+        sceneConfiguration.delegateClass = SceneDelegate.self
         return sceneConfiguration
     }
 }

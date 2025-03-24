@@ -69,12 +69,12 @@ struct ContentView: View {
                                     .frame(width: 200)
                             }
 
-                            NavigationLink(destination: OptionView()) {
-                                Image("options")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 200)
-                            }
+//                            NavigationLink(destination: OptionView()) {
+//                                Image("options")
+//                                    .resizable()
+//                                    .scaledToFit()
+//                                    .frame(width: 200)
+//                            }
 
                             NavigationLink(destination: CreditsView()) {
                                 Image("credits")
