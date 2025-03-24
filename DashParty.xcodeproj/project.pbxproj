@@ -6,6 +6,28 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		57B921072D91F5F2000AA36C /* Prompt-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B921012D91F5F2000AA36C /* Prompt-Regular.ttf */; };
+		57B921082D91F5F2000AA36C /* Prompt-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B920FF2D91F5F2000AA36C /* Prompt-Medium.ttf */; };
+		57B921092D91F5F2000AA36C /* Prompt-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B921022D91F5F2000AA36C /* Prompt-SemiBold.ttf */; };
+		57B9210A2D91F5F2000AA36C /* Prompt-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B920F92D91F5F2000AA36C /* Prompt-ExtraBoldItalic.ttf */; };
+		57B9210B2D91F5F2000AA36C /* Prompt-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B920FD2D91F5F2000AA36C /* Prompt-Light.ttf */; };
+		57B9210C2D91F5F2000AA36C /* Prompt-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B920F52D91F5F2000AA36C /* Prompt-BlackItalic.ttf */; };
+		57B9210D2D91F5F2000AA36C /* Prompt-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B921052D91F5F2000AA36C /* Prompt-ThinItalic.ttf */; };
+		57B9210E2D91F5F2000AA36C /* Prompt-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B920F62D91F5F2000AA36C /* Prompt-Bold.ttf */; };
+		57B9210F2D91F5F2000AA36C /* Prompt-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B920F42D91F5F2000AA36C /* Prompt-Black.ttf */; };
+		57B921102D91F5F2000AA36C /* Prompt-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B921002D91F5F2000AA36C /* Prompt-MediumItalic.ttf */; };
+		57B921112D91F5F2000AA36C /* Prompt-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B920FB2D91F5F2000AA36C /* Prompt-ExtraLightItalic.ttf */; };
+		57B921122D91F5F2000AA36C /* Prompt-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B920F82D91F5F2000AA36C /* Prompt-ExtraBold.ttf */; };
+		57B921132D91F5F2000AA36C /* Prompt-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B920F72D91F5F2000AA36C /* Prompt-BoldItalic.ttf */; };
+		57B921142D91F5F2000AA36C /* Prompt-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B920FE2D91F5F2000AA36C /* Prompt-LightItalic.ttf */; };
+		57B921152D91F5F2000AA36C /* Prompt-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B920FA2D91F5F2000AA36C /* Prompt-ExtraLight.ttf */; };
+		57B921162D91F5F2000AA36C /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 57B920F32D91F5F2000AA36C /* OFL.txt */; };
+		57B921172D91F5F2000AA36C /* Prompt-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B921042D91F5F2000AA36C /* Prompt-Thin.ttf */; };
+		57B921182D91F5F2000AA36C /* Prompt-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B920FC2D91F5F2000AA36C /* Prompt-Italic.ttf */; };
+		57B921192D91F5F2000AA36C /* Prompt-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B921032D91F5F2000AA36C /* Prompt-SemiBoldItalic.ttf */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		E4BC27D02D80B644007C3116 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,6 +46,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		57B920F32D91F5F2000AA36C /* OFL.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
+		57B920F42D91F5F2000AA36C /* Prompt-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-Black.ttf"; sourceTree = "<group>"; };
+		57B920F52D91F5F2000AA36C /* Prompt-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-BlackItalic.ttf"; sourceTree = "<group>"; };
+		57B920F62D91F5F2000AA36C /* Prompt-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-Bold.ttf"; sourceTree = "<group>"; };
+		57B920F72D91F5F2000AA36C /* Prompt-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-BoldItalic.ttf"; sourceTree = "<group>"; };
+		57B920F82D91F5F2000AA36C /* Prompt-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-ExtraBold.ttf"; sourceTree = "<group>"; };
+		57B920F92D91F5F2000AA36C /* Prompt-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		57B920FA2D91F5F2000AA36C /* Prompt-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-ExtraLight.ttf"; sourceTree = "<group>"; };
+		57B920FB2D91F5F2000AA36C /* Prompt-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
+		57B920FC2D91F5F2000AA36C /* Prompt-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-Italic.ttf"; sourceTree = "<group>"; };
+		57B920FD2D91F5F2000AA36C /* Prompt-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-Light.ttf"; sourceTree = "<group>"; };
+		57B920FE2D91F5F2000AA36C /* Prompt-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-LightItalic.ttf"; sourceTree = "<group>"; };
+		57B920FF2D91F5F2000AA36C /* Prompt-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-Medium.ttf"; sourceTree = "<group>"; };
+		57B921002D91F5F2000AA36C /* Prompt-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-MediumItalic.ttf"; sourceTree = "<group>"; };
+		57B921012D91F5F2000AA36C /* Prompt-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-Regular.ttf"; sourceTree = "<group>"; };
+		57B921022D91F5F2000AA36C /* Prompt-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-SemiBold.ttf"; sourceTree = "<group>"; };
+		57B921032D91F5F2000AA36C /* Prompt-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		57B921042D91F5F2000AA36C /* Prompt-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-Thin.ttf"; sourceTree = "<group>"; };
+		57B921052D91F5F2000AA36C /* Prompt-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-ThinItalic.ttf"; sourceTree = "<group>"; };
 		E4BC27BF2D80B642007C3116 /* DashParty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DashParty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4BC27CF2D80B644007C3116 /* DashPartyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DashPartyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4BC27D92D80B644007C3116 /* DashPartyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DashPartyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,9 +126,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		57B921062D91F5F2000AA36C /* Prompt */ = {
+			isa = PBXGroup;
+			children = (
+				57B920F32D91F5F2000AA36C /* OFL.txt */,
+				57B920F42D91F5F2000AA36C /* Prompt-Black.ttf */,
+				57B920F52D91F5F2000AA36C /* Prompt-BlackItalic.ttf */,
+				57B920F62D91F5F2000AA36C /* Prompt-Bold.ttf */,
+				57B920F72D91F5F2000AA36C /* Prompt-BoldItalic.ttf */,
+				57B920F82D91F5F2000AA36C /* Prompt-ExtraBold.ttf */,
+				57B920F92D91F5F2000AA36C /* Prompt-ExtraBoldItalic.ttf */,
+				57B920FA2D91F5F2000AA36C /* Prompt-ExtraLight.ttf */,
+				57B920FB2D91F5F2000AA36C /* Prompt-ExtraLightItalic.ttf */,
+				57B920FC2D91F5F2000AA36C /* Prompt-Italic.ttf */,
+				57B920FD2D91F5F2000AA36C /* Prompt-Light.ttf */,
+				57B920FE2D91F5F2000AA36C /* Prompt-LightItalic.ttf */,
+				57B920FF2D91F5F2000AA36C /* Prompt-Medium.ttf */,
+				57B921002D91F5F2000AA36C /* Prompt-MediumItalic.ttf */,
+				57B921012D91F5F2000AA36C /* Prompt-Regular.ttf */,
+				57B921022D91F5F2000AA36C /* Prompt-SemiBold.ttf */,
+				57B921032D91F5F2000AA36C /* Prompt-SemiBoldItalic.ttf */,
+				57B921042D91F5F2000AA36C /* Prompt-Thin.ttf */,
+				57B921052D91F5F2000AA36C /* Prompt-ThinItalic.ttf */,
+			);
+			path = Prompt;
+			sourceTree = "<group>";
+		};
 		E4BC27B62D80B642007C3116 = {
 			isa = PBXGroup;
 			children = (
+				57B921062D91F5F2000AA36C /* Prompt */,
 				E4BC27C12D80B642007C3116 /* DashParty */,
 				E4BC27D22D80B644007C3116 /* DashPartyTests */,
 				E4BC27DC2D80B644007C3116 /* DashPartyUITests */,
@@ -225,6 +293,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57B921072D91F5F2000AA36C /* Prompt-Regular.ttf in Resources */,
+				57B921082D91F5F2000AA36C /* Prompt-Medium.ttf in Resources */,
+				57B921092D91F5F2000AA36C /* Prompt-SemiBold.ttf in Resources */,
+				57B9210A2D91F5F2000AA36C /* Prompt-ExtraBoldItalic.ttf in Resources */,
+				57B9210B2D91F5F2000AA36C /* Prompt-Light.ttf in Resources */,
+				57B9210C2D91F5F2000AA36C /* Prompt-BlackItalic.ttf in Resources */,
+				57B9210D2D91F5F2000AA36C /* Prompt-ThinItalic.ttf in Resources */,
+				57B9210E2D91F5F2000AA36C /* Prompt-Bold.ttf in Resources */,
+				57B9210F2D91F5F2000AA36C /* Prompt-Black.ttf in Resources */,
+				57B921102D91F5F2000AA36C /* Prompt-MediumItalic.ttf in Resources */,
+				57B921112D91F5F2000AA36C /* Prompt-ExtraLightItalic.ttf in Resources */,
+				57B921122D91F5F2000AA36C /* Prompt-ExtraBold.ttf in Resources */,
+				57B921132D91F5F2000AA36C /* Prompt-BoldItalic.ttf in Resources */,
+				57B921142D91F5F2000AA36C /* Prompt-LightItalic.ttf in Resources */,
+				57B921152D91F5F2000AA36C /* Prompt-ExtraLight.ttf in Resources */,
+				57B921162D91F5F2000AA36C /* OFL.txt in Resources */,
+				57B921172D91F5F2000AA36C /* Prompt-Thin.ttf in Resources */,
+				57B921182D91F5F2000AA36C /* Prompt-Italic.ttf in Resources */,
+				57B921192D91F5F2000AA36C /* Prompt-SemiBoldItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,7 +496,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DashParty/Preview Content\"";
-				DEVELOPMENT_TEAM = 67AYPRFZH8;
+				DEVELOPMENT_TEAM = BW6U8TXQTN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DashParty/Info.plist;
@@ -437,7 +524,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DashParty/Preview Content\"";
-				DEVELOPMENT_TEAM = 67AYPRFZH8;
+				DEVELOPMENT_TEAM = BW6U8TXQTN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DashParty/Info.plist;
