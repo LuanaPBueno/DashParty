@@ -56,23 +56,7 @@ struct NarrativeView: View {
                         .padding(.top, 50)
 
                     
-                    HStack{
-                        Spacer()
-                        Button {
-                            if currentText == narrativeText.count-1 {
-                               currentText = 0
-                            }else{
-                                currentText+=1
-                            }
-                        } label: {
-                            Image("nextNarrativeButton")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(maxWidth: 40)
-                                .padding(.trailing, 40)
-                                
-                        }
-                    }
+                   
                 }
             }
         }
