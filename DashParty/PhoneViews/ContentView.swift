@@ -80,7 +80,7 @@ struct ContentView: View {
                             }
                             
                             NavigationLink(
-                                destination: CharacterView(users: users, user: user, matchManager: matchManager),
+                                destination: /*CharacterView(users: users, user: user, matchManager: matchManager)*/ConnectInHubView(),
                                 isActive: $isActive,
                                 label: { EmptyView() } 
                             )
