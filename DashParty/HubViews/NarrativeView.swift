@@ -46,14 +46,7 @@ struct NarrativeView: View {
     
     private func withoutCharacter() -> some View {
         VStack {
-            //mark: APAGAR ISSO
-            Button {
-                hubManager.actualPage += 1
-            } label: {
-                
-                Text("passa a tela")
-            }
-            //mark: APAGAR ISSO
+            
             ZStack {
                 Image("narrativeTextBackground")
                     .resizable()
@@ -78,14 +71,7 @@ struct NarrativeView: View {
         VStack {
             Spacer().frame(height: 40)
             
-            //mark: APAGAR ISSO
-            Button {
-                hubManager.actualPage += 1
-            } label: {
-                
-                Text("passa a tela")
-            }
-            //mark: APAGAR ISSO
+           
             ZStack{
                 
                 Image("characters")
@@ -182,7 +168,7 @@ struct NarrativeView: View {
                     
                 }
             }
-        }
+         
     }
     
    
