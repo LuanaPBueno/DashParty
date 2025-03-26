@@ -33,6 +33,7 @@ struct NarrativePassingView: View {
                     Spacer()
                     Button {
                         hubManager.actualPage = hubManager.narrativeText.count - 1
+                        navigate = true
                     } label: {
                         Image("skipNarrativeButton")
                     }
