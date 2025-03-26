@@ -15,29 +15,34 @@ struct NarrativeView: View {
     @ObservedObject var hubManager = HUBPhoneManager.instance
 
     var body: some View {
-        ZStack {
-            if hubManager.actualPage < hubManager.narrativeText.count {
-                if hubManager.narrativeText[hubManager.actualPage].values.first == true {
-                    withCharacter()
+        if !hubManager.passToTutorialView {
+            ZStack {
+                if hubManager.actualPage < hubManager.narrativeText.count {
+                    if hubManager.narrativeText[hubManager.actualPage].values.first == true {
+                        withCharacter()
+                    } else {
+                        withoutCharacter()
+                    }
                 } else {
-                    withoutCharacter()
+                    Text("Fim da narrativa!")
+                        .font(.custom("Prompt-Regular", size: 30))
+                        .foregroundColor(.black)
+                        .multilineTextAlignment(.center)
                 }
-            } else {
-                Text("Fim da narrativa!")
-                    .font(.custom("Prompt-Regular", size: 30))
-                    .foregroundColor(.black)
-                    .multilineTextAlignment(.center)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background {
+                Image("narrativeBackground")
+                    .resizable()
+                    .scaledToFill()
+                    .edgesIgnoringSafeArea(.all)
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background {
-            Image("narrativeBackground")
-                .resizable()
-                .scaledToFill()
-                .edgesIgnoringSafeArea(.all)
+        else{
+            TutorialHubView()
         }
     }
-
+    
     private func withoutCharacter() -> some View {
         VStack {
             ZStack {
@@ -87,6 +92,8 @@ struct NarrativeView: View {
             }
         }
     }
+    
+   
 }
 
 

@@ -26,8 +26,13 @@ class HUBPhoneManager: ObservableObject {
         ["Agora!": false]
     ]
     
+    @Published var passToTutorialView: Bool = false
+    
     @Published var actualPage: Int = 0
     
     @Published var changeScreen: Bool = false
+    
+    @Published var actualTutorialIndex: Int = 0
+    
     private init() {}
 }
