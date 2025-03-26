@@ -17,6 +17,7 @@ struct ConnectInHubView: View{
             Image("connectWithHubBackground")
                 .resizable()
                 .scaledToFill()
+                .edgesIgnoringSafeArea(.all)
             
             HStack{
                 Spacer()

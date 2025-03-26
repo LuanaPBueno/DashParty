@@ -14,7 +14,7 @@ struct NarrativePassingView: View {
 
     var body: some View {
         ZStack {
-            Image("connectWithHubBackground")
+            Image("passNarrativeBackground")
                 .resizable()
                 .scaledToFill()
                 .edgesIgnoringSafeArea(.all)
