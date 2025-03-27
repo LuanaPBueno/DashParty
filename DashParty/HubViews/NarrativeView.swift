@@ -12,7 +12,10 @@ struct NarrativeView: View {
     @ObservedObject var hubManager = HUBPhoneManager.instance
     
     var fontSize: CGFloat {
-        return UIScreen.main.bounds.width * 0.03
+        return UIScreen.main.bounds.width * 0.035
+    }
+    var iconSize: CGFloat {
+        return UIScreen.main.bounds.width * 0.09
     }
     
     var body: some View {
@@ -26,7 +29,7 @@ struct NarrativeView: View {
                     }
                 } else {
                     Text("Fim da narrativa!")
-                        .font(.custom("Prompt-Regular", size: 30))
+                        .font(.custom("Prompt-Regular", size: fontSize))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                 }
@@ -45,21 +48,49 @@ struct NarrativeView: View {
     }
     
     private func withoutCharacter() -> some View {
+        
         VStack {
             
             ZStack {
-                Image("narrativeTextBackground")
-                    .resizable()
-                    .scaledToFit()
-                    .padding(.horizontal, 30)
-                
                 
                 VStack {
+                    Spacer()
                     Text(hubManager.narrativeText[hubManager.actualPage].keys.first ?? "")
+                        .lineLimit(nil)
                         .foregroundColor(.black)
                         .font(.custom("Prompt-Regular", size: fontSize))
                         .multilineTextAlignment(.center)
-                        .frame(maxWidth: 1000)
+                        .padding(.horizontal, 80)
+                    
+                        .frame(maxWidth: .infinity)
+                    
+                        .background{
+                            Image("narrativeTextBackground")
+                                .resizable()
+                                .scaledToFill()
+                                .padding(.horizontal, 30)
+                            
+                            
+                            
+                            
+                        }
+                    Spacer()
+                    ///MARK: TIRAR
+                    VStack{
+                        Button(action: {
+                            if hubManager.actualPage < hubManager.narrativeText.count - 1 {
+                                hubManager.actualPage += 1
+                            }
+                        }) {
+                            Text("Próximo")
+                                .font(.custom("Prompt-Regular", size: fontSize))
+                                .foregroundColor(.blue)
+                                .cornerRadius(10)
+                        }
+                    }
+                    ///MARK: TIRAR
+
+                    
                 }
                 
                 
@@ -68,116 +99,135 @@ struct NarrativeView: View {
     }
     
     private func withCharacter() -> some View {
-        VStack {
-            Spacer().frame(height: 40)
+        
+        ZStack{
             
-           
-            ZStack{
+            Image("characters")
+                .resizable()
+                .scaledToFit()
                 
-                Image("characters")
-                    .resizable()
-                    .scaledToFit()
-                    .padding(.horizontal, 30)
-                    .padding(.bottom, 400)
+            Spacer()
             
-                    ZStack{
-                        Image("narrativeTextBackground")
+            VStack {
+                Spacer()
+                VStack{
+                
+                    Text(hubManager.narrativeText[hubManager.actualPage].keys.first ?? "")
+                        .foregroundColor(.black)
+                        .font(.custom("Prompt-Regular", size: fontSize))
+                        .padding(.horizontal, 80)
+                        .frame(maxWidth: .infinity)
+                    
+                        .background{
+                            Image("narrativeTextBackground")
+                                .resizable()
+                                .scaledToFill()
+                                .padding(.horizontal, 30) 
+                        }
+                  
+                }
+                Spacer()
+                        
+                }
+               
+                ZStack{
+                   
+                    if hubManager.actualPage == 4 {
+                        Image("monkeyIcon")
                             .resizable()
                             .scaledToFit()
-                            .padding(.horizontal, 30)
+                            .frame(width: iconSize, height: iconSize)
+                            .padding(.horizontal)
+                            
                         
-                        if hubManager.actualPage == 4 {
-                            Image("monkeyIcon")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(maxWidth: 80)
-                                .padding(.bottom, 200)
-                                .padding(.horizontal)
-                            
-                        }
-                        
-                        if hubManager.actualPage == 5 {
-                            Image("frogIcon")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(maxWidth: 80)
-                                .padding(.bottom, 200)
-                                .padding(.horizontal)
-                            
-                        }
-                        
-                        if hubManager.actualPage == 6 {
-                            Image("bunnyIcon")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(maxWidth: 80)
-                                .padding(.bottom, 200)
-                                .padding(.horizontal)
-                            
-                        }
-                        
-                        if hubManager.actualPage == 7 {
-                            Image("monkeyIcon")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(maxWidth: 80)
-                                .padding(.bottom, 200)
-                                .padding(.horizontal)
-                            
-                        }
-                        
-                        if hubManager.actualPage == 8 {
-                            Image("catIcon")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(maxWidth: 80)
-                                .padding(.bottom, 200)
-                                .padding(.horizontal)
-                            
-                        }
-                        
-                        if hubManager.actualPage == 9 {
-                            Image("monkeyIcon")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(maxWidth: 80)
-                                .padding(.bottom, 200)
-                                .padding(.horizontal)
-                            
-                        }
-                        
-                        if hubManager.actualPage == 10 {
-                            Image("frogIcon")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(maxWidth: 80)
-                                .padding(.bottom, 200)
-                                .padding(.horizontal)
-                            
-                        }
-                            
-                        VStack {
-                            Text(hubManager.narrativeText[hubManager.actualPage].keys.first ?? "")
-                                .foregroundColor(.black)
-                                .font(.custom("Prompt-Regular", size: fontSize))
-                                .multilineTextAlignment(.center)
-                                .frame(maxWidth: 1000)
-                        }
-                        Spacer()
                     }
                     
+                    
+                    if hubManager.actualPage == 5 {
+                        Image("frogIcon")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: iconSize, height: iconSize)
+                            .padding(.horizontal)
+                        
+                    }
+                    
+                    if hubManager.actualPage == 6 {
+                        Image("bunnyIcon")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: iconSize, height: iconSize)
+                            .padding(.horizontal)
+                        
+                    }
+                    
+                    if hubManager.actualPage == 7 {
+                        Image("monkeyIcon")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: iconSize, height: iconSize)
+                            .padding(.horizontal)
+                        
+                    }
+                    
+                    if hubManager.actualPage == 8 {
+                        Image("catIcon")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: iconSize, height: iconSize)
+                            .padding(.horizontal)
+                        
+                    }
+                    
+                    if hubManager.actualPage == 9 {
+                        Image("monkeyIcon")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: iconSize, height: iconSize)
+                            .padding(.horizontal)
+                        
+                    }
+                    
+                    if hubManager.actualPage == 10 {
+                        Image("frogIcon")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: iconSize, height: iconSize)
+                            .padding(.horizontal)
+                        
+                    }
+                    Spacer()
                 }
+                    
+                    
+            ///MARK: TIRAR
+                    VStack{
+                        Button(action: {
+                            if hubManager.actualPage < hubManager.narrativeText.count - 1 {
+                                hubManager.actualPage += 1
+                            }
+                        }) {
+                            Text("Próximo")
+                                .font(.custom("Prompt-Regular", size: fontSize))
+                                .foregroundColor(.blue)
+                            
+                        }
+                    }
+            ///MARK: TIRAR
+
+                
+                Spacer()
             }
-         
+        
+            
+        }
+    }
+
+    
+    
+    #Preview{
+        NarrativeView( )
     }
     
-   
-}
-
-
-#Preview{
-    NarrativeView( )
-}
-
-
-
+    
+    
