@@ -12,7 +12,7 @@ struct NarrativeView: View {
     @ObservedObject var hubManager = HUBPhoneManager.instance
     
     var fontSize: CGFloat {
-        return UIScreen.main.bounds.width * 0.03
+        return UIScreen.main.bounds.width * 0.035
     }
     
     var body: some View {

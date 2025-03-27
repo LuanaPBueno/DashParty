@@ -2,18 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string></string>
-		<string>Prompt-Regular</string>
-		<string>Prompt-Bold</string>
-	</array>
-	<key>CFBundleExecutable</key>
-	<string></string>
-	<key>CFBundleIdentifier</key>
-	<string></string>
 	<key>INIntentsRestrictedWhileLocked</key>
 	<array/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Prompt-Bold.ttf</string>
+		<string>Prompt-Regular.ttf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
