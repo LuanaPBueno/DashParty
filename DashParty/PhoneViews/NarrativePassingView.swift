@@ -35,6 +35,10 @@ struct NarrativePassingView: View {
                         hubManager.actualPage = hubManager.narrativeText.count
                         navigate = true
                         HUBPhoneManager.instance.passToTutorialView = true
+                        
+                        DispatchQueue.main.async {
+                                self.hubManager.objectWillChange.send()
+                            }
                             
                     } label: {
                         Image("skipNarrativeButton")
@@ -45,6 +49,11 @@ struct NarrativePassingView: View {
                             hubManager.actualPage += 1
                         } else {
                             navigate = true
+                            HUBPhoneManager.instance.passToTutorialView = true
+                            
+                            DispatchQueue.main.async {
+                                    self.hubManager.objectWillChange.send()
+                                }
                         }
                     } label: {
                         Image("passNarrativeButton")

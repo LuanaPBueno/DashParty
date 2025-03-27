@@ -17,6 +17,7 @@ class ChallengeManager {
     var currentPlayerIndex = 0
     var tolerancia: Double = 0.03
     var currentSituation: Challenge = .stopped
+    var currentChallenge: Challenge = .running
     func getPlayer(forUser userID: UUID) -> Player? {
         players.first(where: { $0.user.id == userID })
     }
@@ -34,7 +35,8 @@ class ChallengeManager {
                 )
             
         }
-                
+            
+        //MARK: MUDAR ISSO URGENTE DE BOTAR ID COMO ZERO.
         self.currentPlayerIndex = self.players.firstIndex(where: { $0.user.id == myUserID })!
         AccelerationManager.accelerationInstance.startAccelerometer(
             action: { [weak self] deviceMotion in
@@ -78,6 +80,7 @@ class ChallengeManager {
             
             switch players[currentPlayerIndex].currentChallenge {
             case .running:
+                currentChallenge = .running
                 if abs(magnitude) > 0.8
                     && abs(averageAcceleration.y) > abs(averageAcceleration.x)
                     && abs(averageAcceleration.y) > abs(averageAcceleration.z) {
@@ -95,6 +98,7 @@ class ChallengeManager {
                 }
                 
             case .jumping:
+                currentChallenge = .running
                 if recentDeviceMotion.count >= 3 {
                     let lastThreeY = recentDeviceMotion.suffix(7).map { $0.userAcceleration.y }
                     let currentY = averageAcceleration.y
@@ -116,6 +120,7 @@ class ChallengeManager {
                 }
 
             case .openingDoor:
+                currentChallenge = .openingDoor
                 if abs(averageAcceleration.y) < 1
                     && abs(averageAcceleration.y) < abs(averageAcceleration.x)
                     && abs(averageAcceleration.y) < abs(averageAcceleration.z) {
@@ -130,6 +135,7 @@ class ChallengeManager {
                 }
                 
             case .balancing:
+                currentChallenge = .balancing
                 balancingCount["x"] = deviceMotion.attitude.roll
                 balancingCount["y"] = deviceMotion.attitude.pitch
                 balancingCount["z"] = deviceMotion.attitude.yaw
@@ -157,6 +163,7 @@ class ChallengeManager {
             case .stopped:
                 print("YOU WON")
                 players[currentPlayerIndex].progress += 100
+                finishMatch()
 
             case .none:
                 print("None")

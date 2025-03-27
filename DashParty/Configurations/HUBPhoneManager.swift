@@ -30,6 +30,8 @@ class HUBPhoneManager: ObservableObject {
     
     @Published var actualPage: Int = 0
     
+    @Published var startMatch: Bool = false
+    
     @Published var changeScreen: Bool = false
     
     @Published var actualTutorialIndex: Int = 0

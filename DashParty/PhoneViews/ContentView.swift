@@ -11,13 +11,12 @@ import CoreMotion
 struct ContentView: View {
     @State var changed: Bool = HUBPhoneManager.instance.changeScreen
     @State private var isActive = false
-    let user = User(name: "Eu")
-    @State var matchManager = ChallengeManager()
-    var users: [User] = [User(name: "A"), User(name: "B")]
+//    let user = User(name: "Eu")
+//    var users: [User] = [User(name: "A"), User(name: "B")]
 
-    var myPlayer: Player? {
-        matchManager.getPlayer(forUser: user.id)
-    }
+//    var myPlayer: Player? {
+//        matchManager.getPlayer(forUser: user.id)
+//    }
 
     var body: some View {
         NavigationStack{

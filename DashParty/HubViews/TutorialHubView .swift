@@ -9,16 +9,31 @@ import Foundation
 import SwiftUI
 
 struct TutorialHubView: View {
+    let user = User(name: "Eu")
+    @State var matchManager = ChallengeManager()
+    var users: [User] = [User(name: "A"), User(name: "B")]
     @ObservedObject var hubManager = HUBPhoneManager.instance
     
-    var currentTutorialImage: [String] = ["tutorialBackgroundHub1", "tutorialBackgroundHub2", "tutorialBackgroundHub3"]
+    var myPlayer: Player? {
+        matchManager.getPlayer(forUser: user.id)
+    }
+
+    
+    var currentTutorialImage: [String] = ["tutorialBackgroundHub1", "tutorialBackgroundHub2", "tutorialBackgroundHub3", "tutorialToStart"]
     
     var body: some View {
-        Image(currentTutorialImage[safe: hubManager.actualTutorialIndex] ?? "fallbackImage")
-            .resizable()
-            .scaledToFill()
-            .edgesIgnoringSafeArea(.all)
+        if !hubManager.startMatch {
+            Image(currentTutorialImage[safe: hubManager.actualTutorialIndex] ?? "")
+                .resizable()
+                .scaledToFill()
+                .edgesIgnoringSafeArea(.all)
+        }else{
+            MatchViewHub(users: users, user: user, matchManager: matchManager)
+        }
+        
     }
+    
+   
 }
 
 extension Array {

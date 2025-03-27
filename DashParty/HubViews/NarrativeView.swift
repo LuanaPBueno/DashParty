@@ -38,10 +38,11 @@ struct NarrativeView: View {
                     .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
             }
-        }
-        else{
+        } else{
             TutorialHubView()
         }
+        
+        
     }
     
     private func withoutCharacter() -> some View {
