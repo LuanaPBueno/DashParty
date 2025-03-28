@@ -18,6 +18,10 @@ struct TutorialPassingView: View {
     var body: some View {
         
         ZStack{
+             VStack{
+                 Text("PRESS START AFTER READING THE TUTORIAL!")
+                     .fontWeight(.bold)
+                     .font(.title)
             HStack {
                 if currentTutorialImage[safe: hubManager.actualTutorialIndex] == ""{
                     
@@ -32,7 +36,7 @@ struct TutorialPassingView: View {
                         
                     } label: {
                         Image("startMatchButton")
-                            
+                        
                     }
                 }else{
                     Image(currentTutorialImage[safe: hubManager.actualTutorialIndex] ?? "fallbackImage")
@@ -55,30 +59,31 @@ struct TutorialPassingView: View {
                     }
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background {
-                Image("greenBackground")
-                    .resizable()
-                    .scaledToFill()
-                    .edgesIgnoringSafeArea(.all)
-            }
         }
-        NavigationLink(
-            destination: matchPhoneView(),
-            isActive: $pass,
-            label: { EmptyView() }
-        )
-        
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background {
+                    Image("greenBackground")
+                        .resizable()
+                        .scaledToFill()
+                        .edgesIgnoringSafeArea(.all)
+                }
+            }
+            NavigationLink(
+                destination: matchPhoneView(),
+                isActive: $pass,
+                label: { EmptyView() }
+            )
+            
+        }
     }
-}
-
-
-
-struct matchPhoneView : View{
-    var body : some View{
-        Image("matchPhoneViewBackground")
+    
+    
+    
+    struct matchPhoneView : View{
+        var body : some View{
+            Image("matchPhoneViewBackground")
+        }
     }
-}
 
 #Preview{
  TutorialPassingView( )

@@ -12,13 +12,12 @@ struct ConnectInHubView: View{
     @State var navigate : Bool = false
     
     var body : some View{
-        
             ZStack{
-                    Image("blueBackground")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-
+                Image("blueBackground")
+                .resizable()
+                .scaledToFill()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .ignoresSafeArea()
                 
                 VStack{
                     Spacer()
@@ -51,6 +50,7 @@ struct ConnectInHubView: View{
                     
                 }
             }
+            
         }
     }
 

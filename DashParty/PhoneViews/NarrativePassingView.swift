@@ -28,7 +28,7 @@ struct NarrativePassingView: View {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                 
-                    Spacer()
+                    .padding(40)
                 
                 HStack {
                     Spacer()

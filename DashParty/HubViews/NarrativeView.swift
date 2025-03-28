@@ -44,8 +44,6 @@ struct NarrativeView: View {
         } else{
             TutorialHubView()
         }
-        
-        
     }
     
     private func withoutCharacter() -> some View {
@@ -76,20 +74,7 @@ struct NarrativeView: View {
                             
                         }
                     Spacer()
-                    ///MARK: TIRAR
-                    VStack{
-                        Button(action: {
-                            if hubManager.actualPage < hubManager.narrativeText.count - 1 {
-                                hubManager.actualPage += 1
-                            }
-                        }) {
-                            Text("Próximo")
-                                .font(.custom("Prompt-Regular", size: fontSize))
-                                .foregroundColor(.blue)
-                                .cornerRadius(10)
-                        }
-                    }
-                    ///MARK: TIRAR
+                    
                     
                     
                 }
@@ -206,17 +191,6 @@ struct NarrativeView: View {
                 
                 
             }.padding(.bottom, 16)
-            
-            
-            
-            
-            ///MARK: TIRAR
-                
-            
-            ///MARK: TIRAR
-            
-            
-            
         }
         
         

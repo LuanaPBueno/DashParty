@@ -27,7 +27,10 @@ struct CharacterView: View {
                     matchManager.startMatch(users: [user, User(name: "A")], myUserID: user.id)
                     navigateToShareScreen = true
                 } label: {
-                    Image("startButton")
+                    ZStack{
+                        
+                        Image("startButton")
+                    }
                 }
                 .navigationDestination(isPresented: $navigateToShareScreen) {
                     ShareScreen() // Substitua por sua tela de destino
