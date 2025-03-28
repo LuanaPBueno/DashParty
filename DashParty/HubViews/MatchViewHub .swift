@@ -16,20 +16,33 @@ struct MatchViewHub: View {
     
     @State var startTime = Date.now
     @State var finishTime: Date?
+    @State var characterImage: String = "characterFront"
+    
     var body: some View {
         ZStack {
             Image("matchBackground")
                 .resizable()
                 .scaledToFill()
                 .edgesIgnoringSafeArea(.all)
+            VStack{
+                Spacer()
+            VStack{
+                Spacer()
+                Image("\(characterImage)")
+                    .resizable()
+                    .frame(height: 100)
+                Spacer()
+            }
+        }
+         
             if matchManager.players.isEmpty == false {
                 let currentChallenge = matchManager.players[matchManager.currentPlayerIndex].currentChallenge
                 if currentChallenge == .stopped {
                     VStack {
-                        Text("Parabéns")
+                        Text("Congratulations")
                             .font(.system(size: 70, weight: .bold, design: .default))
                         if let finishTime {
-                            Text("Fez em \(finishTime.timeIntervalSince(startTime))")
+                            Text("You did it in\(finishTime.timeIntervalSince(startTime))")
                                 .font(.system(size: 70, weight: .bold, design: .default))
                         }
                     }
@@ -38,46 +51,46 @@ struct MatchViewHub: View {
                     
                     VStack{
                         
-                        Text("\(currentChallenge?.name ?? "no challenge")")
-                            .font(.system(size: 30, weight: .bold, design: .default))
+                        Text("Current challenge: \(currentChallenge?.name ?? "no challenge")")
+                            .font(.system(size: 80, weight: .bold, design: .default))
                         
                         Group {
                             switch currentChallenge {
                             case .running:
                                 if matchManager.currentSituation {
-                                    Text("Running")
+                                    Text("You are running")
                                 } else {
-                                    Text("NO Running")
+                                    Text("You are not running")
                                 }
                             case .jumping:
                                 if matchManager.currentSituation {
-                                    Text("Jumping")
+                                    Text("You are jumping")
                                 } else {
-                                    Text("NO Jumping")
+                                    Text("You are not jumping")
                                 }
                             case .openingDoor:
                                 if matchManager.currentSituation {
-                                    Text("OpeningDoor")
+                                    Text("You are opening the door")
                                 } else {
-                                    Text("NO OpeningDoor")
+                                    Text("You are not opening the door")
                                 }
                             case .balancing:
                                 if matchManager.currentSituation {
-                                    Text("Balancing")
+                                    Text("You are balancing")
                                 } else {
-                                    Text("NO Balancing")
+                                    Text("You are not balancing")
                                 }
                             case .stopped:
                                 if matchManager.currentSituation {
-                                    Text("Stopped")
+                                    Text("You stopped")
                                 } else {
-                                    Text("NO Stopped")
+                                    
                                 }
                             case nil:
                                 Text("?")
                             }
                         }
-                        .font(.system(size: 30, weight: .bold, design: .default))
+                        .font(.system(size: 45, weight: .bold, design: .default))
                         Text("\(matchManager.currentSituation)")
                             .font(.system(size: 30, weight: .bold, design: .default))
                     }
@@ -87,6 +100,7 @@ struct MatchViewHub: View {
         .task {
             matchManager.startMatch(users: users + [user], myUserID: user.id)
             startTime = .now
+            characterImage = "characterBack"
         }
     }
     
