@@ -23,10 +23,22 @@ struct TutorialHubView: View {
     
     var body: some View {
         if !hubManager.startMatch {
-            Image(currentTutorialImage[safe: hubManager.actualTutorialIndex] ?? "")
-                .resizable()
-                .scaledToFill()
-                .edgesIgnoringSafeArea(.all)
+            if currentTutorialImage[safe: hubManager.actualTutorialIndex] == "tutorialToStart"{
+                ZStack{
+                    Image("greenBackground")
+                        .resizable()
+                        .scaledToFill()
+                        .edgesIgnoringSafeArea(.all)
+                    
+                    Image("startMatchButton")
+                }
+            
+            }else{
+                Image(currentTutorialImage[safe: hubManager.actualTutorialIndex] ?? "")
+                    .resizable()
+                    .scaledToFill()
+                    .edgesIgnoringSafeArea(.all)
+            }
         }else{
             MatchViewHub(users: users, user: user, matchManager: matchManager)
         }
@@ -40,4 +52,8 @@ extension Array {
     subscript(safe index: Int) -> Element? {
         return indices.contains(index) ? self[index] : nil
     }
+}
+
+#Preview{
+    TutorialHubView()
 }

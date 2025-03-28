@@ -36,7 +36,6 @@ class ChallengeManager {
             
         }
             
-        //MARK: MUDAR ISSO URGENTE DE BOTAR ID COMO ZERO.
         self.currentPlayerIndex = self.players.firstIndex(where: { $0.user.id == myUserID })!
         AccelerationManager.accelerationInstance.startAccelerometer(
             action: { [weak self] deviceMotion in
@@ -48,7 +47,6 @@ class ChallengeManager {
                     default: 15
                     }
                                 
-                //MARK: Ao invés de ser 4, vai ter que mudar pra jump
                 if recentDeviceMotion.count >= accumulatedElementCount {
                     recentDeviceMotion = Array(recentDeviceMotion.dropFirst())
                 }
@@ -140,7 +138,6 @@ class ChallengeManager {
                 balancingCount["z"] = deviceMotion.attitude.yaw
                 
                 
-                //MARK: REVISAR BALANCING
                 if balancingCount["x"]! >= -0.01 && balancingCount["y"]! <= 0.2 {
                     balancingResult.append("true")
                     print("balancing contando")
