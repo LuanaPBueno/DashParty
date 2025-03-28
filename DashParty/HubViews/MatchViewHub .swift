@@ -29,7 +29,7 @@ struct MatchViewHub: View {
             VStack{
                 Spacer()
                 Image("\(characterImage)")
-                    .resizable()
+                   
                     
                 Spacer()
             }
@@ -52,7 +52,8 @@ struct MatchViewHub: View {
                     VStack{
                         
                         Text("Current challenge: \(currentChallenge?.name ?? "no challenge")")
-                            .font(.system(size: 80, weight: .bold, design: .default))
+                            .font(.custom("Prompt-Black",size: 64))
+                            .foregroundColor(.black)
                         
                         Group {
                             switch currentChallenge {
@@ -90,10 +91,10 @@ struct MatchViewHub: View {
                                 Text("?")
                             }
                         }
-                        .font(.system(size: 45, weight: .bold, design: .default))
-                        Text("\(matchManager.currentSituation)")
-                            .font(.system(size: 30, weight: .bold, design: .default))
+                        .font(.custom("Prompt-ExtraBold",size: 64))
+                        .foregroundColor(.black)
                     }
+                    .background(Color.white)
                 }
             }
         }
@@ -103,5 +104,4 @@ struct MatchViewHub: View {
             characterImage = "characterBack"
         }
     }
-    
 }

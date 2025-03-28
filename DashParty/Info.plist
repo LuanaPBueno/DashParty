@@ -8,6 +8,8 @@
 	<array>
 		<string>Prompt-Bold.ttf</string>
 		<string>Prompt-Regular.ttf</string>
+		<string>Prompt-ExtraBold.ttf</string>
+		<string>Prompt-Black.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

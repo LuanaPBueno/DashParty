@@ -22,7 +22,6 @@
 		57B921132D91F5F2000AA36C /* Prompt-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B920F72D91F5F2000AA36C /* Prompt-BoldItalic.ttf */; };
 		57B921142D91F5F2000AA36C /* Prompt-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B920FE2D91F5F2000AA36C /* Prompt-LightItalic.ttf */; };
 		57B921152D91F5F2000AA36C /* Prompt-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B920FA2D91F5F2000AA36C /* Prompt-ExtraLight.ttf */; };
-		57B921162D91F5F2000AA36C /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 57B920F32D91F5F2000AA36C /* OFL.txt */; };
 		57B921172D91F5F2000AA36C /* Prompt-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B921042D91F5F2000AA36C /* Prompt-Thin.ttf */; };
 		57B921182D91F5F2000AA36C /* Prompt-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B920FC2D91F5F2000AA36C /* Prompt-Italic.ttf */; };
 		57B921192D91F5F2000AA36C /* Prompt-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B921032D91F5F2000AA36C /* Prompt-SemiBoldItalic.ttf */; };
@@ -46,7 +45,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		57B920F32D91F5F2000AA36C /* OFL.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
 		57B920F42D91F5F2000AA36C /* Prompt-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-Black.ttf"; sourceTree = "<group>"; };
 		57B920F52D91F5F2000AA36C /* Prompt-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-BlackItalic.ttf"; sourceTree = "<group>"; };
 		57B920F62D91F5F2000AA36C /* Prompt-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-Bold.ttf"; sourceTree = "<group>"; };
@@ -129,7 +127,6 @@
 		57B921062D91F5F2000AA36C /* Prompt */ = {
 			isa = PBXGroup;
 			children = (
-				57B920F32D91F5F2000AA36C /* OFL.txt */,
 				57B920F42D91F5F2000AA36C /* Prompt-Black.ttf */,
 				57B920F52D91F5F2000AA36C /* Prompt-BlackItalic.ttf */,
 				57B920F62D91F5F2000AA36C /* Prompt-Bold.ttf */,
@@ -308,7 +305,6 @@
 				57B921132D91F5F2000AA36C /* Prompt-BoldItalic.ttf in Resources */,
 				57B921142D91F5F2000AA36C /* Prompt-LightItalic.ttf in Resources */,
 				57B921152D91F5F2000AA36C /* Prompt-ExtraLight.ttf in Resources */,
-				57B921162D91F5F2000AA36C /* OFL.txt in Resources */,
 				57B921172D91F5F2000AA36C /* Prompt-Thin.ttf in Resources */,
 				57B921182D91F5F2000AA36C /* Prompt-Italic.ttf in Resources */,
 				57B921192D91F5F2000AA36C /* Prompt-SemiBoldItalic.ttf in Resources */,
