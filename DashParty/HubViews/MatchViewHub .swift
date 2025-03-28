@@ -30,7 +30,7 @@ struct MatchViewHub: View {
                 Spacer()
                 Image("\(characterImage)")
                     .resizable()
-                    .frame(height: 100)
+                    
                 Spacer()
             }
         }
