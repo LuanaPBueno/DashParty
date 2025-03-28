@@ -79,11 +79,7 @@ struct TutorialPassingView: View {
     
     
     
-    struct matchPhoneView : View{
-        var body : some View{
-            Image("matchPhoneViewBackground")
-        }
-    }
+ 
 
 #Preview{
  TutorialPassingView( )

@@ -29,8 +29,6 @@ struct MatchViewHub: View {
             VStack{
                 Spacer()
                 Image("\(characterImage)")
-                   
-                    
                 Spacer()
             }
         }
@@ -38,15 +36,12 @@ struct MatchViewHub: View {
             if matchManager.players.isEmpty == false {
                 let currentChallenge = matchManager.players[matchManager.currentPlayerIndex].currentChallenge
                 if currentChallenge == .stopped {
-                    VStack {
-                        Text("Congratulations")
-                            .font(.system(size: 70, weight: .bold, design: .default))
-                        if let finishTime {
-                            Text("You did it in\(finishTime.timeIntervalSince(startTime))")
-                                .font(.system(size: 70, weight: .bold, design: .default))
-                        }
-                    }
-                    .task { finishTime = .now }
+                    let interval = finishTime?.timeIntervalSince(startTime)
+                    YouWonView(interval: interval ?? 00)
+                                            .task { self.finishTime = Date() }
+                        .task { self.finishTime = Date() }
+                    
+                   
                 } else {
                     
                     VStack{
@@ -102,6 +97,10 @@ struct MatchViewHub: View {
             matchManager.startMatch(users: users + [user], myUserID: user.id)
             startTime = .now
             characterImage = "characterBack"
+            HUBPhoneManager.instance.newGame = false
+//            DispatchQueue.main.async {
+//                    self.hubManager.objectWillChange.send()
+//                }
         }
     }
 }

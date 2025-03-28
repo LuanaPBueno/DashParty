@@ -41,6 +41,7 @@ struct ConnectInHubView: View{
                             label: { EmptyView() }
                         )
                        
+                        
                         .padding()
                         
                         Image("hubs")

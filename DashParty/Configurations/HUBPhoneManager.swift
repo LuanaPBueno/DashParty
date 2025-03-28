@@ -28,6 +28,8 @@ class HUBPhoneManager: ObservableObject {
     
     @Published var passToTutorialView: Bool = false
     
+    @Published var endedGame: Bool = false
+    
     @Published var actualPage: Int = 0
     
     @Published var startMatch: Bool = false
@@ -35,6 +37,8 @@ class HUBPhoneManager: ObservableObject {
     @Published var changeScreen: Bool = false
     
     @Published var actualTutorialIndex: Int = 0
+    
+    @Published var newGame: Bool = false
     
     private init() {}
 }
