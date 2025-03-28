@@ -14,13 +14,22 @@ struct NarrativePassingView: View {
 
     var body: some View {
         ZStack {
-            Image("passNarrativeBackground")
+            Image("greenBackground")
                 .resizable()
                 .scaledToFill()
                 .edgesIgnoringSafeArea(.all)
 
             VStack {
+             
                 Spacer()
+                
+                Text("FOLLOW THE STORY ON THE BIG SCREEN!")
+                    .multilineTextAlignment(.center)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                
+                    Spacer()
+                
                 HStack {
                     Spacer()
                     Button {
@@ -60,6 +69,7 @@ struct NarrativePassingView: View {
                     }
                     Spacer()
                 }
+                 
                 Spacer()
             }
 
@@ -70,4 +80,8 @@ struct NarrativePassingView: View {
             )
         }
     }
+}
+
+#Preview{
+    NarrativePassingView( )
 }

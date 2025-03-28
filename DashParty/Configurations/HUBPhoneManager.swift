@@ -12,18 +12,18 @@ class HUBPhoneManager: ObservableObject {
     static let instance = HUBPhoneManager()
     
     @Published var narrativeText: [[String : Bool]] = [
-        ["A cada geração, a floresta Aru escolhe seu líder...": false],
-        ["Essa liderança não se ganha com discursos ou promessas...": false],
-        ["Mas com uma corrida!": false],
-        ["A trilha desafia todos que ousam disputá-la. Ela não é apenas um caminho – ela é viva. Cheia de armadilhas, desafios e mistérios.": false],
-        ["Hora da grande corrida! Quem está pronto para perder?": true],
-        ["A corrida não é só velocidade, Bongo. É sobre estratégia, inteligência e—": true],
-        ["—E não ser esmagado por um urso gigante?": true],
-        ["Ei! Talvez o segredo seja… passar por cima da concorrência!": true],
-        ["Prefiro ser devorado por um lobo!": true],
-        ["Se vocês terminaram de discutir, podemos começar? A floresta nos espera.": true],
-        ["Quatro competidores, um único trono. A terra treme. As folhas sussurram. A corrida começa...": false],
-        ["Agora!": false]
+        ["Each generation, the Aru forest chooses its leader...": false],
+        ["This leadership is not won with speeches or promises...": false],
+        ["But with a race!": false],
+        ["The trail challenges all who dare to compete. It is not just a path – it is alive. Full of traps, challenges, and mysteries.": false],
+        ["Time for the great race! Who's ready to lose?": true],
+        ["The race is not just about speed, Bongo. It's about strategy, intelligence, and—": true],
+        ["—And not getting crushed by a giant bear?": true],
+        ["Hey! Maybe the secret is… running over the competition!": true],
+        ["I'd rather be eaten by a wolf!": true],
+        ["If you're done arguing, can we start? The forest awaits us.": true],
+        ["Four competitors, a single throne. The ground shakes. The leaves whisper. The race begins...": false],
+        ["Now!": false]
     ]
     
     @Published var passToTutorialView: Bool = false
