@@ -30,6 +30,8 @@ struct NarrativePassingView: View {
                 
                     .padding(40)
                 
+               
+                
                 HStack {
                     Spacer()
                     Button {

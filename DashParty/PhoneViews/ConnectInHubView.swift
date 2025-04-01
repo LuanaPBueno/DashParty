@@ -12,49 +12,50 @@ struct ConnectInHubView: View{
     @State var navigate : Bool = false
     
     var body : some View{
-            ZStack{
-                Image("blueBackground")
-                .resizable()
-                .scaledToFill()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .ignoresSafeArea()
-                
-                VStack{
-                    Spacer()
-                    Text("TO HAVE A BETTER EXPERIENCE CONNECT YOUR PHONE TO A LARGER SCREEN!")
-                        .multilineTextAlignment(.center)
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                    
-                        .padding()
-                    
-                    VStack {
-                        Button(action: {
-                            navigate = true
-                        }) {
-                            Image("buttonConnected")
-                        }
-                        
-                        NavigationLink(
-                            destination: NarrativePassingView(),
-                            isActive: $navigate,
-                            label: { EmptyView() }
-                        )
-                       
-                        
-                        .padding()
-                        
-                        Image("hubs")
-                            .fixedSize()
-                    }
-                    Spacer()
-                    
-                }
-            }
+        
+        ZStack{
+            Image("blueBackground")
             
+          
+            VStack{
+                Text("TO HAVE A BETTER EXPERIENCE CONNECT \n YOUR PHONE TO A LARGER SCREEN!")
+                    .fontWeight(.black)
+                    .multilineTextAlignment(.center)
+                    .padding(.bottom, 50)
+                    .font(.largeTitle)
+                    .font(.system(size: 80, weight: .regular, design: .default))
+
+                    
+                
+                Button(action: {
+                    navigate = true
+                }) {
+                    Image("buttonConnected")
+
+                }
+                
+                NavigationLink(
+                    destination: NarrativePassingView(),
+                    isActive: $navigate,
+                    label: { EmptyView() }
+                )
+                
+                
+                Image("hubs")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: 400)
+                    .padding(.horizontal)
+                    .padding(.top, 50)
+
+                    
+            }
         }
     }
+}
+    
 
+   
 
 #Preview{
     ConnectInHubView( )

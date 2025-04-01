@@ -52,30 +52,36 @@ struct ContentView: View {
                                     HUBPhoneManager.instance.changeScreen = true
                                     isActive = true
                                 }) {
-                                    Image("easyMode")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 200)
+                                    Text("Easy Mode")
+                                        .fontWeight(.black)
+                                        .multilineTextAlignment(.center)
+                                        .font(.largeTitle)
+                                        .font(.system(size: 80, weight: .regular, design: .default))
+                                        .foregroundColor(.black)
                                 }
 
                             Button(action: {
                                 HUBPhoneManager.instance.changeScreen = true
                                 isActive = true
                             }) {
-                                Image("normalMode")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 200)
+                                Text("NormalMode")
+                                    .fontWeight(.black)
+                                    .multilineTextAlignment(.center)
+                                    .font(.largeTitle)
+                                    .font(.system(size: 80, weight: .regular, design: .default))
+                                    .foregroundColor(.black)
                             }
                             
                             Button(action: {
                                 HUBPhoneManager.instance.changeScreen = true
                                 isActive = true
                             }) {
-                                Image("hardMode")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 200)
+                                Text("HardMode")
+                                    .fontWeight(.black)
+                                    .multilineTextAlignment(.center)
+                                    .font(.largeTitle)
+                                    .font(.system(size: 80, weight: .regular, design: .default))
+                                    .foregroundColor(.black)
                             }
                             
                             NavigationLink(
@@ -85,15 +91,16 @@ struct ContentView: View {
                             )
 
                             NavigationLink(destination: CreditsView()) {
-                                Image("credits")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 200)
+                                Text("Credits")
+                                    .fontWeight(.black)
+                                    .multilineTextAlignment(.center)
+                                    .font(.largeTitle)
+                                    .font(.system(size: 80, weight: .regular, design: .default))
+                                    .foregroundColor(.black)
                             }
                         }
                         .frame(maxWidth: .infinity, alignment: .trailing)
-                        .padding(.trailing, 40)
-                        .padding(.top, 120)
+                        .padding(.horizontal,60)
                 }
             }
         }

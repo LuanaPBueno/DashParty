@@ -10,6 +10,7 @@
 		<string>Prompt-Regular.ttf</string>
 		<string>Prompt-ExtraBold.ttf</string>
 		<string>Prompt-Black.ttf</string>
+		<string>SFPRODISPLAYBOLD.OTF</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
