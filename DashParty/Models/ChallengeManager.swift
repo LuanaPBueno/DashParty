@@ -10,7 +10,8 @@ import CoreMotion
 
 @Observable
 class ChallengeManager {
-    
+    var multipeerSession: MPCSession?
+    var receivedMotionData: [UUID: MotionData] = [:]
     var debugText: String = ""
     var balancingResult : [String] = []
     var players: [Player] = []
@@ -23,6 +24,14 @@ class ChallengeManager {
     }
     var balancingCount: [String: Double] = ["x": 0.0, "y": 0.0, "z": 0.0]
     var recentDeviceMotion: [CMDeviceMotion] = []
+    
+    //MARK: Setting up multipeer session
+    func setupMultipeerSession(_ session: MPCSession) {
+           self.multipeerSession = session
+           session.peerDataHandler = { [weak self] data, peerID in
+               self?.handleReceivedMotionData(data)
+           }
+       }
     
     func startMatch(users: [User], myUserID: UUID) {
         self.players = users.map { user in
@@ -170,7 +179,21 @@ class ChallengeManager {
         })
     }
     
+    private func handleReceivedMotionData(_ data: Data) {
+           do {
+               let decoder = JSONDecoder()
+               let motionData = try decoder.decode(MotionData.self, from: data)
+               
+               DispatchQueue.main.async {
+                   self.receivedMotionData[motionData.playerId] = motionData
+                   // Atualize a UI ou lógica do jogo com os dados recebidos
+               }
+           } catch {
+               print("Error decoding motion data: \(error)")
+           }
+       }
     
+ 
     func finishMatch() {
         AccelerationManager.accelerationInstance.stop()
     }

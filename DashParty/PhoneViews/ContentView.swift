@@ -13,7 +13,7 @@ struct ContentView: View {
     @State private var isActive = false
 //    let user = User(name: "Eu")
 //    var users: [User] = [User(name: "A"), User(name: "B")]
-
+//
 //    var myPlayer: Player? {
 //        matchManager.getPlayer(forUser: user.id)
 //    }
@@ -90,7 +90,6 @@ struct ContentView: View {
 //                                label: { EmptyView() } 
 //                            )
 
-                            
                             
                             NavigationLink(destination: CreditsView()) {
                                 Text("Credits")

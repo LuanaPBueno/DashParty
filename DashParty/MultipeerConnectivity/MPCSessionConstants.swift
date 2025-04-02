@@ -20,6 +20,8 @@ struct MPCSessionConstants {
     static let kKeyIdentity: String = "identity"
 }
 
+
+
 @Observable
 class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate {
     var peerDataHandler: ((Data, MCPeerID) -> Void)?
@@ -27,7 +29,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     var peerDisconnectedHandler: ((MCPeerID) -> Void)?
     private let serviceString: String
     let mcSession: MCSession
-    private let localPeerID = MCPeerID(displayName: UIDevice.current.name)
+    private let localPeerID = MCPeerID(displayName: UIDevice.current.name) //MARK: O nome de usuário que aparece é o nome do dispositivo. Depois, mudar isso para o nome do usuário ou imagem.
     private let mcAdvertiser: MCNearbyServiceAdvertiser
     private let identityString: String
     private let maxNumPeers: Int
@@ -90,9 +92,12 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             }
         }
         if mcSession.connectedPeers.count == maxNumPeers {
-            self.suspend()
+            shouldStartGame = true
+            self.suspend() //MARK: o que é esse suspend? 
         }
     }
+    
+
 
     private func peerDisconnected(peerID: MCPeerID) {
         if let handler = peerDisconnectedHandler {
@@ -151,6 +156,21 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         // The sample app intentional omits this implementation.
     }
 
+    
+    func send(_: Data, toPeers: [MCPeerID], with: MCSessionSendDataMode) throws {
+        //TODO: something
+    }
+    
+//    func sendResourse(at: URL , withName: String, toPeer: MCPeerID, withCompletionHandler: ((any Error)?) -> Void?) -> Progress?{
+//        //TODO: something
+//    }
+    
+    
+    var gameStartedHandler: (() -> Void)?
+    var shouldStartGame = false
+   
+
+    
     // MARK: - `MCNearbyServiceBrowserDelegate`.
     internal func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String: String]?) {
         print("👀 Peer encontrado: \(peerID.displayName), \(host)")
