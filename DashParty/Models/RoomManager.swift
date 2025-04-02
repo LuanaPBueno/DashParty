@@ -7,6 +7,9 @@
 
 import Foundation
 
-struct RoomManager{
-    
+struct RoomManager {
+    var id = UUID()
+    var multipeerSession: MPCSession
+    var host: Player
+    var players: [Player]
 }

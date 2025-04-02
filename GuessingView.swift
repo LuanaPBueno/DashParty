@@ -7,12 +7,34 @@
 
 import SwiftUI
 
-struct GuessingView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+struct RoomView: View {
+    @State var t = false
+    var multipeerSession: MPCSession
 
-#Preview {
-    GuessingView()
+    var body: some View {
+        VStack {
+           
+            Text(t.description)
+            Button {
+                t.toggle()
+            } label: {
+                Text("atualizar")
+            }
+            if multipeerSession.host {
+                Text("Im host")
+                Text("Jogadores conectados:")
+                    .font(.headline)
+                List(multipeerSession.mcSession.connectedPeers.map { $0.displayName }, id: \.self) { player in
+                    Text(player)
+                }
+            }
+        }
+        .onChange(of: multipeerSession.mcSession.connectedPeers.map { $0.displayName }) {
+            print(multipeerSession.mcSession.connectedPeers.map { $0.displayName })
+        }
+        .task{
+            print(multipeerSession.host)
+            print(multipeerSession.mcSession.myPeerID)
+        }
+    }
 }

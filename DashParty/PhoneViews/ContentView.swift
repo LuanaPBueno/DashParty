@@ -84,12 +84,14 @@ struct ContentView: View {
                                     .foregroundColor(.black)
                             }
                             
-                            NavigationLink(
-                                destination: /*CharacterView(users: users, user: user, matchManager: matchManager)*/ConnectInHubView(),
-                                isActive: $isActive,
-                                label: { EmptyView() } 
-                            )
+//                            NavigationLink(
+//                                destination: /*CharacterView(users: users, user: user, matchManager: matchManager)*/ConnectInHubView(),
+//                                isActive: $isActive,
+//                                label: { EmptyView() } 
+//                            )
 
+                            
+                            
                             NavigationLink(destination: CreditsView()) {
                                 Text("Credits")
                                     .fontWeight(.black)
@@ -101,6 +103,9 @@ struct ContentView: View {
                         }
                         .frame(maxWidth: .infinity, alignment: .trailing)
                         .padding(.horizontal,60)
+                }
+                .navigationDestination(isPresented: $isActive) {
+                    ChooseHierarchyView()
                 }
             }
         }

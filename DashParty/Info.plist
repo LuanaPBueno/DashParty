@@ -4,6 +4,10 @@
 <dict>
 	<key>INIntentsRestrictedWhileLocked</key>
 	<array/>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_nisample._tcp</string>
+	</array>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Prompt-Bold.ttf</string>

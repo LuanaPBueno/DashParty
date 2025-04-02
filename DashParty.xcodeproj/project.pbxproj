@@ -25,6 +25,8 @@
 		57B921172D91F5F2000AA36C /* Prompt-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B921042D91F5F2000AA36C /* Prompt-Thin.ttf */; };
 		57B921182D91F5F2000AA36C /* Prompt-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B920FC2D91F5F2000AA36C /* Prompt-Italic.ttf */; };
 		57B921192D91F5F2000AA36C /* Prompt-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B921032D91F5F2000AA36C /* Prompt-SemiBoldItalic.ttf */; };
+		E4A5D9E42D9B0DCE009DB293 /* ChooseHierarqyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A5D9E32D9B0DCE009DB293 /* ChooseHierarqyView.swift */; };
+		E4A5D9E62D9B1035009DB293 /* GuessingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A5D9E52D9B1035009DB293 /* GuessingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,8 @@
 		57B921032D91F5F2000AA36C /* Prompt-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		57B921042D91F5F2000AA36C /* Prompt-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-Thin.ttf"; sourceTree = "<group>"; };
 		57B921052D91F5F2000AA36C /* Prompt-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prompt-ThinItalic.ttf"; sourceTree = "<group>"; };
+		E4A5D9E32D9B0DCE009DB293 /* ChooseHierarqyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseHierarqyView.swift; sourceTree = "<group>"; };
+		E4A5D9E52D9B1035009DB293 /* GuessingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -152,6 +156,8 @@
 		E4BC27B62D80B642007C3116 = {
 			isa = PBXGroup;
 			children = (
+				E4A5D9E32D9B0DCE009DB293 /* ChooseHierarqyView.swift */,
+				E4A5D9E52D9B1035009DB293 /* GuessingView.swift */,
 				57B921062D91F5F2000AA36C /* Prompt */,
 				E4BC27C12D80B642007C3116 /* DashParty */,
 				E4BC27D22D80B644007C3116 /* DashPartyTests */,
@@ -324,6 +330,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4A5D9E62D9B1035009DB293 /* GuessingView.swift in Sources */,
+				E4A5D9E42D9B0DCE009DB293 /* ChooseHierarqyView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,11 +492,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DashParty/Preview Content\"";
-				DEVELOPMENT_TEAM = BW6U8TXQTN;
+				DEVELOPMENT_TEAM = 67AYPRFZH8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DashParty/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "MoonDash: trials of the woods";
+				INFOPLIST_KEY_CFBundleDisplayName = MoonDash;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "This app requires local network service. Supply a value for this string to explain how the user benefits when they allow the app to access local network service.";
+				INFOPLIST_KEY_NSNearbyInteractionAllowOnceUsageDescription = "This app demonstrates the NearbyInteraction framework. Supply a value for this string to explain how the user benefits when they allow the app to use NearbyInteraction.";
+				INFOPLIST_KEY_NSNearbyInteractionUsageDescription = "This app demonstrates the NearbyInteraction framework. Supply a value for this string to explain how the user benefits when they allow the app to use NearbyInteraction.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -513,11 +524,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DashParty/Preview Content\"";
-				DEVELOPMENT_TEAM = BW6U8TXQTN;
+				DEVELOPMENT_TEAM = 67AYPRFZH8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DashParty/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "MoonDash: trials of the woods";
+				INFOPLIST_KEY_CFBundleDisplayName = MoonDash;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "This app requires local network service. Supply a value for this string to explain how the user benefits when they allow the app to access local network service.";
+				INFOPLIST_KEY_NSNearbyInteractionAllowOnceUsageDescription = "This app demonstrates the NearbyInteraction framework. Supply a value for this string to explain how the user benefits when they allow the app to use NearbyInteraction.";
+				INFOPLIST_KEY_NSNearbyInteractionUsageDescription = "This app demonstrates the NearbyInteraction framework. Supply a value for this string to explain how the user benefits when they allow the app to use NearbyInteraction.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

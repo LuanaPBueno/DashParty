@@ -17,22 +17,23 @@ A view controller that facilitates the sample app's primary user experience.
 import UIKit
 import NearbyInteraction
 import MultipeerConnectivity
+import SwiftUI
 
 class ViewController: UIViewController, NISessionDelegate {
 
     // MARK: - `IBOutlet` instances.
-    @IBOutlet weak var monkeyLabel: UILabel!
-    @IBOutlet weak var centerInformationLabel: UILabel!
-    @IBOutlet weak var detailContainer: UIView!
-    @IBOutlet weak var detailAzimuthLabel: UILabel!
-    @IBOutlet weak var detailDeviceNameLabel: UILabel!
-    @IBOutlet weak var detailDistanceLabel: UILabel!
-    @IBOutlet weak var detailDownArrow: UIImageView!
-    @IBOutlet weak var detailElevationLabel: UILabel!
-    @IBOutlet weak var detailLeftArrow: UIImageView!
-    @IBOutlet weak var detailRightArrow: UIImageView!
-    @IBOutlet weak var detailUpArrow: UIImageView!
-    @IBOutlet weak var detailAngleInfoView: UIView!
+    @State private var monkeyLabel: UILabel!
+    @State private var centerInformationLabel: UILabel!
+    @State private var detailContainer: UIView!
+    @State private var detailAzimuthLabel: UILabel!
+    @State private var detailDeviceNameLabel: UILabel!
+    @State private var detailDistanceLabel: UILabel!
+    @State private var detailDownArrow: UIImageView!
+    @State private var detailElevationLabel: UILabel!
+    @State private var detailLeftArrow: UIImageView!
+    @State private var detailRightArrow: UIImageView!
+    @State private var detailUpArrow: UIImageView!
+    @State private var detailAngleInfoView: UIView!
 
     // MARK: - Distance and direction state.
     
