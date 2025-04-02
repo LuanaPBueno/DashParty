@@ -10,6 +10,7 @@ import CoreMotion
 
 @Observable
 class ChallengeManager {
+    var playersPositions: [UUID: CGPoint] = [:]
     var multipeerSession: MPCSession?
     var receivedMotionData: [UUID: MotionData] = [:]
     var debugText: String = ""
@@ -32,6 +33,8 @@ class ChallengeManager {
                self?.handleReceivedMotionData(data)
            }
        }
+    
+    
     
     func startMatch(users: [User], myUserID: UUID) {
         self.players = users.map { user in
