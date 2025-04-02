@@ -10,9 +10,8 @@ import CoreMotion
 
 @Observable
 class ChallengeManager {
-    var playersPositions: [UUID: CGPoint] = [:]
     var multipeerSession: MPCSession?
-    var receivedMotionData: [UUID: MotionData] = [:]
+    var receivedMotionData: [UUID: MotionData] = [:] //para cada 
     var debugText: String = ""
     var balancingResult : [String] = []
     var players: [Player] = []

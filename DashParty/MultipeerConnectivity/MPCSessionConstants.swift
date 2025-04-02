@@ -21,6 +21,10 @@ struct MPCSessionConstants {
 }
 
 
+class MPCSessionManager {
+    static let shared = MPCSession(service: "nisample", identity: "Luana-Bueno.DashParty", maxPeers: 3)
+}
+
 
 @Observable
 class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate {

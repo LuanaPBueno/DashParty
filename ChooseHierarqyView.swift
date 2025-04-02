@@ -11,12 +11,12 @@ import SwiftUI
 struct ChooseHierarchyView : View {
     
     @State var navigate : Bool = false
-    @State var multipeerSession = MPCSession(service: "nisample", identity: "Luana-Bueno.DashParty", maxPeers: 3) //criando session
+    @State var multipeerSession = MPCSessionManager.shared //criando session
     var body : some View{
         VStack{
             Button {
                 print("Host button tapped")
-                multipeerSession.host = true
+                MPCSessionManager.shared.host = true
                 navigate = true
                 multipeerSession.start() // Certifique-se de chamar start() para iniciar a conexão
             } label: {
@@ -25,9 +25,9 @@ struct ChooseHierarchyView : View {
             
             Button {
                 print("Player button tapped")
-                multipeerSession.host = false
+                MPCSessionManager.shared.host = false
                 navigate = true
-                multipeerSession.start() // Certifique-se de chamar start() para começar a busca por peers
+                MPCSessionManager.shared.start() // Certifique-se de chamar start() para começar a busca por peers
             } label: {
                 Text("Player")
             }

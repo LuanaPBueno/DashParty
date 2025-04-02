@@ -10,6 +10,7 @@ import SwiftUI
 
 struct NarrativeView: View {
     @ObservedObject var hubManager = HUBPhoneManager.instance
+    var multipeerSession: MPCSession
     
     var fontSize: CGFloat {
         return UIScreen.main.bounds.width * 0.035
@@ -61,7 +62,7 @@ struct NarrativeView: View {
                     .edgesIgnoringSafeArea(.all)
             }
         } else{
-            TutorialHubView()
+            TutorialHubView(multipeerSession : multipeerSession)
         }
     }
     
@@ -190,7 +191,4 @@ struct NarrativeView: View {
 }
     
 
-        #Preview{
-            NarrativeView()
-        }
 

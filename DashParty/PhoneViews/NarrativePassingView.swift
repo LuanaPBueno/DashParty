@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct NarrativePassingView: View {
+    var multipeerSession : MPCSession!
     @ObservedObject var hubManager = HUBPhoneManager.instance
     @State private var navigate: Bool = false
 
@@ -76,7 +77,7 @@ struct NarrativePassingView: View {
             }
 
             NavigationLink(
-                destination: TutorialPassingView(),
+                destination: TutorialPassingView(multipeerSession: multipeerSession),
                 isActive: $navigate,
                 label: { EmptyView() }
             )

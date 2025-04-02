@@ -19,7 +19,7 @@ struct FirstHubView: View {
                     .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
             } else {
-                NarrativeView()
+                NarrativeView(multipeerSession: MPCSessionManager.shared)
             }
         }
     }

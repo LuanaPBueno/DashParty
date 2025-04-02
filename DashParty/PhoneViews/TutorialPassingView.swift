@@ -10,6 +10,7 @@ import Foundation
 import SwiftUI
 
 struct TutorialPassingView: View {
+    var multipeerSession : MPCSession
     @ObservedObject var hubManager = HUBPhoneManager.instance
     @State var pass : Bool = false
     
@@ -81,6 +82,4 @@ struct TutorialPassingView: View {
     
  
 
-#Preview{
- TutorialPassingView( )
-}
+
