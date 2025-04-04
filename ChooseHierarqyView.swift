@@ -7,39 +7,32 @@
 
 import Foundation
 import SwiftUI
+import SwiftUI
+import MultipeerConnectivity
 
-struct ChooseHierarchyView : View {
+struct ChooseHierarchyView: View {
+    @State private var navigateToRoomListView = false
+    @State private var navigateToRoomView = false
+    @ObservedObject private var multipeerSession = MPCSessionManager.shared
     
-    @State var navigate : Bool = false
-    @State var multipeerSession = MPCSessionManager.shared //criando session
-    var body : some View{
-        VStack{
-            Button {
-                print("Host button tapped")
-                MPCSessionManager.shared.host = true
-                MPCSessionManager.shared.start()
-                navigate = true
-                multipeerSession.start() // Certifique-se de chamar start() para iniciar a conexão
-            } label: {
-                Text("Host")
+    var body: some View {
+        VStack(spacing: 20) {
+            Button("Host") {
+                multipeerSession.host = true
+                multipeerSession.start()
+                navigateToRoomView = true
             }
             
-            Button {
-                print("Player button tapped")
-                MPCSessionManager.shared.host = false
-                MPCSessionManager.shared.start()
-                navigate = true
-                MPCSessionManager.shared.start() // Certifique-se de chamar start() para começar a busca por peers
-            } label: {
-                Text("Player")
+            Button("Player") {
+                multipeerSession.host = false
+                navigateToRoomListView = true
             }
         }
-        .navigationDestination(isPresented: $navigate) {
+        .navigationDestination(isPresented: $navigateToRoomListView) {
+            RoomListView(multipeerSession: multipeerSession)
+        }
+        .navigationDestination(isPresented: $navigateToRoomView) {
             RoomView(multipeerSession: multipeerSession)
         }
-        
-      
-
-
     }
 }

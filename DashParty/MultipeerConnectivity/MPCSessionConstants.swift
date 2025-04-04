@@ -1,18 +1,3 @@
-//
-//  New.swift
-//  DashParty
-//
-//  Created by Luana Bueno on 31/03/25.
-//
-
-import Foundation
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-A class that manages peer discovery-token exchange over the local network by using MultipeerConnectivity.
-*/
-
 import Foundation
 import MultipeerConnectivity
 
@@ -20,68 +5,122 @@ struct MPCSessionConstants {
     static let kKeyIdentity: String = "identity"
 }
 
-
-class MPCSessionManager {
-    static let shared = MPCSession(service: "nisample", identity: "Luana-Bueno.DashParty", maxPeers: 3)
-}
-
-
 @Observable
-class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate {
+class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate, ObservableObject {
+    // MARK: - Properties
+    var pendingInvitations: [String: ((Bool, MCSession?) -> Void)] = [:]
     var peerDataHandler: ((Data, MCPeerID) -> Void)?
     var peerConnectedHandler: ((MCPeerID) -> Void)?
-    private var isSendingMessages = false
-    private var shouldStopSending = false
     var peerDisconnectedHandler: ((MCPeerID) -> Void)?
+    var gameStartedHandler: (() -> Void)?
+    var invitationReceivedHandler: ((String) -> Void)?
+    
+    private var invitationHandler: ((Bool, MCSession?) -> Void)?
+    
     private let serviceString: String
-    let mcSession: MCSession
-    private let localPeerID = MCPeerID(displayName: UIDevice.current.name) //MARK: O nome de usuário que aparece é o nome do dispositivo. Depois, mudar isso para o nome do usuário ou imagem.
-    private let mcAdvertiser: MCNearbyServiceAdvertiser
     private let identityString: String
     private let maxNumPeers: Int
-    private var mcBrowser: MCNearbyServiceBrowser?
+    private var isSendingMessages = false
+    private var shouldStopSending = false
+    var shouldStartGame = false
     var host: Bool = false
     
+    private(set) var mcSession: MCSession
+    private var mcAdvertiser: MCNearbyServiceAdvertiser
+    private var mcBrowser: MCNearbyServiceBrowser?
+    
+    var localPeerID: MCPeerID {
+        didSet {
+            resetSession()
+        }
+    }
+    
+    // MARK: - Initialization
     init(service: String, identity: String, maxPeers: Int) {
-        serviceString = service
-        identityString = identity
-        mcSession = MCSession(peer: localPeerID, securityIdentity: nil, encryptionPreference: .optional)
-        mcAdvertiser = MCNearbyServiceAdvertiser(peer: localPeerID,
-                                                 discoveryInfo: [MPCSessionConstants.kKeyIdentity: identityString],
-                                                 serviceType: serviceString)
-        mcBrowser = MCNearbyServiceBrowser(peer: localPeerID, serviceType: serviceString)
-        maxNumPeers = maxPeers
-
+        self.serviceString = service
+        self.identityString = identity
+        self.maxNumPeers = maxPeers
+        
+        // Primeiro criamos o peerID
+        let peerID = MCPeerID(displayName: UIDevice.current.name)
+        
+        // Depois inicializamos as propriedades que dependem do peerID
+        self.localPeerID = peerID
+        self.mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .optional)
+        self.mcAdvertiser = MCNearbyServiceAdvertiser(
+            peer: peerID,
+            discoveryInfo: [MPCSessionConstants.kKeyIdentity: identityString],
+            serviceType: serviceString
+        )
+        
+        // Agora podemos chamar super.init()
         super.init()
+        
+        self.mcSession.delegate = self
+        self.mcAdvertiser.delegate = self
+        self.resetBrowser()
+    }
+    
+    // MARK: - Session Management
+    private func resetSession() {
+        mcSession.disconnect()
+        mcSession = MCSession(peer: localPeerID, securityIdentity: nil, encryptionPreference: .optional)
         mcSession.delegate = self
+        
+        mcAdvertiser.stopAdvertisingPeer()
+        mcAdvertiser = MCNearbyServiceAdvertiser(
+            peer: localPeerID,
+            discoveryInfo: [MPCSessionConstants.kKeyIdentity: identityString],
+            serviceType: serviceString
+        )
         mcAdvertiser.delegate = self
+        
+        if mcBrowser != nil {
+            resetBrowser()
+        }
+    }
+    
+    private func resetBrowser() {
+        mcBrowser?.stopBrowsingForPeers()
+        mcBrowser = MCNearbyServiceBrowser(peer: localPeerID, serviceType: serviceString)
         mcBrowser?.delegate = self
     }
-
-    // MARK: - `MPCSession` public methods.
+    
     func start() {
         mcAdvertiser.startAdvertisingPeer()
-        if mcBrowser == nil {
-            mcBrowser = MCNearbyServiceBrowser(peer: localPeerID, serviceType: serviceString)
-            mcBrowser?.delegate = self
-        }
         mcBrowser?.startBrowsingForPeers()
     }
-
+    
     func suspend() {
         mcAdvertiser.stopAdvertisingPeer()
-        mcBrowser = nil
+        mcBrowser?.stopBrowsingForPeers()
     }
-
+    
     func invalidate() {
         suspend()
         mcSession.disconnect()
     }
-
+    
+    // MARK: - Invitation Handling
+    func acceptInvitation() {
+        DispatchQueue.main.async {
+            self.invitationHandler?(true, self.mcSession)
+            self.invitationHandler = nil
+        }
+    }
+    
+    func rejectInvitation() {
+        DispatchQueue.main.async {
+            self.invitationHandler?(false, nil)
+            self.invitationHandler = nil
+        }
+    }
+    
+    // MARK: - Data Transfer
     func sendDataToAllPeers(data: Data) {
         sendData(data: data, peers: mcSession.connectedPeers, mode: .reliable)
     }
-
+    
     func sendData(data: Data, peers: [MCPeerID], mode: MCSessionSendDataMode) {
         let connectedPeers = mcSession.connectedPeers.filter { peers.contains($0) }
         guard !connectedPeers.isEmpty else {
@@ -95,8 +134,118 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             print("❌ Failed to send data: \(error)")
         }
     }
-
-    // MARK: - `MPCSession` private methods.
+    
+    func sendBomDiaRepeatedlyToHost() {
+        guard !host else { return }
+        guard let hostPeer = mcSession.connectedPeers.first else {
+            print("Host não encontrado.")
+            return
+        }
+        
+        guard !isSendingMessages else { return }
+        isSendingMessages = true
+        shouldStopSending = false
+        
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            while self?.shouldStopSending == false {
+                let message = "bom dia"
+                if let data = message.data(using: .utf8) {
+                    self?.sendData(data: data, peers: [hostPeer], mode: .reliable)
+                }
+                Thread.sleep(forTimeInterval: 0.001)
+            }
+            self?.isSendingMessages = false
+        }
+    }
+    
+    func stopSendingMessages() {
+        shouldStopSending = true
+    }
+    
+    // MARK: - MCSessionDelegate
+    func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
+        switch state {
+        case .connected:
+            peerConnected(peerID: peerID)
+            print("✅ Peer conectado: \(peerID.displayName), \(host)")
+        case .notConnected:
+            peerDisconnected(peerID: peerID)
+            print("❌ Peer desconectado: \(peerID.displayName), \(host)")
+        case .connecting:
+            print("🔄 Conectando ao peer: \(peerID.displayName), \(host)")
+        @unknown default:
+            fatalError("Unhandled MCSessionState")
+        }
+    }
+    
+    func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
+        print("📥 Dados recebidos de \(peerID.displayName): \(String(data: data, encoding: .utf8) ?? "Não foi possível decodificar")")
+        if let handler = peerDataHandler {
+            DispatchQueue.main.async {
+                handler(data, peerID)
+            }
+        }
+    }
+    
+    func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
+        // Não implementado
+    }
+    
+    func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {
+        // Não implementado
+    }
+    
+    func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {
+        // Não implementado
+    }
+    
+    // MARK: - MCNearbyServiceBrowserDelegate
+    // Em MPCSession, modifique o método browser(_:foundPeer:withDiscoveryInfo:)
+    func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String: String]?) {
+        print("👀 Peer encontrado: \(peerID.displayName), \(host)")
+        guard let identityValue = info?[MPCSessionConstants.kKeyIdentity] else {
+            print("⚠️ Peer sem identidade válida")
+            return
+        }
+        
+        if identityValue == identityString {
+            if host {
+                // Host convida peers quando encontra
+                if mcSession.connectedPeers.count < maxNumPeers {
+                    print("📡 Host enviando convite para \(peerID.displayName)")
+                    browser.invitePeer(peerID, to: mcSession, withContext: nil, timeout: 10)
+                }
+            } else {
+                // Player adiciona à lista de peers disponíveis
+                DispatchQueue.main.async {
+                    self.pendingInvitations[peerID.displayName] = { accept, session in
+                        if accept {
+                            browser.invitePeer(peerID, to: session ?? self.mcSession, withContext: nil, timeout: 10)
+                        }
+                    }
+                    // Notifica a UI que há uma nova sala disponível
+                    self.invitationReceivedHandler?(peerID.displayName)
+                }
+            }
+        }
+    }
+    
+    func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
+        print("👋 Peer perdido: \(peerID.displayName)")
+    }
+    
+    // MARK: - MCNearbyServiceAdvertiserDelegate
+    func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
+        print("📩 Convite recebido de \(peerID.displayName)")
+        if !host {
+            DispatchQueue.main.async {
+                self.invitationHandler = invitationHandler
+                self.invitationReceivedHandler?(peerID.displayName)
+            }
+        }
+    }
+    
+    // MARK: - Peer Management
     private func peerConnected(peerID: MCPeerID) {
         if let handler = peerConnectedHandler {
             DispatchQueue.main.async {
@@ -113,33 +262,11 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         }
         
         if mcSession.connectedPeers.count == maxNumPeers {
-            shouldStartGame =  true
+            shouldStartGame = true
             self.suspend()
         }
     }
     
-    private func setupMessageHandler() {
-        print("recebendo msg de bom dia")
-        peerDataHandler = { [weak self] data, peerID in
-            guard let self = self, self.host else { return }
-            
-            print("antes do if message")
-            if let message = String(data: data, encoding: .utf8), message == "bom dia" {
-                let timestamp = DateFormatter.localizedString(from: Date(),
-                                                            dateStyle: .none,
-                                                            timeStyle: .medium)
-                print("no  if message")
-                print("[\(timestamp)] 📬 Recebido de \(peerID.displayName): \(message)")
-            }
-            print("depois do if message")
-        }
-    }
-    
-    func stopSendingMessages() {
-        shouldStopSending = true
-    }
-
-
     private func peerDisconnected(peerID: MCPeerID) {
         if !host {
             stopSendingMessages()
@@ -150,136 +277,32 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                 handler(peerID)
             }
         }
-
+        
         if mcSession.connectedPeers.count < maxNumPeers {
             self.start()
         }
     }
-
-    // MARK: - `MCSessionDelegate`.
-    internal func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
-        switch state {
-        case .connected:
-            peerConnected(peerID: peerID)
-            print("✅ Peer conectado: \(peerID.displayName), \(host)")
-        case .notConnected:
-            peerDisconnected(peerID: peerID)
-            print("❌ Peer desconectado: \(peerID.displayName), \(host)")
-        case .connecting:
-            print("🔄 Conectando ao peer: \(peerID.displayName), \(host)")
-            break
-        @unknown default:
-            fatalError("Unhandled MCSessionState")
-        }
-    }
-
-    internal func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-        print("📥 Dados recebidos de \(peerID.displayName): \(String(data: data, encoding: .utf8) ?? "Não foi possível decodificar")")
-        if let handler = peerDataHandler {
-            DispatchQueue.main.async {
-                handler(data, peerID)
+    
+    private func setupMessageHandler() {
+        peerDataHandler = { [weak self] data, peerID in
+            guard let self = self, self.host else { return }
+            
+            if let message = String(data: data, encoding: .utf8), message == "bom dia" {
+                let timestamp = DateFormatter.localizedString(from: Date(),
+                                                          dateStyle: .none,
+                                                          timeStyle: .medium)
+                print("[\(timestamp)] 📬 Recebido de \(peerID.displayName): \(message)")
             }
         }
     }
     
-    func sendBomDiaRepeatedlyToHost() {
-        guard !host else { return }
-        guard let hostPeer = mcSession.connectedPeers.first else {
-            print("Host não encontrado.")
-            return
-        }
-        
-        // Evita iniciar múltiplos envios simultâneos
-        guard !isSendingMessages else { return }
-        isSendingMessages = true
-        shouldStopSending = false
-        
-        DispatchQueue.global(qos: .background).async { [weak self] in
-            while self?.shouldStopSending == false {
-                let message = "bom dia"
-                if let data = message.data(using: .utf8) {
-                    self?.sendData(data: data, peers: [hostPeer], mode: .reliable)
-                }
-                Thread.sleep(forTimeInterval: 0.001)
-            }
-            self?.isSendingMessages = false
-        }
-    }
-
-    internal func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
-        // The sample app intentional omits this implementation.
-    }
-
-    internal func session(_ session: MCSession,
-                          didStartReceivingResourceWithName resourceName: String,
-                          fromPeer peerID: MCPeerID,
-                          with progress: Progress) {
-        // The sample app intentional omits this implementation.
-    }
-
-    internal func session(_ session: MCSession,
-                          didFinishReceivingResourceWithName resourceName: String,
-                          fromPeer peerID: MCPeerID,
-                          at localURL: URL?,
-                          withError error: Error?) {
-        // The sample app intentional omits this implementation.
-    }
-
-    
-    func send(_: Data, toPeers: [MCPeerID], with: MCSessionSendDataMode) throws {
-        //TODO: something
-    }
-    
-//    func sendResourse(at: URL , withName: String, toPeer: MCPeerID, withCompletionHandler: ((any Error)?) -> Void?) -> Progress?{
-//        //TODO: something
-//    }
-    
-    
-    var gameStartedHandler: (() -> Void)?
-    var shouldStartGame = false
-   
-
-    
-    // MARK: - `MCNearbyServiceBrowserDelegate`.
-    internal func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String: String]?) {
-        print("👀 Peer encontrado: \(peerID.displayName), \(host)")
-        if self.host{
-            guard let identityValue = info?[MPCSessionConstants.kKeyIdentity] else {
-                print("⚠️ Peer sem identidade válida")
-                return
-            }
-            print("🎯 Identidade do peer: \(identityValue)")
-            if identityValue == identityString && mcSession.connectedPeers.count < maxNumPeers {
-                print("📡 Enviando convite para \(peerID.displayName)")
-                browser.invitePeer(peerID, to: mcSession, withContext: nil, timeout: 10)
-            }
-        }
-    }
-    
+    // MARK: - Utility
     func getConnectedPeersNames() -> [String] {
         return mcSession.connectedPeers.map { $0.displayName }
     }
-    
-   
-    internal func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
-        // The sample app intentional omits this implementation.
-    }
+}
 
-    // MARK: - `MCNearbyServiceAdvertiserDelegate`.
-    internal func advertiser(_ advertiser: MCNearbyServiceAdvertiser,
-                             didReceiveInvitationFromPeer peerID: MCPeerID,
-                             withContext context: Data?,
-                             invitationHandler: @escaping (Bool, MCSession?) -> Void) {
-        print("📩 Convite recebido de \(peerID.displayName)")
-        if !self.host {
-            if self.mcSession.connectedPeers.count < maxNumPeers {
-                print("✅ Aceitando convite de \(peerID.displayName), \(host)")
-                invitationHandler(true, mcSession)
-            } else {
-                print("❌ Número máximo de peers atingido, convite recusado, \(host)")
-                invitationHandler(false, nil)
-            }
-        }
-    }
-
+// Singleton manager
+class MPCSessionManager {
+    static let shared = MPCSession(service: "dashparty", identity: "com.dashparty.app", maxPeers: 3)
 }
