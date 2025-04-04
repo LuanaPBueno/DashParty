@@ -17,6 +17,7 @@ struct ChooseHierarchyView : View {
             Button {
                 print("Host button tapped")
                 MPCSessionManager.shared.host = true
+                MPCSessionManager.shared.start()
                 navigate = true
                 multipeerSession.start() // Certifique-se de chamar start() para iniciar a conexão
             } label: {
@@ -26,6 +27,7 @@ struct ChooseHierarchyView : View {
             Button {
                 print("Player button tapped")
                 MPCSessionManager.shared.host = false
+                MPCSessionManager.shared.start()
                 navigate = true
                 MPCSessionManager.shared.start() // Certifique-se de chamar start() para começar a busca por peers
             } label: {

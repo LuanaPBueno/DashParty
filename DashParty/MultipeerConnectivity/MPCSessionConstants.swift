@@ -30,6 +30,8 @@ class MPCSessionManager {
 class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate {
     var peerDataHandler: ((Data, MCPeerID) -> Void)?
     var peerConnectedHandler: ((MCPeerID) -> Void)?
+    private var isSendingMessages = false
+    private var shouldStopSending = false
     var peerDisconnectedHandler: ((MCPeerID) -> Void)?
     private let serviceString: String
     let mcSession: MCSession
@@ -43,7 +45,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     init(service: String, identity: String, maxPeers: Int) {
         serviceString = service
         identityString = identity
-        mcSession = MCSession(peer: localPeerID, securityIdentity: nil, encryptionPreference: .required)
+        mcSession = MCSession(peer: localPeerID, securityIdentity: nil, encryptionPreference: .optional)
         mcAdvertiser = MCNearbyServiceAdvertiser(peer: localPeerID,
                                                  discoveryInfo: [MPCSessionConstants.kKeyIdentity: identityString],
                                                  serviceType: serviceString)
@@ -81,10 +83,16 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     }
 
     func sendData(data: Data, peers: [MCPeerID], mode: MCSessionSendDataMode) {
+        let connectedPeers = mcSession.connectedPeers.filter { peers.contains($0) }
+        guard !connectedPeers.isEmpty else {
+            print("⚠️ No connected peers to send data to.")
+            return
+        }
+        
         do {
-            try mcSession.send(data, toPeers: peers, with: mode)
-        } catch let error {
-            NSLog("Error sending data: \(error)")
+            try mcSession.send(data, toPeers: connectedPeers, with: mode)
+        } catch {
+            print("❌ Failed to send data: \(error)")
         }
     }
 
@@ -95,15 +103,48 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                 handler(peerID)
             }
         }
+        
+        if !host {
+            print("enviando msg de bom dia")
+            sendBomDiaRepeatedlyToHost()
+        } else {
+            setupMessageHandler()
+            print("⚡ Host pronto para receber mensagens dos peers")
+        }
+        
         if mcSession.connectedPeers.count == maxNumPeers {
-            shouldStartGame = true
-            self.suspend() //MARK: o que é esse suspend? 
+            shouldStartGame =  true
+            self.suspend()
         }
     }
     
+    private func setupMessageHandler() {
+        print("recebendo msg de bom dia")
+        peerDataHandler = { [weak self] data, peerID in
+            guard let self = self, self.host else { return }
+            
+            print("antes do if message")
+            if let message = String(data: data, encoding: .utf8), message == "bom dia" {
+                let timestamp = DateFormatter.localizedString(from: Date(),
+                                                            dateStyle: .none,
+                                                            timeStyle: .medium)
+                print("no  if message")
+                print("[\(timestamp)] 📬 Recebido de \(peerID.displayName): \(message)")
+            }
+            print("depois do if message")
+        }
+    }
+    
+    func stopSendingMessages() {
+        shouldStopSending = true
+    }
 
 
     private func peerDisconnected(peerID: MCPeerID) {
+        if !host {
+            stopSendingMessages()
+        }
+        
         if let handler = peerDisconnectedHandler {
             DispatchQueue.main.async {
                 handler(peerID)
@@ -138,6 +179,30 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             DispatchQueue.main.async {
                 handler(data, peerID)
             }
+        }
+    }
+    
+    func sendBomDiaRepeatedlyToHost() {
+        guard !host else { return }
+        guard let hostPeer = mcSession.connectedPeers.first else {
+            print("Host não encontrado.")
+            return
+        }
+        
+        // Evita iniciar múltiplos envios simultâneos
+        guard !isSendingMessages else { return }
+        isSendingMessages = true
+        shouldStopSending = false
+        
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            while self?.shouldStopSending == false {
+                let message = "bom dia"
+                if let data = message.data(using: .utf8) {
+                    self?.sendData(data: data, peers: [hostPeer], mode: .reliable)
+                }
+                Thread.sleep(forTimeInterval: 0.001)
+            }
+            self?.isSendingMessages = false
         }
     }
 
