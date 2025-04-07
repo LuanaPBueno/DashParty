@@ -26,3 +26,4 @@ struct Player: Identifiable, Hashable, Equatable {
         self.challenges = [.running] + challenges
     }
 }
+

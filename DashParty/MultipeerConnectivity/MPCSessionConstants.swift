@@ -1,5 +1,7 @@
 import Foundation
 import MultipeerConnectivity
+import CoreMotion
+
 
 struct MPCSessionConstants {
     static let kKeyIdentity: String = "identity"
@@ -8,6 +10,11 @@ struct MPCSessionConstants {
 @Observable
 class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate, ObservableObject {
     // MARK: - Properties
+
+    // Adicione esta propriedade à sua classe
+    let motionManager = CMMotionManager()
+    var matchManager: ChallengeManager
+    var currentAcceleration: CMAcceleration?
     var pendingInvitations: [String: ((Bool, MCSession?) -> Void)] = [:]
     var peerDataHandler: ((Data, MCPeerID) -> Void)?
     var peerConnectedHandler: ((MCPeerID) -> Void)?
@@ -41,10 +48,11 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     }
     
     // MARK: - Initialization
-    init(service: String, identity: String, maxPeers: Int) {
+    init(service: String, identity: String, maxPeers: Int, matchManager: ChallengeManager) {
         self.serviceString = service
         self.identityString = identity
         self.maxNumPeers = maxPeers
+        self.matchManager = matchManager
         
         // Primeiro criamos o peerID
         let peerID = MCPeerID(displayName: UIDevice.current.name)
@@ -141,7 +149,28 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         }
     }
     
-    func sendBomDiaRepeatedlyToHost() {
+    func setupCoreMotion() {
+        if motionManager.isAccelerometerAvailable {
+            motionManager.accelerometerUpdateInterval = 0.01 // 100 Hz
+            motionManager.startAccelerometerUpdates(to: .main) { [weak self] (data, error) in
+                if let acceleration = data?.acceleration {
+                    self?.currentAcceleration = acceleration
+                }
+            }
+        } else {
+            print("Acelerômetro não disponível")
+        }
+    }
+
+    struct AccelerationData: Codable {
+        let x: Double
+        let y: Double
+        let z: Double
+        let timestamp: Date // Opcional: útil para sincronização
+    }
+
+    //MARK: ENVIANDO DATA
+    func sendMyCoordinatesToHost() {
         guard !host else { return }
         guard let hostPeer = mcSession.connectedPeers.first else {
             print("Host não encontrado.")
@@ -153,14 +182,30 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         shouldStopSending = false
         
         DispatchQueue.global(qos: .background).async { [weak self] in
-            while self?.shouldStopSending == false {
-                let message = "bom dia"
-                if let data = message.data(using: .utf8) {
-                    self?.sendData(data: data, peers: [hostPeer], mode: .reliable)
-                }
-                Thread.sleep(forTimeInterval: 0.001)
+            guard let self else { return }
+            while self.shouldStopSending == false {
+                    
+                    do {
+                        let encoder = JSONEncoder()
+                        encoder.dateEncodingStrategy = .iso8601
+                        let data = try encoder.encode(
+                            SendingPlayer(
+                                id: HUBPhoneManager.instance.user.id ,
+                                currentSituation: self.matchManager.currentSituation,
+                                currentChallenge: self.matchManager.currentChallenge
+                            )
+                        )
+                       
+                        self.sendData(data: data, peers: [hostPeer], mode: .reliable)
+                    } catch {
+                        print("Erro ao codificar dados de aceleração:", error)
+                        break
+                    }
+                
+                
+                Thread.sleep(forTimeInterval: 0.01) // Ajuste conforme necessário
             }
-            self?.isSendingMessages = false
+            self.isSendingMessages = false
         }
     }
     
@@ -225,9 +270,9 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                 // Player adiciona à lista de peers disponíveis
                 DispatchQueue.main.async {
                     self.pendingInvitations[peerID.displayName] = { accept, session in
-                        if accept {
-                            browser.invitePeer(peerID, to: session ?? self.mcSession, withContext: nil, timeout: 10)
-                        }
+//                        if accept {
+//                            browser.invitePeer(peerID, to: session ?? self.mcSession, withContext: nil, timeout: 10)
+//                        }
                     }
                     // Notifica a UI que há uma nova sala disponível
                     self.invitationReceivedHandler?(peerID.displayName)
@@ -242,11 +287,13 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     
     // MARK: - MCNearbyServiceAdvertiserDelegate
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
-        print("📩 Convite recebido de \(peerID.displayName)")
-        if !host {
-            DispatchQueue.main.async {
-                self.invitationHandler = invitationHandler
-                self.invitationReceivedHandler?(peerID.displayName)
+        if !host{
+            print("📩 Convite recebido de \(peerID.displayName)")
+            if !host {
+                DispatchQueue.main.async {
+                    self.invitationHandler = invitationHandler
+                    self.invitationReceivedHandler?(peerID.displayName)
+                }
             }
         }
     }
@@ -262,8 +309,9 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         }
         
         if !host {
-            print("enviando msg de bom dia")
-            sendBomDiaRepeatedlyToHost()
+            print("enviando coordenadas")
+            matchManager.startMatch(users: [HUBPhoneManager.instance.user], myUserID: HUBPhoneManager.instance.user.id)
+            sendMyCoordinatesToHost()
         } else {
             setupMessageHandler()
             print("⚡ Host pronto para receber mensagens dos peers")
@@ -303,14 +351,28 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         peerDataHandler = { [weak self] data, peerID in
             guard let self = self, self.host else { return }
             
-            if let message = String(data: data, encoding: .utf8), message == "bom dia" {
-                let timestamp = DateFormatter.localizedString(from: Date(),
-                                                          dateStyle: .none,
-                                                          timeStyle: .medium)
-                print("[\(timestamp)] 📬 Recebido de \(peerID.displayName): \(message)")
-            }
+            setupMessageHandler(data, from: peerID)
         }
     }
+    
+    //MARK: Enviando DATA
+    func setupMessageHandler(_ data: Data, from peer: MCPeerID) {
+        do {
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
+            let receivedData = try decoder.decode(SendingPlayer.self, from: data)
+            
+           
+            
+            // Atualizar UI ou processar os dados
+            DispatchQueue.main.async {
+               // self.updateAccelerationDisplay(x: receivedData.x, y: receivedData.y, z: receivedData.z)
+            }
+        } catch {
+            print("Erro ao decodificar dados recebidos:", error)
+        }
+    }
+    
     
     // MARK: - Utility
     func getConnectedPeersNames() -> [String] {
@@ -320,5 +382,5 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
 
 // Singleton manager
 class MPCSessionManager {
-    static let shared = MPCSession(service: "dashparty", identity: "com.dashparty.app", maxPeers: 3)
+    static let shared = MPCSession(service: "nisample", identity: "com.dashparty.app", maxPeers: 3, matchManager: HUBPhoneManager.instance.matchManager)
 }

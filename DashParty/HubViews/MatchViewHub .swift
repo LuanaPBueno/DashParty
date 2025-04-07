@@ -13,7 +13,6 @@ struct MatchViewHub: View {
     var user: User
     var matchManager: ChallengeManager  // Usando o matchManager existente
     @State var currentSituation: String = ""
-    
     @State var startTime = Date.now
     @State var finishTime: Date?
     @State var characterImage: String = "characterFront"
@@ -32,6 +31,7 @@ struct MatchViewHub: View {
                 Spacer()
             }
         }
+            
          
             if matchManager.players.isEmpty == false {
                 let currentChallenge = matchManager.players[matchManager.currentPlayerIndex].currentChallenge
@@ -98,9 +98,6 @@ struct MatchViewHub: View {
             startTime = .now
             characterImage = "characterBack"
             HUBPhoneManager.instance.newGame = false
-//            DispatchQueue.main.async {
-//                    self.hubManager.objectWillChange.send()
-//                }
         }
     }
 }

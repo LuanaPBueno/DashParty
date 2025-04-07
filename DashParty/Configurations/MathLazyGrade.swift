@@ -20,8 +20,8 @@ struct MatchGridView: View {
 
     var body: some View {
         LazyVGrid(columns: columns, spacing: 10) {
-            ForEach(0..<count + 1, id: \.self) { _ in
-                MatchViewHub(users: users, user: user, matchManager: matchManager)
+            ForEach(0..<count + 1, id: \.self) { i in
+                MatchViewHub(users: users, user: users[i], matchManager: matchManager)
             }
         }
     }
