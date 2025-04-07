@@ -97,16 +97,19 @@ struct RoomListView: View {
     @ObservedObject var multipeerSession: MPCSession
     @State private var showingInvitationAlert = false
     @State private var invitationFromPeer = ""
+    @State private var showingButtonInvitationAlert = false
     
     var body: some View {
         VStack {
             if multipeerSession.host {
                 Text("Você é o Host")
-                // ... conteúdo do host
             } else {
                 List(multipeerSession.pendingInvitations.keys.sorted(), id: \.self) { peerName in
                     Button(action: {
                         multipeerSession.pendingInvitations[peerName]?(true, multipeerSession.mcSession)
+                        if showingInvitationAlert{
+                            showingButtonInvitationAlert = true
+                        }
                     }) {
                         HStack {
                             Text(peerName)
@@ -118,7 +121,7 @@ struct RoomListView: View {
                 .navigationTitle("Salas Disponíveis")
             }
         }
-        .alert("Convite Recebido", isPresented: $showingInvitationAlert) {
+        .alert("Convite Recebido", isPresented: $showingButtonInvitationAlert) {
             Button("Aceitar") {
                 multipeerSession.acceptInvitation()
             }
