@@ -19,6 +19,11 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     
     private let serviceString: String
     private let identityString: String
+    var connectedPeersNames: [String] = [] {
+            didSet {
+                print("Lista de peers atualizada: \(connectedPeersNames)")
+            }
+        }
     private let maxNumPeers: Int
     private var isSendingMessages = false
     private var shouldStopSending = false
@@ -55,6 +60,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         
         // Agora podemos chamar super.init()
         super.init()
+        
         
         self.mcSession.delegate = self
         self.mcAdvertiser.delegate = self
@@ -247,10 +253,12 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     
     // MARK: - Peer Management
     private func peerConnected(peerID: MCPeerID) {
+        updateConnectedPeersList()
         if let handler = peerConnectedHandler {
             DispatchQueue.main.async {
                 handler(peerID)
             }
+            updateConnectedPeersList()
         }
         
         if !host {
@@ -268,6 +276,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     }
     
     private func peerDisconnected(peerID: MCPeerID) {
+        updateConnectedPeersList()
         if !host {
             stopSendingMessages()
         }
@@ -281,7 +290,14 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         if mcSession.connectedPeers.count < maxNumPeers {
             self.start()
         }
+       
     }
+    
+    private func updateConnectedPeersList() {
+           DispatchQueue.main.async {
+               self.connectedPeersNames = self.mcSession.connectedPeers.map { $0.displayName }
+           }
+       }
     
     private func setupMessageHandler() {
         peerDataHandler = { [weak self] data, peerID in
