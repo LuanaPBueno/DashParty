@@ -12,6 +12,7 @@ struct MatchViewHub: View {
     var users: [User]
     var user: User
     var index: Int
+    @State private var timer = Timer.publish(every: 0.01, on: .main, in: .common).autoconnect()
     var matchManager: ChallengeManager
     @State var currentSituation: Bool = false
     @State var currentChallenge: Challenge?
@@ -36,7 +37,7 @@ struct MatchViewHub: View {
             }
             
             let displayedChallenge = currentChallenge ?? matchManager.currentChallenge
-            let displayedSituation = currentSituation ?? matchManager.currentSituation
+            let displayedSituation = currentSituation
             
             if matchManager.players.isEmpty == false {
                 if displayedChallenge == .stopped {

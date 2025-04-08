@@ -15,7 +15,6 @@ class HUBPhoneManager: ObservableObject {
     
     @Published var allPlayers : [SendingPlayer] = []
     
-    
     @Published var narrativeText: [[String : Bool]] = [
         ["Each generation, the Aru forest chooses its leader...": false],
         ["This leadership is not won with speeches or promises...": false],
