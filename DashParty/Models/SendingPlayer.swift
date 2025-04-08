@@ -12,3 +12,4 @@ struct SendingPlayer: Codable {
     var currentSituation: Bool
     var currentChallenge: Challenge
 }
+

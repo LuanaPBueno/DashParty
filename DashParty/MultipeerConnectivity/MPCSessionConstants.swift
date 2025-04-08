@@ -362,16 +362,22 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             decoder.dateDecodingStrategy = .iso8601
             let receivedData = try decoder.decode(SendingPlayer.self, from: data)
             
-           
             
             // Atualizar UI ou processar os dados
             DispatchQueue.main.async {
-               // self.updateAccelerationDisplay(x: receivedData.x, y: receivedData.y, z: receivedData.z)
+                if let existingPlayerIndex = HUBPhoneManager.instance.allPlayers.firstIndex(where: { $0.id == receivedData.id }) {
+                    HUBPhoneManager.instance.allPlayers[existingPlayerIndex].currentSituation = receivedData.currentSituation
+                    HUBPhoneManager.instance.allPlayers[existingPlayerIndex].currentChallenge = receivedData.currentChallenge
+                } else {
+                    HUBPhoneManager.instance.allPlayers.append(receivedData)
+                }
             }
         } catch {
             print("Erro ao decodificar dados recebidos:", error)
         }
     }
+    
+ 
     
     
     // MARK: - Utility

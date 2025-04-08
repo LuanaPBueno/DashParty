@@ -13,6 +13,9 @@ class HUBPhoneManager: ObservableObject {
     
     @Published var user = User(name: "Eu")
     
+    @Published var allPlayers : [SendingPlayer] = []
+    
+    
     @Published var narrativeText: [[String : Bool]] = [
         ["Each generation, the Aru forest chooses its leader...": false],
         ["This leadership is not won with speeches or promises...": false],
@@ -44,5 +47,13 @@ class HUBPhoneManager: ObservableObject {
     
     @Published var matchManager = ChallengeManager()
     
-    private init() {}
+    private init() {
+           self.allPlayers = [
+               SendingPlayer(
+                   id: self.user.id,
+                   currentSituation: self.matchManager.currentSituation,
+                   currentChallenge: self.matchManager.currentChallenge
+               )
+           ]
+       }
 }
