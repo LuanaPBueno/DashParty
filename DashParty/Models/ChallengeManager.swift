@@ -88,28 +88,40 @@ class ChallengeManager {
             """
             
             switch players[currentPlayerIndex].currentChallenge {
+                
             case .running:
+                currentChallenge = .running
+                DispatchQueue.main.async {
+                    HUBPhoneManager.instance.allPlayers[0].currentChallenge = .running
+                        }
                 if abs(magnitude) > 0.8
                     && abs(averageAcceleration.y) > abs(averageAcceleration.x)
                     && abs(averageAcceleration.y) > abs(averageAcceleration.z) {
                     print("correndo")
                     currentSituation = true
-                    HUBPhoneManager.instance.allPlayers[0].currentSituation = true
+                    DispatchQueue.main.async {
+                        HUBPhoneManager.instance.allPlayers[0].currentSituation = true
+                            }
                     players[currentPlayerIndex].progress += magnitude
                     
                 } else {
                     //TODO: muda a animação pra uma parada
                     print("correndo ignorado")
                     currentSituation = false
-                    HUBPhoneManager.instance.allPlayers[0].currentSituation = false
+                    DispatchQueue.main.async {
+                        HUBPhoneManager.instance.allPlayers[0].currentSituation = false
+                            }
                    
                     
                     
                 }
                 
             case .jumping:
-                currentChallenge = .running
-                HUBPhoneManager.instance.allPlayers[0].currentChallenge = .running
+                currentChallenge = .jumping
+                
+                DispatchQueue.main.async {
+                    HUBPhoneManager.instance.allPlayers[0].currentChallenge = .jumping
+                        }
                 if recentDeviceMotion.count >= 3 {
                     let lastThreeY = recentDeviceMotion.suffix(7).map { $0.userAcceleration.y }
                     let currentY = averageAcceleration.y
@@ -120,13 +132,18 @@ class ChallengeManager {
                         
                         print("pulando detectado")
                         currentSituation = true
-                        HUBPhoneManager.instance.allPlayers[0].currentSituation = true
+                        
+                        DispatchQueue.main.async {
+                            HUBPhoneManager.instance.allPlayers[0].currentSituation = true
+                                }
                         print(currentY, lastThreeY.min()!, lastThreeY.max()!)
                         players[currentPlayerIndex].progress += 100
                     } else {
                         print("pulando ignorado")
                         currentSituation = false
-                        HUBPhoneManager.instance.allPlayers[0].currentSituation = false
+                        DispatchQueue.main.async {
+                            HUBPhoneManager.instance.allPlayers[0].currentSituation = false
+                                }
                         
                         
                     }
@@ -134,25 +151,36 @@ class ChallengeManager {
 
             case .openingDoor:
                 currentChallenge = .openingDoor
-                HUBPhoneManager.instance.allPlayers[0].currentChallenge = .openingDoor
+                DispatchQueue.main.async {
+                    HUBPhoneManager.instance.allPlayers[0].currentChallenge = .openingDoor
+                        }
+               
                 if abs(averageAcceleration.y) < 1
                     && abs(averageAcceleration.y) < abs(averageAcceleration.x)
                     && abs(averageAcceleration.y) < abs(averageAcceleration.z) {
                     print("abrindo a porta")
                     currentSituation = true
-                    HUBPhoneManager.instance.allPlayers[0].currentSituation = true
+                    
+                    DispatchQueue.main.async {
+                        HUBPhoneManager.instance.allPlayers[0].currentSituation = true
+                            }
                     players[currentPlayerIndex].progress += 100
                 } else {
                     print("porta ignorada")
                     currentSituation = false
-                    HUBPhoneManager.instance.allPlayers[0].currentSituation = false
+                    DispatchQueue.main.async {
+                        HUBPhoneManager.instance.allPlayers[0].currentSituation = false
+                            }
                    
                     
                 }
                 
             case .balancing:
                 currentChallenge = .balancing
-                HUBPhoneManager.instance.allPlayers[0].currentChallenge = .balancing
+               
+                DispatchQueue.main.async {
+                    HUBPhoneManager.instance.allPlayers[0].currentChallenge = .balancing
+                        }
                 balancingCount["x"] = deviceMotion.attitude.roll
                 balancingCount["y"] = deviceMotion.attitude.pitch
                 balancingCount["z"] = deviceMotion.attitude.yaw
@@ -162,18 +190,24 @@ class ChallengeManager {
                     balancingResult.append("true")
                     print("balancing contando")
                     currentSituation = true
-                    HUBPhoneManager.instance.allPlayers[0].currentSituation = true
+                    DispatchQueue.main.async {
+                        HUBPhoneManager.instance.allPlayers[0].currentSituation = true
+                            }
                 }
                 else{
                     print("balancing não detectado")
                     currentSituation = false
-                    HUBPhoneManager.instance.allPlayers[0].currentSituation = false
+                    DispatchQueue.main.async {
+                        HUBPhoneManager.instance.allPlayers[0].currentSituation = false
+                            }
                 }
                 
                 if balancingResult.count == 30 { //para dar 3 segundos, não necessariamente continuos.
                     print("balancing done")
                     currentSituation = true
-                    HUBPhoneManager.instance.allPlayers[0].currentSituation = true
+                    DispatchQueue.main.async {
+                        HUBPhoneManager.instance.allPlayers[0].currentSituation = true
+                            }
                     balancingResult = []
                     players[currentPlayerIndex].progress += 100
                 }
@@ -198,8 +232,7 @@ class ChallengeManager {
                
                DispatchQueue.main.async {
                    self.receivedMotionData[motionData.playerId] = motionData
-                   // Atualize a UI ou lógica do jogo com os dados recebidos
-               }
+                }
            } catch {
                print("Error decoding motion data: \(error)")
            }

@@ -8,14 +8,15 @@
 import Foundation
 import SwiftUI
 
-class HUBPhoneManager: ObservableObject {
+@Observable
+class HUBPhoneManager {
     static let instance = HUBPhoneManager()
     
-    @Published var user = User(name: "Eu")
+    var user = User(name: "Eu")
     
-    @Published var allPlayers : [SendingPlayer] = []
+    var allPlayers : [SendingPlayer] = []
     
-    @Published var narrativeText: [[String : Bool]] = [
+    var narrativeText: [[String : Bool]] = [
         ["Each generation, the Aru forest chooses its leader...": false],
         ["This leadership is not won with speeches or promises...": false],
         ["But with a race!": false],
@@ -30,22 +31,22 @@ class HUBPhoneManager: ObservableObject {
         ["Now!": false]
     ]
     
-    @Published var passToTutorialView: Bool = false
+    var passToTutorialView: Bool = false
     
-    @Published var endedGame: Bool = false
+    var endedGame: Bool = false
     
-    @Published var actualPage: Int = 0
+    var actualPage: Int = 0
     
-    @Published var startMatch: Bool = false
+    var startMatch: Bool = false
     
-    @Published var changeScreen: Bool = false
+    var changeScreen: Bool = false
     
-    @Published var actualTutorialIndex: Int = 0
+    var actualTutorialIndex: Int = 0
     
-    @Published var newGame: Bool = false
+    var newGame: Bool = false
     
-    @Published var matchManager = ChallengeManager()
-    
+    var matchManager = ChallengeManager()
+
     private init() {
            self.allPlayers = [
                SendingPlayer(

@@ -14,7 +14,7 @@ struct TutorialHubView: View {
     let user = HUBPhoneManager.instance.user
     @State var matchManager = HUBPhoneManager.instance.matchManager
     var users: [User] = [User(name: "A"), User(name: "B")]
-    @ObservedObject var hubManager = HUBPhoneManager.instance
+    var hubManager = HUBPhoneManager.instance
     
     var myPlayer: Player? {
         matchManager.getPlayer(forUser: user.id)

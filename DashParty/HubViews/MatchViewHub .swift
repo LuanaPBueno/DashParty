@@ -13,9 +13,9 @@ struct MatchViewHub: View {
     var user: User
     var index: Int
     @State private var timer = Timer.publish(every: 0.01, on: .main, in: .common).autoconnect()
-    var matchManager: ChallengeManager
-    @State var currentSituation: Bool = false
-    @State var currentChallenge: Challenge?
+    @State var matchManager: ChallengeManager
+    var currentSituation: Bool { HUBPhoneManager.instance.allPlayers[index].currentSituation }
+    var currentChallenge: Challenge { HUBPhoneManager.instance.allPlayers[index].currentChallenge }
     @State var startTime = Date.now
     @State var finishTime: Date?
     @State var characterImage: String = "characterFront"
@@ -36,8 +36,8 @@ struct MatchViewHub: View {
                 }
             }
             
-            let displayedChallenge = currentChallenge ?? matchManager.currentChallenge
-            let displayedSituation = currentSituation
+            let displayedChallenge = HUBPhoneManager.instance.allPlayers[index].currentChallenge
+            let displayedSituation = HUBPhoneManager.instance.allPlayers[index].currentSituation
             
             if matchManager.players.isEmpty == false {
                 if displayedChallenge == .stopped {
@@ -92,10 +92,10 @@ struct MatchViewHub: View {
                 }
             }
         }
-        .onReceive(HUBPhoneManager.instance.$allPlayers) { players in
-            currentSituation = players[index].currentSituation
-            currentChallenge = players[index].currentChallenge
-        }
+//        .onReceive(HUBPhoneManager.instance.$allPlayers) { _ in
+//            currentSituation = HUBPhoneManager.instance.allPlayers[index].currentSituation
+//            currentChallenge = HUBPhoneManager.instance.allPlayers[index].currentChallenge
+//        }
         .task {
             matchManager.startMatch(users: users + [user], myUserID: user.id)
             startTime = .now

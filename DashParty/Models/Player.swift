@@ -7,11 +7,12 @@
 
 import Foundation
 
-struct Player: Identifiable, Hashable, Equatable {
+@Observable
+class Player {
     var id = UUID()
     var user: User
     var challenges: [Challenge]
-    var progress: Double = 0
+    var progress: Double = 0.0
     var currentChallenge: Challenge? {
         let index = Int(progress / 100)
         if index >= 0 && index < challenges.count {

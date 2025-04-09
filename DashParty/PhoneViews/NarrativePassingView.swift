@@ -10,7 +10,7 @@ import SwiftUI
 
 struct NarrativePassingView: View {
     var multipeerSession : MPCSession!
-    @ObservedObject var hubManager = HUBPhoneManager.instance
+    var hubManager = HUBPhoneManager.instance
     @State private var navigate: Bool = false
 
     var body: some View {
@@ -49,7 +49,7 @@ struct NarrativePassingView: View {
                         HUBPhoneManager.instance.passToTutorialView = true
                         
                         DispatchQueue.main.async {
-                                self.hubManager.objectWillChange.send()
+//                                self.hubManager.objectWillChange.send()
                             }
                             
                     } label: {
@@ -64,7 +64,7 @@ struct NarrativePassingView: View {
                             HUBPhoneManager.instance.passToTutorialView = true
                             
                             DispatchQueue.main.async {
-                                    self.hubManager.objectWillChange.send()
+//                                    self.hubManager.objectWillChange.send()
                                 }
                         }
                     } label: {

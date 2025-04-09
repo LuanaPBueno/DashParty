@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct FirstHubView: View {
-    @StateObject var hubManager = HUBPhoneManager.instance
+    @State var hubManager = HUBPhoneManager.instance
 
     var body: some View {
         ZStack {
