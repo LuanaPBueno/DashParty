@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-enum Challenge {
+enum Challenge: Codable {
     
     case running
     case jumping

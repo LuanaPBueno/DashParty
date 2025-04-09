@@ -10,8 +10,8 @@ import Foundation
 import SwiftUI
 
 struct TutorialPassingView: View {
-    var multipeerSession : MPCSession!
-    @ObservedObject var hubManager = HUBPhoneManager.instance
+    var multipeerSession : MPCSession
+    var hubManager = HUBPhoneManager.instance
     @State var pass : Bool = false
     
     var currentTutorialImage: [String] = ["tutorialImage1", "tutorialImage2", "tutorialImage3", ""]
@@ -32,7 +32,7 @@ struct TutorialPassingView: View {
                         pass = true
                         
                         DispatchQueue.main.async {
-                            self.hubManager.objectWillChange.send()
+//                            self.hubManager.objectWillChange.send()
                         }
                         
                     } label: {
@@ -64,7 +64,8 @@ struct TutorialPassingView: View {
                 
             
             NavigationLink(
-                destination: matchPhoneView(),
+                //MARK: TIRAR USERS
+                destination: MatchViewHub(users:  [HUBPhoneManager.instance.user], user:  HUBPhoneManager.instance.user, index: 0, matchManager:  HUBPhoneManager.instance.matchManager),
                 isActive: $pass,
                 label: { EmptyView() }
             )

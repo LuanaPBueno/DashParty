@@ -28,6 +28,9 @@ struct ChooseHierarchyView: View {
                 navigateToRoomListView = true
             }
         }
+        .task{
+            //tirar as configurações antes configuradas.
+        }
         .navigationDestination(isPresented: $navigateToRoomListView) {
             RoomListView(multipeerSession: multipeerSession)
         }

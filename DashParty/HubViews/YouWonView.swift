@@ -13,7 +13,7 @@ struct YouWonView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @StateObject var hubManager = HUBPhoneManager.instance
+    var hubManager = HUBPhoneManager.instance
     
     var formattedTime: String {
         let formatter = DateComponentsFormatter()
@@ -51,7 +51,7 @@ struct YouWonView: View {
         .onAppear {
             HUBPhoneManager.instance.endedGame = true
             DispatchQueue.main.async {
-                    self.hubManager.objectWillChange.send()
+//                    self.hubManager.objectWillChange.send()
                 }
             if hubManager.newGame {
                 DispatchQueue.main.async {

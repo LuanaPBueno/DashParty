@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct matchPhoneView : View{
-    @StateObject var hubManager = HUBPhoneManager.instance
+    @State var hubManager = HUBPhoneManager.instance
     
     var body : some View{
         if !hubManager.endedGame {
@@ -25,7 +25,7 @@ struct matchPhoneView : View{
                 Button {
                     HUBPhoneManager.instance.newGame = true
                     DispatchQueue.main.async {
-                            self.hubManager.objectWillChange.send()
+//                            self.hubManager.objectWillChange.send()
                         }
                         
                 } label: {

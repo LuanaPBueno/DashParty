@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct NarrativeView: View {
-    @ObservedObject var hubManager = HUBPhoneManager.instance
+    var hubManager = HUBPhoneManager.instance
     var multipeerSession: MPCSession
     
     var fontSize: CGFloat {

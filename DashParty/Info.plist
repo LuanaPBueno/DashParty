@@ -7,6 +7,7 @@
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_nisample._tcp</string>
+		<string>_nisample._udp</string>
 	</array>
 	<key>UIAppFonts</key>
 	<array>

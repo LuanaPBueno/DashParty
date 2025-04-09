@@ -11,10 +11,10 @@ import SwiftUI
 struct TutorialHubView: View {
     var multipeerSession = MPCSessionManager.shared
 
-    let user = User(name: "Eu")
-    @State var matchManager = ChallengeManager()
+    let user = HUBPhoneManager.instance.user
+    @State var matchManager = HUBPhoneManager.instance.matchManager
     var users: [User] = [User(name: "A"), User(name: "B")]
-    @ObservedObject var hubManager = HUBPhoneManager.instance
+    var hubManager = HUBPhoneManager.instance
     
     var myPlayer: Player? {
         matchManager.getPlayer(forUser: user.id)
@@ -49,8 +49,6 @@ struct TutorialHubView: View {
         }
         
     }
-    
-   
 }
 
 extension Array {

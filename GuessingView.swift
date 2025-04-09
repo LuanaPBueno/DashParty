@@ -12,31 +12,21 @@ import SwiftUI
 import SwiftUI
 struct RoomView: View {
     //MARK: Deixar observable
-    @State var t = false
-    var multipeerSession: MPCSession
+   
+    @Bindable var multipeerSession: MPCSession
     @State var navigateHost: Bool = false
     @State var navigateToPlayerDisplayView: Bool = false
 
     var body: some View {
         VStack {
-           
-            if multipeerSession.host {
-                Button {
-                    t.toggle()
-                } label: {
-                    Text("atualizar")
-                }
-            }
-            
             if multipeerSession.host {
                 VStack{
                 Text("Im host")
                 Text("Jogadores conectados:")
                     .font(.headline)
-                    List(multipeerSession.mcSession.connectedPeers.map { $0.displayName }, id: \.self) { player in
-                        Text(player)
-                        
-                    }
+                    List(multipeerSession.connectedPeersNames, id: \.self) { player in
+                                           Text(player)
+                                       }
                     Button {
                         self.navigateHost = true
                     } label: {
@@ -97,16 +87,19 @@ struct RoomListView: View {
     @ObservedObject var multipeerSession: MPCSession
     @State private var showingInvitationAlert = false
     @State private var invitationFromPeer = ""
+    @State private var showingButtonInvitationAlert = false
     
     var body: some View {
         VStack {
             if multipeerSession.host {
                 Text("Você é o Host")
-                // ... conteúdo do host
             } else {
                 List(multipeerSession.pendingInvitations.keys.sorted(), id: \.self) { peerName in
                     Button(action: {
                         multipeerSession.pendingInvitations[peerName]?(true, multipeerSession.mcSession)
+                        if showingInvitationAlert{
+                            showingButtonInvitationAlert = true
+                        }
                     }) {
                         HStack {
                             Text(peerName)
@@ -118,7 +111,7 @@ struct RoomListView: View {
                 .navigationTitle("Salas Disponíveis")
             }
         }
-        .alert("Convite Recebido", isPresented: $showingInvitationAlert) {
+        .alert("Convite Recebido", isPresented: $showingButtonInvitationAlert) {
             Button("Aceitar") {
                 multipeerSession.acceptInvitation()
             }

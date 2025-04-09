@@ -11,9 +11,11 @@ import SwiftUI
 struct MatchViewHub: View {
     var users: [User]
     var user: User
-    var matchManager: ChallengeManager  // Usando o matchManager existente
-    @State var currentSituation: String = ""
-    
+    var index: Int
+    @State private var timer = Timer.publish(every: 0.01, on: .main, in: .common).autoconnect()
+    @State var matchManager: ChallengeManager
+    var currentSituation: Bool { HUBPhoneManager.instance.allPlayers[index].currentSituation }
+    var currentChallenge: Challenge { HUBPhoneManager.instance.allPlayers[index].currentChallenge }
     @State var startTime = Date.now
     @State var finishTime: Date?
     @State var characterImage: String = "characterFront"
@@ -24,63 +26,60 @@ struct MatchViewHub: View {
                 .resizable()
                 .scaledToFill()
                 .edgesIgnoringSafeArea(.all)
+            
             VStack{
                 Spacer()
-            VStack{
-                Spacer()
-                Image("\(characterImage)")
-                Spacer()
+                VStack{
+                    Spacer()
+                    Image("\(characterImage)")
+                    Spacer()
+                }
             }
-        }
-         
+            
+            let displayedChallenge = HUBPhoneManager.instance.allPlayers[index].currentChallenge
+            let displayedSituation = HUBPhoneManager.instance.allPlayers[index].currentSituation
+            
             if matchManager.players.isEmpty == false {
-                let currentChallenge = matchManager.players[matchManager.currentPlayerIndex].currentChallenge
-                if currentChallenge == .stopped {
+                if displayedChallenge == .stopped {
                     let interval = finishTime?.timeIntervalSince(startTime)
                     YouWonView(interval: interval ?? 00)
-                                            .task { self.finishTime = Date() }
                         .task { self.finishTime = Date() }
                     
-                   
                 } else {
-                    
                     VStack{
-                        
-                        Text("Current challenge: \(currentChallenge?.name ?? "no challenge")")
+                        Text("Current challenge: \(displayedChallenge.name)")
                             .font(.custom("Prompt-Black",size: 64))
                             .foregroundColor(.black)
                         
                         Group {
-                            switch currentChallenge {
+                            switch displayedChallenge {
                             case .running:
-                                if matchManager.currentSituation {
+                                if displayedSituation {
                                     Text("You are running")
                                 } else {
                                     Text("You are not running")
                                 }
                             case .jumping:
-                                if matchManager.currentSituation {
+                                if displayedSituation {
                                     Text("You are jumping")
                                 } else {
                                     Text("You are not jumping")
                                 }
                             case .openingDoor:
-                                if matchManager.currentSituation {
+                                if displayedSituation {
                                     Text("You are opening the door")
                                 } else {
                                     Text("You are not opening the door")
                                 }
                             case .balancing:
-                                if matchManager.currentSituation {
+                                if displayedSituation {
                                     Text("You are balancing")
                                 } else {
                                     Text("You are not balancing")
                                 }
                             case .stopped:
-                                if matchManager.currentSituation {
+                                if displayedSituation {
                                     Text("You stopped")
-                                } else {
-                                    
                                 }
                             case nil:
                                 Text("?")
@@ -93,14 +92,15 @@ struct MatchViewHub: View {
                 }
             }
         }
+//        .onReceive(HUBPhoneManager.instance.$allPlayers) { _ in
+//            currentSituation = HUBPhoneManager.instance.allPlayers[index].currentSituation
+//            currentChallenge = HUBPhoneManager.instance.allPlayers[index].currentChallenge
+//        }
         .task {
             matchManager.startMatch(users: users + [user], myUserID: user.id)
             startTime = .now
             characterImage = "characterBack"
             HUBPhoneManager.instance.newGame = false
-//            DispatchQueue.main.async {
-//                    self.hubManager.objectWillChange.send()
-//                }
         }
     }
 }
