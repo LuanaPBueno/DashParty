@@ -92,10 +92,6 @@ struct MatchViewHub: View {
                 }
             }
         }
-//        .onReceive(HUBPhoneManager.instance.$allPlayers) { _ in
-//            currentSituation = HUBPhoneManager.instance.allPlayers[index].currentSituation
-//            currentChallenge = HUBPhoneManager.instance.allPlayers[index].currentChallenge
-//        }
         .task {
             matchManager.startMatch(users: users + [user], myUserID: user.id)
             startTime = .now

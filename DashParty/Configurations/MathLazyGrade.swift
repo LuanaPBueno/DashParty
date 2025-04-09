@@ -23,7 +23,15 @@ struct MatchGridView: View {
         LazyVGrid(columns: columns, spacing: 10) {
             ForEach(0..<min(players.count, users.count), id: \.self) { i in
                 MatchViewHub(users: users, user: users[i], index: i, matchManager: matchManager)
+                    .border(Color.red)
+                    .task{
+                        print(users[i].id)
+                        print(i)
+                    }
             }
+        }
+        .task{
+            print("number of players: \(players.count)")
         }
     }
 }

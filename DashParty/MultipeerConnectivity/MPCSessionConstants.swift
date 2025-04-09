@@ -369,8 +369,10 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                 if let existingPlayerIndex = HUBPhoneManager.instance.allPlayers.firstIndex(where: { $0.id == receivedData.id }) {
                     HUBPhoneManager.instance.allPlayers[existingPlayerIndex].currentSituation = receivedData.currentSituation
                     HUBPhoneManager.instance.allPlayers[existingPlayerIndex].currentChallenge = receivedData.currentChallenge
+                    print("Mudando o status: \(receivedData)")
                 } else {
                     HUBPhoneManager.instance.allPlayers.append(receivedData)
+                    print("appendando: \(receivedData)")
                 }
             }
         } catch {
