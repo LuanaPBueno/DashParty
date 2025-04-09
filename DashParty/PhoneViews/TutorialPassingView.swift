@@ -75,11 +75,4 @@ struct TutorialPassingView: View {
     }
     
     
-    
-#Preview {
-    
-    TutorialPassingView()
-}
-
-
 

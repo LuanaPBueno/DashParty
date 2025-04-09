@@ -21,6 +21,7 @@ struct RoomsView: View{
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
+            RoomListView(multipeerSession: multipeerSession)
         }
     }
 }

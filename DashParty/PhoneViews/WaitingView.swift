@@ -14,6 +14,8 @@ struct WaitingView: View{
     @State var navigate : Bool = false
     @State var changed: Bool = HUBPhoneManager.instance.changeScreen
     @State private var isActive = false
+    @State var navigateHost: Bool = false
+    @State var navigateToPlayerDisplayView: Bool = false
     
     
     var body : some View{
@@ -26,26 +28,40 @@ struct WaitingView: View{
                     .ignoresSafeArea()
             
                 VStack{
-                    Spacer()
+//                    Spacer()
+//                    
+//                    Text("Waiting for players to join...")
+//                        .multilineTextAlignment(.center)
+//                        .font(.custom("TorukSC-Regular", size: 40))
+//                        .foregroundColor(.white)
+//                    
+//                    Spacer()
                     
-                    Text("Waiting for players to join...")
-                        .multilineTextAlignment(.center)
-                        .font(.custom("TorukSC-Regular", size: 40))
-                        .foregroundColor(.white)
+                    if multipeerSession.host {
+                        VStack{
+
+                            List(multipeerSession.connectedPeersNames, id: \.self) { player in
+                                                   Text(player)
+                                               }
+                            .background(Color .white)
+
+                        }
+                    }
                     
-                    Spacer()
-                    
-                    HStack{
-                    Image("hostPhone")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 200, height: 200)
-                    
-                }
-                    Spacer()
+//                    HStack{
+//                    Image("hostPhone")
+//                        .resizable()
+//                        .scaledToFit()
+//                        .frame(width: 200, height: 200)
+//                    
+//                }
+                  //  Spacer()
                     
                   Button(action: {
-                        navigate = true
+                       // navigate = true
+                        self.navigateHost = true
+                        HUBPhoneManager.instance.changeScreen = true
+                      
                     }) {
                         Image("decorativeRectOrange")
                             .resizable()
@@ -73,6 +89,22 @@ struct WaitingView: View{
                 
                 Spacer()
             }
+            .task{
+                if !multipeerSession.host {
+                    navigateToPlayerDisplayView = true
+                }
+            
+            }
+        }
+        .onChange(of: multipeerSession.mcSession.connectedPeers.map { $0.displayName }) {
+            print(multipeerSession.mcSession.connectedPeers.map { $0.displayName })
+        }
+        .navigationDestination(isPresented: $navigateHost, destination: {
+            NarrativePassingView(multipeerSession: multipeerSession)
+        })
+        .task{
+            print(multipeerSession.host)
+            print(multipeerSession.mcSession.myPeerID)
         }
     }
 }

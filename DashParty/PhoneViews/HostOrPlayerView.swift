@@ -9,7 +9,7 @@ import SwiftUI
 import CoreMotion
 
 struct HostOrPlayerView: View {
-    var multipeerSession : MPCSession!
+    var multipeerSession : MPCSession = MPCSessionManager.shared
     
     @State var navigateToHost : Bool = false
     @State var navigateToJoin : Bool = false
@@ -31,6 +31,9 @@ struct HostOrPlayerView: View {
                     
                     Button(action: {
                         navigateToHost = true
+                        multipeerSession.host = true
+                        multipeerSession.start()
+                       // navigateToRoomView = true
                     }) {
                         Image("decorativeRectOrange")
                             .resizable()
@@ -52,6 +55,7 @@ struct HostOrPlayerView: View {
                     
                     Button(action: {
                         navigateToJoin = true
+                        multipeerSession.host = false
                     }) {
                         Image("decorativeRectBlue")
                             .resizable()
@@ -67,7 +71,7 @@ struct HostOrPlayerView: View {
                     }
                     
                     NavigationLink(
-                        destination: RoomsView(multipeerSession: multipeerSession),
+                        destination: RoomListView(multipeerSession: multipeerSession),
                         isActive: $navigateToJoin,
                         label: { EmptyView() }
                     )

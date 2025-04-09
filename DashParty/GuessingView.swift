@@ -43,7 +43,7 @@ struct RoomView: View {
             }
         }
         .navigationDestination(isPresented: $navigateHost, destination: {
-            ConnectInHubView(multipeerSession: multipeerSession)
+            WaitingView(multipeerSession: multipeerSession)
         })
 //        .navigationDestination(isPresented: $navigateToPlayerDisplayView, destination: {
 //            ConnectInHubView()

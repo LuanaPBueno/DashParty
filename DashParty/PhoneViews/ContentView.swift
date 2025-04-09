@@ -70,7 +70,8 @@ struct ContentView: View {
                         }
                         
                         NavigationLink(
-                            destination: HostOrPlayerView(multipeerSession: multipeerSession),
+                            destination: HostOrPlayerView(),
+                          //  destination: ChooseHierarchyView(),
                             isActive: $navigate,
                             label: { EmptyView() }
                         )
