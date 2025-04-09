@@ -19,6 +19,7 @@ class ChallengeManager {
     var tolerancia: Double = 0.03
     var currentSituation: Bool = false
     var currentChallenge: Challenge = .running
+    var youWon: Bool = false
     func getPlayer(forUser userID: UUID) -> Player? {
         players.first(where: { $0.user.id == userID })
     }
@@ -216,6 +217,10 @@ class ChallengeManager {
             case .stopped:
                 print("YOU WON")
                 players[currentPlayerIndex].progress += 100
+                youWon = true
+                DispatchQueue.main.async {
+                    HUBPhoneManager.instance.allPlayers[0].youWon = true
+                        }
                 finishMatch()
 
             case .none:

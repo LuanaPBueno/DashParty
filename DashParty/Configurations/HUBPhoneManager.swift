@@ -52,7 +52,8 @@ class HUBPhoneManager {
                SendingPlayer(
                    id: self.user.id,
                    currentSituation: self.matchManager.currentSituation,
-                   currentChallenge: self.matchManager.currentChallenge
+                   currentChallenge: self.matchManager.currentChallenge,
+                   youWon: false
                )
            ]
        }

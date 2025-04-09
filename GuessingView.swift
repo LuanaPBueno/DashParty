@@ -88,6 +88,7 @@ struct RoomListView: View {
     @State private var showingInvitationAlert = false
     @State private var invitationFromPeer = ""
     @State private var showingButtonInvitationAlert = false
+    @State private var passView: Bool = false
     
     var body: some View {
         VStack {
@@ -114,6 +115,7 @@ struct RoomListView: View {
         .alert("Convite Recebido", isPresented: $showingButtonInvitationAlert) {
             Button("Aceitar") {
                 multipeerSession.acceptInvitation()
+                passView = true
             }
             Button("Recusar", role: .cancel) {
                 multipeerSession.rejectInvitation()
@@ -121,6 +123,11 @@ struct RoomListView: View {
         } message: {
             Text("\(invitationFromPeer) está te convidando para entrar na sala.")
         }
+        NavigationLink(
+            destination: matchPhoneView(),
+            isActive: $passView,
+            label: { EmptyView() }
+        )
         .onAppear {
             multipeerSession.invitationReceivedHandler = { peerName in
                 invitationFromPeer = peerName

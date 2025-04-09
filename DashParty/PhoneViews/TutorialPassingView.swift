@@ -3,7 +3,7 @@
 //  DashParty
 //
 //  Created by Luana Bueno on 26/03/25.
-//
+//X
 
 import Foundation
 
@@ -71,7 +71,8 @@ struct TutorialPassingView: View {
             }
             NavigationLink(
                 //MARK: TIRAR USERS
-                destination: MatchViewHub(users:  [HUBPhoneManager.instance.user], user:  HUBPhoneManager.instance.user, index: 0, matchManager:  HUBPhoneManager.instance.matchManager),
+               // destination: MatchViewHub(users:  [HUBPhoneManager.instance.user], user:  HUBPhoneManager.instance.user, index: 0, matchManager:  HUBPhoneManager.instance.matchManager),
+                destination: matchPhoneView(), 
                 isActive: $pass,
                 label: { EmptyView() }
             )

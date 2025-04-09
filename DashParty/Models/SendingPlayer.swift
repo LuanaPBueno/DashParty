@@ -11,5 +11,6 @@ struct SendingPlayer: Codable {
     var id: UUID
     var currentSituation: Bool
     var currentChallenge: Challenge
+    var youWon: Bool
 }
 

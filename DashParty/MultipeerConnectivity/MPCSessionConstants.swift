@@ -192,7 +192,8 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                             SendingPlayer(
                                 id: HUBPhoneManager.instance.user.id ,
                                 currentSituation: self.matchManager.currentSituation,
-                                currentChallenge: self.matchManager.currentChallenge
+                                currentChallenge: self.matchManager.currentChallenge,
+                                youWon: self.matchManager.youWon
                             )
                         )
                        
