@@ -11,7 +11,6 @@ import CoreMotion
 struct OptionView: View {
     var body: some View{
         ZStack{
-            Image("blueBackground")
         }
     }
 }

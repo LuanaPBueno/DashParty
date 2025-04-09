@@ -10,16 +10,20 @@ import SwiftUI
 @main
 
 struct DashPartyApp: App {
+    
+    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
-    init() {
-            let cfURL = Bundle.main.url(forResource: "Prompt-Regular", withExtension: "ttf")! as CFURL
-            CTFontManagerRegisterFontsForURL(cfURL, CTFontManagerScope.process, nil)
-        }
-    
+//    init() {
+//        if let fontURL = Bundle.main.url(forResource: "TorukscRegular-z8MA1", withExtension: "ttf") {
+//            CTFontManagerRegisterFontsForURL(fontURL as CFURL, .process, nil)
+//        }
+//    }
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            
+
+                        ContentView()
         }
     }
 }

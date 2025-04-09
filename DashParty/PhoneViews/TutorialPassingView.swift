@@ -18,11 +18,11 @@ struct TutorialPassingView: View {
     
     var body: some View {
         
-        ZStack{
              VStack{
-                 Text("PRESS START AFTER READING THE TUTORIAL!")
-                     .fontWeight(.bold)
-                     .font(.title)
+                 Text("Press start after reading the tutorial!")
+                     .font(.custom("TorukSC-Regular", size: 30))
+                     .multilineTextAlignment(.center)
+
             HStack {
                 if currentTutorialImage[safe: hubManager.actualTutorialIndex] == ""{
                     
@@ -61,14 +61,8 @@ struct TutorialPassingView: View {
                 }
             }
         }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background {
-                    Image("greenBackground")
-                        .resizable()
-                        .scaledToFill()
-                        .edgesIgnoringSafeArea(.all)
-                }
-            }
+                
+            
             NavigationLink(
                 //MARK: TIRAR USERS
                // destination: MatchViewHub(users:  [HUBPhoneManager.instance.user], user:  HUBPhoneManager.instance.user, index: 0, matchManager:  HUBPhoneManager.instance.matchManager),
@@ -82,6 +76,10 @@ struct TutorialPassingView: View {
     
     
     
- 
+#Preview {
+    
+    TutorialPassingView()
+}
+
 
 

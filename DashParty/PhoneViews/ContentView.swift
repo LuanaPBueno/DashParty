@@ -9,107 +9,113 @@ import SwiftUI
 import CoreMotion
 
 struct ContentView: View {
+    
+    var multipeerSession : MPCSession!
+    @State var navigate : Bool = false
     @State var changed: Bool = HUBPhoneManager.instance.changeScreen
     @State private var isActive = false
-//    let user = User(name: "Eu")
-//    var users: [User] = [User(name: "A"), User(name: "B")]
-//
-//    var myPlayer: Player? {
-//        matchManager.getPlayer(forUser: user.id)
-//    }
-
+    
+    //    let user = User(name: "Eu")
+    //    var users: [User] = [User(name: "A"), User(name: "B")]
+    //
+    //    var myPlayer: Player? {
+    //        matchManager.getPlayer(forUser: user.id)
+    //    }
+    
     var body: some View {
         NavigationStack{
-            GeometryReader { geometry in
-                ZStack {
-                    Image("chooseLevelBackground")
-                        .resizable()
-                        .scaledToFill()
-                        .edgesIgnoringSafeArea(.all)
-                        .frame(width: geometry.size.width, height: geometry.size.height)
+           
+            ZStack{
+                
+                Image("firstBackground")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
 
-                    Image("goldenLogo")
+                
+                VStack{
+                    
+                    Spacer()
+                    //                    if let myPlayer {
+                    //                        VStack {
+                    //                            Text("Challenge: \(myPlayer.currentChallenge?.name ?? "Nenhum")")
+                    //                                .font(.title)
+                    //                                .padding()
+                    //                        }
+                    //                    } else {
+                    
+                    
+                    
+                    Image("logoBranca")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: geometry.size.width * 0.4)
-                        .offset(x: geometry.size.width * 0.20, y: -geometry.size.height * 0.38)
-
-                    Image("dashLogo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: geometry.size.width * 0.3)
-                        .offset(x: geometry.size.width * 0.20, y: -geometry.size.height * 0.20)
-
-//                    if let myPlayer {
-//                        VStack {
-//                            Text("Challenge: \(myPlayer.currentChallenge?.name ?? "Nenhum")")
-//                                .font(.title)
-//                                .padding()
-//                        }
-//                    } else {
-                        VStack(alignment: .trailing, spacing: 18) {
-                                Button(action: {
-                                    HUBPhoneManager.instance.changeScreen = true
-                                    isActive = true
-                                }) {
-                                    Text("Easy Mode")
-                                        .fontWeight(.black)
-                                        .multilineTextAlignment(.center)
-                                        .font(.largeTitle)
-                                        .font(.system(size: 80, weight: .regular, design: .default))
-                                        .foregroundColor(.black)
-                                }
-
-                            Button(action: {
-                                HUBPhoneManager.instance.changeScreen = true
-                                isActive = true
-                            }) {
-                                Text("NormalMode")
-                                    .fontWeight(.black)
-                                    .multilineTextAlignment(.center)
-                                    .font(.largeTitle)
-                                    .font(.system(size: 80, weight: .regular, design: .default))
-                                    .foregroundColor(.black)
-                            }
-                            
-                            Button(action: {
-                                HUBPhoneManager.instance.changeScreen = true
-                                isActive = true
-                            }) {
-                                Text("HardMode")
-                                    .fontWeight(.black)
-                                    .multilineTextAlignment(.center)
-                                    .font(.largeTitle)
-                                    .font(.system(size: 80, weight: .regular, design: .default))
-                                    .foregroundColor(.black)
-                            }
-                            
-//                            NavigationLink(
-//                                destination: /*CharacterView(users: users, user: user, matchManager: matchManager)*/ConnectInHubView(),
-//                                isActive: $isActive,
-//                                label: { EmptyView() } 
-//                            )
-
-                            
-                            NavigationLink(destination: CreditsView()) {
-                                Text("Credits")
-                                    .fontWeight(.black)
-                                    .multilineTextAlignment(.center)
-                                    .font(.largeTitle)
-                                    .font(.system(size: 80, weight: .regular, design: .default))
-                                    .foregroundColor(.black)
-                            }
+                        .frame(maxWidth: 500)
+                        .padding(.top, 40)
+                    
+                    Spacer()
+                    
+                    HStack(alignment: .center){
+                        Button(action: {
+                            navigate = true
+                        }) {
+                            Image("decorativeRectOrange")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 150, height: 60)
+                                .overlay(
+                                    Text("PLAY")
+                                        .font(.custom("TorukSC-Regular", size: 28))
+                                        .foregroundColor(.white)
+                                )
                         }
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                        .padding(.horizontal,60)
+                        
+                        NavigationLink(
+                            destination: HostOrPlayerView(multipeerSession: multipeerSession),
+                            isActive: $navigate,
+                            label: { EmptyView() }
+                        )
+                        
+                        
+                        Button(action: {
+                            navigate = true
+                        }) {
+                            Image("decorativeRectOrange")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 150, height: 60)
+                                .overlay(
+                                    Text("Options")
+                                        .font(.custom("TorukSC-Regular", size: 28))
+                                        .foregroundColor(.white)
+                                    
+                                )
+                        }
+                        
+                        NavigationLink(
+                            destination: CreditsView(),
+                            isActive: $navigate,
+                            label: { EmptyView() }
+                        )
+                    }
+                    
+                    
+                    //                            NavigationLink(
+                    //                                destination: /*CharacterView(users: users, user: user, matchManager: matchManager)*/ConnectInHubView(),
+                    //                                isActive: $isActive,
+                    //                                label: { EmptyView() }
+                    //                            )
+                    
+                   Spacer()
                 }
+            }
+           
                 .navigationDestination(isPresented: $isActive) {
-                    ChooseHierarchyView()
+                                      //  ChooseHierarchyView/()
                 }
             }
         }
     }
-}
+
 
 #Preview {
     ContentView()
