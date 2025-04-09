@@ -12,7 +12,6 @@ import CoreMotion
 struct CreditsView: View {
     var body: some View{
         ZStack{
-            Image("blueBackground")
         }
     }
 }

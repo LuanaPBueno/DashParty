@@ -9,16 +9,13 @@ import Foundation
 import SwiftUI
 
 struct NarrativePassingView: View {
+    
     var multipeerSession : MPCSession!
     @ObservedObject var hubManager = HUBPhoneManager.instance
     @State private var navigate: Bool = false
+    @State private var isActive = false
 
     var body: some View {
-        ZStack {
-            Image("greenBackground")
-                .resizable()
-                .scaledToFill()
-                .edgesIgnoringSafeArea(.all)
 
             VStack {
              
@@ -26,13 +23,10 @@ struct NarrativePassingView: View {
                 
                 Text("FOLLOW THE STORY ON THE BIG SCREEN!")
                     .multilineTextAlignment(.center)
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                
+                    .font(.custom("TorukSC-Regular", size: 30))
                     .padding(40)
                 
-               
-                
+    
                 HStack {
                     Spacer()
                     Button {
@@ -81,7 +75,7 @@ struct NarrativePassingView: View {
                 isActive: $navigate,
                 label: { EmptyView() }
             )
-        }
+        
     }
 }
 

@@ -10,11 +10,11 @@
 	</array>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Prompt-Bold.ttf</string>
-		<string>Prompt-Regular.ttf</string>
-		<string>Prompt-ExtraBold.ttf</string>
-		<string>Prompt-Black.ttf</string>
-		<string>SFPRODISPLAYBOLD.OTF</string>
+		<string></string>
+		<string>Wonder-Light.otf</string>
+		<string>TorukscRegular-z8MA1.ttf</string>
+		<string>TorukSC-Light.otf</string>
+		<string>TorukSC-Regular.otf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
