@@ -311,7 +311,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         
         if !host {
             print("enviando coordenadas")
-          //  matchManager.startMatch(users: [HUBPhoneManager.instance.user], myUserID: HUBPhoneManager.instance.user.id)
+            matchManager.startMatch(users: [HUBPhoneManager.instance.user], myUserID: HUBPhoneManager.instance.allPlayers[0].id, index: 0)
             sendMyCoordinatesToHost()
         } else {
             setupMessageHandler()

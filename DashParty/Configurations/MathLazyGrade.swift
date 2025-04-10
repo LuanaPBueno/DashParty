@@ -24,10 +24,7 @@ struct MatchGridView: View {
             ForEach(0..<max(2, HUBPhoneManager.instance.allPlayers.count), id: \.self) { i in
                 MatchViewHub(users: users, index: i, matchManager: matchManager)
                     .border(Color.red)
-                    .task{
-                        print(users[i].id)
-                        print(i)
-                    }
+                    
             }
         }
         .task{
