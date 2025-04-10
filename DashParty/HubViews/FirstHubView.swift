@@ -18,10 +18,10 @@ struct FirstHubView: View {
                     .resizable()
                     .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
-                Text("OI")
+                Text("Choose level hub") //MARK: TIRAR
             } else {
                 NarrativeView(multipeerSession: MPCSessionManager.shared)
-                Text("OI")
+                Text("Narrative view") //MARK: TIRAR
             }
         }
     }
