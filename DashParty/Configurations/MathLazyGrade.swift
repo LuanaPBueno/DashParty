@@ -13,6 +13,9 @@ struct MatchGridView: View {
     let users: [User] = HUBPhoneManager.instance.users
     let user: User
     var matchManager: ChallengeManager
+    @State private var timer: Timer?
+    @State private var ranking = false
+    @State private var allPlayersFinished = false
 
     private let columns = [
         GridItem(.flexible()),
@@ -20,15 +23,38 @@ struct MatchGridView: View {
     ]
 
     var body: some View {
-        LazyVGrid(columns: columns, spacing: 10) {
-            ForEach(0..<max(2, HUBPhoneManager.instance.allPlayers.count), id: \.self) { i in
-                MatchViewHub(users: users, index: i, matchManager: matchManager)
-                    .border(Color.red)
+        if !ranking{
+            LazyVGrid(columns: columns, spacing: 10) {
+                ForEach(0..<max(2, HUBPhoneManager.instance.allPlayers.count), id: \.self) { i in
+                    MatchViewHub(users: users, index: i, matchManager: matchManager)
+                        .border(Color.red)
                     
+                }
             }
-        }
-        .task{
-            print("number of players: \(players.count)")
+            .task{
+                print("number of players: \(players.count)")
+                startCheckingForAllWinners()
+            }
+            .onDisappear {
+                timer?.invalidate()
+            }
+          
+        } else{
+            YouWonView()
         }
     }
+    
+    private func startCheckingForAllWinners() {
+           timer?.invalidate()
+           
+           timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+               let allWon = HUBPhoneManager.instance.allPlayers.allSatisfy { $0.youWon == true }
+               if allWon {
+                   allPlayersFinished = true
+                   ranking = true
+                   timer?.invalidate() 
+               }
+           }
+       }
+   
 }

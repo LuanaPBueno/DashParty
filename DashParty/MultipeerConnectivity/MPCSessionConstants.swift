@@ -193,7 +193,8 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                                 id: HUBPhoneManager.instance.user.id ,
                                 currentSituation: self.matchManager.currentSituation,
                                 currentChallenge: self.matchManager.currentChallenge,
-                                youWon: self.matchManager.youWon
+                                youWon: self.matchManager.youWon,
+                                interval: self.matchManager.interval
                             )
                         )
                        
@@ -369,6 +370,9 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                 if let existingPlayerIndex = HUBPhoneManager.instance.allPlayers.firstIndex(where: { $0.id == receivedData.id }) {
                     HUBPhoneManager.instance.allPlayers[existingPlayerIndex].currentSituation = receivedData.currentSituation
                     HUBPhoneManager.instance.allPlayers[existingPlayerIndex].currentChallenge = receivedData.currentChallenge
+                    HUBPhoneManager.instance.allPlayers[existingPlayerIndex].youWon = receivedData.youWon
+                    HUBPhoneManager.instance.allPlayers[existingPlayerIndex].interval = receivedData.interval
+
                     print("Mudando o status: \(receivedData)")
                 } else {
                     HUBPhoneManager.instance.allPlayers.append(receivedData)

@@ -41,9 +41,10 @@ struct MatchViewHub: View {
             
             if matchManager.players.isEmpty == false {
                 if displayedChallenge == .stopped {
-                    let interval = finishTime?.timeIntervalSince(startTime)
-                    YouWonView(interval: interval ?? 00)
-                        .task { self.finishTime = Date() }
+                    //                    let interval = finishTime?.timeIntervalSince(startTime)
+                    //                    YouWonView(interval: interval ?? 00)
+                    //                        .task { self.finishTime = Date() }
+                    Text("Você acabou, espere pelo ranking")
                     
                 } else {
                     VStack{
@@ -79,9 +80,8 @@ struct MatchViewHub: View {
                                     Text("You are not balancing")
                                 }
                             case .stopped:
-                                if displayedSituation {
-                                    Text("You stopped")
-                                }
+                                    Text("You finished. Wait for the final ranking")
+                                
                             case nil:
                                 Text("?")
                             }
@@ -90,6 +90,7 @@ struct MatchViewHub: View {
                         .foregroundColor(.black)
                     }
                     .background(Color.white)
+                    
                 }
             }
         }

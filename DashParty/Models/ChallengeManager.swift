@@ -20,6 +20,7 @@ class ChallengeManager {
     var currentSituation: Bool = false
     var currentChallenge: Challenge = .running
     var youWon: Bool = false
+    var interval: TimeInterval = 0.0
     func getPlayer(forUser userID: UUID) -> Player? {
         players.first(where: { $0.user.id == userID })
     }
@@ -40,19 +41,21 @@ class ChallengeManager {
         self.players = users.map { user in
             Player(
                 user: users[0],
-                challenges: [Challenge .jumping, .openingDoor, .balancing]
-                    .flatMap { Array(repeating: $0, count: 4) }
+                //MARK: MUDAR ISSO, SÓ PRA TESTE DE RANKING
+                challenges: [Challenge /*.jumping,*/ .openingDoor/*, .balancing*/]
+                    .flatMap { Array(repeating: $0, count: 1) } //MUDAR PRA REPETIR SÓ 1 VEZ
                     .shuffled()
                     .flatMap { [$0, .running] }
                 )
             
         }
-        
-        print(myUserID)
+        var startTime = Date.now //MARK: CONFERIR 
         self.currentPlayerIndex = index
         AccelerationManager.accelerationInstance.startAccelerometer(
+            
             action: { [weak self] deviceMotion in
                 guard let self else { return }
+                
                 
                 let accumulatedElementCount: Int =
                     switch players[currentPlayerIndex].currentChallenge {
@@ -217,10 +220,16 @@ class ChallengeManager {
             
             case .stopped:
                 print("YOU WON")
+                var finishTime = Date()
                 players[currentPlayerIndex].progress += 100
+                currentChallenge = .stopped
                 youWon = true
+                interval = finishTime.timeIntervalSince(startTime)
+                print("MEU INTERVALO: \(interval)")
                 DispatchQueue.main.async {
                     HUBPhoneManager.instance.allPlayers[0].youWon = true
+                    HUBPhoneManager.instance.allPlayers[0].interval = finishTime.timeIntervalSince(startTime)
+                    HUBPhoneManager.instance.allPlayers[0].currentChallenge = .stopped
                         }
                 finishMatch()
 
