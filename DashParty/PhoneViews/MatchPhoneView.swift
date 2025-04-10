@@ -13,7 +13,7 @@ struct matchPhoneView : View{
     
     var body : some View{
         if !hubManager.endedGame {
-            Image("matchPhoneViewBackground")
+            Text("oioioioioioioi")
         }
         else{
             ZStack{

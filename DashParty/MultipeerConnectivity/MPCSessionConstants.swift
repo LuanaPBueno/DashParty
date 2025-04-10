@@ -21,6 +21,15 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     var peerDisconnectedHandler: ((MCPeerID) -> Void)?
     var gameStartedHandler: (() -> Void)?
     var invitationReceivedHandler: ((String) -> Void)?
+    var selectedClans: [String: Clan] = [:] // Novo: guarda o clan escolhido por cada peer
+
+        var myPeerID: MCPeerID {
+            mcSession.myPeerID
+        }
+
+        var myDisplayName: String {
+            mcSession.myPeerID.displayName
+        }
     
     private var invitationHandler: ((Bool, MCSession?) -> Void)?
     
@@ -385,6 +394,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     func getConnectedPeersNames() -> [String] {
         return mcSession.connectedPeers.map { $0.displayName }
     }
+    
 }
 
 // Singleton manager

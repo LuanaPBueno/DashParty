@@ -57,31 +57,39 @@ struct RoomView: View {
         }
     }
 }
-struct InvitationListView: View {
-    @Environment(MPCSession.self) private var mpcSession
-    @Environment(\.dismiss) private var dismiss
-    
-    var body: some View {
-        NavigationStack {
-            List(Array(mpcSession.pendingInvitations.keys), id: \.self) { peerName in
-                HStack {
-                    Text(peerName) // Usando diretamente o nome do peer (String)
-                    Spacer()
-                    Button("Entrar") {
-                        if let handler = mpcSession.pendingInvitations[peerName] {
-                            handler(true, mpcSession.mcSession)
-                        }
-                        dismiss()
-                    }
-                }
-            }
-            .navigationTitle("Salas Disponíveis")
-            .toolbar {
-                Button("Cancelar") { dismiss() }
-            }
-        }
-    }
-}
+//struct InvitationListView: View {
+//    @Environment(MPCSession.self) private var mpcSession
+//    @Environment(\.dismiss) private var dismiss
+//    @State var passView: Bool = false
+//    
+//    var body: some View {
+//        NavigationStack {
+//            List(Array(mpcSession.pendingInvitations.keys), id: \.self) { peerName in
+//                HStack {
+//                    Text(peerName) // Usando diretamente o nome do peer (String)
+//                    Spacer()
+//                    Button("Entrar") {
+//                        if let handler = mpcSession.pendingInvitations[peerName] {
+//                            handler(true, mpcSession.mcSession)
+//                        }
+////                        passView = true
+//                        dismiss()
+//                    }
+//                }
+//            }
+//            .navigationTitle("Salas Disponíveis")
+//            .toolbar {
+//                Button("Cancelar") { dismiss() }
+//            }
+//        }
+//        
+//        NavigationLink(
+//            destination: NarrativePassingView(),
+//            isActive: $passView,
+//            label: { EmptyView() }
+//        )
+//    }
+//}
 
 struct RoomListView: View {
     @ObservedObject var multipeerSession: MPCSession
@@ -123,11 +131,9 @@ struct RoomListView: View {
         } message: {
             Text("\(invitationFromPeer) está te convidando para entrar na sala.")
         }
-        NavigationLink(
-            destination: matchPhoneView(),
-            isActive: $passView,
-            label: { EmptyView() }
-        )
+        .navigationDestination(isPresented: $passView){
+            CharacterView(multipeerSession: multipeerSession)
+        }
         .onAppear {
             multipeerSession.invitationReceivedHandler = { peerName in
                 invitationFromPeer = peerName
