@@ -14,6 +14,8 @@ class HUBPhoneManager {
     
     var user = User(name: "Eu")
     
+    var users: [User] = []
+    
     var allPlayers : [SendingPlayer] = []
     
     var narrativeText: [[String : Bool]] = [
@@ -53,7 +55,8 @@ class HUBPhoneManager {
                    id: self.user.id,
                    currentSituation: self.matchManager.currentSituation,
                    currentChallenge: self.matchManager.currentChallenge,
-                   youWon: false
+                   youWon: false,
+                   interval: 0.0
                )
            ]
        }

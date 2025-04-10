@@ -87,7 +87,21 @@ struct NarrativePassingView: View {
                 )
                 
             }
-        }
+            .task{
+                HUBPhoneManager.instance.users = HUBPhoneManager.instance.allPlayers.map { player in
+                    return User(
+                        id: player.id,
+                        name: ""
+                    )
+                }
+            }
+
+            NavigationLink(
+                destination: TutorialPassingView(multipeerSession: multipeerSession),
+                isActive: $navigate,
+                label: { EmptyView() }
+            )
+        
     }
 }
 #Preview{
