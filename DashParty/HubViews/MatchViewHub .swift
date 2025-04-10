@@ -10,7 +10,6 @@ import SwiftUI
 
 struct MatchViewHub: View {
     var users: [User]
-    var user: User
     var index: Int
     @State private var timer = Timer.publish(every: 0.01, on: .main, in: .common).autoconnect()
     @State var matchManager: ChallengeManager
@@ -38,6 +37,7 @@ struct MatchViewHub: View {
             
             let displayedChallenge = HUBPhoneManager.instance.allPlayers[index].currentChallenge
             let displayedSituation = HUBPhoneManager.instance.allPlayers[index].currentSituation
+            let playerID = HUBPhoneManager.instance.allPlayers[index].id
             
             if matchManager.players.isEmpty == false {
                 if displayedChallenge == .stopped {
@@ -47,6 +47,7 @@ struct MatchViewHub: View {
                     
                 } else {
                     VStack{
+                        Text("\(playerID)")
                         Text("Current challenge: \(displayedChallenge.name)")
                             .font(.custom("Prompt-Black",size: 64))
                             .foregroundColor(.black)
@@ -93,7 +94,7 @@ struct MatchViewHub: View {
             }
         }
         .task {
-            matchManager.startMatch(users: users + [user], myUserID: user.id)
+            matchManager.startMatch(users: users, myUserID: HUBPhoneManager.instance.allPlayers[index].id, index: index)
             startTime = .now
             characterImage = "characterBack"
             HUBPhoneManager.instance.newGame = false

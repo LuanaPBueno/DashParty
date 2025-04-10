@@ -9,8 +9,8 @@ import Foundation
 
 struct MatchGridView: View {
     let count: Int
-    let users: [User]
     let players = HUBPhoneManager.instance.allPlayers
+    let users: [User] = HUBPhoneManager.instance.users
     let user: User
     var matchManager: ChallengeManager
 
@@ -21,8 +21,8 @@ struct MatchGridView: View {
 
     var body: some View {
         LazyVGrid(columns: columns, spacing: 10) {
-            ForEach(0..<min(players.count, users.count), id: \.self) { i in
-                MatchViewHub(users: users, user: users[i], index: i, matchManager: matchManager)
+            ForEach(0..<max(2, HUBPhoneManager.instance.allPlayers.count), id: \.self) { i in
+                MatchViewHub(users: users, index: i, matchManager: matchManager)
                     .border(Color.red)
                     .task{
                         print(users[i].id)

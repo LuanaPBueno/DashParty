@@ -13,7 +13,7 @@ struct TutorialHubView: View {
 
     let user = HUBPhoneManager.instance.user
     @State var matchManager = HUBPhoneManager.instance.matchManager
-    var users: [User] = [User(name: "A"), User(name: "B")]
+    var users: [User] = []
     var hubManager = HUBPhoneManager.instance
     
     var myPlayer: Player? {
@@ -42,7 +42,7 @@ struct TutorialHubView: View {
                     .edgesIgnoringSafeArea(.all)
             }
         }else{
-            MatchGridView(count: multipeerSession.mcSession.connectedPeers.count, users: users, user: user, matchManager: matchManager)
+            MatchGridView(count: multipeerSession.mcSession.connectedPeers.count, user: user, matchManager: matchManager)
                 .task{
                     print(multipeerSession.mcSession.connectedPeers.count)
                 }

@@ -36,10 +36,10 @@ class ChallengeManager {
     
     
     
-    func startMatch(users: [User], myUserID: UUID) {
+    func startMatch(users: [User], myUserID: UUID, index: Int) {
         self.players = users.map { user in
             Player(
-                user: user,
+                user: users[0],
                 challenges: [Challenge .jumping, .openingDoor, .balancing]
                     .flatMap { Array(repeating: $0, count: 4) }
                     .shuffled()
@@ -47,8 +47,9 @@ class ChallengeManager {
                 )
             
         }
-            
-        self.currentPlayerIndex = self.players.firstIndex(where: { $0.user.id == myUserID })!
+        
+        print(myUserID)
+        self.currentPlayerIndex = index
         AccelerationManager.accelerationInstance.startAccelerometer(
             action: { [weak self] deviceMotion in
                 guard let self else { return }

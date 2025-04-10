@@ -14,6 +14,8 @@ class HUBPhoneManager {
     
     var user = User(name: "Eu")
     
+    var users: [User] = []
+    
     var allPlayers : [SendingPlayer] = []
     
     var narrativeText: [[String : Bool]] = [

@@ -69,6 +69,14 @@ struct NarrativePassingView: View {
                  
                 Spacer()
             }
+            .task{
+                HUBPhoneManager.instance.users = HUBPhoneManager.instance.allPlayers.map { player in
+                    return User(
+                        id: player.id,
+                        name: ""
+                    )
+                }
+            }
 
             NavigationLink(
                 destination: TutorialPassingView(multipeerSession: multipeerSession),

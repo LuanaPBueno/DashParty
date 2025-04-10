@@ -72,9 +72,7 @@ struct TutorialPassingView: View {
             
             NavigationLink(
                 //MARK: TIRAR USERS
-               // destination: MatchViewHub(users:  [HUBPhoneManager.instance.user], user:  HUBPhoneManager.instance.user, index: 0, matchManager:  HUBPhoneManager.instance.matchManager),
-               // destination: matchPhoneView(),
-                destination: MatchGridView(count: multipeerSession.mcSession.connectedPeers.count, users: users, user: user, matchManager: matchManager), 
+                destination: matchPhoneView(),
                 isActive: $pass,
                 label: { EmptyView() }
             )
