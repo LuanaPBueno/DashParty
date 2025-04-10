@@ -18,8 +18,10 @@ struct FirstHubView: View {
                     .resizable()
                     .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
+                Text("OI")
             } else {
                 NarrativeView(multipeerSession: MPCSessionManager.shared)
+                Text("OI")
             }
         }
     }

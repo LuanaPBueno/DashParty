@@ -25,7 +25,7 @@ struct NarrativePassingView: View {
             
             
             VStack {
-    
+                
                 Text("FOLLOW THE STORY ON THE BIG SCREEN!")
                     .multilineTextAlignment(.center)
                     .font(.custom("TorukSC-Regular", size: 30))
@@ -36,9 +36,9 @@ struct NarrativePassingView: View {
                     Image("decorativeRectCream")
                     
                     HStack {
-                      
+                        
                         Spacer()
-                       
+                        
                         Button {
                             if hubManager.actualPage > 0 {
                                 hubManager.actualPage -= 1
@@ -95,15 +95,13 @@ struct NarrativePassingView: View {
                     )
                 }
             }
-
+            
             NavigationLink(
                 destination: TutorialPassingView(multipeerSession: multipeerSession),
                 isActive: $navigate,
                 label: { EmptyView() }
             )
-        
+            
+        }
     }
-}
-#Preview{
-    NarrativePassingView( )
 }
