@@ -202,9 +202,9 @@ struct CharacterView: View {
                     .disabled(tempSelection == nil)
                     .opacity(tempSelection == nil ? 0.5 : 1.0)
                     
-                    NavigationLink(destination: ReadyView(multipeerSession: multipeerSession), isActive: $navigateToNext) {
-                        EmptyView()
-                    }
+//                    NavigationLink(destination: ReadyView(multipeerSession: multipeerSession), isActive: $navigateToNext) {
+//                        EmptyView()
+//                    }
                 }
                 .padding()
             }

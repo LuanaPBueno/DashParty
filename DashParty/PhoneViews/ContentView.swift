@@ -9,7 +9,7 @@ import SwiftUI
 import CoreMotion
 
 struct ContentView: View {
-    
+    @Binding var router: Router
     var multipeerSession : MPCSession!
     @State var navigate : Bool = false
     @State var changed: Bool = HUBPhoneManager.instance.changeScreen
@@ -26,7 +26,6 @@ struct ContentView: View {
         NavigationStack{
            
             ZStack{
-                
                 Image("firstBackground")
                     .resizable()
                     .scaledToFill()
@@ -34,18 +33,7 @@ struct ContentView: View {
 
                 
                 VStack{
-                    
                     Spacer()
-                    //                    if let myPlayer {
-                    //                        VStack {
-                    //                            Text("Challenge: \(myPlayer.currentChallenge?.name ?? "Nenhum")")
-                    //                                .font(.title)
-                    //                                .padding()
-                    //                        }
-                    //                    } else {
-                    
-                    
-                    
                     Image("logoBranca")
                         .resizable()
                         .scaledToFit()
@@ -56,7 +44,7 @@ struct ContentView: View {
                     
                     HStack(alignment: .center){
                         Button(action: {
-                            navigate = true
+                            router = .play
                         }) {
                             Image("decorativeRectOrange")
                                 .resizable()
@@ -68,17 +56,9 @@ struct ContentView: View {
                                         .foregroundColor(.white)
                                 )
                         }
-                        
-                        NavigationLink(
-                            destination: HostOrPlayerView(),
-                          //  destination: ChooseHierarchyView(),
-                            isActive: $navigate,
-                            label: { EmptyView() }
-                        )
-                        
-                        
+
                         Button(action: {
-                            navigate = true
+                            router = .options
                         }) {
                             Image("decorativeRectOrange")
                                 .resizable()
@@ -91,21 +71,7 @@ struct ContentView: View {
                                     
                                 )
                         }
-                        
-                        NavigationLink(
-                            destination: CreditsView(),
-                            isActive: $navigate,
-                            label: { EmptyView() }
-                        )
                     }
-                    
-                    
-                    //                            NavigationLink(
-                    //                                destination: /*CharacterView(users: users, user: user, matchManager: matchManager)*/ConnectInHubView(),
-                    //                                isActive: $isActive,
-                    //                                label: { EmptyView() }
-                    //                            )
-                    
                    Spacer()
                 }
             }
@@ -119,5 +85,5 @@ struct ContentView: View {
 
 
 #Preview {
-    ContentView()
+    ContentView(router: .constant(.start))
 }

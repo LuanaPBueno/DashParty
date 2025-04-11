@@ -7,31 +7,10 @@
 
 import Foundation
 import SwiftUI
-//
-//struct RoomListView: View{
-//    
-//    var multipeerSession : MPCSession!
-//    @State var navigate : Bool = false
-//    @State var changed: Bool = HUBPhoneManager.instance.changeScreen
-//    @State private var isActive = false
-//    
-//    var body: some View{
-//        ZStack{
-//            Image("purpleBackground")
-//                .resizable()
-//                .scaledToFill()
-//                .ignoresSafeArea()
-//            
-//            
-//        }
-//    }
-//}
-//
-//#Preview {
-//    RoomListView(multipeerSession: multipeerSession)
-//}
 
 struct RoomListView: View {
+    @Binding var router:Router
+    
     @ObservedObject var multipeerSession: MPCSession
     @State private var showingInvitationAlert = false
     @State private var invitationFromPeer = ""
@@ -72,7 +51,7 @@ struct RoomListView: View {
             .alert("Convite Recebido", isPresented: $showingButtonInvitationAlert) {
                 Button("Aceitar") {
                     multipeerSession.acceptInvitation()
-                    passView = true
+                    router = .storyBoard
                 }
                 Button("Recusar", role: .cancel) {
                     multipeerSession.rejectInvitation()
@@ -82,9 +61,7 @@ struct RoomListView: View {
                     .font(.custom("TorukSC-Regular", size: 24))
                     .foregroundColor(.white)
             }
-            .navigationDestination(isPresented: $passView){
-                CharacterView(multipeerSession: multipeerSession)
-            }
+           
             .onAppear {
                 multipeerSession.invitationReceivedHandler = { peerName in
                     invitationFromPeer = peerName
@@ -96,6 +73,6 @@ struct RoomListView: View {
     }
 }
 #Preview {
-    RoomListView(multipeerSession: MPCSession(service: "kiwi", identity: "uva", maxPeers: 6, matchManager: ChallengeManager()))
+    RoomListView(router: .constant(.chooseRoom), multipeerSession: MPCSession(service: "kiwi", identity: "uva", maxPeers: 6, matchManager: ChallengeManager()))
 }
 

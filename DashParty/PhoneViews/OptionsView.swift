@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreMotion
 
-struct OptionView: View {
+struct OptionsView: View {
     var body: some View{
         ZStack{
         }
@@ -16,5 +16,5 @@ struct OptionView: View {
 }
 
 #Preview {
-    OptionView()
+    OptionsView()
 }

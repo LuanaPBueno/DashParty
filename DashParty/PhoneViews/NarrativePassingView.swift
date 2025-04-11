@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct NarrativePassingView: View {
+    @Binding var router:Router
     var multipeerSession : MPCSession = MPCSessionManager.shared
     
     //    var multipeerSession : MPCSession!
@@ -22,7 +23,6 @@ struct NarrativePassingView: View {
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
-            
             
             VStack {
                 
@@ -54,11 +54,11 @@ struct NarrativePassingView: View {
                                 hubManager.actualPage += 1
                             } else {
                                 navigate = true
-                                HUBPhoneManager.instance.passToTutorialView = true
+                                router = .tutorial
                                 
-                                DispatchQueue.main.async {
-                                    //                                    self.hubManager.objectWillChange.send()
-                                }
+                                //                                DispatchQueue.main.async {
+                                //                                    //                                    self.hubManager.objectWillChange.send()
+                                //                                }
                             }
                         } label: {
                             Image("passNarrativeButton")
@@ -68,21 +68,21 @@ struct NarrativePassingView: View {
                 }
                 
                 Spacer()
-                   
+                
                 Button {
-                        hubManager.actualPage = hubManager.narrativeText.count
-                        navigate = true
-                        HUBPhoneManager.instance.passToTutorialView = true
-                        
-                        DispatchQueue.main.async {
-                            //                                self.hubManager.objectWillChange.send()
-                        }
-                      
-                        
-                    } label: {
-                        Image("skip")
-                    }
-             
+                    hubManager.actualPage = hubManager.narrativeText.count
+                    navigate = true
+                    router = .tutorial
+                    
+                    //                        DispatchQueue.main.async {
+                    //                            //                                self.hubManager.objectWillChange.send()
+                    //                        }
+                    
+                    
+                } label: {
+                    Image("skip")
+                }
+                
                 
                 Spacer()
             }
@@ -95,16 +95,12 @@ struct NarrativePassingView: View {
                 }
             }
             
-            NavigationLink(
-                destination: TutorialPassingView(multipeerSession: multipeerSession),
-                isActive: $navigate,
-                label: { EmptyView() }
-            )
+            
             
         }
     }
 }
 
-                                  #Preview {
-                                      NarrativePassingView()
-                                  }
+#Preview {
+    NarrativePassingView(router: .constant(.storyBoard))
+}

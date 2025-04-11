@@ -9,10 +9,11 @@ import SwiftUI
 import CoreMotion
 
 struct HostOrPlayerView: View {
+    @Binding var router:Router
     var multipeerSession : MPCSession = MPCSessionManager.shared
     
     @State var navigateToHost : Bool = false
-    @State var navigateToJoin : Bool = false
+//    @State var navigateToJoin : Bool = false
     @State var changed: Bool = HUBPhoneManager.instance.changeScreen
     @State private var isActive = false
     @State var showAlert = false
@@ -50,11 +51,11 @@ struct HostOrPlayerView: View {
                             )
                     }
                     
-                    NavigationLink(
-                        destination: GameDifficulty(multipeerSession: multipeerSession),
-                        isActive: $navigateToHost,
-                        label: { EmptyView() }
-                    )
+//                    NavigationLink(
+//                        destination: GameDifficulty(multipeerSession: multipeerSession),
+//                        isActive: $navigateToHost,
+//                        label: { EmptyView() }
+//                    )
                     
                     
                     Button(action: {
@@ -78,11 +79,7 @@ struct HostOrPlayerView: View {
                     
                     
                     
-                    NavigationLink(
-                        destination: RoomListView(multipeerSession: multipeerSession),
-                        isActive: $navigateToJoin,
-                        label: { EmptyView() }
-                    )
+                   
                     
                 }
                 
@@ -111,8 +108,7 @@ struct HostOrPlayerView: View {
                                 HUBPhoneManager.instance.roomName = roomName
                              //   multipeerSession.configureAsHost()
                                 showAlert = false
-                                navigateToHost = true
-
+                                router = .matchmaking
                                 
                             }
                         }
@@ -149,7 +145,7 @@ struct HostOrPlayerView: View {
                             Button("Salvar") {
                                 HUBPhoneManager.instance.playername = userName
                                 showAlert = false
-                                navigateToJoin = true
+                                router = .chooseRoom
                             }
                         }
                         .padding(.horizontal)
@@ -167,5 +163,5 @@ struct HostOrPlayerView: View {
 
 
 #Preview {
-   HostOrPlayerView()
+    HostOrPlayerView(router: .constant(.play))
 }

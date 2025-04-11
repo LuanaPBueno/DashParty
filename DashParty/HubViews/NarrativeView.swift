@@ -24,7 +24,6 @@ struct NarrativeView: View {
     }
     
     var body: some View {
-        if !hubManager.passToTutorialView {
             ZStack {
                 if hubManager.actualPage < hubManager.narrativeText.count {
                     if hubManager.narrativeText[hubManager.actualPage].values.first == true {
@@ -39,7 +38,7 @@ struct NarrativeView: View {
                         .multilineTextAlignment(.center)
                 }
                 
-                /////MARK: REMOVER
+                //MARK: REMOVER
                 VStack {
                     Spacer()
                     Button(action: {
@@ -52,7 +51,7 @@ struct NarrativeView: View {
                             .foregroundColor(.blue)
                     }
                 }
-                ///MARK: REMOVER
+                //MARK: REMOVER
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background {
@@ -61,14 +60,10 @@ struct NarrativeView: View {
                     .scaledToFill()
                     .ignoresSafeArea()
             }
-        } else{
-            TutorialHubView(multipeerSession : multipeerSession)
-        }
+       
     }
     
     private func withoutCharacter() -> some View {
-        
-        
         VStack {
             
             ZStack {

@@ -9,7 +9,7 @@ import SwiftUI
 import CoreMotion
 
 struct ReadyView: View {
-    
+    @Binding var router:Router
     var multipeerSession : MPCSession!
     
     @State var navigate : Bool = false
@@ -44,7 +44,7 @@ struct ReadyView: View {
                     Spacer()
                     
                     Button(action: {
-                        navigate = true
+                        router = .matchmaking
                     }) {
                         Image("decorativeRectOrange")
                             .resizable()
@@ -57,12 +57,12 @@ struct ReadyView: View {
                             )
                     }
                     
-                    NavigationLink(
-                        destination: NarrativePassingView(),
-                      //  destination: ChooseHierarchyView(),
-                        isActive: $navigate,
-                        label: { EmptyView() }
-                    )
+//                    NavigationLink(
+//                        destination: NarrativePassingView(),
+//                      //  destination: ChooseHierarchyView(),
+//                        isActive: $navigate,
+//                        label: { EmptyView() }
+//                    )
                     
                     Spacer()
                 }
@@ -74,5 +74,5 @@ struct ReadyView: View {
 }
 
 #Preview {
-    ReadyView()
+    ReadyView(router: .constant(.airplayInstructions))
 }

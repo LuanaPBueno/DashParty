@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RoomView: View {
     //MARK: Deixar observable
-   
+    @Binding var router:Router
     @ObservedObject var multipeerSession: MPCSession
     @State var navigateHost: Bool = false
     @State var navigateToPlayerDisplayView: Bool = false
@@ -31,7 +31,7 @@ struct RoomView: View {
                             Text(player)
                         }
                         Button {
-                            self.navigateHost = true
+                            router = .storyBoard
                         } label: {
                             Text("Start Tutorial")
                                 .font(.custom("TorukSC-Regular", size: 24))
@@ -66,7 +66,7 @@ struct RoomView: View {
 }
 
 #Preview {
-    RoomView(multipeerSession: MPCSession(service: "banana", identity: "maça", maxPeers: 5, matchManager: ChallengeManager()))
+    RoomView(router: .constant(.matchmaking), multipeerSession: MPCSession(service: "banana", identity: "maça", maxPeers: 5, matchManager: ChallengeManager()))
 }
 //struct InvitationListView: View {
 //    @Environment(MPCSession.self) private var mpcSession

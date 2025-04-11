@@ -10,6 +10,7 @@ import Foundation
 import SwiftUI
 
 struct TutorialPassingView: View {
+    @Binding var router:Router
     var multipeerSession : MPCSession
     var hubManager = HUBPhoneManager.instance
     
@@ -36,15 +37,17 @@ struct TutorialPassingView: View {
             if hubManager.actualTutorialIndex == 1 {
                 VStack {
                     Spacer()
-                    Image("startMatchButton")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 100, height: 100)
-                        .onTapGesture {
-                            HUBPhoneManager.instance.startMatch = true
-                            pass = true
-                        }
-                        //.padding(.bottom, 150) // posição personalizada
+                    Button {
+                        HUBPhoneManager.instance.startMatch = true
+                        router = .game
+                    } label: {
+                        Image("startMatchButton")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 100, height: 100)
+                    }
+
+                     
                 }
             }
 
@@ -88,17 +91,12 @@ struct TutorialPassingView: View {
         }
         
 
-                // NavigationLink sempre presente, ativado via `pass`
-                NavigationLink(
-                    destination: NarrativePassingView(), // ou matchPhoneView(), se for o correto
-                    isActive: $pass,
-                    label: { EmptyView() }
-                )
+                
             }
 }
     
 #Preview {
-    TutorialPassingView(multipeerSession: MPCSessionManager.shared)
+    TutorialPassingView(router: .constant(.tutorial), multipeerSession: MPCSessionManager.shared)
 }
 
 

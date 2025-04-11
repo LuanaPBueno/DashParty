@@ -21,7 +21,7 @@ struct DashPartyApp: App {
 //    }
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RouterView()
         }
     }
 }
