@@ -3,7 +3,7 @@
 //  DashParty
 //
 //  Created by Luana Bueno on 26/03/25.
-//X
+//
 
 import Foundation
 
@@ -13,6 +13,7 @@ struct TutorialPassingView: View {
     var multipeerSession : MPCSession
     var hubManager = HUBPhoneManager.instance
     
+    
     //MARK: TIRAR
     let user = HUBPhoneManager.instance.user
     @State var matchManager = HUBPhoneManager.instance.matchManager
@@ -21,76 +22,75 @@ struct TutorialPassingView: View {
     
     @State var pass : Bool = false
     
-    var currentTutorialImage: [String] = ["tutorialImage1", "tutorialImage2", "tutorialImage3", ""]
+    var currentTutorialImage: [String] = ["tutorialImage1", "tutorialImage2"]
     
     var body: some View {
-        ZStack{
-            Image("purpleBackground")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
-            
-            VStack{
-                Spacer()
-                
-                Text("Press start after reading the tutorial!")
-                    .font(.custom("TorukSC-Regular", size: 30))
-                    .foregroundColor(.white)
-                    .multilineTextAlignment(.center)
-                
-                
-                    if currentTutorialImage[safe: hubManager.actualTutorialIndex] == ""{
+        ZStack {
+                    Image(currentTutorialImage[safe: hubManager.actualTutorialIndex] ?? "fallbackImage")
+                        .resizable()
+                        .scaledToFill()
+                        .ignoresSafeArea()
+
+                    VStack {
+                        Spacer()
                         
-                        Button {
-                            HUBPhoneManager.instance.startMatch = true
-                            
-                            pass = true
-                            
-                            DispatchQueue.main.async {
-                                //                            self.hubManager.objectWillChange.send()
-                            }
-                            
-                        } label: {
-                            Image("startMatchButton")
-                            
-                        }
-                    }else{
-                        HStack{
-                            Spacer()
-                            Image(currentTutorialImage[safe: hubManager.actualTutorialIndex] ?? "fallbackImage")
-                                .resizable()
-                                .scaledToFit()
-                            Spacer()
-                        }
-                    }
-                    
-                    Spacer()
-                
-                        if currentTutorialImage[safe: hubManager.actualTutorialIndex] != ""{
-                            
+                        HStack {
+                            // BACK BUTTON
                             Button(action: {
-                                self.hubManager.actualTutorialIndex += 1
+                                if hubManager.actualTutorialIndex > 0 {
+                                    hubManager.actualTutorialIndex -= 1
+                                }
                             }) {
-                                Image("passNarrativeButton")
+                                Image("backButton")
                                     .resizable()
                                     .frame(width: 40, height: 40)
-                            
-                            
+                                    .opacity(hubManager.actualTutorialIndex == 0 ? 0.2 : 1.0)
+                            }
+
+                            Spacer()
+
+                            // NEXT BUTTON
+                            Button(action: {
+                                if hubManager.actualTutorialIndex < currentTutorialImage.count - 1 {
+                                    hubManager.actualTutorialIndex += 1
+                                }
+                            }) {
+                                Image("nextButton")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                                    .opacity(hubManager.actualTutorialIndex == 1 ? 0.2 : 1.0)
+                            }
+                        }
+                        .padding(.horizontal, 40)
+                        .padding(.bottom, 30)
+
+                        // START BUTTON (aparece só na última imagem)
+                        if hubManager.actualTutorialIndex == 1 {
+                            Spacer()
+                            Button(action: {
+                                HUBPhoneManager.instance.startMatch = true
+                                pass = true
+                            }) {
+                                Image("startMatchButton")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 100, height: 100)
+                            }
                         }
                     }
-                
-            }
-            
-            
-            NavigationLink(
-                //MARK: TIRAR USERS
-                destination: matchPhoneView(),
-                isActive: $pass,
-                label: { EmptyView() }
-            )
-            
+                }
+        .onAppear {
+            hubManager.actualTutorialIndex = 0
         }
-    }
+        
+
+                // NavigationLink sempre presente, ativado via `pass`
+                NavigationLink(
+                    destination: NarrativePassingView(), // ou matchPhoneView(), se for o correto
+                    isActive: $pass,
+                    label: { EmptyView() }
+                )
+            }
 }
     
 #Preview {

@@ -20,7 +20,7 @@ struct GameDifficulty: View {
     
     var body: some View {
         
-        NavigationStack{
+     
             
             ZStack{
                 Image("purpleBackground")
@@ -46,12 +46,7 @@ struct GameDifficulty: View {
                             )
                     }
                     
-                    NavigationLink(
-                        destination: WaitingView(multipeerSession: multipeerSession),
-                        isActive: $navigate,
-                        label: { EmptyView() }
-                    )
-                    
+                   
                     Spacer()
                     
                     Button(action: {
@@ -94,15 +89,11 @@ struct GameDifficulty: View {
                             )
                     }
                     
-                    NavigationLink(
-                        destination: WaitingView(multipeerSession: multipeerSession),
-                        isActive: $navigate,
-                        label: { EmptyView() }
-                    )
+                 
                     
                     Spacer()
                 }
-            }
+            
         }
     }
 }

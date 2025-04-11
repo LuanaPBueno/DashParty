@@ -156,7 +156,7 @@ struct CharacterView: View {
     @State private var navigateToNext = false
     
     var body: some View {
-        NavigationStack {
+     
             ZStack {
                 Image("purpleBackground")
                     .resizable()
@@ -208,7 +208,7 @@ struct CharacterView: View {
                 }
                 .padding()
             }
-        }
+        
     }
 }
 

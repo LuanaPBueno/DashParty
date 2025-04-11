@@ -17,7 +17,7 @@ struct ReadyView: View {
     @State private var isActive = false
     
     var body: some View {
-        NavigationStack{
+      
             ZStack{
                 Image("purpleBackground")
                     .resizable()
@@ -69,7 +69,7 @@ struct ReadyView: View {
                 
             }
             
-        }
+        
     }
 }
 

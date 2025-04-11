@@ -19,7 +19,7 @@ struct HostOrPlayerView: View {
     
     var body: some View {
         
-        NavigationStack{
+       
             
             ZStack{
                 Image("darkblueBackground")
@@ -80,7 +80,7 @@ struct HostOrPlayerView: View {
                 
             }
         }
-    }
+    
 }
 
 

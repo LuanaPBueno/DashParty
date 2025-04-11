@@ -17,7 +17,7 @@ struct LoadingView: View {
     @State private var isLoadingComplete = false
     
     var body: some View {
-        NavigationStack {
+    
             VStack(spacing: 40) {
                 Circle()
                     .fill(Color(.lightGray))
@@ -58,7 +58,7 @@ struct LoadingView: View {
                 }
             }
         }
-    }
+    
 }
 
 #Preview{

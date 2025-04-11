@@ -133,7 +133,7 @@ struct WaitingView: View {
     @State private var navigateToPlayerDisplayView: Bool = false
     
     var body: some View {
-        NavigationStack {
+    
             ZStack {
                 Image("purpleBackground")
                     .resizable()
@@ -193,7 +193,7 @@ struct WaitingView: View {
             .navigationDestination(isPresented: $navigateHost) {
                 CharacterView(multipeerSession: multipeerSession)
             }
-        }
+        
         .task {
             print("Host? \(multipeerSession.host)")
             print("Meu PeerID: \(multipeerSession.mcSession.myPeerID)")

@@ -82,12 +82,7 @@ struct NarrativePassingView: View {
                     } label: {
                         Image("skip")
                     }
-                
-                NavigationLink(
-                    destination: TutorialPassingView(multipeerSession: multipeerSession),
-                    isActive: $navigate,
-                    label: { EmptyView() }
-                )
+             
                 
                 Spacer()
             }
