@@ -59,7 +59,7 @@ class HUBPhoneManager {
            self.allPlayers = [
                SendingPlayer(
                    id: self.user.id,
-                   name: HUBPhoneManager.instance.playername,
+                   name: self.playername,
                    currentSituation: self.matchManager.currentSituation,
                    currentChallenge: self.matchManager.currentChallenge,
                    youWon: false,

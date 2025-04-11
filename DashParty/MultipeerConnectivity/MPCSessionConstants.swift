@@ -89,7 +89,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         self.maxNumPeers = maxPeers
         self.matchManager = matchManager
 
-        let peerID = MCPeerID(displayName: HUBPhoneManager.instance.roomName)
+        let peerID = MCPeerID(displayName: UIDevice.current.name) //HUBPhoneManager.instance.roomName
         self.localPeerID = peerID
         self.mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .optional)
 
