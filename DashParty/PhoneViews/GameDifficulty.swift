@@ -10,11 +10,12 @@ import CoreMotion
 
 struct GameDifficulty: View {
     
-    
     var multipeerSession : MPCSession!
     @State var navigate : Bool = false
     @State var changed: Bool = HUBPhoneManager.instance.changeScreen
     @State private var isActive = false
+    @State var currentName : String = ""
+    @State private var askForHostName = false
     
     
     
@@ -89,7 +90,19 @@ struct GameDifficulty: View {
                             )
                     }
                     
-                 
+                    .alert("Entre com seu nome", isPresented: $askForHostName) {
+                        TextField("Entre com seu nome", text: $currentName)
+                            Button("Cancelar", role: .cancel) { }
+                            
+                                Button {
+                                    HUBPhoneManager.instance.allPlayers[0].name = currentName
+                                    
+                                } label: {
+                                    Text("Salvar")
+                                }
+
+                           }
+                    
                     
                     Spacer()
                 }

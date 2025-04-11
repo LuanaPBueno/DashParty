@@ -49,7 +49,7 @@ class ChallengeManager {
                 )
             
         }
-        var startTime = Date.now //MARK: CONFERIR 
+        let startTime = Date.now //MARK: CONFERIR
         self.currentPlayerIndex = index
         AccelerationManager.accelerationInstance.startAccelerometer(
             
@@ -220,7 +220,7 @@ class ChallengeManager {
             
             case .stopped:
                 print("YOU WON")
-                var finishTime = Date()
+                let finishTime = Date()
                 players[currentPlayerIndex].progress += 100
                 currentChallenge = .stopped
                 youWon = true

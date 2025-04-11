@@ -9,8 +9,6 @@ import SwiftUI
 import CoreMotion
 
 struct HostOrPlayerView: View {
-    var multipeerSession : MPCSession = MPCSessionManager.shared
-    
     @State var navigateToHost : Bool = false
     @State var navigateToJoin : Bool = false
     @State var changed: Bool = HUBPhoneManager.instance.changeScreen
@@ -19,6 +17,7 @@ struct HostOrPlayerView: View {
     @State var showRoomAlert = false
     @State var userName: String = ""
     @State var roomName: String = ""
+    @State var askForHostName = false
     
     var body: some View {
         
@@ -33,11 +32,16 @@ struct HostOrPlayerView: View {
                 VStack(alignment: .center, spacing: 10) {
                     
                     Button(action: {
-                        multipeerSession.host = true
-                        multipeerSession.start()
-                        showRoomAlert = true
-                        HUBPhoneManager.instance.playername = "Host"
-                        HUBPhoneManager.instance.allPlayers[0].name = "Host"
+                        MPCSessionManager.shared.host = true
+                        MPCSessionManager.shared.start()
+                      //   showRoomAlert = true //MARK: MUDAR ISSO
+                        if userName != ""{
+                            navigateToHost = true
+                        }else{
+                            askForHostName = true
+                        }
+                        MPCSessionManager.shared.startSession(asHost: true)
+
                     }) {
                         Image("decorativeRectOrange")
                             .resizable()
@@ -51,17 +55,20 @@ struct HostOrPlayerView: View {
                     }
                     
                     NavigationLink(
-                        destination: GameDifficulty(multipeerSession: multipeerSession),
+                        destination: GameDifficulty(multipeerSession: MPCSessionManager.shared),
                         isActive: $navigateToHost,
                         label: { EmptyView() }
                     )
                     
                     
                     Button(action: {
-                        
-                        multipeerSession.host = false
-                        showAlert = true
-                       // multipeerSession.configureAsClient()
+                        MPCSessionManager.shared.host = false
+                        MPCSessionManager.shared.startSession(asHost: false)
+                        if userName != ""{
+                            navigateToHost = true
+                        }else{
+                            showAlert = true
+                        }
                     }) {
                         Image("decorativeRectBlue")
                             .resizable()
@@ -79,87 +86,64 @@ struct HostOrPlayerView: View {
                     
                     
                     NavigationLink(
-                        destination: RoomListView(multipeerSession: multipeerSession),
+                        destination: RoomListView(multipeerSession: MPCSessionManager.shared),
                         isActive: $navigateToJoin,
                         label: { EmptyView() }
                     )
                     
                 }
                 
-                
-                if showRoomAlert {
-                    Color.black.opacity(0.4)
-                        .edgesIgnoringSafeArea(.all)
-                    
-                    VStack(spacing: 20) {
-                        Text("Digite o nome da sala")
-                            .font(.headline)
+                .alert("Entre com seu nome", isPresented: $askForHostName) {
+                    TextField("Entre com seu nome", text: $userName)
+                        Button("Cancelar", role: .cancel) { }
                         
-                        TextField("Nome", text: $roomName)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .padding(.horizontal)
-                        
-                        HStack {
-                            Button("Cancelar") {
-                                showAlert = false
-                            }
-                            .foregroundColor(.red)
-                            
-                            Spacer()
-                            
-                            Button("Salvar") {
-                                HUBPhoneManager.instance.roomName = roomName
-                             //   multipeerSession.configureAsHost()
-                                showAlert = false
+                            Button {
+                                HUBPhoneManager.instance.allPlayers[0].name = userName
                                 navigateToHost = true
-
-                                
+                            } label: {
+                                Text("Salvar")
                             }
-                        }
-                        .padding(.horizontal)
-                    }
-                    .padding()
-                    .background(Color(.systemBackground))
-                    .cornerRadius(16)
-                    .shadow(radius: 10)
-                    .frame(maxWidth: 300)
-                }
 
+                       }
                 
-                if showAlert {
-                    Color.black.opacity(0.4)
-                        .edgesIgnoringSafeArea(.all)
-                    
-                    VStack(spacing: 20) {
-                        Text("Digite seu nome")
-                            .font(.headline)
+                .alert("Entre com seu nome", isPresented: $showAlert) {
+                    TextField("Entre com seu nome", text: $userName)
+                        Button("Cancelar", role: .cancel) { }
                         
-                        TextField("Seu nome", text: $userName)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .padding(.horizontal)
-                        
-                        HStack {
-                            Button("Cancelar") {
-                                showAlert = false
-                            }
-                            .foregroundColor(.red)
-                            
-                            Spacer()
-                            
-                            Button("Salvar") {
+                            Button {
                                 HUBPhoneManager.instance.playername = userName
                                 showAlert = false
                                 navigateToJoin = true
+                            } label: {
+                                Text("Salvar")
                             }
-                        }
-                        .padding(.horizontal)
-                    }
-                    .padding()
-                    .background(Color(.systemBackground))
-                    .cornerRadius(16)
-                    .shadow(radius: 10)
-                    .frame(maxWidth: 300)
-                }
+
+                       }
+//                
+//                .alert("Entre com o nome da sala", isPresented: $showRoomAlert) {
+//                    TextField("Entre com o nome da sala", text: $userName)
+//                        Button("Cancelar", role: .cancel) { }
+//                        
+//                            Button {
+//                                HUBPhoneManager.instance.roomName = roomName
+//                                showAlert = false
+//                                navigateToHost = true
+//                                askForHostName = true
+//                                
+//                            } label: {
+//                                Text("Salvar")
+//                            }
+//
+//                       }
+                
+                
+     
+                
+                
+               
+
+                
+              
             }
         }
     

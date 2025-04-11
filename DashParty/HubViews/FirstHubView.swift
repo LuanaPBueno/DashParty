@@ -20,7 +20,7 @@ struct FirstHubView: View {
                     .edgesIgnoringSafeArea(.all)
                 Text("Choose level hub") //MARK: TIRAR
             } else {
-                NarrativeView(multipeerSession: MPCSessionManager.shared)
+                NarrativeView()
                 Text("Narrative view") //MARK: TIRAR
             }
         }
