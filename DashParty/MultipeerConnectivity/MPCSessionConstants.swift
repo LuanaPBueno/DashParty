@@ -1,3 +1,4 @@
+
 import Foundation
 import MultipeerConnectivity
 import CoreMotion
@@ -57,74 +58,32 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     }
     
     // MARK: - Initialization
-//    init(service: String, identity: String, maxPeers: Int, matchManager: ChallengeManager) {
-//        self.serviceString = service
-//        self.identityString = identity
-//        self.maxNumPeers = maxPeers
-//        self.matchManager = matchManager
-//        
-//        // Primeiro criamos o peerID
-//        let peerID = MCPeerID(displayName: HUBPhoneManager.instance.roomName)
-//        
-//        // Depois inicializamos as propriedades que dependem do peerID
-//        self.localPeerID = peerID
-//        self.mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .optional)
-//        self.mcAdvertiser = MCNearbyServiceAdvertiser(
-//            peer: peerID,
-//            discoveryInfo: [MPCSessionConstants.kKeyIdentity: identityString],
-//            serviceType: serviceString
-//        )
-//        
-//        // Agora podemos chamar super.init()
-//        super.init()
-//        
-//        
-//        self.mcSession.delegate = self
-//        self.mcAdvertiser.delegate = self
-//        self.resetBrowser()
-//    }
     init(service: String, identity: String, maxPeers: Int, matchManager: ChallengeManager) {
         self.serviceString = service
         self.identityString = identity
         self.maxNumPeers = maxPeers
         self.matchManager = matchManager
-
+        
+        // Primeiro criamos o peerID
         let peerID = MCPeerID(displayName: UIDevice.current.name) //HUBPhoneManager.instance.roomName
+        
+        // Depois inicializamos as propriedades que dependem do peerID
         self.localPeerID = peerID
         self.mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .optional)
-
-        // Não criar ainda os componentes de advertising/browsing
-        self.mcAdvertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: serviceString)
-        self.mcBrowser = nil
-
-        super.init()
-        self.mcSession.delegate = self
-    }
-
-    func configureAsHost() {
-        self.host = true
-
-        // Configura o advertiser
-        mcAdvertiser = MCNearbyServiceAdvertiser(
-            peer: localPeerID,
+        self.mcAdvertiser = MCNearbyServiceAdvertiser(
+            peer: peerID,
             discoveryInfo: [MPCSessionConstants.kKeyIdentity: identityString],
             serviceType: serviceString
         )
-        mcAdvertiser.delegate = self
-        mcAdvertiser.startAdvertisingPeer()
-
-        print("🚀 Host configurado e sala criada.")
+        
+        // Agora podemos chamar super.init()
+        super.init()
+        
+        
+        self.mcSession.delegate = self
+        self.mcAdvertiser.delegate = self
+        self.resetBrowser()
     }
-
-    func configureAsClient() {
-        self.host = false
-
-        resetBrowser()
-        mcBrowser?.startBrowsingForPeers()
-
-        print("🔍 Procurando por salas...")
-    }
-
     
     // MARK: - Session Management
     private func resetSession() {
@@ -161,12 +120,9 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         mcBrowser?.stopBrowsingForPeers()
     }
     
-    
     func invalidate() {
         suspend()
         mcSession.disconnect()
-
-        
     }
     
     // MARK: - Invitation Handling
@@ -188,8 +144,6 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     func sendDataToAllPeers(data: Data) {
         sendData(data: data, peers: mcSession.connectedPeers, mode: .reliable)
     }
-    
-    
     
     func sendData(data: Data, peers: [MCPeerID], mode: MCSessionSendDataMode) {
         let connectedPeers = mcSession.connectedPeers.filter { peers.contains($0) }

@@ -33,7 +33,6 @@ struct HostOrPlayerView: View {
                 VStack(alignment: .center, spacing: 10) {
                     
                     Button(action: {
-                        navigateToHost = true
                         multipeerSession.host = true
                         multipeerSession.start()
                         showRoomAlert = true
@@ -62,7 +61,7 @@ struct HostOrPlayerView: View {
                         
                         multipeerSession.host = false
                         showAlert = true
-                        multipeerSession.configureAsClient()
+                       // multipeerSession.configureAsClient()
                     }) {
                         Image("decorativeRectBlue")
                             .resizable()
@@ -110,9 +109,11 @@ struct HostOrPlayerView: View {
                             
                             Button("Salvar") {
                                 HUBPhoneManager.instance.roomName = roomName
-                                multipeerSession.configureAsHost()
+                             //   multipeerSession.configureAsHost()
                                 showAlert = false
-                                navigateToJoin = true
+                                navigateToHost = true
+
+                                
                             }
                         }
                         .padding(.horizontal)
