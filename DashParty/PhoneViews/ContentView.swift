@@ -10,7 +10,7 @@ import CoreMotion
 
 struct ContentView: View {
     @Binding var router: Router
-    var multipeerSession : MPCSession!
+    
     @State var navigate : Bool = false
     @State var changed: Bool = HUBPhoneManager.instance.changeScreen
     @State private var isActive = false

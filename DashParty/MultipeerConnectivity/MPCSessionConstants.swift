@@ -63,11 +63,9 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         self.identityString = identity
         self.maxNumPeers = maxPeers
         self.matchManager = matchManager
+    
+        let peerID = MCPeerID(displayName: UIDevice.current.name)
         
-        // Primeiro criamos o peerID
-        let peerID = MCPeerID(displayName: UIDevice.current.name) //HUBPhoneManager.instance.roomName
-        
-        // Depois inicializamos as propriedades que dependem do peerID
         self.localPeerID = peerID
         self.mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .optional)
         self.mcAdvertiser = MCNearbyServiceAdvertiser(
@@ -76,14 +74,26 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             serviceType: serviceString
         )
         
-        // Agora podemos chamar super.init()
         super.init()
-        
         
         self.mcSession.delegate = self
         self.mcAdvertiser.delegate = self
-        self.resetBrowser()
+       // self.resetBrowser() -> Aqui, ele inicia
+        self.mcBrowser = MCNearbyServiceBrowser(peer: localPeerID, serviceType: serviceString)
+        self.mcBrowser?.delegate = self
     }
+    
+    func startSession(asHost: Bool) {
+        self.host = asHost
+        if host {
+            print("🧑‍💼 Iniciando como HOST")
+            mcAdvertiser.startAdvertisingPeer()
+        } else {
+            print("🎮 Iniciando como PLAYER")
+            mcBrowser?.startBrowsingForPeers()
+        }
+    }
+
     
     // MARK: - Session Management
     private func resetSession() {
@@ -264,7 +274,6 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     }
     
     // MARK: - MCNearbyServiceBrowserDelegate
-    // Em MPCSession, modifique o método browser(_:foundPeer:withDiscoveryInfo:)
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String: String]?) {
         print("👀 Peer encontrado: \(peerID.displayName), \(host)")
         guard let identityValue = info?[MPCSessionConstants.kKeyIdentity] else {
@@ -274,7 +283,6 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         
         if identityValue == identityString {
             if host {
-                // Host convida peers quando encontra
                 if mcSession.connectedPeers.count < maxNumPeers {
                     print("📡 Host enviando convite para \(peerID.displayName)")
                     browser.invitePeer(peerID, to: mcSession, withContext: nil, timeout: 10)
