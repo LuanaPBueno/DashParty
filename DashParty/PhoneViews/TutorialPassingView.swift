@@ -26,59 +26,63 @@ struct TutorialPassingView: View {
     
     var body: some View {
         ZStack {
-                    Image(currentTutorialImage[safe: hubManager.actualTutorialIndex] ?? "fallbackImage")
+            // Background do tutorial
+            Image(currentTutorialImage[safe: hubManager.actualTutorialIndex] ?? "fallbackImage")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+
+            // Botão de Start, posicionado fixo no rodapé com ZStack
+            if hubManager.actualTutorialIndex == 1 {
+                VStack {
+                    Spacer()
+                    Image("startMatchButton")
                         .resizable()
-                        .scaledToFill()
-                        .ignoresSafeArea()
-
-                    VStack {
-                        Spacer()
-                        
-                        HStack {
-                            // BACK BUTTON
-                            Button(action: {
-                                if hubManager.actualTutorialIndex > 0 {
-                                    hubManager.actualTutorialIndex -= 1
-                                }
-                            }) {
-                                Image("backButton")
-                                    .resizable()
-                                    .frame(width: 40, height: 40)
-                                    .opacity(hubManager.actualTutorialIndex == 0 ? 0.2 : 1.0)
-                            }
-
-                            Spacer()
-
-                            // NEXT BUTTON
-                            Button(action: {
-                                if hubManager.actualTutorialIndex < currentTutorialImage.count - 1 {
-                                    hubManager.actualTutorialIndex += 1
-                                }
-                            }) {
-                                Image("nextButton")
-                                    .resizable()
-                                    .frame(width: 40, height: 40)
-                                    .opacity(hubManager.actualTutorialIndex == 1 ? 0.2 : 1.0)
-                            }
+                        .scaledToFit()
+                        .frame(width: 100, height: 100)
+                        .onTapGesture {
+                            HUBPhoneManager.instance.startMatch = true
+                            pass = true
                         }
-                        .padding(.horizontal, 40)
-                        .padding(.bottom, 30)
+                        //.padding(.bottom, 150) // posição personalizada
+                }
+            }
 
-                        // START BUTTON (aparece só na última imagem)
-                        if hubManager.actualTutorialIndex == 1 {
-                            Spacer()
-                            Button(action: {
-                                HUBPhoneManager.instance.startMatch = true
-                                pass = true
-                            }) {
-                                Image("startMatchButton")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 100, height: 100)
-                            }
+            // Botões de navegação no rodapé
+            VStack {
+                Spacer()
+                HStack {
+                    // BACK BUTTON
+                    Button(action: {
+                        if hubManager.actualTutorialIndex > 0 {
+                            hubManager.actualTutorialIndex -= 1
                         }
+                    }) {
+                        Image("backButton")
+                            .resizable()
+                            .frame(width: 40, height: 40)
+                            .opacity(hubManager.actualTutorialIndex == 0 ? 0.2 : 1.0)
+                    }
+
+                    Spacer()
+
+                    // NEXT BUTTON
+                    Button(action: {
+                        if hubManager.actualTutorialIndex < currentTutorialImage.count - 1 {
+                            hubManager.actualTutorialIndex += 1
+                        }
+                    }) {
+                        Image("nextButton")
+                            .resizable()
+                            .frame(width: 40, height: 40)
+                            .opacity(hubManager.actualTutorialIndex == 1 ? 0.2 : 1.0)
                     }
                 }
+                .padding(.horizontal, 40)
+                .padding(.bottom, 30)
+            }
+        }
+
         .onAppear {
             hubManager.actualTutorialIndex = 0
         }
