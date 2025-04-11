@@ -26,9 +26,9 @@ struct YouWonView: View {
 
     private func formatTimeInterval(_ interval: TimeInterval) -> String {
         let formatter = DateComponentsFormatter()
-//        formatter.allowedUnits = [.minute, .second]
-//        formatter.unitsStyle = .positional
-//        formatter.zeroFormattingBehavior = .pad
+        formatter.allowedUnits = [.minute, .second]
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
         return formatter.string(from: interval) ?? "00:00"
     }
     
@@ -53,7 +53,7 @@ struct YouWonView: View {
                         .font(.title3)
                         .frame(width: 30, alignment: .leading)
                     
-                    Text(ranked.player.id.uuidString)
+                    Text(ranked.player.name)
                     
                     Text(ranked.formattedTime)
                         .font(.title3)

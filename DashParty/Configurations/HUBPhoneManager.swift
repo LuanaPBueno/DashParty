@@ -12,7 +12,11 @@ import SwiftUI
 class HUBPhoneManager {
     static let instance = HUBPhoneManager()
     
+    var roomName : String = ""
+    
     var user = User(name: "Eu")
+    
+    var playername: String = ""
     
     var users: [User] = []
     
@@ -37,6 +41,8 @@ class HUBPhoneManager {
     
     var endedGame: Bool = false
     
+    var currentName = UIDevice.current.name
+    
     var actualPage: Int = 0
     
     var startMatch: Bool = false
@@ -53,6 +59,7 @@ class HUBPhoneManager {
            self.allPlayers = [
                SendingPlayer(
                    id: self.user.id,
+                   name: HUBPhoneManager.instance.playername,
                    currentSituation: self.matchManager.currentSituation,
                    currentChallenge: self.matchManager.currentChallenge,
                    youWon: false,
