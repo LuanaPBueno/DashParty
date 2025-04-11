@@ -26,6 +26,8 @@ struct NarrativePassingView: View {
             
             VStack {
                 
+                Spacer()
+                
                 Text("FOLLOW THE STORY ON THE BIG SCREEN!")
                     .multilineTextAlignment(.center)
                     .font(.custom("TorukSC-Regular", size: 30))
@@ -48,19 +50,6 @@ struct NarrativePassingView: View {
                         }
                         Spacer()
                         Button {
-                            hubManager.actualPage = hubManager.narrativeText.count
-                            navigate = true
-                            HUBPhoneManager.instance.passToTutorialView = true
-                            
-                            DispatchQueue.main.async {
-                                //                                self.hubManager.objectWillChange.send()
-                            }
-                            
-                        } label: {
-                            Image("skipNarrativeButton")
-                        }
-                        Spacer()
-                        Button {
                             if hubManager.actualPage < hubManager.narrativeText.count - 1 {
                                 hubManager.actualPage += 1
                             } else {
@@ -76,9 +65,23 @@ struct NarrativePassingView: View {
                         }
                         Spacer()
                     }
-                    
-                    Spacer()
                 }
+                
+                Spacer()
+                   
+                Button {
+                        hubManager.actualPage = hubManager.narrativeText.count
+                        navigate = true
+                        HUBPhoneManager.instance.passToTutorialView = true
+                        
+                        DispatchQueue.main.async {
+                            //                                self.hubManager.objectWillChange.send()
+                        }
+                      
+                        
+                    } label: {
+                        Image("skip")
+                    }
                 
                 NavigationLink(
                     destination: TutorialPassingView(multipeerSession: multipeerSession),
@@ -86,6 +89,7 @@ struct NarrativePassingView: View {
                     label: { EmptyView() }
                 )
                 
+                Spacer()
             }
             .task{
                 HUBPhoneManager.instance.users = HUBPhoneManager.instance.allPlayers.map { player in
@@ -105,3 +109,7 @@ struct NarrativePassingView: View {
         }
     }
 }
+
+                                  #Preview {
+                                      NarrativePassingView()
+                                  }

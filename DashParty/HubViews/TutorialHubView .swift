@@ -26,14 +26,10 @@ struct TutorialHubView: View {
     var body: some View {
         if !hubManager.startMatch {
             if currentTutorialImage[safe: hubManager.actualTutorialIndex] == "tutorialToStart"{
-                ZStack{
-                    Image("greenBackground")
-                        .resizable()
-                        .scaledToFill()
-                        .edgesIgnoringSafeArea(.all)
+                
                     
                     Image("startMatchButton")
-                }
+                
             
             }else{
                 Image(currentTutorialImage[safe: hubManager.actualTutorialIndex] ?? "")
@@ -57,3 +53,6 @@ extension Array {
     }
 }
 
+#Preview {
+    TutorialHubView(multipeerSession: MPCSessionManager.shared)
+}

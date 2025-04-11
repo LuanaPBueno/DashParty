@@ -34,7 +34,7 @@ struct NarrativeView: View {
                     }
                 } else {
                     Text("Fim da narrativa!")
-                        .font(.custom("Prompt-Regular", size: 28, relativeTo: .title))
+                        .font(.custom("TorukSC-Light", size: 28, relativeTo: .title))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                 }
@@ -48,7 +48,7 @@ struct NarrativeView: View {
                         }
                     }) {
                         Text("Próximo")
-                            .font(.custom("Prompt-Regular", size: 24))
+                            .font(.custom("TorukSC-Light", size: 24, relativeTo: .title))
                             .foregroundColor(.blue)
                     }
                 }
@@ -56,10 +56,10 @@ struct NarrativeView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background {
-                Image("narrativeBackground")
+                Image("blurFlorest")
                     .resizable()
                     .scaledToFill()
-                    .edgesIgnoringSafeArea(.all)
+                    .ignoresSafeArea()
             }
         } else{
             TutorialHubView(multipeerSession : multipeerSession)
@@ -78,14 +78,14 @@ struct NarrativeView: View {
                     Text(hubManager.narrativeText[hubManager.actualPage].keys.first ?? "")
                         .lineLimit(nil)
                         .foregroundColor(.black)
-                        .font(.custom("Prompt-Regular", size: 40, relativeTo: .title))
+                        .font(.custom("TorukSC-Light", size: 32, relativeTo: .title))
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 50)
                     
                         .frame(maxWidth: .infinity)
                     
                         .background{
-                            Image("narrativeTextBackground")
+                            Image("decorativeRectCream")
                                 .resizable()
                                 .scaledToFill()
                                 .padding(.horizontal, 30)
@@ -115,14 +115,14 @@ struct NarrativeView: View {
                     Text(hubManager.narrativeText[hubManager.actualPage].keys.first ?? "")
                         .lineLimit(nil)
                         .foregroundColor(.black)
-                       .font(.custom("Prompt-Regular", size: 40, relativeTo: .title))
+                       .font(.custom("TorukSC-Light", size: 32, relativeTo: .title))
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 50)
                     
                         .frame(maxWidth: .infinity)
                     
                         .background{
-                            Image("narrativeTextBackground")
+                            Image("decorativeRectCream")
                                 .resizable()
                                 .scaledToFill()
                                 .padding(.horizontal, 30)
@@ -190,5 +190,8 @@ struct NarrativeView: View {
     }
 }
     
+#Preview {
+    NarrativeView(multipeerSession: MPCSessionManager.shared)
+}
 
 
