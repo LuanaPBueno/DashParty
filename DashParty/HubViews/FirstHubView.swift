@@ -14,14 +14,13 @@ struct FirstHubView: View {
     var body: some View {
         ZStack {
             if !hubManager.changeScreen {
-                Image("chooseLevelHub")
+                Image("firstBackground")
                     .resizable()
                     .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
                 Text("Choose level hub") //MARK: TIRAR
             } else {
                 NarrativeView(multipeerSession: MPCSessionManager.shared)
-                Text("Narrative view") //MARK: TIRAR
             }
         }
     }

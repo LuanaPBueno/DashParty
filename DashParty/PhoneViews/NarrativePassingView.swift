@@ -18,11 +18,10 @@ struct NarrativePassingView: View {
     
     var body: some View {
         ZStack{
-            Image("blurFlorest")
+            Image("blurflorest")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
-            
             
             VStack {
                 

@@ -5,13 +5,15 @@
 //  Created by Luana Bueno on 11/03/25.
 //
 
+
 import SwiftUI
 import CoreMotion
 
 struct ContentView: View {
     
     var multipeerSession : MPCSession!
-    @State var navigate : Bool = false
+    @State var navigateToOptions : Bool = false
+    @State var navigateToPlay : Bool = false
     @State var changed: Bool = HUBPhoneManager.instance.changeScreen
     @State private var isActive = false
     
@@ -56,7 +58,7 @@ struct ContentView: View {
                     
                     HStack(alignment: .center){
                         Button(action: {
-                            navigate = true
+                            navigateToPlay = true
                         }) {
                             Image("decorativeRectOrange")
                                 .resizable()
@@ -72,13 +74,13 @@ struct ContentView: View {
                         NavigationLink(
                             destination: HostOrPlayerView(),
                           //  destination: ChooseHierarchyView(),
-                            isActive: $navigate,
+                            isActive: $navigateToPlay,
                             label: { EmptyView() }
                         )
                         
                         
                         Button(action: {
-                            navigate = true
+                            navigateToOptions = true
                         }) {
                             Image("decorativeRectOrange")
                                 .resizable()
@@ -93,8 +95,8 @@ struct ContentView: View {
                         }
                         
                         NavigationLink(
-                            destination: CreditsView(),
-                            isActive: $navigate,
+                            destination: OptionsView(),
+                            isActive: $navigateToOptions,
                             label: { EmptyView() }
                         )
                     }

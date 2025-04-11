@@ -12,69 +12,101 @@ struct YouWonView: View {
     
     @Environment(\.dismiss) var dismiss
     
+    @State var navigate: Bool = false
+    
     var players: [SendingPlayer] = HUBPhoneManager.instance.allPlayers
     
     var rankedPlayers: [(player: SendingPlayer, formattedTime: String)] {
         guard !players.isEmpty else { return [] }
-
+        
         return players.sorted { $0.interval < $1.interval }
             .map { player in
                 let formattedTime = formatTimeInterval(player.interval)
                 return (player, formattedTime)
             }
     }
-
+    
     private func formatTimeInterval(_ interval: TimeInterval) -> String {
         let formatter = DateComponentsFormatter()
-//        formatter.allowedUnits = [.minute, .second]
-//        formatter.unitsStyle = .positional
-//        formatter.zeroFormattingBehavior = .pad
         return formatter.string(from: interval) ?? "00:00"
     }
     
     var hubManager = HUBPhoneManager.instance
     
     var body: some View {
-        VStack {
-            Text("RACE COMPLETE!")
-                .font(.system(size: 70, weight: .bold, design: .default))
-                .font(.title2)
+        ZStack{
+            Image("purpleBackground")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
             
-            Text("⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯")
-                .font(.title2)
             
-            Text("FINAL RANKING:\n")
-                .font(.title)
+            VStack {
+              Spacer()
+                Text("RACE COMPLETE!")
+                    .font(.custom("TorukSC-Regular", size: 30))
+                    .foregroundColor(.white)
                 
-            
-            ForEach(Array(rankedPlayers.enumerated()), id: \.offset) { index, ranked in
-                HStack {
-                    Text("#\(index + 1)")
-                        .font(.title3)
-                        .frame(width: 30, alignment: .leading)
-                    
-                    Text(ranked.player.id.uuidString)
-                    
-                    Text(ranked.formattedTime)
-                        .font(.title3)
-                       
+               
+                HStack{
+                    ForEach(1...4, id: \.self) { index in
+                        Image("bunnyFinal\(index)")
+                            .resizable()
+                            .scaledToFit()
+                        
+                    }
                 }
-                .padding(.horizontal)
-                .foregroundColor(.white)
+                    Text("FINAL RANKING:")
+                        .font(.custom("TorukSC-Regular", size: 30))
+                        .foregroundColor(.white)
+                    
+                    ForEach(Array(rankedPlayers.enumerated()), id: \.offset) { index, ranked in
+                        
+                        HStack {
+                            Text("#\(index + 1)")
+                                .font(.title3)
+                            
+                            Text(ranked.player.id.uuidString)
+                            
+                            Text(ranked.formattedTime)
+                                .font(.title3)
+                            
+                        }
+                        .foregroundColor(.white)
+                    }
+                    
+                    
+                    
+                    Button(action: {
+                        navigate = true
+                    }) {
+                        Image("rematchButton")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 200, height: 80)
+                        
+                    }
+                    
+                    NavigationLink(
+                        destination: ContentView(),
+                        isActive: $navigate,
+                        label: { EmptyView() }
+                    )
+                }
             }
             
-            Text("COME ON! THINK YOU CAN GO FASTER?")
-                .font(.title3)
-        }
-
-        .onAppear {
-            HUBPhoneManager.instance.endedGame = true
-            if hubManager.newGame {
-                DispatchQueue.main.async {
-                    dismiss()
+            .onAppear {
+                HUBPhoneManager.instance.endedGame = true
+                if hubManager.newGame {
+                    DispatchQueue.main.async {
+                        dismiss()
+                    }
                 }
             }
         }
     }
+
+#Preview {
+    YouWonView()
 }
 

@@ -21,15 +21,13 @@ struct TutorialHubView: View {
     }
 
     
-    var currentTutorialImage: [String] = ["tutorialBackgroundHub1", "tutorialBackgroundHub2", "tutorialBackgroundHub3", "tutorialToStart"]
+    var currentTutorialImage: [String] = ["tutorial3hub", "tutorial2hub", "tutorial3hub"]
     
     var body: some View {
         if !hubManager.startMatch {
             if currentTutorialImage[safe: hubManager.actualTutorialIndex] == "tutorialToStart"{
                 
                     
-                    Image("startMatchButton")
-                
             
             }else{
                 Image(currentTutorialImage[safe: hubManager.actualTutorialIndex] ?? "")
