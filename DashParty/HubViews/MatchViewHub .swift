@@ -29,6 +29,10 @@ struct MatchViewHub: View {
             VStack{
                 Spacer()
                 VStack{
+                    Text(HUBPhoneManager.instance.allPlayers[index].name)
+                        .font(.custom("Prompt-Black",size: 64))
+                        .foregroundColor(.black)
+                        .background(Color.white)
                     Spacer()
                     Image("\(characterImage)")
                     Spacer()
@@ -41,10 +45,10 @@ struct MatchViewHub: View {
             
             if matchManager.players.isEmpty == false {
                 if displayedChallenge == .stopped {
-                    //                    let interval = finishTime?.timeIntervalSince(startTime)
-                    //                    YouWonView(interval: interval ?? 00)
-                    //                        .task { self.finishTime = Date() }
                     Text("Você acabou, espere pelo ranking")
+                        .background(Color.white)
+                        .font(.custom("Prompt-Black",size: 64))
+                        .foregroundColor(.black)
                     
                 } else {
                     VStack{

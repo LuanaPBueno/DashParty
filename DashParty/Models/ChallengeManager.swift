@@ -41,8 +41,9 @@ class ChallengeManager {
         self.players = users.map { user in
             Player(
                 user: users[0],
-                challenges: [Challenge .jumping, .openingDoor, .balancing]
-                    .flatMap { Array(repeating: $0, count: 4) }
+                
+                challenges: [Challenge .jumping,/* .openingDoor, .balancing*/]
+                    .flatMap { Array(repeating: $0, count: 2) }
                     .shuffled()
                     .flatMap { [$0, .running] }
                 )

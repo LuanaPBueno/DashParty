@@ -25,7 +25,7 @@ struct MatchGridView: View {
     var body: some View {
         if !ranking{
             LazyVGrid(columns: columns, spacing: 10) {
-                ForEach(0..<max(2, HUBPhoneManager.instance.allPlayers.count), id: \.self) { i in
+                ForEach(0..<HUBPhoneManager.instance.allPlayers.count, id: \.self) { i in
                     MatchViewHub(users: users, index: i, matchManager: matchManager)
                         .border(Color.red)
                     
