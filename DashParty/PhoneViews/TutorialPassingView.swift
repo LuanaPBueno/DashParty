@@ -24,51 +24,63 @@ struct TutorialPassingView: View {
     var currentTutorialImage: [String] = ["tutorialImage1", "tutorialImage2", "tutorialImage3", ""]
     
     var body: some View {
-        
-             VStack{
-                 Text("Press start after reading the tutorial!")
-                     .font(.custom("TorukSC-Regular", size: 30))
-                     .multilineTextAlignment(.center)
-
-            HStack {
-                if currentTutorialImage[safe: hubManager.actualTutorialIndex] == ""{
-                    
-                    Button {
-                        HUBPhoneManager.instance.startMatch = true
-                        
-                        pass = true
-                        
-                        DispatchQueue.main.async {
-//                            self.hubManager.objectWillChange.send()
-                        }
-                        
-                    } label: {
-                        Image("startMatchButton")
-                        
-                    }
-                }else{
-                    Image(currentTutorialImage[safe: hubManager.actualTutorialIndex] ?? "fallbackImage")
-                        .resizable()
-                        .scaledToFit()
-                        .edgesIgnoringSafeArea(.all)
-                }
+        ZStack{
+            Image("purpleBackground")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+            
+            VStack{
+                Spacer()
                 
-                HStack {
-                    if currentTutorialImage[safe: hubManager.actualTutorialIndex] != ""{
+                Text("Press start after reading the tutorial!")
+                    .font(.custom("TorukSC-Regular", size: 30))
+                    .foregroundColor(.white)
+                    .multilineTextAlignment(.center)
+                
+                
+                    if currentTutorialImage[safe: hubManager.actualTutorialIndex] == ""{
                         
-                        Button(action: {
-                            self.hubManager.actualTutorialIndex += 1
-                        }) {
-                            Image("passNarrativeButton")
+                        Button {
+                            HUBPhoneManager.instance.startMatch = true
+                            
+                            pass = true
+                            
+                            DispatchQueue.main.async {
+                                //                            self.hubManager.objectWillChange.send()
+                            }
+                            
+                        } label: {
+                            Image("startMatchButton")
+                            
+                        }
+                    }else{
+                        HStack{
+                            Spacer()
+                            Image(currentTutorialImage[safe: hubManager.actualTutorialIndex] ?? "fallbackImage")
                                 .resizable()
-                                .frame(width: 40, height: 40)
+                                .scaledToFit()
+                            Spacer()
                         }
-                        .padding()
                     }
-                }
-            }
-        }
+                    
+                    Spacer()
                 
+                        if currentTutorialImage[safe: hubManager.actualTutorialIndex] != ""{
+                            
+                            Button(action: {
+                                self.hubManager.actualTutorialIndex += 1
+                            }) {
+                                Image("passNarrativeButton")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                            
+                            
+                        }
+                    }
+                
+            }
+            
             
             NavigationLink(
                 //MARK: TIRAR USERS
@@ -79,6 +91,10 @@ struct TutorialPassingView: View {
             
         }
     }
+}
     
-    
+#Preview {
+    TutorialPassingView(multipeerSession: MPCSessionManager.shared)
+}
+
 
