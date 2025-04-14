@@ -8,20 +8,23 @@
 import SwiftUI
 
 struct ContinueButton: View {
-    var text:String
+    var text: String
     var sizeFont: Int
+
     var body: some View {
-        ZStack{
+        ZStack {
             Image("decorativeRectOrange")
                 .resizable()
                 .scaledToFit()
             Text(text)
-                .font(.custom("TorukSC-Light", size: CGFloat(sizeFont), relativeTo: .title))
+                .font(.custom("TorukSC-Light", size: CGFloat(sizeFont)))
                 .foregroundColor(.white)
                 .multilineTextAlignment(.center)
+                .minimumScaleFactor(0.5)
         }
     }
 }
+
 
 #Preview {
     ContinueButton(text: "Continue", sizeFont: 34)

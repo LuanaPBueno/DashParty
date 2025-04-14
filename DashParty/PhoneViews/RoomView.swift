@@ -13,7 +13,7 @@ struct RoomView: View {
     @ObservedObject var multipeerSession: MPCSession
     @State var navigateHost: Bool = false
     @State var navigateToPlayerDisplayView: Bool = false
-
+    
     var body: some View {
         ZStack{
             Image("purpleBackground")
@@ -24,7 +24,15 @@ struct RoomView: View {
             VStack {
                 if multipeerSession.host {
                     VStack{
-                        Text("Im host")
+                        HStack{
+                            Button {
+                                print("clicou no back")
+                            } label: {
+                                Image("backButton")
+                            }
+                            Text("Waiting for players to join...")
+                                .font(.custom("TorukSC-Regular", size: 34))
+                        }
                         Text("Jogadores conectados:")
                             .font(.custom("TorukSC-Regular", size: 24))
                         List(multipeerSession.connectedPeersNames, id: \.self) { player in
@@ -33,9 +41,10 @@ struct RoomView: View {
                         Button {
                             router = .storyBoard
                         } label: {
-                            Text("Start Tutorial")
-                                .font(.custom("TorukSC-Regular", size: 24))
+                            ContinueButton(text: "Continue", sizeFont: 34)
                         }
+                        
+                        
                         
                     }
                 }
@@ -43,18 +52,18 @@ struct RoomView: View {
             }
         }
         .scrollContentBackground(.hidden)
-
+        
         .task{
             if !multipeerSession.host {
                 navigateToPlayerDisplayView = true
             }
         }
-//        .navigationDestination(isPresented: $navigateHost, destination: {
-//            WaitingView(multipeerSession: multipeerSession)
-//        })
-//        .navigationDestination(isPresented: $navigateToPlayerDisplayView, destination: {
-//            ConnectInHubView()
-//        })
+        //        .navigationDestination(isPresented: $navigateHost, destination: {
+        //            WaitingView(multipeerSession: multipeerSession)
+        //        })
+        //        .navigationDestination(isPresented: $navigateToPlayerDisplayView, destination: {
+        //            ConnectInHubView()
+        //        })
         .onChange(of: multipeerSession.mcSession.connectedPeers.map { $0.displayName }) {
             print(multipeerSession.mcSession.connectedPeers.map { $0.displayName })
         }

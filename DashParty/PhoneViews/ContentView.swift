@@ -23,65 +23,51 @@ struct ContentView: View {
     //    }
     
     var body: some View {
-        NavigationStack{
-           
             ZStack{
-                Image("firstBackground")
+                Image("titleScreen")
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
 
-                
-                VStack{
+                VStack {
                     Spacer()
+                    //Spacer()
                     Image("logoBranca")
                         .resizable()
                         .scaledToFit()
-                        .frame(maxWidth: 500)
+                        //.frame(maxWidth: 500)
                         .padding(.top, 40)
                     
-                    Spacer()
-                    
                     HStack(alignment: .center){
+                        Spacer()
                         Button(action: {
                             router = .play
                         }) {
-                            Image("decorativeRectOrange")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 150, height: 60)
-                                .overlay(
-                                    Text("PLAY")
-                                        .font(.custom("TorukSC-Regular", size: 28))
-                                        .foregroundColor(.white)
-                                )
+                            ContinueButton(text: "Play", sizeFont: 28)
+                                .padding(.vertical, 60)
+                                
                         }
+                        .padding(.trailing, 10)
+                        
+                        HStack(alignment: .center){
+                            Button(action: {
+                                router = .options
+                            }) {
+                                ContinueButton(text: "Options", sizeFont: 28)
+                                    .padding(.vertical, 60)
 
-                        Button(action: {
-                            router = .options
-                        }) {
-                            Image("decorativeRectOrange")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 150, height: 60)
-                                .overlay(
-                                    Text("Options")
-                                        .font(.custom("TorukSC-Regular", size: 28))
-                                        .foregroundColor(.white)
-                                    
-                                )
+                            }
+                            
                         }
+                        Spacer()
                     }
-                   Spacer()
+                    Spacer()
                 }
             }
-           
-                .navigationDestination(isPresented: $isActive) {
-                                      //  ChooseHierarchyView/()
-                }
-            }
-        }
+            
+        
     }
+}
 
 
 #Preview {
