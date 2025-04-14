@@ -39,6 +39,7 @@ enum Router {
     case victoryStory
     case ranking
     
+    case waitingRoom
     
     
     

@@ -16,7 +16,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         if session.role == .windowExternalDisplayNonInteractive{
             let window = UIWindow(windowScene: windowSecene)
-            window.rootViewController = UIHostingController(rootView: FirstHubView())
+            @Bindable var manager = HUBPhoneManager.instance
+            window.rootViewController = UIHostingController(rootView: RouterHubView(router: $manager.router))
             self.window = window
             window.makeKeyAndVisible()
         }

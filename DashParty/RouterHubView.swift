@@ -7,44 +7,37 @@
 
 import SwiftUI
 
-struct RouterView: View {
+struct RouterHubView: View {
     @Binding var router:Router
     var multipeerSession : MPCSession = MPCSessionManager.shared
+    let user = HUBPhoneManager.instance.user
+    @State var matchManager = HUBPhoneManager.instance.matchManager
     var body: some View {
         switch router {
         case .start:
-            ContentView(router: $router)
+            InitialView()
         case .options:
-            OptionsView()
+            InitialView()
         case .play:
-            HostOrPlayerView(router: $router)
+            InitialView()
         case .createRoom:
-            Text("CreateRoom")
+            InitialView()
         case .createName:
-            Text("CreateName")
+            InitialView()
         case .airplayInstructions:
-            ReadyView(router: $router)
+            InitialView()
         case .chooseRoom:
-            RoomListView(router: $router, multipeerSession: multipeerSession)
+            InitialView()
         case .waitingRoom:
-            WaitingView(router: $router, multipeerSession: multipeerSession)
+            InitialView()
         case .matchmaking:
             RoomView(router: $router, multipeerSession: multipeerSession)
         case .storyBoard:
-            if multipeerSession.host {
-                NarrativePassingView(router: $router)
-            }
-            else {
-                EyesOnTheHub()
-            }
+            NarrativeView()
         case .tutorial:
-            
-            TutorialPassingView(router: $router, multipeerSession: multipeerSession)
-            
-            
-            
+            TutorialHubView()
         case .game:
-            matchPhoneView()
+            MatchGridView(count: multipeerSession.mcSession.connectedPeers.count, user: user, matchManager: matchManager)
         case .victoryStory:
             Text("Victory")
         case .ranking:

@@ -12,6 +12,8 @@ import SwiftUI
 class HUBPhoneManager {
     static let instance = HUBPhoneManager()
     
+    var router:Router = .start
+    
     var roomName : String = ""
     
     var user = User(name: "Eu")

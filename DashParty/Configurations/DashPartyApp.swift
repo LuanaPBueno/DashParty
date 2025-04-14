@@ -21,7 +21,8 @@ struct DashPartyApp: App {
 //    }
     var body: some Scene {
         WindowGroup {
-            RouterView()
+            @Bindable var manager = HUBPhoneManager.instance
+            RouterView(router: $manager.router)
         }
     }
 }

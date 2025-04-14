@@ -99,6 +99,7 @@ struct HostOrPlayerView: View {
                 Button {
                     HUBPhoneManager.instance.allPlayers[0].name = userName
                     navigateToHost = true
+                    router = .matchmaking
                 } label: {
                     Text("Salvar")
                 }

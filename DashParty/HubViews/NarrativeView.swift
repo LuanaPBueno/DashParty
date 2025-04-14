@@ -54,7 +54,7 @@ struct NarrativeView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background {
-                Image("blurFlorest")
+                Image("blurForest")
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()

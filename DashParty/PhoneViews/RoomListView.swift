@@ -48,12 +48,12 @@ struct RoomListView: View {
 
                 }
             }
-            .alert("Convite Recebido", isPresented: $showingButtonInvitationAlert) {
-                Button("Aceitar") {
+            .alert("Are you sure you want to join?", isPresented: $showingButtonInvitationAlert) {
+                Button("Yes") {
                     multipeerSession.acceptInvitation()
-                    router = .storyBoard
+                    router = .waitingRoom
                 }
-                Button("Recusar", role: .cancel) {
+                Button("No", role: .cancel) {
                     multipeerSession.rejectInvitation()
                 }
             } message: {

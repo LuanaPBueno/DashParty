@@ -66,11 +66,11 @@ struct GameDifficulty: View {
                             )
                     }
                     
-                    NavigationLink(
-                        destination: WaitingView(multipeerSession: multipeerSession),
-                        isActive: $navigate,
-                        label: { EmptyView() }
-                    )
+//                    NavigationLink(
+//                        destination: WaitingView(multipeerSession: multipeerSession),
+//                        isActive: $navigate,
+//                        label: { EmptyView() }
+//                    )
                     
                     Spacer()
                     
