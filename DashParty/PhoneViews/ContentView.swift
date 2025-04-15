@@ -41,17 +41,17 @@ struct ContentView: View {
                         }
                         .padding(.trailing, 10)
                         
-                        HStack(alignment: .center){
-                            Button(action: {
-                                router = .options
-                            }) {
-                                OrangeButtonPhone(text: "Options", sizeFont: 28)
-                                    .padding(.vertical, 60)
-                                    
-
-                            }
-                            
-                        }
+//                        HStack(alignment: .center){
+//                            Button(action: {
+//                                router = .options
+//                            }) {
+//                                OrangeButtonPhone(text: "Options", sizeFont: 28)
+//                                    .padding(.vertical, 60)
+//                                    
+//
+//                            }
+//                            
+//                        }
                         Spacer()
                     }
                     Spacer()

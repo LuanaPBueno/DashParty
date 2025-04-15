@@ -24,18 +24,33 @@ struct RoomView: View {
             VStack {
                 if multipeerSession.host {
                     VStack{
-                        Button {
-                            router = .play
-                        } label: {
-                            Image("backButton")
-                        }
+                        Spacer()
+//                        Button {
+//                            router = .play
+//                        } label: {
+//                            Image("backButton")
+//                        }
                         HStack{
+                            
+                            
+                            Button {
+                                print("clicou no back")
+                            } label: {
+                                Image("backButton")
+                            }
+                            Spacer()
                             
                             Text("Waiting for players to join...")
                                 .font(.custom("TorukSC-Regular", size: 34))
+                                .foregroundColor(.white)
+                            
+                            Spacer()
+                            
                         }
                         Text("Connected players:")
                             .font(.custom("TorukSC-Regular", size: 24))
+                            .foregroundColor(.white)
+
                         List(multipeerSession.connectedPeersNames, id: \.self) { player in
                             Text(player)
                         }
@@ -70,5 +85,12 @@ struct RoomView: View {
 }
 
 #Preview {
-    RoomView(router: .constant(.matchmaking), multipeerSession: MPCSession(service: "banana", identity: "maça", maxPeers: 5, matchManager: ChallengeManager()))
+    let matchManager = ChallengeManager()
+    let session = MPCSession(service: "banana", identity: "maçã", maxPeers: 5, matchManager: matchManager)
+    
+    // Simular host e jogadores conectados para visualização
+    session.host = true
+    session.connectedPeersNames = ["Alice", "Bob", "Charlie"]
+    
+    return RoomView(router: .constant(.matchmaking), multipeerSession: session)
 }

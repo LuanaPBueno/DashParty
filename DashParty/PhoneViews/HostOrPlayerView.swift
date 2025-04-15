@@ -29,13 +29,21 @@ struct HostOrPlayerView: View {
                 .scaledToFill()
                 .ignoresSafeArea()
            
-            VStack(alignment: .center, spacing: 10) {
-                Button {
-                    router = .start
-                } label: {
-                    Image("backButton")
+            VStack{
+                
+                HStack{
+                    Button {
+                        router = .start
+                    } label: {
+                        Image("backButton")
+                            .scaledToFit()
+                            .frame(width: 200, height: 150)
+                    }
+                    Spacer()
                 }
-Spacer()
+                
+                
+                
                 Button(action: {
                     MPCSessionManager.shared.host = true
                     MPCSessionManager.shared.start()
@@ -81,9 +89,10 @@ Spacer()
                             
                         )
                 }
+                
+                
+                
                 Spacer()
-                
-                
             }
             
             .alert("Insert your name", isPresented: $askForHostName) {
@@ -143,8 +152,7 @@ Spacer()
             
         }
     }
-    
-}
+ }
 
 
 #Preview {
