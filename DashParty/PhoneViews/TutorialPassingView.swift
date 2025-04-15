@@ -27,13 +27,24 @@ struct TutorialPassingView: View {
     
     var body: some View {
         ZStack {
-            // Background do tutorial
+            
             Image(currentTutorialImage[safe: hubManager.actualTutorialIndex] ?? "fallbackImage")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
-
-            // Botão de Start, posicionado fixo no rodapé com ZStack
+            VStack{
+                HStack{
+                    Button {
+                        router = .storyBoard
+                    } label: {
+                        Image("backButton")
+                            .padding(.leading, 28)
+                            .padding(.top, 28)
+                    }
+                    Spacer()
+                }
+                Spacer()
+            }
             if hubManager.actualTutorialIndex == 5 {
                 VStack {
                     Spacer()

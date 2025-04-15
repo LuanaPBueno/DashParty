@@ -18,6 +18,36 @@
             endingLineNumber = "33"
             landmarkName = "setupMultipeerSession(_:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "9FA51398-6853-48B0-AA94-CFD51E7C98CF - 37f2d8721f45898b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "DashParty.ChallengeManager.setupMultipeerSession(DashParty.MPCSession) -&gt; ()"
+                  moduleName = "DashParty.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/fernandaauler/Developer/DashParty/DashParty/Models/ChallengeManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33">
+               </Location>
+               <Location
+                  uuid = "9FA51398-6853-48B0-AA94-CFD51E7C98CF - 27bf40783fed8d98"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Foundation.Data, __C.MCPeerID) -&gt; () in DashParty.ChallengeManager.setupMultipeerSession(DashParty.MPCSession) -&gt; ()"
+                  moduleName = "DashParty.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/fernandaauler/Developer/DashParty/DashParty/Models/ChallengeManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -34,6 +64,36 @@
             endingLineNumber = "235"
             landmarkName = "startupMPC()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F3A45D36-015B-49A7-AB6B-535894C3163D - 9314a2129c0c7f5a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "DashParty.ViewController.startupMPC() -&gt; ()"
+                  moduleName = "DashParty.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/fernandaauler/Developer/DashParty/DashParty/MultipeerConnectivity/MutipeerConectivityControler.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "235"
+                  endingLineNumber = "235">
+               </Location>
+               <Location
+                  uuid = "F3A45D36-015B-49A7-AB6B-535894C3163D - 4b22cb7db82e618f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "implicit closure #2 (__C.MCPeerID) -&gt; () in implicit closure #1 (DashParty.ViewController) -&gt; (__C.MCPeerID) -&gt; () in DashParty.ViewController.startupMPC() -&gt; ()"
+                  moduleName = "DashParty.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/fernandaauler/Developer/DashParty/DashParty/MultipeerConnectivity/MutipeerConectivityControler.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "235"
+                  endingLineNumber = "235">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
