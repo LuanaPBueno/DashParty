@@ -34,12 +34,10 @@ struct TutorialPassingView: View {
                 .ignoresSafeArea()
 
             // Botão de Start, posicionado fixo no rodapé com ZStack
-            if hubManager.actualTutorialIndex == 1 {
+            if hubManager.actualTutorialIndex == 5 {
                 VStack {
                     Spacer()
                     if multipeerSession.host{
-                        
-                        
                         Button {
                             HUBPhoneManager.instance.startMatch = true
                             router = .game
@@ -72,6 +70,7 @@ struct TutorialPassingView: View {
                                 .resizable()
                                 .frame(width: 40, height: 40)
                                 .opacity(hubManager.actualTutorialIndex == 0 ? 0.2 : 1.0)
+                                .disabled(hubManager.actualTutorialIndex == 0)
                         }
                         
                         Spacer()
@@ -85,7 +84,8 @@ struct TutorialPassingView: View {
                             Image("nextYellowButton")
                                 .resizable()
                                 .frame(width: 40, height: 40)
-                                .opacity(hubManager.actualTutorialIndex == 1 ? 0.2 : 1.0)
+                                .opacity(hubManager.actualTutorialIndex == 5 ? 0.2 : 1.0)
+                                .disabled(hubManager.actualTutorialIndex == 5)
                         }
                     }
                     .padding(.horizontal, 40)

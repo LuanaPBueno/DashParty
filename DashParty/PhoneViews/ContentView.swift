@@ -15,13 +15,6 @@ struct ContentView: View {
     @State var changed: Bool = HUBPhoneManager.instance.changeScreen
     @State private var isActive = false
     
-    //    let user = User(name: "Eu")
-    //    var users: [User] = [User(name: "A"), User(name: "B")]
-    //
-    //    var myPlayer: Player? {
-    //        matchManager.getPlayer(forUser: user.id)
-    //    }
-    
     var body: some View {
             ZStack{
                 Image("titleScreen")
@@ -43,7 +36,7 @@ struct ContentView: View {
                         Button(action: {
                             router = .play
                         }) {
-                            ContinueButton(text: "Play", sizeFont: 28)
+                            OrangeButtonPhone(text: "Play", sizeFont: 28)
                                 .padding(.vertical, 60)
                                 
                         }
@@ -53,8 +46,9 @@ struct ContentView: View {
                             Button(action: {
                                 router = .options
                             }) {
-                                ContinueButton(text: "Options", sizeFont: 28)
+                                OrangeButtonPhone(text: "Options", sizeFont: 28)
                                     .padding(.vertical, 60)
+                                    
 
                             }
                             
