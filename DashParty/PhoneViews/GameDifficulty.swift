@@ -90,15 +90,15 @@ struct GameDifficulty: View {
                             )
                     }
                     
-                    .alert("Entre com seu nome", isPresented: $askForHostName) {
-                        TextField("Entre com seu nome", text: $currentName)
-                            Button("Cancelar", role: .cancel) { }
+                    .alert("Insert your name", isPresented: $askForHostName) {
+                        TextField("Insert your name", text: $currentName)
+                            Button("Cancel", role: .cancel) { }
                             
                                 Button {
                                     HUBPhoneManager.instance.allPlayers[0].name = currentName
                                     
                                 } label: {
-                                    Text("Salvar")
+                                    Text("Save")
                                 }
 
                            }

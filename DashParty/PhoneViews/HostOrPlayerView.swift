@@ -86,9 +86,9 @@ Spacer()
                 
             }
             
-            .alert("Entre com seu nome", isPresented: $askForHostName) {
-                TextField("Entre com seu nome", text: $userName)
-                Button("Cancelar", role: .cancel) { }
+            .alert("Insert your name", isPresented: $askForHostName) {
+                TextField("Insert your name", text: $userName)
+                Button("Cancel", role: .cancel) { }
                 
                 Button {
                     HUBPhoneManager.instance.allPlayers[0].name = userName
@@ -97,14 +97,14 @@ Spacer()
                     showRoomAlert = true
                    
                 } label: {
-                    Text("Salvar")
+                    Text("Save")
                 }
                 
             }
             
-            .alert("Entre com seu nome", isPresented: $showAlert) {
-                TextField("Entre com seu nome", text: $userName)
-                Button("Cancelar", role: .cancel) { }
+            .alert("Insert your name", isPresented: $showAlert) {
+                TextField("Insert your name", text: $userName)
+                Button("Cancel", role: .cancel) { }
                 
                 Button {
                     HUBPhoneManager.instance.playername = userName
@@ -115,14 +115,14 @@ Spacer()
                     
                 }
                 label: {
-                    Text("Salvar")
+                    Text("Save")
                 }
                 
             }
             
-            .alert("Entre com o nome da sala", isPresented: $showRoomAlert) {
-                TextField("Entre com o nome da sala", text: $roomName)
-                    Button("Cancelar", role: .cancel) { }
+            .alert("Insert the room's name", isPresented: $showRoomAlert) {
+                TextField("Insert the room's name", text: $roomName)
+                    Button("Cancel", role: .cancel) { }
 
                         Button {
                             HUBPhoneManager.instance.roomName = roomName
@@ -133,7 +133,7 @@ Spacer()
                             router = .matchmaking
 
                         } label: {
-                            Text("Salvar")
+                            Text("Save")
                         }
 
                    }

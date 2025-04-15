@@ -62,7 +62,7 @@ struct RoomListView: View {
                     multipeerSession.rejectInvitation()
                 }
             } message: {
-                Text("\(invitationFromPeer) está te convidando para entrar na sala.")
+                Text("\(invitationFromPeer) is inviting you to enter the room.")
                     .font(.custom("TorukSC-Regular", size: 24))
                     .foregroundColor(.white)
             }

@@ -30,15 +30,11 @@ struct RoomView: View {
                             Image("backButton")
                         }
                         HStack{
-                            Button {
-                                print("clicou no back")
-                            } label: {
-                                Image("backButton")
-                            }
+                            
                             Text("Waiting for players to join...")
                                 .font(.custom("TorukSC-Regular", size: 34))
                         }
-                        Text("Jogadores conectados:")
+                        Text("Connected players:")
                             .font(.custom("TorukSC-Regular", size: 24))
                         List(multipeerSession.connectedPeersNames, id: \.self) { player in
                             Text(player)
@@ -63,12 +59,6 @@ struct RoomView: View {
                 navigateToPlayerDisplayView = true
             }
         }
-        //        .navigationDestination(isPresented: $navigateHost, destination: {
-        //            WaitingView(multipeerSession: multipeerSession)
-        //        })
-        //        .navigationDestination(isPresented: $navigateToPlayerDisplayView, destination: {
-        //            ConnectInHubView()
-        //        })
         .onChange(of: multipeerSession.mcSession.connectedPeers.map { $0.displayName }) {
             print(multipeerSession.mcSession.connectedPeers.map { $0.displayName })
         }
