@@ -61,16 +61,10 @@ struct TutorialPassingView: View {
                                 .frame(width: 100, height: 100)
                         }
                     }
-//                    else{
-//                        Button {
-//                            
-//                        } label: {
-//                            Image("Your host needs to press start")
-//                                .resizable()
-//                                .scaledToFit()
-//                                .frame(width: 100, height: 100)
-//                        }
-//                    }
+                    else{
+                        Text("Wait for the host to start the game")
+                            .font(.custom("TorukSC-Regular", size: 30))
+                    }
                 }
             }
 
