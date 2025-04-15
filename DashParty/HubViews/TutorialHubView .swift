@@ -28,11 +28,14 @@ struct TutorialHubView: View {
         if !hubManager.startMatch {
             if currentTutorialImage[safe: hubManager.actualTutorialIndex] == "tutorialhub6"{
                 
-                    
-                Image("decorativeRectBlue")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 150, height: 60)
+//                Button {
+//                    router = .game
+//                } label: {
+//                    Image("startMatchButton")
+//                        .resizable()
+//                        .scaledToFit()
+//                        .frame(width: 100, height: 100)
+//                }
             
             }else{
                 Image(currentTutorialImage[safe: hubManager.actualTutorialIndex] ?? "")
