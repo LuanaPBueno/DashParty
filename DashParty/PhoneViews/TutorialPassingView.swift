@@ -32,18 +32,20 @@ struct TutorialPassingView: View {
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
-            VStack{
-                HStack{
-                    Button {
-                        router = .storyBoard
-                    } label: {
-                        Image("backButton")
-                            .padding(.leading, 28)
-                            .padding(.top, 28)
+            if multipeerSession.host{
+                VStack{
+                    HStack{
+                        Button {
+                            router = .storyBoard
+                        } label: {
+                            Image("backButton")
+                                .padding(.leading, 28)
+                                .padding(.top, 28)
+                        }
+                        Spacer()
                     }
                     Spacer()
                 }
-                Spacer()
             }
             if hubManager.actualTutorialIndex == 5 {
                 VStack {
@@ -59,13 +61,21 @@ struct TutorialPassingView: View {
                                 .frame(width: 100, height: 100)
                         }
                     }
-
-                     
+//                    else{
+//                        Button {
+//                            
+//                        } label: {
+//                            Image("Your host needs to press start")
+//                                .resizable()
+//                                .scaledToFit()
+//                                .frame(width: 100, height: 100)
+//                        }
+//                    }
                 }
             }
 
             // Botões de navegação no rodapé
-            if multipeerSession.host{
+            //if multipeerSession.host{
                 
                 
                 VStack {
@@ -102,7 +112,7 @@ struct TutorialPassingView: View {
                     .padding(.horizontal, 40)
                     .padding(.bottom, 30)
                 }
-            }
+            //}
         }
 
         .onAppear {
