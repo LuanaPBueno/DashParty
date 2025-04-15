@@ -55,11 +55,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     private var mcAdvertiser: MCNearbyServiceAdvertiser
     private var mcBrowser: MCNearbyServiceBrowser?
     
-    var localPeerID: MCPeerID {
-        didSet {
-            resetSession()
-        }
-    }
+    var localPeerID: MCPeerID 
     
     // MARK: - Initialization
     init(service: String, identity: String, maxPeers: Int, matchManager: ChallengeManager) {
@@ -100,28 +96,35 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
 
     
     // MARK: - Session Management
-    private func resetSession() {
+     func resetSession() {
+        mcAdvertiser.stopAdvertisingPeer()
         mcSession.disconnect()
+        if host{
+            localPeerID = MCPeerID(displayName: HUBPhoneManager.instance.roomName)
+        } else{
+            localPeerID = MCPeerID(displayName: HUBPhoneManager.instance.playername)
+        }
         mcSession = MCSession(peer: localPeerID, securityIdentity: nil, encryptionPreference: .optional)
         mcSession.delegate = self
-        
-        mcAdvertiser.stopAdvertisingPeer()
         mcAdvertiser = MCNearbyServiceAdvertiser(
             peer: localPeerID,
             discoveryInfo: [MPCSessionConstants.kKeyIdentity: identityString],
             serviceType: serviceString
         )
         mcAdvertiser.delegate = self
+        mcAdvertiser.startAdvertisingPeer()
         
         if mcBrowser != nil {
             resetBrowser()
         }
+         
     }
-    
+
     private func resetBrowser() {
         mcBrowser?.stopBrowsingForPeers()
         mcBrowser = MCNearbyServiceBrowser(peer: localPeerID, serviceType: serviceString)
         mcBrowser?.delegate = self
+        mcBrowser?.startBrowsingForPeers()
     }
     
     func start() {

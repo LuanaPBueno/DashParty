@@ -15,13 +15,6 @@ struct ContentView: View {
     @State var changed: Bool = HUBPhoneManager.instance.changeScreen
     @State private var isActive = false
     
-    //    let user = User(name: "Eu")
-    //    var users: [User] = [User(name: "A"), User(name: "B")]
-    //
-    //    var myPlayer: Player? {
-    //        matchManager.getPlayer(forUser: user.id)
-    //    }
-    
     var body: some View {
             ZStack{
                 Image("titleScreen")
@@ -31,7 +24,6 @@ struct ContentView: View {
 
                 VStack {
                     Spacer()
-                    //Spacer()
                     Image("logoBranca")
                         .resizable()
                         .scaledToFit()

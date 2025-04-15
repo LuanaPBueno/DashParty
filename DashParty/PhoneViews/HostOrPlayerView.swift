@@ -59,12 +59,6 @@ Spacer()
                         )
                 }
                 
-                //                    NavigationLink(
-                //                        destination: GameDifficulty(multipeerSession: multipeerSession),
-                //                        isActive: $navigateToHost,
-                //                        label: { EmptyView() }
-                //                    )
-                
                 
                 Button(action: {
                     MPCSessionManager.shared.host = false
@@ -96,8 +90,10 @@ Spacer()
                 
                 Button {
                     HUBPhoneManager.instance.allPlayers[0].name = userName
-                    navigateToHost = true
-                    router = .matchmaking
+//                    navigateToHost = true
+//                    router = .matchmaking
+                    showRoomAlert = true
+                   
                 } label: {
                     Text("Salvar")
                 }
@@ -111,33 +107,38 @@ Spacer()
                 Button {
                     HUBPhoneManager.instance.playername = userName
                     showAlert = false
+                    
+                    multipeerSession.resetSession()
                     router = .chooseRoom
+                    
                 }
                 label: {
                     Text("Salvar")
                 }
                 
             }
-            //
-            //                .alert("Entre com o nome da sala", isPresented: $showRoomAlert) {
-            //                    TextField("Entre com o nome da sala", text: $userName)
-            //                        Button("Cancelar", role: .cancel) { }
-            //
-            //                            Button {
-            //                                HUBPhoneManager.instance.roomName = roomName
-            //                                showAlert = false
-            //                                navigateToHost = true
-            //                                askForHostName = true
-            //
-            //                            } label: {
-            //                                Text("Salvar")
-            //                            }
-            //
-            //                       }
             
+            .alert("Entre com o nome da sala", isPresented: $showRoomAlert) {
+                TextField("Entre com o nome da sala", text: $roomName)
+                    Button("Cancelar", role: .cancel) { }
+
+                        Button {
+                            HUBPhoneManager.instance.roomName = roomName
+                            showAlert = false
+                            navigateToHost = true
+                            askForHostName = true
+                            multipeerSession.resetSession()
+                            router = .matchmaking
+
+                        } label: {
+                            Text("Salvar")
+                        }
+
+                   }
+
+
             
-            
-            
+//            
             
             
             
