@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct YouWonView: View {
-    
+    @Binding var router:Router
     @Environment(\.dismiss) var dismiss
     
     var players: [SendingPlayer] = HUBPhoneManager.instance.allPlayers
@@ -65,10 +65,17 @@ struct YouWonView: View {
             
             Text("COME ON! THINK YOU CAN GO FASTER?")
                 .font(.title3)
+            Button {
+                router = .start
+            } label: {
+                Text("Play again")
+            }
+
         }
 
         .onAppear {
             HUBPhoneManager.instance.endedGame = true
+            
             if hubManager.newGame {
                 DispatchQueue.main.async {
                     dismiss()

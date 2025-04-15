@@ -16,25 +16,9 @@ struct matchPhoneView : View{
             EyesOnTheHub()
         }
         else{
-            ZStack{
-                Image("pinkBackground")
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea(.all)
-                
-                Button {
-                    HUBPhoneManager.instance.newGame = true
-                    DispatchQueue.main.async {
-//                            self.hubManager.objectWillChange.send()
-                        }
-                        
-                } label: {
-                    Image("newGameButton")
-                }
-
-               
-            }
+            
         }
+       
         
     }
 }

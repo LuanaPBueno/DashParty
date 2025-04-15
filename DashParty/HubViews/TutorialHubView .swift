@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct TutorialHubView: View {
+    @Binding var router:Router
     var multipeerSession = MPCSessionManager.shared
 
     let user = HUBPhoneManager.instance.user
@@ -40,7 +41,7 @@ struct TutorialHubView: View {
                     .edgesIgnoringSafeArea(.all)
             }
         }else{
-            MatchGridView(count: multipeerSession.mcSession.connectedPeers.count, user: user, matchManager: matchManager)
+            MatchGridView(router: $router, count: multipeerSession.mcSession.connectedPeers.count, user: user, matchManager: matchManager)
                 .task{
                     print(multipeerSession.mcSession.connectedPeers.count)
                 }
@@ -56,5 +57,5 @@ extension Array {
 }
 
 #Preview {
-    TutorialHubView(multipeerSession: MPCSessionManager.shared)
+    TutorialHubView(router: .constant(.victoryStory), multipeerSession: MPCSessionManager.shared)
 }

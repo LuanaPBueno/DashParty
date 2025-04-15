@@ -8,6 +8,7 @@ import SwiftUI
 import Foundation
 
 struct MatchGridView: View {
+    @Binding var router:Router
     let count: Int
     let players = HUBPhoneManager.instance.allPlayers
     let users: [User] = HUBPhoneManager.instance.users
@@ -23,7 +24,7 @@ struct MatchGridView: View {
     ]
 
     var body: some View {
-        if !ranking{
+       
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(0..<HUBPhoneManager.instance.allPlayers.count, id: \.self) { i in
                     MatchViewHub(users: users, index: i, matchManager: matchManager)
@@ -39,9 +40,7 @@ struct MatchGridView: View {
                 timer?.invalidate()
             }
           
-        } else{
-            YouWonView()
-        }
+        
     }
     
     private func startCheckingForAllWinners() {
@@ -52,7 +51,8 @@ struct MatchGridView: View {
                if allWon {
                    allPlayersFinished = true
                    ranking = true
-                   timer?.invalidate() 
+                   router = .ranking
+                   timer?.invalidate()
                }
            }
        }

@@ -24,6 +24,11 @@ struct RoomView: View {
             VStack {
                 if multipeerSession.host {
                     VStack{
+                        Button {
+                            router = .play
+                        } label: {
+                            Image("backButton")
+                        }
                         HStack{
                             Button {
                                 print("clicou no back")

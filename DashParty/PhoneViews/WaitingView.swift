@@ -18,13 +18,18 @@ struct WaitingView: View {
     
     var body: some View {
     
-            ZStack {
+            ZStack { 
                 Image("purpleBackground")
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
                 
                 VStack {
+                    Button {
+                        router = .play
+                    } label: {
+                        Image("backButton")
+                    }
                     Spacer()
                     
                     // Lista de jogadores conectados

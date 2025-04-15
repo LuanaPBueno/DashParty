@@ -35,13 +35,13 @@ struct RouterHubView: View {
         case .storyBoard:
             NarrativeView()
         case .tutorial:
-            TutorialHubView()
+            TutorialHubView(router: $router)
         case .game:
-            MatchGridView(count: multipeerSession.mcSession.connectedPeers.count, user: user, matchManager: matchManager)
+            MatchGridView(router: $router, count: multipeerSession.mcSession.connectedPeers.count, user: user, matchManager: matchManager)
         case .victoryStory:
             Text("Victory")
         case .ranking:
-            YouWonView()
+            YouWonView(router: $router)
         }
     }
 }

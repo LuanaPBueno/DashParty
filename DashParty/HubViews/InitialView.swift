@@ -35,6 +35,8 @@ struct InitialView: View {
                             breathe.toggle()
                         }
                     }
+                
+                
 
                 // Alerta Customizado
 //                if showCustomAlert {

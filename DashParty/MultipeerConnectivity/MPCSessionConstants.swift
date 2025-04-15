@@ -52,10 +52,10 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     var host: Bool = false
     
     private(set) var mcSession: MCSession
-    private var mcAdvertiser: MCNearbyServiceAdvertiser
+    var mcAdvertiser: MCNearbyServiceAdvertiser
     private var mcBrowser: MCNearbyServiceBrowser?
     
-    var localPeerID: MCPeerID 
+    var localPeerID: MCPeerID
     
     // MARK: - Initialization
     init(service: String, identity: String, maxPeers: Int, matchManager: ChallengeManager) {
@@ -87,7 +87,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         self.host = asHost
         if host {
             print("🧑‍💼 Iniciando como HOST")
-            mcAdvertiser.startAdvertisingPeer()
+           // mcAdvertiser.startAdvertisingPeer()
         } else {
             print("🎮 Iniciando como PLAYER")
             mcBrowser?.startBrowsingForPeers()
@@ -128,7 +128,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     }
     
     func start() {
-        mcAdvertiser.startAdvertisingPeer()
+       // mcAdvertiser.startAdvertisingPeer()
         mcBrowser?.startBrowsingForPeers()
     }
     
@@ -319,12 +319,12 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         if !host{
             print("📩 Convite recebido de \(peerID.displayName)")
-            if !host {
+          
                 DispatchQueue.main.async {
                     self.invitationHandler = invitationHandler
                     self.invitationReceivedHandler?(peerID.displayName)
                 }
-            }
+            
         }
     }
     
@@ -337,6 +337,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             }
             updateConnectedPeersList()
         }
+
         
         if !host {
             print("enviando coordenadas")

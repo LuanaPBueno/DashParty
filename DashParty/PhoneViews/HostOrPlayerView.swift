@@ -82,6 +82,8 @@ Spacer()
                         )
                 }
                 Spacer()
+                
+                
             }
             
             .alert("Entre com seu nome", isPresented: $askForHostName) {
@@ -135,14 +137,9 @@ Spacer()
                         }
 
                    }
-
-
-            
-//            
-            
-            
-            
-            
+        }
+        .task{
+            multipeerSession.mcAdvertiser.stopAdvertisingPeer()
             
         }
     }
