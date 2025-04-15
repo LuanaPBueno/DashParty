@@ -43,7 +43,7 @@ struct ContentView: View {
                         Button(action: {
                             router = .play
                         }) {
-                            ContinueButton(text: "Play", sizeFont: 28)
+                            OrangeButtonPhone(text: "Play", sizeFont: 28)
                                 .padding(.vertical, 60)
                                 
                         }
@@ -53,7 +53,7 @@ struct ContentView: View {
                             Button(action: {
                                 router = .options
                             }) {
-                                ContinueButton(text: "Options", sizeFont: 28)
+                                OrangeButtonPhone(text: "Options", sizeFont: 28)
                                     .padding(.vertical, 60)
 
                             }

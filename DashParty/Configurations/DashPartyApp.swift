@@ -23,6 +23,7 @@ struct DashPartyApp: App {
         WindowGroup {
             @Bindable var manager = HUBPhoneManager.instance
             RouterView(router: $manager.router)
+           // RoomView(router: $manager.router, multipeerSession: MPCSession(service: "banana", identity: "maça", maxPeers: 5, matchManager: ChallengeManager()))
         }
     }
 }

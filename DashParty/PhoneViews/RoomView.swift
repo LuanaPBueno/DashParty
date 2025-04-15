@@ -21,36 +21,71 @@ struct RoomView: View {
                 .scaledToFill()
                 .ignoresSafeArea()
             
-            VStack {
+          
                 if multipeerSession.host {
+                   
+//                    VStack{
+//                        HStack{
+//                            
+//                            
+//                            Spacer()
+//                        }
+//                        Spacer()
+//                    }
+//                    .padding()
+                    
                     VStack{
+                       
+                        Spacer()
+                        
                         HStack{
+                            
                             Button {
-                                print("clicou no back")
+                                router = .play
                             } label: {
                                 Image("backButton")
                             }
+                            
+                            Spacer()
+                            
                             Text("Waiting for players to join...")
-                                .font(.custom("TorukSC-Regular", size: 34))
+                                .font(.custom("TorukSC-Regular", size: 30, relativeTo: .title))
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(.white)
+                            
+//                                .padding()
+                            
+                            Spacer()
                         }
-                        Text("Jogadores conectados:")
-                            .font(.custom("TorukSC-Regular", size: 24))
+                        
+                        Text("Connected Players:")
+                            .font(.custom("TorukSC-Regular", size: 20))
+                            .foregroundColor(.white)
+                            .multilineTextAlignment(.center)
+                            .padding()
+                            
                         List(multipeerSession.connectedPeersNames, id: \.self) { player in
                             Text(player)
+                                .font(.custom("TorukSC-Regular", size: 18))
                         }
+                        .listStyle(.plain)
+                        .frame(height: 200)
+                        .scrollContentBackground(.hidden)
+                        
+                        Spacer()
+                        
                         Button {
                             router = .storyBoard
                         } label: {
-                            ContinueButton(text: "Continue", sizeFont: 34)
+                            OrangeButtonPhone(text: "Continue", sizeFont: 20)
                         }
                         
+//                        Spacer()
                         
                         
                     }
                 }
-                
-            }
-        }
+          }
         .scrollContentBackground(.hidden)
         
         .task{
@@ -74,6 +109,17 @@ struct RoomView: View {
     }
 }
 
+//#Preview {
+//    RoomView(router: .constant(.matchmaking), multipeerSession: MPCSession(service: "banana", identity: "maça", maxPeers: 5, matchManager: ChallengeManager()))
+//}
+
 #Preview {
-    RoomView(router: .constant(.matchmaking), multipeerSession: MPCSession(service: "banana", identity: "maça", maxPeers: 5, matchManager: ChallengeManager()))
+    let matchManager = ChallengeManager()
+    let session = MPCSession(service: "banana", identity: "maçã", maxPeers: 5, matchManager: matchManager)
+    
+    // Simular host e jogadores conectados para visualização
+    session.host = true
+    
+    
+    return RoomView(router: .constant(.matchmaking), multipeerSession: session)
 }

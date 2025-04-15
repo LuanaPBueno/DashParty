@@ -1,14 +1,8 @@
-//
-//  NarrativeView.swift
-//  DashParty
-//
-//  Created by Luana Bueno on 24/03/25.
-
 
 import Foundation
 import SwiftUI
 
-struct NarrativeView: View {
+struct NewNarrativeView: View {
     var hubManager = HUBPhoneManager.instance
     
     var fontSize: CGFloat {
