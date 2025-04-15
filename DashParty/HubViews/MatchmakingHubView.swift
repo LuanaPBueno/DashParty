@@ -1,13 +1,13 @@
 //
-//  GuessingView.swift
+//  MatchmakingHubView.swift
 //  DashParty
 //
-//  Created by Luana Bueno on 31/03/25.
+//  Created by Fernanda Auler on 15/04/25.
 //
 
 import SwiftUI
 
-struct RoomView: View {
+struct MatchmakingHubView: View {
     //MARK: Deixar observable
     @Binding var router:Router
     @ObservedObject var multipeerSession: MPCSession
@@ -52,7 +52,6 @@ struct RoomView: View {
                         
                         HStack{
                             
-                            
                             Button {
                                 router = .play
                             } label: {
@@ -62,14 +61,13 @@ struct RoomView: View {
                             Spacer()
                             
                             Text("Waiting for players to join...")
-                                .font(.custom("TorukSC-Regular", size: 30, relativeTo: .title))
+                                .font(.custom("TorukSC-Regular", size: 250, relativeTo: .title))
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(.white)
                             
 //                                .padding()
                             
                             Spacer()
-                            
                         }
                         
                         Text("Connected Players:")
@@ -78,21 +76,32 @@ struct RoomView: View {
                             .multilineTextAlignment(.center)
                             .padding()
                             
-                        List(multipeerSession.connectedPeersNames, id: \.self) { player in
-                            Text(player)
-                                .font(.custom("TorukSC-Regular", size: 18))
+                        ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
+                            ZStack{
+                                HStack{
+                                    Spacer()
+                                    Image("phone")
+                                    Text(player)
+                                        .font(.custom("TorukSC-Regular", size: 28, relativeTo: .title2))
+                                        .background(.black)
+                                        .padding(.top, 40)
+                                    Spacer()
+                                }
+                            }
+                            
                         }
-                        .listStyle(.plain)
-                        .frame(height: 200)
-                        .scrollContentBackground(.hidden)
+                       // .listStyle(.plain)
+                        //.frame(maxWidth: 100, maxHeight: 100)
+                       // .scrollContentBackground(.hidden)
                         
                         Spacer()
                         
-                        Button {
-                            router = .storyBoard
-                        } label: {
-                            OrangeButtonPhone(text: "Continue", sizeFont: 20)
-                        }
+//                        Button {
+//                            router = .storyBoard
+//                        } label: {
+//                            OrangeButtonPhone(text: "Continue", sizeFont: 20)
+//                                .padding(.horizontal, 100)
+//                        }
                         
 //                        Spacer()
                         
@@ -107,6 +116,12 @@ struct RoomView: View {
                 navigateToPlayerDisplayView = true
             }
         }
+        //        .navigationDestination(isPresented: $navigateHost, destination: {
+        //            WaitingView(multipeerSession: multipeerSession)
+        //        })
+        //        .navigationDestination(isPresented: $navigateToPlayerDisplayView, destination: {
+        //            ConnectInHubView()
+        //        })
         .onChange(of: multipeerSession.mcSession.connectedPeers.map { $0.displayName }) {
             print(multipeerSession.mcSession.connectedPeers.map { $0.displayName })
         }
@@ -127,8 +142,7 @@ struct RoomView: View {
     
     // Simular host e jogadores conectados para visualização
     session.host = true
-    session.connectedPeersNames = ["Alice", "Bob", "Charlie"]
     
     
-    return RoomView(router: .constant(.matchmaking), multipeerSession: session)
+    return MatchmakingHubView(router: .constant(.matchmaking), multipeerSession: session)
 }

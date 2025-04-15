@@ -31,7 +31,7 @@ struct RouterHubView: View {
         case .waitingRoom:
             InitialView()
         case .matchmaking:
-            RoomView(router: $router, multipeerSession: multipeerSession)
+            MatchmakingHubView(router: $router, multipeerSession: multipeerSession)
         case .storyBoard:
             NarrativeView()
         case .tutorial:
