@@ -26,23 +26,15 @@ struct TutorialHubView: View {
     
     var body: some View {
         if !hubManager.startMatch {
-            if currentTutorialImage[safe: hubManager.actualTutorialIndex] == "tutorialhub6"{
+            //if currentTutorialImage[safe: hubManager.actualTutorialIndex] == "tutorialhub6"{
                 
-//                Button {
-//                    router = .game
-//                } label: {
-//                    Image("startMatchButton")
-//                        .resizable()
-//                        .scaledToFit()
-//                        .frame(width: 100, height: 100)
-//                }
             
-            }else{
-                Image(currentTutorialImage[safe: hubManager.actualTutorialIndex] ?? "")
+           // }else{
+            Image(currentTutorialImage[safe: hubManager.actualTutorialIndex] ?? "")
                     .resizable()
                     .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
-            }
+            //}
         }else{
             MatchGridView(router: $router, count: multipeerSession.mcSession.connectedPeers.count, user: user, matchManager: matchManager)
                 .task{
