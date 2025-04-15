@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Router {
+enum Router: Codable {
     //INICIO
     case start
     case options

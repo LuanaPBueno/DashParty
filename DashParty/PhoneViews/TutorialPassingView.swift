@@ -68,7 +68,7 @@ struct TutorialPassingView: View {
                                 hubManager.actualTutorialIndex -= 1
                             }
                         }) {
-                            Image("backButton")
+                            Image("backYellowButton")
                                 .resizable()
                                 .frame(width: 40, height: 40)
                                 .opacity(hubManager.actualTutorialIndex == 0 ? 0.2 : 1.0)
@@ -82,7 +82,7 @@ struct TutorialPassingView: View {
                                 hubManager.actualTutorialIndex += 1
                             }
                         }) {
-                            Image("nextButton")
+                            Image("nextYellowButton")
                                 .resizable()
                                 .frame(width: 40, height: 40)
                                 .opacity(hubManager.actualTutorialIndex == 1 ? 0.2 : 1.0)

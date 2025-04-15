@@ -23,17 +23,19 @@ struct HostOrPlayerView: View {
     @State var askForHostName = false
     
     var body: some View {
-        
-        
-        
         ZStack{
             Image("darkblueBackground")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
-            
+           
             VStack(alignment: .center, spacing: 10) {
-                
+                Button {
+                    router = .start
+                } label: {
+                    Image("backButton")
+                }
+Spacer()
                 Button(action: {
                     MPCSessionManager.shared.host = true
                     MPCSessionManager.shared.start()
@@ -85,11 +87,7 @@ struct HostOrPlayerView: View {
                             
                         )
                 }
-                
-                
-                
-                
-                
+                Spacer()
             }
             
             .alert("Entre com seu nome", isPresented: $askForHostName) {

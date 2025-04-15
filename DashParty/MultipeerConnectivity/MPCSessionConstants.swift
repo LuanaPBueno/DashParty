@@ -17,7 +17,11 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     var matchManager: ChallengeManager
     var currentAcceleration: CMAcceleration?
     var pendingInvitations: [String: ((Bool, MCSession?) -> Void)] = [:]
-    var peerDataHandler: ((Data, MCPeerID) -> Void)?
+    var peerDataHandler: ((Data, MCPeerID) -> Void)? {
+        didSet {
+            print("PEER DATA HANDLER CHANGED \(oldValue == nil) -> \(peerDataHandler == nil)")
+        }
+    }
     var peerConnectedHandler: ((MCPeerID) -> Void)?
     var peerDisconnectedHandler: ((MCPeerID) -> Void)?
     var gameStartedHandler: (() -> Void)?
@@ -209,13 +213,15 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                         let encoder = JSONEncoder()
                         encoder.dateEncodingStrategy = .iso8601
                         let data = try encoder.encode(
-                            SendingPlayer(
-                                id: HUBPhoneManager.instance.user.id ,
-                                name: HUBPhoneManager.instance.playername,
-                                currentSituation: self.matchManager.currentSituation,
-                                currentChallenge: self.matchManager.currentChallenge,
-                                youWon: self.matchManager.youWon,
-                                interval: self.matchManager.interval
+                            EventMessage.playerUpdate(
+                                SendingPlayer(
+                                    id: HUBPhoneManager.instance.user.id ,
+                                    name: HUBPhoneManager.instance.playername,
+                                    currentSituation: self.matchManager.currentSituation,
+                                    currentChallenge: self.matchManager.currentChallenge,
+                                    youWon: self.matchManager.youWon,
+                                    interval: self.matchManager.interval
+                                )
                             )
                         )
                        
@@ -333,10 +339,9 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             print("enviando coordenadas")
             matchManager.startMatch(users: [HUBPhoneManager.instance.user], myUserID: HUBPhoneManager.instance.allPlayers[0].id, index: 0)
             sendMyCoordinatesToHost()
-        } else {
-            setupMessageHandler()
-            print("⚡ Host pronto para receber mensagens dos peers")
         }
+        setupMessageHandler()
+        print("⚡ Host pronto para receber mensagens dos peers")
         
         if mcSession.connectedPeers.count == maxNumPeers {
             shouldStartGame = true
@@ -370,7 +375,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     
     private func setupMessageHandler() {
         peerDataHandler = { [weak self] data, peerID in
-            guard let self = self, self.host else { return }
+            guard let self = self else { return }
             
             setupMessageHandler(data, from: peerID)
         }
@@ -381,21 +386,27 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         do {
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .iso8601
-            let receivedData = try decoder.decode(SendingPlayer.self, from: data)
-            
-            
-            // Atualizar UI ou processar os dados
-            DispatchQueue.main.async {
-                if let existingPlayerIndex = HUBPhoneManager.instance.allPlayers.firstIndex(where: { $0.id == receivedData.id }) {
-                    HUBPhoneManager.instance.allPlayers[existingPlayerIndex].currentSituation = receivedData.currentSituation
-                    HUBPhoneManager.instance.allPlayers[existingPlayerIndex].currentChallenge = receivedData.currentChallenge
-                    HUBPhoneManager.instance.allPlayers[existingPlayerIndex].youWon = receivedData.youWon
-                    HUBPhoneManager.instance.allPlayers[existingPlayerIndex].interval = receivedData.interval
-
-                    print("Mudando o status: \(receivedData)")
-                } else {
-                    HUBPhoneManager.instance.allPlayers.append(receivedData)
-                    print("appendando: \(receivedData)")
+            let receivedData = try decoder.decode(EventMessage.self, from: data)
+            switch receivedData {
+            case .navigation(let navigationData):
+                print(Thread.isMainThread)
+                HUBPhoneManager.instance.router = navigationData
+            case .playerUpdate(let receivedData):
+            //let receivedData = try decoder.decode(SendingPlayer.self, from: data)
+                
+                // Atualizar UI ou processar os dados
+                DispatchQueue.main.async {
+                    if let existingPlayerIndex = HUBPhoneManager.instance.allPlayers.firstIndex(where: { $0.id == receivedData.id }) {
+                        HUBPhoneManager.instance.allPlayers[existingPlayerIndex].currentSituation = receivedData.currentSituation
+                        HUBPhoneManager.instance.allPlayers[existingPlayerIndex].currentChallenge = receivedData.currentChallenge
+                        HUBPhoneManager.instance.allPlayers[existingPlayerIndex].youWon = receivedData.youWon
+                        HUBPhoneManager.instance.allPlayers[existingPlayerIndex].interval = receivedData.interval
+                        
+                        print("Mudando o status: \(receivedData)")
+                    } else {
+                        HUBPhoneManager.instance.allPlayers.append(receivedData)
+                        print("appendando: \(receivedData)")
+                    }
                 }
             }
         } catch {
@@ -416,4 +427,10 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
 // Singleton manager
 class MPCSessionManager {
     static let shared = MPCSession(service: "nisample", identity: "com.dashparty.app", maxPeers: 3, matchManager: HUBPhoneManager.instance.matchManager)
+}
+
+enum EventMessage: Codable {
+    case navigation(Router)
+    case playerUpdate(SendingPlayer)
+    
 }

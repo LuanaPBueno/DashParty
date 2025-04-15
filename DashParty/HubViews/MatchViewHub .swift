@@ -21,7 +21,7 @@ struct MatchViewHub: View {
     
     var body: some View {
         ZStack {
-            Image("matchBackground")
+            Image("backgroundFill")
                 .resizable()
                 .scaledToFill()
                 .edgesIgnoringSafeArea(.all)

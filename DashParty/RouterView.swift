@@ -33,18 +33,44 @@ struct RouterView: View {
         case .storyBoard:
             if multipeerSession.host {
                 NarrativePassingView(router: $router)
+                    .onAppear {
+                        do {
+                            let data = try JSONEncoder().encode(EventMessage.navigation(.storyBoard))
+                            multipeerSession.sendDataToAllPeers(data: data)
+                        }
+                        catch {
+                            print(error)
+                        }
+                    }
             }
             else {
                 EyesOnTheHub()
             }
         case .tutorial:
-            
             TutorialPassingView(router: $router, multipeerSession: multipeerSession)
+                .onAppear {
+                    do {
+                        let data = try JSONEncoder().encode(EventMessage.navigation(.tutorial))
+                        multipeerSession.sendDataToAllPeers(data: data)
+                    }
+                    catch {
+                        print(error)
+                    }
+                }
             
             
             
         case .game:
             matchPhoneView()
+                .onAppear {
+                    do {
+                        let data = try JSONEncoder().encode(EventMessage.navigation(.game))
+                        multipeerSession.sendDataToAllPeers(data: data)
+                    }
+                    catch {
+                        print(error)
+                    }
+                }
         case .victoryStory:
             Text("Victory")
         case .ranking:
