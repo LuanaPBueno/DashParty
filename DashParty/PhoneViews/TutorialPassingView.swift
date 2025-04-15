@@ -27,19 +27,30 @@ struct TutorialPassingView: View {
     
     var body: some View {
         ZStack {
-            // Background do tutorial
+            
             Image(currentTutorialImage[safe: hubManager.actualTutorialIndex] ?? "fallbackImage")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
-
-            // Botão de Start, posicionado fixo no rodapé com ZStack
-            if hubManager.actualTutorialIndex == 1 {
+            if multipeerSession.host{
+                VStack{
+                    HStack{
+                        Button {
+                            router = .storyBoard
+                        } label: {
+                            Image("backButton")
+                                .padding(.leading, 28)
+                                .padding(.top, 28)
+                        }
+                        Spacer()
+                    }
+                    Spacer()
+                }
+            }
+            if hubManager.actualTutorialIndex == 5 {
                 VStack {
                     Spacer()
                     if multipeerSession.host{
-                        
-                        
                         Button {
                             HUBPhoneManager.instance.startMatch = true
                             router = .game
@@ -50,13 +61,15 @@ struct TutorialPassingView: View {
                                 .frame(width: 100, height: 100)
                         }
                     }
-
-                     
+                    else{
+                        Text("Wait for the host to start the game")
+                            .font(.custom("TorukSC-Regular", size: 30))
+                    }
                 }
             }
 
             // Botões de navegação no rodapé
-            if multipeerSession.host{
+            //if multipeerSession.host{
                 
                 
                 VStack {
@@ -72,6 +85,7 @@ struct TutorialPassingView: View {
                                 .resizable()
                                 .frame(width: 40, height: 40)
                                 .opacity(hubManager.actualTutorialIndex == 0 ? 0.2 : 1.0)
+                                .disabled(hubManager.actualTutorialIndex == 0)
                         }
                         
                         Spacer()
@@ -85,13 +99,14 @@ struct TutorialPassingView: View {
                             Image("nextYellowButton")
                                 .resizable()
                                 .frame(width: 40, height: 40)
-                                .opacity(hubManager.actualTutorialIndex == 1 ? 0.2 : 1.0)
+                                .opacity(hubManager.actualTutorialIndex == 5 ? 0.2 : 1.0)
+                                .disabled(hubManager.actualTutorialIndex == 5)
                         }
                     }
                     .padding(.horizontal, 40)
                     .padding(.bottom, 30)
                 }
-            }
+            //}
         }
 
         .onAppear {

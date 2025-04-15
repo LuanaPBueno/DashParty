@@ -46,7 +46,7 @@ struct RoomView: View {
                         Button {
                             router = .storyBoard
                         } label: {
-                            ContinueButton(text: "Continue", sizeFont: 34)
+                            OrangeButtonPhone(text: "Continue", sizeFont: 34)
                         }
                         
                         
