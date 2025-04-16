@@ -35,24 +35,11 @@ struct RoomView: View {
             
           
                 if multipeerSession.host {
-                   
-//                    VStack{
-//                        HStack{
-//
-//
-//                            Spacer()
-//                        }
-//                        Spacer()
-//                    }
-//                    .padding()
                     
                     VStack{
-                       
                         Spacer()
                         
                         HStack{
-                            
-                            
                             Button {
                                 router = .play
                             } label: {
@@ -66,8 +53,6 @@ struct RoomView: View {
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(.white)
                             
-//                                .padding()
-                            
                             Spacer()
                             
                         }
@@ -77,25 +62,25 @@ struct RoomView: View {
                             .foregroundColor(.white)
                             .multilineTextAlignment(.center)
                             .padding()
-                            
-                        List(multipeerSession.connectedPeersNames, id: \.self) { player in
-                            Text(player)
-                                .font(.custom("TorukSC-Regular", size: 18))
+                         
+                        HStack{
+                            ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
+                                MMPhone(playerName: player)
+                            }
                         }
-                        .listStyle(.plain)
-                        .frame(height: 200)
-                        .scrollContentBackground(.hidden)
+                        
                         
                         Spacer()
                         
-                        Button {
-                            router = .storyBoard
-                        } label: {
-                            OrangeButtonPhone(text: "Continue", sizeFont: 20)
+                        HStack{
+                            Button {
+                                router = .storyBoard
+                            } label: {
+                                OrangeButtonPhone(text: "Continue", sizeFont: 20)
+                            }
+                            .frame(height: UIScreen.main.bounds.height * 0.1)
+                            
                         }
-                        
-//                        Spacer()
-                        
                         
                     }
                 }

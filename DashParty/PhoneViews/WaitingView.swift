@@ -33,42 +33,12 @@ struct WaitingView: View {
                     Spacer()
                     
                     // Lista de jogadores conectados
-                    List(multipeerSession.connectedPeersNames, id: \.self) { player in
-                        Text(player)
-                            .font(.custom("TorukSC-Regular", size: 24))
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(
-                                Image("decorativeRectYellow")
-                                    .resizable()
-                                    .scaledToFill()
-                            )
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    HStack{
+                        ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
+                            MMPhone(playerName: player)
+                        }
                     }
-                    .frame(height: 200)
-                    .scrollContentBackground(.hidden)
-                    .background(Color.clear)
-                    
                     Spacer()
-                    
-                    // Botão "Continue"
-//                    Button(action: {
-//                        router = .waitingRoom
-//                        HUBPhoneManager.instance.changeScreen = true
-//                        
-//                    }) {
-//                        Image("decorativeRectOrange")
-//                            .resizable()
-//                            .scaledToFit()
-//                            .frame(width: 180, height: 60)
-//                            .overlay(
-//                                Text("Continue")
-//                                    .font(.custom("TorukSC-Regular", size: 24))
-//                                    .foregroundColor(.white)
-//                            )
-//                    }
-                    
-                    //Spacer()
                 }
                 .padding()
                 .onAppear {

@@ -21,21 +21,25 @@ struct InitialView: View {
                     .scaledToFill()
 
                 // Logo animada
-                Image("logoBranca")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: geometry.size.width * 0.8)
-                    .scaleEffect(breathe ? 1.1 : 0.95)
-                    .opacity(breathe ? 1.0 : 0.8)
-                    .onAppear {
-                        withAnimation(
-                            .easeInOut(duration: 1.6)
+                VStack{
+                    Spacer()
+                    Image("logoBranca")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: geometry.size.width * 0.8)
+                        .scaleEffect(breathe ? 1.1 : 0.95)
+                        .opacity(breathe ? 1.0 : 0.8)
+                        .onAppear {
+                            withAnimation(
+                                .easeInOut(duration: 1.6)
                                 .repeatForever(autoreverses: true)
-                        ) {
-                            breathe.toggle()
+                            ) {
+                                breathe.toggle()
+                            }
                         }
-                    }
-                
+                    Spacer()
+                    Spacer()
+                }
                 
 
                 // Alerta Customizado
