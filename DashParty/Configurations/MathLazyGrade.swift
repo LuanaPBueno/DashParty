@@ -15,8 +15,8 @@ struct MatchGridView: View {
     let user: User
     var matchManager: ChallengeManager
     @State private var timer: Timer?
-    @State private var ranking = false
-    @State private var allPlayersFinished = false
+     var ranking = HUBPhoneManager.instance.ranking
+     var allPlayersFinished = HUBPhoneManager.instance.allPlayersFinished
 
     private let columns = [
         GridItem(.flexible()),
@@ -24,7 +24,7 @@ struct MatchGridView: View {
     ]
 
     var body: some View {
-       
+        
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(0..<HUBPhoneManager.instance.allPlayers.count, id: \.self) { i in
                     MatchViewHub(users: users, index: i, matchManager: matchManager)
@@ -49,8 +49,8 @@ struct MatchGridView: View {
            timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
                let allWon = HUBPhoneManager.instance.allPlayers.allSatisfy { $0.youWon == true }
                if allWon {
-                   allPlayersFinished = true
-                   ranking = true
+                   HUBPhoneManager.instance.allPlayersFinished = true
+                   HUBPhoneManager.instance.ranking = true
                    router = .ranking
                    timer?.invalidate()
                }

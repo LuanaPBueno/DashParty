@@ -70,8 +70,8 @@ struct NarrativePassingView: View {
                 Spacer()
                 
                 Button {
-                    hubManager.actualPage = hubManager.narrativeText.count
-                    navigate = true
+                    hubManager.actualPage = hubManager.narrativeText.count - 1
+                 //   navigate = true
                     router = .tutorial
                     
                     //                        DispatchQueue.main.async {

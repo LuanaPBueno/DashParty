@@ -73,7 +73,19 @@ struct YouWonView: View {
                 Spacer()
                 
                 Button {
+                    router = .tutorial
+                  
+                    DispatchQueue.main.async {
+                        HUBPhoneManager.instance.allPlayersFinished = false
+                        HUBPhoneManager.instance.ranking = false
+                        for i in 0..<HUBPhoneManager.instance.allPlayers.count {
+                            HUBPhoneManager.instance.allPlayers[i].youWon = false
+                        }
+
+                            }
+                    
                     router = .start
+                    
                 } label: {
                     Text("Play again")
                         .font(.custom("TorukSC-Regular", size: 25))

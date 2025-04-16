@@ -56,6 +56,9 @@ class HUBPhoneManager {
     var newGame: Bool = false
     
     var matchManager = ChallengeManager()
+    
+   var ranking = false
+   var allPlayersFinished = false
 
     private init() {
            self.allPlayers = [
