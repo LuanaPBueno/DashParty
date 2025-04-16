@@ -11,16 +11,22 @@ struct OrangeButtonPhone: View {
     var text: String
     var sizeFont: Int
     var body: some View {
-        ZStack {
-            Image("decorativeRectOrange")
-                .resizable()
-                .scaledToFit()
-            Text(text)
-                .font(.custom("TorukSC-Light", size: CGFloat(sizeFont)))
-                .foregroundColor(.white)
-                .multilineTextAlignment(.center)
-                .minimumScaleFactor(0.5)
+        
+        GeometryReader{ geo in
+            ZStack {
+                Image("decorativeRectOrange")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: geo.size.width)
+                Text(text)
+                    .font(.custom("TorukSC-Light", size: CGFloat(sizeFont)))
+                    .foregroundColor(.white)
+                    .multilineTextAlignment(.center)
+                    .minimumScaleFactor(0.5)
+            }
+            .aspectRatio(1/6, contentMode: .fit)
         }
+        
     }
 }
 

@@ -61,50 +61,25 @@ struct MatchmakingHubView: View {
                             Spacer()
                             
                             Text("Waiting for players to join...")
-                                .font(.custom("TorukSC-Regular", size: 250, relativeTo: .title))
+                                .font(.custom("TorukSC-Regular", size: 100, relativeTo: .largeTitle))
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(.white)
-                            
-//                                .padding()
                             
                             Spacer()
                         }
                         
                         Text("Connected Players:")
-                            .font(.custom("TorukSC-Regular", size: 20))
+                            .font(.custom("TorukSC-Regular", size: 70, relativeTo: .title))
                             .foregroundColor(.white)
                             .multilineTextAlignment(.center)
                             .padding()
                             
                         ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
-                            ZStack{
-                                HStack{
-                                    Spacer()
-                                    Image("phone")
-                                    Text(player)
-                                        .font(.custom("TorukSC-Regular", size: 28, relativeTo: .title2))
-                                        .background(.black)
-                                        .padding(.top, 40)
-                                    Spacer()
-                                }
-                            }
-                            
+                            MMPhone(playerName: player)
                         }
-                       // .listStyle(.plain)
-                        //.frame(maxWidth: 100, maxHeight: 100)
-                       // .scrollContentBackground(.hidden)
+                      
                         
                         Spacer()
-                        
-//                        Button {
-//                            router = .storyBoard
-//                        } label: {
-//                            OrangeButtonPhone(text: "Continue", sizeFont: 20)
-//                                .padding(.horizontal, 100)
-//                        }
-                        
-//                        Spacer()
-                        
                         
                     }
                 }

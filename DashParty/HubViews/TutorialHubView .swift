@@ -15,22 +15,36 @@ struct TutorialHubView: View {
     let user = HUBPhoneManager.instance.user
     @State var matchManager = HUBPhoneManager.instance.matchManager
     var hubManager = HUBPhoneManager.instance
-
-    var currentTutorialImage: [String] = [
-        "tutorialhub1", "tutorialhub2", "tutorialhub3",
-        "tutorialhub4", "tutorialhub5", "tutorialhub6"
-    ]
+    
+    let basicTutorialImage = "phoneTV"
 
     var body: some View {
         ZStack {
+            Image("backgroundPurple")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+            
             if !hubManager.startMatch {
-                // Exibe a imagem do tutorial atual
-                Image(currentTutorialImage[safe: hubManager.actualTutorialIndex] ?? "fallbackImage")
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
+                VStack {
+                    Text("Heads UP!")
+                        .font(.custom("TorukSC-Regular", size: 80, relativeTo: .largeTitle))
+                    
+                    Text("Things make way more sense after the tutorial.")
+                        .font(.custom("TorukSC-Regular", size: 50, relativeTo: .title))
+                    
+                    Image("\(basicTutorialImage)\(hubManager.actualTutorialIndex + 1)")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(
+                            width: UIScreen.main.bounds.width * 1.6,
+                            height: UIScreen.main.bounds.width * 0.95
+                        )
+                }
+                .foregroundStyle(.white)
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
-                // Quando o match começa, muda para a tela MatchGrid
                 MatchGridView(
                     router: $router,
                     count: multipeerSession.mcSession.connectedPeers.count,
@@ -43,10 +57,11 @@ struct TutorialHubView: View {
             }
         }
         .onAppear {
-            hubManager.actualTutorialIndex = 0 // começa sempre do início
+            hubManager.actualTutorialIndex = 0
         }
     }
 }
+
 
 extension Array {
     subscript(safe index: Int) -> Element? {
