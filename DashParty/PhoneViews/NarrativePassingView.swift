@@ -14,7 +14,7 @@ struct NarrativePassingView: View {
     
     //    var multipeerSession : MPCSession!
     var hubManager = HUBPhoneManager.instance
-    @State private var navigate: Bool = false
+    //    @State private var navigate: Bool = false
     @State private var isActive = false
     
     var body: some View {
@@ -34,9 +34,9 @@ struct NarrativePassingView: View {
                     .padding(40)
                     .foregroundColor(.white)
                 Image("decorativeRectCream")
-                    //.resizable()
-                    //.scaledToFit()
-                    //.frame(maxWidth: 350) // ajuste conforme o tamanho do seu rect
+                //.resizable()
+                //.scaledToFit()
+                //.frame(maxWidth: 350) // ajuste conforme o tamanho do seu rect
                     .overlay(
                         HStack {
                             Spacer()
@@ -45,17 +45,18 @@ struct NarrativePassingView: View {
                                     hubManager.actualPage -= 1
                                 }
                                 else {
-                                    navigate = true
+                                    print("entrou aq no else no back ")
                                     router = .matchmaking
                                 }
                             }) {
                                 Image("backNarrativeButton")
+                                
                                 //.resizable()
                                 //.frame(width: 40, height: 40)
-                                    .opacity(hubManager.actualPage == 0 ? 0.2 : 1.0)
+                                // .opacity(hubManager.actualPage == 0 ? 0.2 : 1.0)
                                 
                             }
-                            .disabled(hubManager.actualPage == 0)
+                            // .disabled(hubManager.actualPage == 0)
                             
                             Spacer()
                             Spacer()
@@ -66,23 +67,24 @@ struct NarrativePassingView: View {
                                 if hubManager.actualPage < hubManager.narrativeText.count - 1 {
                                     hubManager.actualPage += 1
                                 } else {
-                                    navigate = true
+                                    print("entrou aqui no pass")
                                     router = .tutorial
                                 }
                             }) {
                                 Image("passNarrativeButton")
-                                    .opacity(hubManager.actualPage == hubManager.narrativeText.count - 1 ? 0.2 : 1.0)
+                                
+                                //.opacity(hubManager.actualPage == hubManager.narrativeText.count - 1 ? 0.2 : 1.0)
                             }
-                            .disabled(hubManager.actualPage == hubManager.narrativeText.count - 1)
-                        Spacer()
+                            //.disabled(hubManager.actualPage == hubManager.narrativeText.count - 1)
+                            Spacer()
                         }
-                        .padding(.horizontal, 24)
+                            .padding(.horizontal, 24)
                     )
                 Spacer()
                 
                 Button {
                     hubManager.actualPage = hubManager.narrativeText.count - 1
-                 //   navigate = true
+                    //   navigate = true
                     router = .tutorial
                     
                 } label: {
