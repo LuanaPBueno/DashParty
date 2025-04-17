@@ -33,51 +33,57 @@ struct NarrativePassingView: View {
                     .font(.custom("TorukSC-Regular", size: 30))
                     .padding(40)
                     .foregroundColor(.white)
-                
-                ZStack{
-                    Image("decorativeRectCream")
-                    
-                    HStack {
-                        
-                        Spacer()
-                        
-                        Button {
-                            if hubManager.actualPage > 0 {
-                                hubManager.actualPage -= 1
-                            }
-                        } label: {
-                            Image("backNarrativeButton")
-                        }
-                        Spacer()
-                        Button {
-                            if hubManager.actualPage < hubManager.narrativeText.count - 1 {
-                                hubManager.actualPage += 1
-                            } else {
-                                navigate = true
-                                router = .tutorial
+                Image("decorativeRectCream")
+                    //.resizable()
+                    //.scaledToFit()
+                    //.frame(maxWidth: 350) // ajuste conforme o tamanho do seu rect
+                    .overlay(
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                if hubManager.actualPage > 0 {
+                                    hubManager.actualPage -= 1
+                                }
+                                else {
+                                    navigate = true
+                                    router = .matchmaking
+                                }
+                            }) {
+                                Image("backNarrativeButton")
+                                //.resizable()
+                                //.frame(width: 40, height: 40)
+                                    .opacity(hubManager.actualPage == 0 ? 0.2 : 1.0)
                                 
-                                //                                DispatchQueue.main.async {
-                                //                                    //                                    self.hubManager.objectWillChange.send()
-                                //                                }
                             }
-                        } label: {
-                            Image("passNarrativeButton")
-                        }
+                            .disabled(hubManager.actualPage == 0)
+                            
+                            Spacer()
+                            Spacer()
+                            Spacer()
+                            Spacer()
+                            
+                            Button(action: {
+                                if hubManager.actualPage < hubManager.narrativeText.count - 1 {
+                                    hubManager.actualPage += 1
+                                } else {
+                                    navigate = true
+                                    router = .tutorial
+                                }
+                            }) {
+                                Image("passNarrativeButton")
+                                    .opacity(hubManager.actualPage == hubManager.narrativeText.count - 1 ? 0.2 : 1.0)
+                            }
+                            .disabled(hubManager.actualPage == hubManager.narrativeText.count - 1)
                         Spacer()
-                    }
-                }
-                
+                        }
+                        .padding(.horizontal, 24)
+                    )
                 Spacer()
                 
                 Button {
                     hubManager.actualPage = hubManager.narrativeText.count - 1
                  //   navigate = true
                     router = .tutorial
-                    
-                    //                        DispatchQueue.main.async {
-                    //                            //                                self.hubManager.objectWillChange.send()
-                    //                        }
-                    
                     
                 } label: {
                     Image("skip")

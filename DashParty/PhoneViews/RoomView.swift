@@ -23,6 +23,8 @@ struct RoomView: View {
                         router = .play
                     } label: {
                         Image("backButton")
+                            .padding(.leading, 28)
+                            .padding(.top, 28)
                     }
 
                     Spacer()
@@ -44,6 +46,8 @@ struct RoomView: View {
                                 router = .play
                             } label: {
                                 Image("backButton")
+                                    .padding(.leading, 28)
+                                    .padding(.top, 28)
                             }
                             
                             Spacer()
@@ -65,7 +69,7 @@ struct RoomView: View {
                          
                         HStack{
                             ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
-                                MMPhone(playerName: player)
+                                MMPhone(playerName: player, sizePadding: 0)
                             }
                         }
                         

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MMPhone: View {
     var playerName: String
-
+    var sizePadding: Int
     var body: some View {
         GeometryReader { geometry in
             
@@ -25,6 +25,8 @@ struct MMPhone: View {
                             Spacer()
                             Text(playerName)
                                 .font(.custom("TorukSC-Regular", size: fontSize))
+                                .foregroundColor(Color(red: 126/255, green: 97/255, blue: 46/255))
+                                .padding(.bottom, CGFloat(sizePadding))
                                 .minimumScaleFactor(0.5)
                                 .lineLimit(1)
                         }
@@ -39,5 +41,5 @@ struct MMPhone: View {
 
 
 #Preview {
-    MMPhone(playerName: "Player 1")
+    MMPhone(playerName: "Player 1", sizePadding: 0)
 }

@@ -25,17 +25,24 @@ struct WaitingView: View {
                     .ignoresSafeArea()
                 
                 VStack {
-                    Button {
-                        router = .play
-                    } label: {
-                        Image("backButton")
+                    HStack{
+                        
+                        Button {
+                            router = .play
+                        } label: {
+                            Image("backButton")
+                                .padding(.leading, 28)
+                                .padding(.top, 28)
+                        }
+                       
+                        Spacer()
                     }
                     Spacer()
                     
                     // Lista de jogadores conectados
                     HStack{
                         ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
-                            MMPhone(playerName: player)
+                            MMPhone(playerName: player, sizePadding: 0)
                         }
                     }
                     Spacer()

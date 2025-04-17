@@ -75,7 +75,7 @@ struct MatchmakingHubView: View {
                             .padding()
                             
                         ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
-                            MMPhone(playerName: player)
+                            MMPhone(playerName: player, sizePadding: 0)
                         }
                       
                         

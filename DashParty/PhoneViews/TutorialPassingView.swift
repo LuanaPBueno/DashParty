@@ -64,6 +64,8 @@ struct TutorialPassingView: View {
                     else{
                         Text("Wait for the host to start the game")
                             .font(.custom("TorukSC-Regular", size: 30))
+                            .foregroundColor(.white)
+                            .padding(.bottom, 40)
                     }
                 }
             }

@@ -27,82 +27,97 @@ struct MatchViewHub: View {
                 .edgesIgnoringSafeArea(.all)
             
             VStack{
-                Spacer()
+                //Spacer()
                 VStack{
-                    Text(HUBPhoneManager.instance.allPlayers[index].name)
-                        .font(.custom("Prompt-Black",size: 64))
-                        .foregroundColor(.black)
-                        .background(Color.white)
-                    Spacer()
-                    Image("\(characterImage)")
-                    Spacer()
-                }
-            }
-            
-            let displayedChallenge = HUBPhoneManager.instance.allPlayers[index].currentChallenge
-            let displayedSituation = HUBPhoneManager.instance.allPlayers[index].currentSituation
-            let playerID = HUBPhoneManager.instance.allPlayers[index].id
-            
-            if matchManager.players.isEmpty == false {
-                if displayedChallenge == .stopped {
-                    Text("Você acabou, espere pelo ranking")
-                        .background(Color.white)
-                        .font(.custom("Prompt-Black",size: 64))
-                        .foregroundColor(.black)
                     
-                } else {
-                    VStack{
-                        Text("\(playerID)")
-                        Text("Current challenge: \(displayedChallenge.name)")
-                            .font(.custom("Prompt-Black",size: 64))
-                            .foregroundColor(.black)
-                        
-                        Group {
-                            switch displayedChallenge {
-                            case .running:
-                                if displayedSituation {
-                                    Text("You are running")
+                    Image("warning")
+//                        .resizable()
+//                        .scaledToFit()
+//                        .frame(width: 300) // tamanho base
+//                        .scaleEffect(currentSituation ? 1.3 : 1.0) // aumenta se estiver fazendo o desafio
+//                        .animation(.easeInOut(duration: 0.4), value: currentSituation)
+                        .overlay {
+                            
+                            let displayedChallenge = HUBPhoneManager.instance.allPlayers[index].currentChallenge
+                            let displayedSituation = HUBPhoneManager.instance.allPlayers[index].currentSituation
+                            let playerID = HUBPhoneManager.instance.allPlayers[index].id
+                            
+                            if matchManager.players.isEmpty == false {
+                                if displayedChallenge == .stopped {
+                                    Text("Wait for the ranking")
+                                        //.background(Color.white)
+                                        .font(.custom("TorukSC-Regular", size: 64, relativeTo: .title))
+                                        .foregroundColor(.black)
+                                    
                                 } else {
-                                    Text("You are not running")
+                                    VStack{
+                                        //Text("\(playerID)")
+                                        Text("\(displayedChallenge.name)!")
+                                            .font(.custom("TorukSC-Regular", size: 64, relativeTo: .title))
+                                            .foregroundColor(.black)
+                                        
+                                        Group {
+                                            switch displayedChallenge {
+                                            case .running:
+                                                if displayedSituation {
+                                                    Text("Run")
+                                                }
+                //                                else {
+                //                                    Text("Not Running")
+                //                                }
+                                            case .jumping:
+                                                if displayedSituation {
+                                                    Text("Jump")
+                                                }
+                //                                else {
+                //                                    Text("Not Jumping")
+                //                                }
+                                            case .openingDoor:
+                                                if displayedSituation {
+                                                    Text("Push the vine")
+                                                }
+                //                                else {
+                //                                    Text("Not Pushing")
+                //                                }
+                                            case .balancing:
+                                                if displayedSituation {
+                                                    Text("Balancing")
+                                                }
+                //                                else {
+                //                                    Text("Not Balancing")
+                //                                }
+                                            case .stopped:
+                                                    Text("You finished. Wait for the final ranking")
+                                                
+                                            case nil:
+                                                Text("?")
+                                            }
+                                        }
+                                        .font(.custom("TorukSC-Regular", size: 64, relativeTo: .title))
+                                        .foregroundColor(.black)
+                                    }
+                //                    .background(Color.white)
+                                    
                                 }
-                            case .jumping:
-                                if displayedSituation {
-                                    Text("You are jumping")
-                                } else {
-                                    Text("You are not jumping")
-                                }
-                            case .openingDoor:
-                                if displayedSituation {
-                                    Text("You are opening the door")
-                                } else {
-                                    Text("You are not opening the door")
-                                }
-                            case .balancing:
-                                if displayedSituation {
-                                    Text("You are balancing")
-                                } else {
-                                    Text("You are not balancing")
-                                }
-                            case .stopped:
-                                    Text("You finished. Wait for the final ranking")
-                                
-                            case nil:
-                                Text("?")
                             }
                         }
-                        .font(.custom("Prompt-ExtraBold",size: 64))
+                        .task {
+                            matchManager.startMatch(users: users, myUserID: HUBPhoneManager.instance.allPlayers[index].id, index: index)
+                            startTime = .now
+                            characterImage = "characterBack"
+                            HUBPhoneManager.instance.newGame = false
+                        }
+                        }
+                    Image("\(characterImage)")
+                    Text(HUBPhoneManager.instance.allPlayers[index].name)
+                        .font(.custom("TorukSC-Regular", size: 64, relativeTo: .title))
                         .foregroundColor(.black)
-                    }
-                    .background(Color.white)
-                    
+                        .background(.white)
                 }
             }
-        }
-        .task {
-            matchManager.startMatch(users: users, myUserID: HUBPhoneManager.instance.allPlayers[index].id, index: index)
-            startTime = .now
-            characterImage = "characterBack"
-            HUBPhoneManager.instance.newGame = false
-        }
+            
+            
     }
 }
+
+

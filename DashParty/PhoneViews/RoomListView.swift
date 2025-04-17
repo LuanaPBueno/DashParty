@@ -29,6 +29,8 @@ struct RoomListView: View {
                     router = .play
                 } label: {
                     Image("backButton")
+                        .padding(.leading, 28)
+                        .padding(.top, 28)
                 }
                 if multipeerSession.host {
                     Text("Você é o Host")
