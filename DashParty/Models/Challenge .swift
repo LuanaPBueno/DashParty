@@ -15,6 +15,8 @@ enum Challenge: Codable {
     case openingDoor
     case balancing
     case stopped
+   
+    
     
     var name: String {
         switch self {
@@ -28,7 +30,10 @@ enum Challenge: Codable {
             "Balancing"
         case .stopped:
             "Stopped"
+     
+        
         }
+        
         
     }
     
@@ -44,6 +49,7 @@ enum Challenge: Codable {
             UIImage(named: "orangePerson")!
         case .stopped:
             UIImage(named: "orangePerson")!
+  
 
         }
     }

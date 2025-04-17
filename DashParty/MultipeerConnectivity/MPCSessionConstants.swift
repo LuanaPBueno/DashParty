@@ -161,6 +161,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     func sendDataToAllPeers(data: Data) {
         sendData(data: data, peers: mcSession.connectedPeers, mode: .reliable)
     }
+
     
     func sendData(data: Data, peers: [MCPeerID], mode: MCSessionSendDataMode) {
         let connectedPeers = mcSession.connectedPeers.filter { peers.contains($0) }
@@ -263,6 +264,18 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         print("📥 Dados recebidos de \(peerID.displayName): \(String(data: data, encoding: .utf8) ?? "Não foi possível decodificar")")
+        
+        let receivedString = String(data: data, encoding: .utf8)
+                if receivedString == "StartTime" {
+                    HUBPhoneManager.instance.matchManager.players[0].startTime = true
+                    HUBPhoneManager.instance.matchManager.atualizaStart()
+                    }
+                    
+                if receivedString == "Reset" {
+                    HUBPhoneManager.instance.matchManager.players[0].startTime = false
+                    HUBPhoneManager.instance.matchManager.reset()
+                }
+        
         if let handler = peerDataHandler {
             DispatchQueue.main.async {
                 handler(data, peerID)

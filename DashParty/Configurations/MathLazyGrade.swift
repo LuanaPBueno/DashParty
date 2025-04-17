@@ -17,6 +17,7 @@ struct MatchGridView: View {
     @State private var timer: Timer?
      var ranking = HUBPhoneManager.instance.ranking
      var allPlayersFinished = HUBPhoneManager.instance.allPlayersFinished
+    
 
     private let columns = [
         GridItem(.flexible()),

@@ -54,6 +54,7 @@ struct TutorialPassingView: View {
                         Button {
                             HUBPhoneManager.instance.startMatch = true
                             router = .game
+                            HUBPhoneManager.instance.matchManager.atualizaStart()
                         } label: {
                             Image("startMatchButton")
                                 .resizable()

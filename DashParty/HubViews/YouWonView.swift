@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct YouWonView: View {
+    @State var matchManager = HUBPhoneManager.instance.matchManager
     @Binding var router:Router
     @Environment(\.dismiss) var dismiss
     
@@ -73,18 +74,19 @@ struct YouWonView: View {
                 Spacer()
                 
                 Button {
-                    router = .tutorial
-                  
                     DispatchQueue.main.async {
                         HUBPhoneManager.instance.allPlayersFinished = false
                         HUBPhoneManager.instance.ranking = false
                         for i in 0..<HUBPhoneManager.instance.allPlayers.count {
                             HUBPhoneManager.instance.allPlayers[i].youWon = false
+                            HUBPhoneManager.instance.allPlayers[i].interval = 0.0
                         }
 
                             }
                     
-                    router = .start
+                    HUBPhoneManager.instance.matchManager.reset()
+                    HUBPhoneManager.instance.startMatch = false
+                    router = .tutorial
                     
                 } label: {
                     Text("Play again")

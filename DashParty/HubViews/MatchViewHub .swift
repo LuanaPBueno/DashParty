@@ -11,6 +11,7 @@ import SwiftUI
 struct MatchViewHub: View {
     var users: [User]
     var index: Int
+    var multipeerSession = MPCSessionManager.shared
     @State private var timer = Timer.publish(every: 0.01, on: .main, in: .common).autoconnect()
     @State var matchManager: ChallengeManager
     var currentSituation: Bool { HUBPhoneManager.instance.allPlayers[index].currentSituation }
@@ -88,6 +89,8 @@ struct MatchViewHub: View {
                                 
                             case nil:
                                 Text("?")
+                                
+                            
                             }
                         }
                         .font(.custom("Prompt-ExtraBold",size: 64))
@@ -101,6 +104,10 @@ struct MatchViewHub: View {
         .task {
             matchManager.startMatch(users: users, myUserID: HUBPhoneManager.instance.allPlayers[index].id, index: index)
             startTime = .now
+            let message = "StartTime"
+                if let data = message.data(using: .utf8) {
+                    multipeerSession.sendDataToAllPeers(data: data)
+                }
             characterImage = "characterBack"
             HUBPhoneManager.instance.newGame = false
         }

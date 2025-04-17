@@ -21,6 +21,8 @@ class Player {
             return Challenge .stopped
         }
     }
+    var startTime: Bool = false
+    var interval: TimeInterval?
     
     init (user: User, challenges: [Challenge]) {
         self.user = user

@@ -11,13 +11,16 @@ import CoreMotion
 @Observable
 class ChallengeManager {
     var multipeerSession: MPCSession?
-    var receivedMotionData: [UUID: MotionData] = [:] //para cada 
+    var receivedMotionData: [UUID: MotionData] = [:]
     var debugText: String = ""
     var balancingResult : [String] = []
     var players: [Player] = []
     var currentPlayerIndex = 0
     var tolerancia: Double = 0.03
+    var startTime = Date.now
+    private var observationToken: Any?
     var currentSituation: Bool = false
+    
     var currentChallenge: Challenge = .running
     var youWon: Bool = false
     var interval: TimeInterval = 0.0
@@ -26,6 +29,11 @@ class ChallengeManager {
     }
     var balancingCount: [String: Double] = ["x": 0.0, "y": 0.0, "z": 0.0]
     var recentDeviceMotion: [CMDeviceMotion] = []
+    var tempo: TimeInterval = 10
+    
+    init() {
+           
+    }
     
     //MARK: Setting up multipeer session
     func setupMultipeerSession(_ session: MPCSession) {
@@ -35,24 +43,35 @@ class ChallengeManager {
            }
        }
     
+     func atualizaStart() {
+        startTime = Date.now
+    }
     
+    func reset(){
+        print("resetar infos do jogo")
+        players[0].startTime = false
+        players[0].progress = 0.0
+        players[0].interval = 0.0
+        HUBPhoneManager.instance.allPlayers[0].interval = 0.0
+    }
     
     func startMatch(users: [User], myUserID: UUID, index: Int) {
         self.players = users.map { user in
             Player(
                 user: users[0],
                 
-                challenges: [Challenge .jumping, .openingDoor, .balancing]
-                    .flatMap { Array(repeating: $0, count: 4) }
+                challenges: [Challenge /*.jumping, .openingDoor, */.balancing ]
+                    .flatMap { Array(repeating: $0, count: 1) }
                     .shuffled()
                     .flatMap { [$0, .running] }
                 )
             
         }
-        let startTime = Date.now //MARK: CONFERIR
+        if players[0].startTime == true{
+            startTime = Date.now
+        }
         self.currentPlayerIndex = index
         AccelerationManager.accelerationInstance.startAccelerometer(
-            
             action: { [weak self] deviceMotion in
                 guard let self else { return }
                 
@@ -116,10 +135,8 @@ class ChallengeManager {
                     DispatchQueue.main.async {
                         HUBPhoneManager.instance.allPlayers[0].currentSituation = false
                             }
-                   
-                    
-                    
                 }
+                
                 
             case .jumping:
                 currentChallenge = .jumping
@@ -224,11 +241,12 @@ class ChallengeManager {
                 players[currentPlayerIndex].progress += 100
                 currentChallenge = .stopped
                 youWon = true
-                interval = finishTime.timeIntervalSince(startTime)
+                interval = finishTime.timeIntervalSince(self.startTime)
+                HUBPhoneManager.instance.allPlayers[0].interval = finishTime.timeIntervalSince(self.startTime)
                 print("MEU INTERVALO: \(interval)")
                 DispatchQueue.main.async {
                     HUBPhoneManager.instance.allPlayers[0].youWon = true
-                    HUBPhoneManager.instance.allPlayers[0].interval = finishTime.timeIntervalSince(startTime)
+                    HUBPhoneManager.instance.allPlayers[0].interval = finishTime.timeIntervalSince(self.startTime)
                     HUBPhoneManager.instance.allPlayers[0].currentChallenge = .stopped
                         }
                 finishMatch()
