@@ -280,7 +280,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                         HUBPhoneManager.instance.allPlayers[index].youWon = false
                     }
                     print("Recebi a func de reset")
-                    HUBPhoneManager.instance.matchManager.reset(isHost: false)
+                    HUBPhoneManager.instance.matchManager.reset()
                 }
         
         if let handler = peerDataHandler {

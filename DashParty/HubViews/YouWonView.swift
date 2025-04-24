@@ -91,7 +91,7 @@ struct YouWonView: View {
                             
                         }
                     router = .tutorial
-                    HUBPhoneManager.instance.matchManager.reset(isHost: true)
+                    HUBPhoneManager.instance.matchManager.reset()
                     
                 } label: {
                     Text("Play again")

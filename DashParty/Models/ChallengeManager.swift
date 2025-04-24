@@ -47,7 +47,7 @@ class ChallengeManager {
         startTime = Date.now
     }
     
-    func reset(isHost: Bool){
+    func reset(){
         print("resetar infos do jogo")
         players[0].startTime = false
         players[0].progress = 0.0
@@ -56,9 +56,9 @@ class ChallengeManager {
         HUBPhoneManager.instance.allPlayers[0].youWon = false
         HUBPhoneManager.instance.allPlayers[0].interval = 0.0
         
-        if !isHost{
-            HUBPhoneManager.instance.matchManager.startMatch(users: [HUBPhoneManager.instance.user], myUserID: HUBPhoneManager.instance.allPlayers[0].id, index: 0)
-        }
+      
+        HUBPhoneManager.instance.matchManager.startMatch(users: [HUBPhoneManager.instance.user], myUserID: HUBPhoneManager.instance.allPlayers[0].id, index: 0)
+        
         print("resetei tudo")
     }
     
@@ -67,7 +67,7 @@ class ChallengeManager {
             Player(
                 user: users[0],
                 
-                challenges: [Challenge /*.jumping, .openingDoor, */.balancing ]
+                challenges: [Challenge /*.jumping,*/ .openingDoor, .balancing ]
                     .flatMap { Array(repeating: $0, count: 1) }
                     .shuffled()
                     .flatMap { [$0, .running] }
