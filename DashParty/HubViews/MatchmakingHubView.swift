@@ -35,17 +35,6 @@ struct MatchmakingHubView: View {
             
           
                 if multipeerSession.host {
-                   
-//                    VStack{
-//                        HStack{
-//
-//
-//                            Spacer()
-//                        }
-//                        Spacer()
-//                    }
-//                    .padding()
-                    
                     VStack{
                        
                         Spacer()
@@ -73,9 +62,10 @@ struct MatchmakingHubView: View {
                             .foregroundColor(.white)
                             .multilineTextAlignment(.center)
                             .padding()
-                            
-                        ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
-                            MMPhone(playerName: player, sizePadding: 0)
+                        HStack{
+                            ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
+                                MMPhone(playerName: player, sizePadding: 0)
+                            }
                         }
                       
                         

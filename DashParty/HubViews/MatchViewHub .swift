@@ -27,15 +27,12 @@ struct MatchViewHub: View {
                 .edgesIgnoringSafeArea(.all)
             
             VStack{
-                //Spacer()
                 VStack{
                     
                     Image("warning")
-//                        .resizable()
-//                        .scaledToFit()
-//                        .frame(width: 300) // tamanho base
-//                        .scaleEffect(currentSituation ? 1.3 : 1.0) // aumenta se estiver fazendo o desafio
-//                        .animation(.easeInOut(duration: 0.4), value: currentSituation)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 600) // tamanho base
                         .overlay {
                             
                             let displayedChallenge = HUBPhoneManager.instance.allPlayers[index].currentChallenge
@@ -51,53 +48,12 @@ struct MatchViewHub: View {
                                     
                                 } else {
                                     VStack{
-                                        //Text("\(playerID)")
                                         Text("\(displayedChallenge.name)!")
                                             .font(.custom("TorukSC-Regular", size: 64, relativeTo: .title))
                                             .foregroundColor(.black)
-                                        
-                                        Group {
-                                            switch displayedChallenge {
-                                            case .running:
-                                                if displayedSituation {
-                                                    Text("Run")
-                                                }
-                //                                else {
-                //                                    Text("Not Running")
-                //                                }
-                                            case .jumping:
-                                                if displayedSituation {
-                                                    Text("Jump")
-                                                }
-                //                                else {
-                //                                    Text("Not Jumping")
-                //                                }
-                                            case .openingDoor:
-                                                if displayedSituation {
-                                                    Text("Push the vine")
-                                                }
-                //                                else {
-                //                                    Text("Not Pushing")
-                //                                }
-                                            case .balancing:
-                                                if displayedSituation {
-                                                    Text("Balancing")
-                                                }
-                //                                else {
-                //                                    Text("Not Balancing")
-                //                                }
-                                            case .stopped:
-                                                    Text("You finished. Wait for the final ranking")
-                                                
-                                            case nil:
-                                                Text("?")
-                                            }
-                                        }
-                                        .font(.custom("TorukSC-Regular", size: 64, relativeTo: .title))
-                                        .foregroundColor(.black)
+                                
+                                       
                                     }
-                //                    .background(Color.white)
-                                    
                                 }
                             }
                         }
