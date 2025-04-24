@@ -61,6 +61,10 @@ struct MatchViewHub: View {
                         .task {
                             matchManager.startMatch(users: users, myUserID: HUBPhoneManager.instance.allPlayers[index].id, index: index)
                             startTime = .now
+                            let message = "StartTime"
+                                if let data = message.data(using: .utf8) {
+                                    multipeerSession.sendDataToAllPeers(data: data)
+                                }
                             characterImage = "characterBack"
                             HUBPhoneManager.instance.newGame = false
                         }
