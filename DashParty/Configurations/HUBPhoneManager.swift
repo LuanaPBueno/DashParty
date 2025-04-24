@@ -68,7 +68,8 @@ class HUBPhoneManager {
                    currentSituation: self.matchManager.currentSituation,
                    currentChallenge: self.matchManager.currentChallenge,
                    youWon: false,
-                   interval: 0.0
+                   interval: 0.0,
+                   progress: 0.0
                )
            ]
        }

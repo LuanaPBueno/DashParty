@@ -47,12 +47,19 @@ class ChallengeManager {
         startTime = Date.now
     }
     
-    func reset(){
+    func reset(isHost: Bool){
         print("resetar infos do jogo")
         players[0].startTime = false
         players[0].progress = 0.0
+        print("Após mudar o progress pra 0.0, o currentChallenge é: \(HUBPhoneManager.instance.allPlayers[0].currentChallenge), \(HUBPhoneManager.instance.allPlayers[0].currentSituation)")
         players[0].interval = 0.0
+        HUBPhoneManager.instance.allPlayers[0].youWon = false
         HUBPhoneManager.instance.allPlayers[0].interval = 0.0
+        
+        if !isHost{
+            HUBPhoneManager.instance.matchManager.startMatch(users: [HUBPhoneManager.instance.user], myUserID: HUBPhoneManager.instance.allPlayers[0].id, index: 0)
+        }
+        print("resetei tudo")
     }
     
     func startMatch(users: [User], myUserID: UUID, index: Int) {
@@ -121,7 +128,7 @@ class ChallengeManager {
                 if abs(magnitude) > 0.8
                     && abs(averageAcceleration.y) > abs(averageAcceleration.x)
                     && abs(averageAcceleration.y) > abs(averageAcceleration.z) {
-                    print("correndo")
+                   
                     currentSituation = true
                     DispatchQueue.main.async {
                         HUBPhoneManager.instance.allPlayers[0].currentSituation = true
@@ -130,7 +137,7 @@ class ChallengeManager {
                     
                 } else {
                     //TODO: muda a animação pra uma parada
-                    print("correndo ignorado")
+                   
                     currentSituation = false
                     DispatchQueue.main.async {
                         HUBPhoneManager.instance.allPlayers[0].currentSituation = false
@@ -152,7 +159,7 @@ class ChallengeManager {
                         && abs(averageAcceleration.y) > abs(averageAcceleration.x)
                         && abs(averageAcceleration.y) > abs(averageAcceleration.z) {
                         
-                        print("pulando detectado")
+                       
                         currentSituation = true
                         
                         DispatchQueue.main.async {
@@ -161,7 +168,6 @@ class ChallengeManager {
                         print(currentY, lastThreeY.min()!, lastThreeY.max()!)
                         players[currentPlayerIndex].progress += 100
                     } else {
-                        print("pulando ignorado")
                         currentSituation = false
                         DispatchQueue.main.async {
                             HUBPhoneManager.instance.allPlayers[0].currentSituation = false
@@ -180,7 +186,6 @@ class ChallengeManager {
                 if abs(averageAcceleration.y) < 1
                     && abs(averageAcceleration.y) < abs(averageAcceleration.x)
                     && abs(averageAcceleration.y) < abs(averageAcceleration.z) {
-                    print("abrindo a porta")
                     currentSituation = true
                     
                     DispatchQueue.main.async {
@@ -188,7 +193,6 @@ class ChallengeManager {
                             }
                     players[currentPlayerIndex].progress += 100
                 } else {
-                    print("porta ignorada")
                     currentSituation = false
                     DispatchQueue.main.async {
                         HUBPhoneManager.instance.allPlayers[0].currentSituation = false
@@ -210,14 +214,12 @@ class ChallengeManager {
                 
                 if balancingCount["x"]! >= -0.01 && balancingCount["y"]! <= 0.2 {
                     balancingResult.append("true")
-                    print("balancing contando")
                     currentSituation = true
                     DispatchQueue.main.async {
                         HUBPhoneManager.instance.allPlayers[0].currentSituation = true
                             }
                 }
                 else{
-                    print("balancing não detectado")
                     currentSituation = false
                     DispatchQueue.main.async {
                         HUBPhoneManager.instance.allPlayers[0].currentSituation = false
@@ -225,7 +227,6 @@ class ChallengeManager {
                 }
                 
                 if balancingResult.count == 30 { //para dar 3 segundos, não necessariamente continuos.
-                    print("balancing done")
                     currentSituation = true
                     DispatchQueue.main.async {
                         HUBPhoneManager.instance.allPlayers[0].currentSituation = true

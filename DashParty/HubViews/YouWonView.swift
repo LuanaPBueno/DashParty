@@ -84,9 +84,14 @@ struct YouWonView: View {
 
                             }
                     
-                    HUBPhoneManager.instance.matchManager.reset()
                     HUBPhoneManager.instance.startMatch = false
+                    let message = "Reset"
+                        if let data = message.data(using: .utf8) {
+                            MPCSessionManager.shared.sendDataToAllPeers(data: data)
+                            
+                        }
                     router = .tutorial
+                    HUBPhoneManager.instance.matchManager.reset(isHost: true)
                     
                 } label: {
                     Text("Play again")

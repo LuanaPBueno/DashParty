@@ -160,6 +160,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     // MARK: - Data Transfer
     func sendDataToAllPeers(data: Data) {
         sendData(data: data, peers: mcSession.connectedPeers, mode: .reliable)
+        print("Enviei a mensagem para o usuário")
     }
 
     
@@ -221,10 +222,12 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                                 SendingPlayer(
                                     id: HUBPhoneManager.instance.user.id ,
                                     name: HUBPhoneManager.instance.playername,
-                                    currentSituation: self.matchManager.currentSituation,
-                                    currentChallenge: self.matchManager.currentChallenge,
-                                    youWon: self.matchManager.youWon,
-                                    interval: self.matchManager.interval
+                                    currentSituation: HUBPhoneManager.instance.allPlayers[0].currentSituation,
+                                    currentChallenge: HUBPhoneManager.instance.allPlayers[0].currentChallenge,
+                                    youWon: HUBPhoneManager.instance.allPlayers[0].youWon,
+                                    interval: HUBPhoneManager.instance.allPlayers[0].interval,
+                                    progress: HUBPhoneManager.instance.allPlayers[0].progress
+                                    
                                 )
                             )
                         )
@@ -273,7 +276,11 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                     
                 if receivedString == "Reset" {
                     HUBPhoneManager.instance.matchManager.players[0].startTime = false
-                    HUBPhoneManager.instance.matchManager.reset()
+                    for index in HUBPhoneManager.instance.allPlayers.indices {
+                        HUBPhoneManager.instance.allPlayers[index].youWon = false
+                    }
+                    print("Recebi a func de reset")
+                    HUBPhoneManager.instance.matchManager.reset(isHost: false)
                 }
         
         if let handler = peerDataHandler {

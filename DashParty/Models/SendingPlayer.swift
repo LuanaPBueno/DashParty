@@ -14,5 +14,6 @@ struct SendingPlayer: Codable {
     var currentChallenge: Challenge
     var youWon: Bool
     var interval: TimeInterval
+    var progress: Double
 }
 
