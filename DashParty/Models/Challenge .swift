@@ -19,13 +19,13 @@ enum Challenge: Codable {
     var name: String {
         switch self {
         case .running:
-            "Running"
+            "RUN"
         case .jumping:
-            "Jumping"
+            "JUMP"
         case .openingDoor:
-            "OpeningDoor"
+            "PUSH"
         case .balancing:
-            "Balancing"
+            "BALANCE"
         case .stopped:
             "Stopped"
      

@@ -36,8 +36,9 @@ struct HostOrPlayerView: View {
                         router = .start
                     } label: {
                         Image("backButton")
-                            .scaledToFit()
-                            .frame(width: 200, height: 150)
+                            .padding(.leading, 28)
+                            .padding(.top, 28)
+
                     }
                     Spacer()
                 }
@@ -56,15 +57,8 @@ struct HostOrPlayerView: View {
                     MPCSessionManager.shared.startSession(asHost: true)
                     
                 }) {
-                    Image("decorativeRectOrange")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 150, height: 60)
-                        .overlay(
-                            Text("Host")
-                                .font(.custom("TorukSC-Regular", size: 40))
-                                .foregroundColor(.white)
-                        )
+                    OrangeButtonPhone(text: "Host", sizeFont: 40)
+                        .padding(.vertical, 30)
                 }
                 
                 
@@ -77,22 +71,10 @@ struct HostOrPlayerView: View {
                         showAlert = true
                     }
                 }) {
-                    Image("decorativeRectBlue")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 150, height: 60)
+                    BlueButtonPhone(text: "Join", sizeFont: 40)
+                        .padding(.vertical, 30)
                     
-                        .overlay(
-                            Text("Join")
-                                .font(.custom("TorukSC-Regular", size: 40))
-                                .foregroundColor(.white)
-                            
-                        )
                 }
-                
-                
-                
-                Spacer()
             }
             
             .alert("Insert your name", isPresented: $askForHostName) {
@@ -139,7 +121,7 @@ struct HostOrPlayerView: View {
                             navigateToHost = true
                             askForHostName = true
                             multipeerSession.resetSession()
-                            router = .matchmaking
+                            router = .airplayInstructions
 
                         } label: {
                             Text("Save")

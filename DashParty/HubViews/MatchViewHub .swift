@@ -28,88 +28,53 @@ struct MatchViewHub: View {
                 .edgesIgnoringSafeArea(.all)
             
             VStack{
-                Spacer()
                 VStack{
-                    Text(HUBPhoneManager.instance.allPlayers[index].name)
-                        .font(.custom("Prompt-Black",size: 64))
-                        .foregroundColor(.black)
-                        .background(Color.white)
-                    Spacer()
-                    Image("\(characterImage)")
-                    Spacer()
-                }
-            }
-            
-            let displayedChallenge = HUBPhoneManager.instance.allPlayers[index].currentChallenge
-            let displayedSituation = HUBPhoneManager.instance.allPlayers[index].currentSituation
-            let playerID = HUBPhoneManager.instance.allPlayers[index].id
-            
-            if matchManager.players.isEmpty == false {
-                if displayedChallenge == .stopped {
-                    Text("Você acabou, espere pelo ranking")
-                        .background(Color.white)
-                        .font(.custom("Prompt-Black",size: 64))
-                        .foregroundColor(.black)
                     
-                } else {
-                    VStack{
-                        Text("\(playerID)")
-                        Text("Current challenge: \(displayedChallenge.name)")
-                            .font(.custom("Prompt-Black",size: 64))
-                            .foregroundColor(.black)
-                        
-                        Group {
-                            switch displayedChallenge {
-                            case .running:
-                                if displayedSituation {
-                                    Text("You are running")
-                                } else {
-                                    Text("You are not running")
-                                }
-                            case .jumping:
-                                if displayedSituation {
-                                    Text("You are jumping")
-                                } else {
-                                    Text("You are not jumping")
-                                }
-                            case .openingDoor:
-                                if displayedSituation {
-                                    Text("You are opening the door")
-                                } else {
-                                    Text("You are not opening the door")
-                                }
-                            case .balancing:
-                                if displayedSituation {
-                                    Text("You are balancing")
-                                } else {
-                                    Text("You are not balancing")
-                                }
-                            case .stopped:
-                                    Text("You finished. Wait for the final ranking")
-                                
-                            case nil:
-                                Text("?")
-                                
+                    Image("warning")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 600) // tamanho base
+                        .overlay {
                             
+                            let displayedChallenge = HUBPhoneManager.instance.allPlayers[index].currentChallenge
+                            let displayedSituation = HUBPhoneManager.instance.allPlayers[index].currentSituation
+                            let playerID = HUBPhoneManager.instance.allPlayers[index].id
+                            
+                            if matchManager.players.isEmpty == false {
+                                if displayedChallenge == .stopped {
+                                    Text("Wait for the ranking")
+                                        //.background(Color.white)
+                                        .font(.custom("TorukSC-Regular", size: 64, relativeTo: .title))
+                                        .foregroundColor(.black)
+                                    
+                                } else {
+                                    VStack{
+                                        Text("\(displayedChallenge.name)!")
+                                            .font(.custom("TorukSC-Regular", size: 64, relativeTo: .title))
+                                            .foregroundColor(.black)
+                                
+                                       
+                                    }
+                                }
                             }
                         }
-                        .font(.custom("Prompt-ExtraBold",size: 64))
+                        .task {
+                            matchManager.startMatch(users: users, myUserID: HUBPhoneManager.instance.allPlayers[index].id, index: index)
+                            startTime = .now
+                            characterImage = "characterBack"
+                            HUBPhoneManager.instance.newGame = false
+                        }
+                        }
+                    Image("\(characterImage)")
+                    Text(HUBPhoneManager.instance.allPlayers[index].name)
+                        .font(.custom("TorukSC-Regular", size: 64, relativeTo: .title))
                         .foregroundColor(.black)
-                    }
-                    .background(Color.white)
-                    
+                        .background(.white)
                 }
             }
-        }
-        .task {
-            matchManager.startMatch(users: users, myUserID: HUBPhoneManager.instance.allPlayers[index].id, index: index)
-            startTime = .now
-            let message = "StartTime"
-                if let data = message.data(using: .utf8) {
-                    multipeerSession.sendDataToAllPeers(data: data)
-                }
-            characterImage = "characterBack"
-            HUBPhoneManager.instance.newGame = false
-        }
+            
+            
     }
 }
+
+
