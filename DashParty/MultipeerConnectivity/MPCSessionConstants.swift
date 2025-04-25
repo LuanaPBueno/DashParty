@@ -36,7 +36,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             mcSession.myPeerID.displayName
         }
     
-    private var invitationHandler: ((Bool, MCSession?) -> Void)?
+    var invitationHandler: ((Bool, MCSession?) -> Void)?
     
     private let serviceString: String
     private let identityString: String

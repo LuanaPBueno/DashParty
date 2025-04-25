@@ -38,10 +38,14 @@ struct RoomListView: View {
                     
                     List(multipeerSession.pendingInvitations.keys.sorted(), id: \.self) { peerName in
                         Button(action: {
-                            multipeerSession.pendingInvitations[peerName]?(true, multipeerSession.mcSession)
-                            if showingInvitationAlert{
-                                showingButtonInvitationAlert = true
-                            }
+                            invitationFromPeer = peerName
+                               if let handler = multipeerSession.pendingInvitations[peerName] {
+                                   multipeerSession.invitationHandler = handler
+                                   multipeerSession.pendingInvitations[invitationFromPeer]?(true, multipeerSession.mcSession)
+                                   showingButtonInvitationAlert = true
+                               }
+                          
+                        
                         }) {
                             HStack {
                                 Text(peerName)
