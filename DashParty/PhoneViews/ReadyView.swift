@@ -17,59 +17,49 @@ struct ReadyView: View {
     @State private var isActive = false
     
     var body: some View {
-      
-            ZStack{
-                Image("purpleBackground")
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
-                
-                VStack{
-                    
-                    Spacer()
-                    
-                                        
-                        Text("to set up your game, share \n your screen via AirPlay!")
-                            .font(.custom("TorukSC-Regular", size: 30))
-                            .foregroundColor(.white)
-                            .multilineTextAlignment(.center)
-                    
-                    Spacer()
-                    
-                    Text("we recommend these screens")
-                        .font(.custom("TorukSC-Regular", size: 20))
-                        .foregroundColor(.white)
-                    
-                    Image("hubs")
-                    Spacer()
-                    
-                    Button(action: {
-                        router = .matchmaking
-                    }) {
-                        Image("decorativeRectOrange")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 150, height: 60)
-                            .overlay(
-                                Text("Ready")
-                                    .font(.custom("TorukSC-Regular", size: 28))
-                                    .foregroundColor(.white)
-                            )
+        ZStack{
+            Image("purpleBackground")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+            
+            VStack{
+                HStack{
+                    Button {
+                        router = .play
+                    } label: {
+                        Image("backButton")
+                            .padding(.leading, 56)
+                            .padding(.top, 44)
+
                     }
-                    
-//                    NavigationLink(
-//                        destination: NarrativePassingView(),
-//                      //  destination: ChooseHierarchyView(),
-//                        isActive: $navigate,
-//                        label: { EmptyView() }
-//                    )
-                    
                     Spacer()
                 }
+                Text("Ready?")
+                    .font(.custom("TorukSC-Regular", size: 45, relativeTo: .title))
+                    .foregroundColor(.white)
+                    .multilineTextAlignment(.center)
+                Spacer()
+                HStack (spacing: 20){
+                    Image("hub")
+                    Text("To set up your game, share your screen via AirPlay!")
+                        .font(.custom("TorukSC-Regular", size: 35))
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.leading)
+                }
+                .padding(.horizontal, 80)
+                .multilineTextAlignment(.center)
+                Spacer()
+                Text("We recommend these screens")
+                    .font(.custom("TorukSC-Regular", size: 15))
+                    .foregroundColor(.white)
+                Image("hubs")
+                
+                
+                
                 
             }
-            
-        
+        }
     }
 }
 

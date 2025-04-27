@@ -28,10 +28,16 @@ struct TutorialPassingView: View {
     var body: some View {
         ZStack {
             
-            Image(currentTutorialImage[safe: hubManager.actualTutorialIndex] ?? "fallbackImage")
+            Image("purpleBackground")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
+            if !multipeerSession.host{
+                Image("eyesOnTheHub")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+            }
             if multipeerSession.host{
                 VStack{
                     HStack{
@@ -39,8 +45,8 @@ struct TutorialPassingView: View {
                             router = .storyBoard
                         } label: {
                             Image("backButton")
-                                .padding(.leading, 28)
-                                .padding(.top, 28)
+                                .padding(.leading, 35)
+                                .padding(.top, 35)
                         }
                         Spacer()
                     }
@@ -50,77 +56,100 @@ struct TutorialPassingView: View {
             if hubManager.actualTutorialIndex == 5 {
                 VStack {
                     Spacer()
-                    if multipeerSession.host{
-                        Button {
-                            HUBPhoneManager.instance.startMatch = true
-                            router = .game
-                            HUBPhoneManager.instance.matchManager.atualizaStart()
-                        } label: {
-                            Image("startMatchButton")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 100, height: 100)
-                        }
-                    }
-                    else{
-                        Text("Wait for the host to start the game")
-                            .font(.custom("TorukSC-Regular", size: 30))
-                            .foregroundColor(.white)
-                            .padding(.bottom, 40)
+                    Button {
+                        HUBPhoneManager.instance.startMatch = true
+                        router = .game
+                        HUBPhoneManager.instance.matchManager.atualizaStart()
+                    } label: {
+                        Image("startMatchButton")
+                            .padding(.bottom, 20)
                     }
                 }
             }
-
+            
             // Botões de navegação no rodapé
-            //if multipeerSession.host{
-                
-                
-                VStack {
+            if multipeerSession.host{
+                VStack{
                     Spacer()
-                    HStack {
-                        // BACK BUTTON
-                        Button(action: {
-                            if hubManager.actualTutorialIndex > 0 {
-                                hubManager.actualTutorialIndex -= 1
+                Image("decorativeRectCream")
+                    .overlay(
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                if hubManager.actualTutorialIndex > 0 {
+                                    hubManager.actualTutorialIndex -= 1
+                                }
+                            }) {
+                                Image("backNarrativeButton")
+                                    .opacity(hubManager.actualTutorialIndex == 0 ? 0.2 : 1.0)
+                                    .disabled(hubManager.actualTutorialIndex == 0)
+                                
+                                
+                                
                             }
-                        }) {
-                            Image("backYellowButton")
-                                .resizable()
-                                .frame(width: 40, height: 40)
-                                .opacity(hubManager.actualTutorialIndex == 0 ? 0.2 : 1.0)
-                                .disabled(hubManager.actualTutorialIndex == 0)
-                        }
-                        
-                        Spacer()
-                        
-                        // NEXT BUTTON
-                        Button(action: {
-                            if hubManager.actualTutorialIndex < currentTutorialImage.count - 1 {
-                                hubManager.actualTutorialIndex += 1
+                            Spacer()
+                            Spacer()
+                            Spacer()
+                            Spacer()
+                            Button(action: {
+                                if hubManager.actualTutorialIndex < currentTutorialImage.count - 1 {
+                                    hubManager.actualTutorialIndex += 1
+                                }
+                            }) {
+                                Image("passNarrativeButton")
+                                    .opacity(hubManager.actualTutorialIndex == 5 ? 0.2 : 1.0)
+                                    .disabled(hubManager.actualTutorialIndex == 5)
                             }
-                        }) {
-                            Image("nextYellowButton")
-                                .resizable()
-                                .frame(width: 40, height: 40)
-                                .opacity(hubManager.actualTutorialIndex == 5 ? 0.2 : 1.0)
-                                .disabled(hubManager.actualTutorialIndex == 5)
+                            Spacer()
                         }
-                    }
-                    .padding(.horizontal, 40)
-                    .padding(.bottom, 30)
-                }
-            //}
-        }
-
-        .onAppear {
-            hubManager.actualTutorialIndex = 0
+                            .padding(.horizontal, 24)
+                    )
+                    Spacer()
+            }
+                //                VStack {
+                //                    Spacer()
+                //                    HStack {
+                //                        // BACK BUTTON
+                //                        Button(action: {
+                //                            if hubManager.actualTutorialIndex > 0 {
+                //                                hubManager.actualTutorialIndex -= 1
+                //                            }
+                //                        }) {
+                //                            Image("backYellowButton")
+                //                                .resizable()
+                //                                .frame(width: 40, height: 40)
+                //                                .opacity(hubManager.actualTutorialIndex == 0 ? 0.2 : 1.0)
+                //                                .disabled(hubManager.actualTutorialIndex == 0)
+                //                        }
+                //
+                //                        Spacer()
+                //
+                //                        // NEXT BUTTON
+                //                        Button(action: {
+                //                            if hubManager.actualTutorialIndex < currentTutorialImage.count - 1 {
+                //                                hubManager.actualTutorialIndex += 1
+                //                            }
+                //                        }) {
+                //                            Image("nextYellowButton")
+                //                                .resizable()
+                //                                .frame(width: 40, height: 40)
+                //                                .opacity(hubManager.actualTutorialIndex == 5 ? 0.2 : 1.0)
+                //                                .disabled(hubManager.actualTutorialIndex == 5)
+                //                        }
+                //                    }
+                //                    .padding(.horizontal, 40)
+                //                    .padding(.bottom, 30)
+                //                }
+            }
         }
         
-
-                
-            }
+        
+        
+        
+        
+    }
 }
-    
+
 #Preview {
     TutorialPassingView(router: .constant(.tutorial), multipeerSession: MPCSessionManager.shared)
 }
