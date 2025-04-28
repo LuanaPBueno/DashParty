@@ -11,6 +11,17 @@ struct MPCSessionConstants {
 @Observable
 class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate, ObservableObject {
     // MARK: - Properties
+    
+    
+    // Novas variaveis para nova lógica de communicação
+    var nearbyPeers: [MCPeerID] = []
+    var connectedPeersNames: [String] = [] {
+        didSet {
+            print("Lista de peers atualizada: \(connectedPeersNames)")
+        }
+    }
+    var isConnected: Bool = false
+    
 
     // Adicione esta propriedade à sua classe
     let motionManager = CMMotionManager()
@@ -40,11 +51,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     
     private let serviceString: String
     private let identityString: String
-    var connectedPeersNames: [String] = [] {
-            didSet {
-                print("Lista de peers atualizada: \(connectedPeersNames)")
-            }
-        }
+    
     private let maxNumPeers: Int
     private var isSendingMessages = false
     private var shouldStopSending = false
@@ -87,9 +94,11 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         self.host = asHost
         if host {
             print("🧑‍💼 Iniciando como HOST")
-           // mcAdvertiser.startAdvertisingPeer()
+            mcAdvertiser.startAdvertisingPeer()
+//            mcBrowser?.startBrowsingForPeers()
         } else {
             print("🎮 Iniciando como PLAYER")
+//            mcAdvertiser.stopAdvertisingPeer()
             mcBrowser?.startBrowsingForPeers()
         }
     }
@@ -97,8 +106,8 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     
     // MARK: - Session Management
      func resetSession() {
-        mcAdvertiser.stopAdvertisingPeer()
-        mcSession.disconnect()
+        print("Session Resetada!!")
+        self.invalidate()
         if host{
             localPeerID = MCPeerID(displayName: HUBPhoneManager.instance.roomName)
         } else{
@@ -112,11 +121,17 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             serviceType: serviceString
         )
         mcAdvertiser.delegate = self
-        mcAdvertiser.startAdvertisingPeer()
         
         if mcBrowser != nil {
             resetBrowser()
         }
+         
+         if host{
+             mcAdvertiser.startAdvertisingPeer()
+         }
+         else{
+             mcBrowser?.startBrowsingForPeers()
+         }
          
     }
 
@@ -124,17 +139,23 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         mcBrowser?.stopBrowsingForPeers()
         mcBrowser = MCNearbyServiceBrowser(peer: localPeerID, serviceType: serviceString)
         mcBrowser?.delegate = self
-        mcBrowser?.startBrowsingForPeers()
+//        mcBrowser?.startBrowsingForPeers()
     }
     
     func start() {
-       // mcAdvertiser.startAdvertisingPeer()
+//        mcAdvertiser.startAdvertisingPeer()
         mcBrowser?.startBrowsingForPeers()
     }
     
     func suspend() {
+        print("Session Suspended!!")
         mcAdvertiser.stopAdvertisingPeer()
         mcBrowser?.stopBrowsingForPeers()
+    }
+    
+    func suspendAdvertising(){
+        print("Suspending Advertising")
+        mcAdvertiser.stopAdvertisingPeer()
     }
     
     func invalidate() {
@@ -143,7 +164,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     }
     
     // MARK: - Invitation Handling
-    func acceptInvitation() {
+    func acceptInvitation(peer: String) {
         DispatchQueue.main.async {
             self.invitationHandler?(true, self.mcSession)
             self.invitationHandler = nil
@@ -254,9 +275,18 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         switch state {
         case .connected:
             peerConnected(peerID: peerID)
+            // OBS: Só irei utilizar isso para o player.
+            DispatchQueue.main.async{
+                self.isConnected = true
+            }
+            
             print("✅ Peer conectado: \(peerID.displayName), \(host)")
         case .notConnected:
             peerDisconnected(peerID: peerID)
+            
+            DispatchQueue.main.async{
+                self.isConnected = false
+            }
             print("❌ Peer desconectado: \(peerID.displayName), \(host)")
         case .connecting:
             print("🔄 Conectando ao peer: \(peerID.displayName), \(host)")
@@ -304,48 +334,50 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     
     // MARK: - MCNearbyServiceBrowserDelegate
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String: String]?) {
-        print("👀 Peer encontrado: \(peerID.displayName), \(host)")
-        guard let identityValue = info?[MPCSessionConstants.kKeyIdentity] else {
-            print("⚠️ Peer sem identidade válida")
-            return
-        }
-        
-        if identityValue == identityString {
-            if host {
-                if mcSession.connectedPeers.count < maxNumPeers {
-                    print("📡 Host enviando convite para \(peerID.displayName)")
-                    browser.invitePeer(peerID, to: mcSession, withContext: nil, timeout: 10)
-                }
-            } else {
-                // Player adiciona à lista de peers disponíveis
-                DispatchQueue.main.async {
-                    self.pendingInvitations[peerID.displayName] = { accept, session in
-//                        if accept {
-//                            browser.invitePeer(peerID, to: session ?? self.mcSession, withContext: nil, timeout: 10)
-//                        }
-                    }
-                    // Notifica a UI que há uma nova sala disponível
-                    self.invitationReceivedHandler?(peerID.displayName)
-                }
+        DispatchQueue.main.async {
+            if !self.nearbyPeers.contains(peerID) {
+                self.nearbyPeers.append(peerID)
             }
         }
+        
+//        print("👀 Peer encontrado: \(peerID.displayName), \(host)")
+//        guard let identityValue = info?[MPCSessionConstants.kKeyIdentity] else {
+//            print("⚠️ Peer sem identidade válida")
+//            return
+//        }
+//
+//        if identityValue == identityString {
+//            if host {
+//                if mcSession.connectedPeers.count < maxNumPeers {
+//                    print("📡 Host enviando convite para \(peerID.displayName)")
+//                    browser.invitePeer(peerID, to: mcSession, withContext: nil, timeout: 10)
+//                }
+//            } else {
+//                // Apenas os jogadores recebem as convites, mas não enviam
+//                DispatchQueue.main.async {
+//                    self.pendingInvitations[peerID.displayName] = { accept, session in
+//                        // Não permite o envio de convite
+//                    }
+//                    self.invitationReceivedHandler?(peerID.displayName)
+//                }
+//            }
+//        }
     }
+
     
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
+        DispatchQueue.main.async {
+            self.nearbyPeers.removeAll { $0.displayName == peerID.displayName }
+        }
         print("👋 Peer perdido: \(peerID.displayName)")
     }
     
     // MARK: - MCNearbyServiceAdvertiserDelegate
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
-        if !host{
-            print("📩 Convite recebido de \(peerID.displayName)")
-          
-                DispatchQueue.main.async {
-                    self.invitationHandler = invitationHandler
-                    self.invitationReceivedHandler?(peerID.displayName)
-                }
-            
-        }
+        
+        print("📩 Convite recebido de \(peerID.displayName)")
+        let handler = invitationHandler
+        handler(true, self.mcSession)
     }
     
     // MARK: - Peer Management
@@ -444,6 +476,10 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     // MARK: - Utility
     func getConnectedPeersNames() -> [String] {
         return mcSession.connectedPeers.map { $0.displayName }
+    }
+    
+    func invite(peer: MCPeerID){
+        mcBrowser?.invitePeer(peer, to: mcSession, withContext: nil, timeout: 90)
     }
     
 }

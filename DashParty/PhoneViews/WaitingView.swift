@@ -28,7 +28,9 @@ struct WaitingView: View {
                     HStack{
                         
                         Button {
+                            multipeerSession.mcSession.disconnect()
                             router = .play
+                           
                         } label: {
                             Image("backButton")
                                 .padding(.leading, 28)

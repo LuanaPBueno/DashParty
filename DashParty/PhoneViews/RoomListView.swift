@@ -7,15 +7,17 @@
 
 import Foundation
 import SwiftUI
+import MultipeerConnectivity
 
 struct RoomListView: View {
     @Binding var router:Router
     
     @ObservedObject var multipeerSession: MPCSession
     @State private var showingInvitationAlert = false
-    @State private var invitationFromPeer = ""
+    @State private var invitationToHost: MCPeerID? = nil
     @State private var showingButtonInvitationAlert = false
     @State private var passView: Bool = false
+    
     
     var body: some View {
         ZStack{
@@ -36,50 +38,77 @@ struct RoomListView: View {
                     Text("Você é o Host")
                 } else {
                     
-                    List(multipeerSession.pendingInvitations.keys.sorted(), id: \.self) { peerName in
+                    
+                    List(multipeerSession.nearbyPeers, id: \.self) { peerID in
                         Button(action: {
-                            invitationFromPeer = peerName
-                               if let handler = multipeerSession.pendingInvitations[peerName] {
-                                   multipeerSession.invitationHandler = handler
-                                   multipeerSession.pendingInvitations[invitationFromPeer]?(true, multipeerSession.mcSession)
-                                   showingButtonInvitationAlert = true
-                               }
-                          
-                        
-                        }) {
+                            //print(peerID)
+                            invitationToHost = peerID
+                            showingButtonInvitationAlert = true
+                            
+                            
+                        }, label: {
                             HStack {
-                                Text(peerName)
+                                Text(peerID.displayName)
                                 Spacer()
                                 Image(systemName: "chevron.right")
                             }
-                        }
+                        })
                     }
                     .navigationTitle("Salas Disponíveis")
                     .scrollContentBackground(.hidden)
+                    
+                    
+                    .onChange(of: multipeerSession.isConnected){ old, value in
+                        if value{
+                            router = .waitingRoom
+                        }
+                    }
+                    
+                    
+//                    List(multipeerSession.pendingInvitations.keys.sorted(), id: \.self) { peerName in
+//                        Button(action: {
+//                            invitationFromPeer = peerName
+//                               if let handler = multipeerSession.pendingInvitations[peerName] {
+//                                   multipeerSession.invitationHandler = multipeerSession.pendingInvitations[peerName]
+//                                  
+//                                   showingButtonInvitationAlert = true
+//                               }
+//                          
+//                        
+//                        }) {
+//                            HStack {
+//                                Text(peerName)
+//                                Spacer()
+//                                Image(systemName: "chevron.right")
+//                            }
+//                        }
+//                    }
+                    
 
                 }
             }
             .alert("Are you sure you want to join?", isPresented: $showingButtonInvitationAlert) {
                 Button("Yes") {
-                    multipeerSession.acceptInvitation()
-                    router = .waitingRoom
+                    if let invitationToHost{
+                        multipeerSession.invite(peer: invitationToHost)
+                    }
                 }
                 Button("No", role: .cancel) {
-                    multipeerSession.rejectInvitation()
+                    invitationToHost = nil
                 }
             } message: {
-                Text("\(invitationFromPeer) is inviting you to enter the room.")
+                Text("\(invitationToHost?.displayName ?? "") is inviting you to enter the room.")
                     .font(.custom("TorukSC-Regular", size: 24))
                     .foregroundColor(.white)
             }
            
-            .onAppear {
-                multipeerSession.invitationReceivedHandler = { peerName in
-                    invitationFromPeer = peerName
-                    showingInvitationAlert = true
-                }
-                multipeerSession.start()
-            }
+//            .onAppear {
+//                multipeerSession.invitationReceivedHandler = { peerName in
+////                    invitationFromPeer = peerName
+//                    showingInvitationAlert = true
+//                }
+//                multipeerSession.start()
+//            }
         }
     }
 }

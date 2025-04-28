@@ -43,12 +43,11 @@ struct HostOrPlayerView: View {
                     Spacer()
                 }
                 
-                
-                
                 Button(action: {
                     MPCSessionManager.shared.host = true
-                    MPCSessionManager.shared.start()
-                    //   showRoomAlert = true //MARK: MUDAR ISSO
+//                    MPCSessionManager.shared.start()
+//                    multipeerSession.mcAdvertiser.startAdvertisingPeer()
+
                     if userName != ""{
                         navigateToHost = true
                     }else{
@@ -65,11 +64,16 @@ struct HostOrPlayerView: View {
                 Button(action: {
                     MPCSessionManager.shared.host = false
                     MPCSessionManager.shared.startSession(asHost: false)
+//                    multipeerSession.suspendAdvertising()
                     if userName != ""{
                         navigateToHost = true
+//                        multipeerSession.mcAdvertiser.stopAdvertisingPeer()
                     }else{
+//                        multipeerSession.mcAdvertiser.stopAdvertisingPeer()
                         showAlert = true
+                        
                     }
+                  
                 }) {
                     BlueButtonPhone(text: "Join", sizeFont: 40)
                         .padding(.vertical, 30)
@@ -129,10 +133,9 @@ struct HostOrPlayerView: View {
 
                    }
         }
-        .task{
-            multipeerSession.mcAdvertiser.stopAdvertisingPeer()
-            
-        }
+//        .task{
+//            multipeerSession.mcAdvertiser.stopAdvertisingPeer()
+//        }
     }
  }
 
