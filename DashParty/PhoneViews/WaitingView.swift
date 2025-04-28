@@ -31,8 +31,8 @@ struct WaitingView: View {
                             router = .play
                         } label: {
                             Image("backButton")
-                                .padding(.leading, 28)
-                                .padding(.top, 28)
+                                .padding(.leading, 35)
+                                .padding(.top, 35)
                         }
                        
                         Spacer()

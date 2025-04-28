@@ -31,7 +31,7 @@ struct ReadyView: View {
                         Image("backButton")
                             .padding(.leading, 56)
                             .padding(.top, 44)
-
+                        
                     }
                     Spacer()
                 }
@@ -54,11 +54,23 @@ struct ReadyView: View {
                     .font(.custom("TorukSC-Regular", size: 15))
                     .foregroundColor(.white)
                 Image("hubs")
-                
-                
-                
-                
             }
+               
+               // .padding(.vertical, 40)
+
+            VStack {
+                Spacer()
+                Button {
+                    router = .matchmaking
+                } label: {
+                    OrangeButtonPhone(text: "Ready", sizeFont: 20)
+                        .frame(width: 150, height: 45) // controla o tamanho do botão
+                }
+                .frame(maxWidth: .infinity, alignment: .trailing) // joga o botão pra direita
+                .padding(.trailing, 35) // encosta ele na direita, mas com uma margem de 40
+                .padding(.bottom, 20) // opcional: dar uma afastada da borda inferior
+            }
+            
         }
     }
 }

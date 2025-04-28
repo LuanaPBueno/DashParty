@@ -12,20 +12,20 @@ struct OrangeButtonPhone: View {
     var sizeFont: Int
     var body: some View {
         
-        GeometryReader{ geo in
+//        GeometryReader{ geo in
             ZStack {
                 Image("decorativeRectOrange")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: geo.size.width)
+//                    .frame(width: geo.size.width)
                 Text(text)
                     .font(.custom("TorukSC-Light", size: CGFloat(sizeFont)))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.center)
                     .minimumScaleFactor(0.5)
             }
-            .aspectRatio(1/6, contentMode: .fit)
-        }
+            //.aspectRatio(1/6, contentMode: .fit)
+//        }
         
     }
 }

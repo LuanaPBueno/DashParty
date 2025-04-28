@@ -43,14 +43,14 @@ struct RoomView: View {
                     }
                     .padding(.leading, 35)
                     .padding(.top, 35)
-                    
+                    Spacer()
                     HStack{
                         ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
                             MMPhone(playerName: player, sizePadding: 0)
                         }
                     }
                     .padding(.top, 30)
-                    
+                    Spacer()
                     
                 }
                 .foregroundColor(.white)
