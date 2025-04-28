@@ -87,6 +87,8 @@ struct HostOrPlayerView: View {
                 
                 Button {
                     HUBPhoneManager.instance.allPlayers[0].name = userName
+                    HUBPhoneManager.instance.playername = userName
+
 //                    navigateToHost = true
 //                    router = .matchmaking
                     showRoomAlert = true

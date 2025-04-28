@@ -21,6 +21,9 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         }
     }
     var isConnected: Bool = false
+    var hostPeerID: MCPeerID?
+    var hostName: String = ""
+    var peersDiscoveryInfo: [MCPeerID: [String: String]] = [:]
     
 
     // Adicione esta propriedade à sua classe
@@ -117,7 +120,10 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         mcSession.delegate = self
         mcAdvertiser = MCNearbyServiceAdvertiser(
             peer: localPeerID,
-            discoveryInfo: [MPCSessionConstants.kKeyIdentity: identityString],
+            discoveryInfo: [
+                MPCSessionConstants.kKeyIdentity: identityString,
+                "HostName": HUBPhoneManager.instance.playername
+            ],
             serviceType: serviceString
         )
         mcAdvertiser.delegate = self
@@ -278,6 +284,12 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             // OBS: Só irei utilizar isso para o player.
             DispatchQueue.main.async{
                 self.isConnected = true
+                //self.hostName = session.description.
+                if let idx = self.hostPeerID{
+                    let discInfo = self.peersDiscoveryInfo[idx]
+                    self.hostName = discInfo!["HostName"]!
+//                    print("HostName: \(self.hostName)")
+                }
             }
             
             print("✅ Peer conectado: \(peerID.displayName), \(host)")
@@ -337,6 +349,10 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         DispatchQueue.main.async {
             if !self.nearbyPeers.contains(peerID) {
                 self.nearbyPeers.append(peerID)
+                
+                if let info = info{
+                    self.peersDiscoveryInfo[peerID] = info
+                }
             }
         }
         
@@ -479,6 +495,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     }
     
     func invite(peer: MCPeerID){
+        hostPeerID = peer
         mcBrowser?.invitePeer(peer, to: mcSession, withContext: nil, timeout: 90)
     }
     

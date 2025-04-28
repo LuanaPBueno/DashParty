@@ -43,6 +43,7 @@ struct RoomView: View {
                         
                         HStack{
                             Button {
+                                multipeerSession.mcSession.disconnect()
                                 router = .play
                             } label: {
                                 Image("backButton")
@@ -68,6 +69,8 @@ struct RoomView: View {
                             .padding()
                          
                         HStack{
+                            Text(HUBPhoneManager.instance.roomName)
+                            MMPhone(playerName: HUBPhoneManager.instance.playername , sizePadding: 0)
                             ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
                                 MMPhone(playerName: player, sizePadding: 0)
                             }

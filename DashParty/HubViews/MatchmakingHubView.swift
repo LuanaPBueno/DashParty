@@ -63,6 +63,8 @@ struct MatchmakingHubView: View {
                             .multilineTextAlignment(.center)
                             .padding()
                         HStack{
+                            Text(HUBPhoneManager.instance.roomName)
+                            MMPhone(playerName: HUBPhoneManager.instance.playername , sizePadding: 0)
                             ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
                                 MMPhone(playerName: player, sizePadding: 0)
                             }

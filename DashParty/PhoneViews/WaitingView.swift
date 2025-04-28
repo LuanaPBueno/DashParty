@@ -13,7 +13,6 @@ struct WaitingView: View {
     @Binding var router:Router
     var multipeerSession: MPCSession
     
-//    @State private var navigateHost: Bool = false
     @State private var navigateToPlayerDisplayView: Bool = false
     
     var body: some View {
@@ -42,9 +41,19 @@ struct WaitingView: View {
                     Spacer()
                     
                     // Lista de jogadores conectados
+                    
                     HStack{
+                        Text(multipeerSession.hostPeerID!.displayName)
+                        
+                            MMPhone(playerName: multipeerSession.hostName, sizePadding: 0)
+                            MMPhone(playerName: HUBPhoneManager.instance.playername, sizePadding: 0)
+                        
                         ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
-                            MMPhone(playerName: player, sizePadding: 0)
+                            if player == multipeerSession.hostPeerID!.displayName {
+                               Text("")
+                            }else{
+                                MMPhone(playerName: player, sizePadding: 0)
+                            }
                         }
                     }
                     Spacer()
