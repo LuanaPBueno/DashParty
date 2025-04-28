@@ -23,15 +23,22 @@ struct TutorialPassingView: View {
     
     @State var pass : Bool = false
     
+    @State var showStartAlert = false
     var currentTutorialImage: [String] = ["tutorialPhone1", "tutorialPhone2", "tutorialPhone3", "tutorialPhone4", "tutorialPhone5", "tutorialPhone6"]
     
     var body: some View {
         ZStack {
             
-            Image(currentTutorialImage[safe: hubManager.actualTutorialIndex] ?? "fallbackImage")
+            Image("purpleBackground")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
+            if !multipeerSession.host{
+                Image("eyesOnTheHub")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+            }
             if multipeerSession.host{
                 VStack{
                     HStack{
@@ -39,88 +46,84 @@ struct TutorialPassingView: View {
                             router = .storyBoard
                         } label: {
                             Image("backButton")
-                                .padding(.leading, 28)
-                                .padding(.top, 28)
+                                .padding(.leading, 35)
+                                .padding(.top, 35)
                         }
                         Spacer()
                     }
                     Spacer()
                 }
             }
-            if hubManager.actualTutorialIndex == 5 {
-                VStack {
+
+            if multipeerSession.host{
+                VStack{
                     Spacer()
-                    if multipeerSession.host{
-                        Button {
-                            HUBPhoneManager.instance.startMatch = true
-                            router = .game
-                            HUBPhoneManager.instance.matchManager.atualizaStart()
-                        } label: {
-                            Image("startMatchButton")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 100, height: 100)
-                        }
-                    }
-                    else{
-                        Text("Wait for the host to start the game")
-                            .font(.custom("TorukSC-Regular", size: 30))
-                            .foregroundColor(.white)
-                            .padding(.bottom, 40)
-                    }
-                }
-            }
-
-            // Botões de navegação no rodapé
-            //if multipeerSession.host{
-                
-                
-                VStack {
+                    //Spacer()
+                    
+                    Text("Look at the screen and enjoy the story!")
+                        .multilineTextAlignment(.center)
+                        .font(.custom("TorukSC-Regular", size: 30))
+                        .padding(40)
+                        .foregroundColor(.white)
+                    Image("decorativeRectCream")
+                        .overlay(
+                            HStack {
+                                Spacer()
+                                Button(action: {
+                                    if hubManager.actualTutorialIndex > 0 {
+                                        hubManager.actualTutorialIndex -= 1
+                                    }
+                                }) {
+                                    Image("backNarrativeButton")
+                                        .opacity(hubManager.actualTutorialIndex == 0 ? 0.2 : 1.0)
+                                        .disabled(hubManager.actualTutorialIndex == 0)
+                                    
+                                    
+                                    
+                                }
+                                Spacer()
+                                Spacer()
+                                Spacer()
+                                Spacer()
+                                Button(action: {
+                                    if hubManager.actualTutorialIndex < currentTutorialImage.count - 1 {
+                                        hubManager.actualTutorialIndex += 1
+                                    } else if hubManager.actualTutorialIndex == currentTutorialImage.count - 1 {
+                                        // Quando clicar no último Next → ALERTA
+                                        showStartAlert = true
+                                    }
+                                }) {
+                                    Image("passNarrativeButton")
+                                        .opacity(hubManager.actualTutorialIndex == 5 ? 0.2 : 1.0)
+                                        .disabled(hubManager.actualTutorialIndex == 5)
+                                }
+                                Spacer()
+                            }
+                                .padding(.horizontal, 24)
+                        )
                     Spacer()
-                    HStack {
-                        // BACK BUTTON
-                        Button(action: {
-                            if hubManager.actualTutorialIndex > 0 {
-                                hubManager.actualTutorialIndex -= 1
-                            }
-                        }) {
-                            Image("backYellowButton")
-                                .resizable()
-                                .frame(width: 40, height: 40)
-                                .opacity(hubManager.actualTutorialIndex == 0 ? 0.2 : 1.0)
-                                .disabled(hubManager.actualTutorialIndex == 0)
-                        }
-                        
-                        Spacer()
-                        
-                        // NEXT BUTTON
-                        Button(action: {
-                            if hubManager.actualTutorialIndex < currentTutorialImage.count - 1 {
-                                hubManager.actualTutorialIndex += 1
-                            }
-                        }) {
-                            Image("nextYellowButton")
-                                .resizable()
-                                .frame(width: 40, height: 40)
-                                .opacity(hubManager.actualTutorialIndex == 5 ? 0.2 : 1.0)
-                                .disabled(hubManager.actualTutorialIndex == 5)
-                        }
-                    }
-                    .padding(.horizontal, 40)
-                    .padding(.bottom, 30)
                 }
-            //}
-        }
-
-        .onAppear {
-            hubManager.actualTutorialIndex = 0
-        }
-        
-
                 
             }
-}
+                
+        }
+        .alert(isPresented: $showStartAlert) {
+            Alert(
+                title: Text("Are you ready!"),
+                message: Text("As soon as you click start, the game will begin. Are you prepared?"),
+                primaryButton: .destructive(Text("Cancel")),
+                secondaryButton: .default(Text("Start")) {
+                    HUBPhoneManager.instance.startMatch = true
+                    router = .game
+                    HUBPhoneManager.instance.matchManager.atualizaStart()
+                },
+               
+            )
+        }
+    }
     
+}
+
 #Preview {
     TutorialPassingView(router: .constant(.tutorial), multipeerSession: MPCSessionManager.shared)
 }

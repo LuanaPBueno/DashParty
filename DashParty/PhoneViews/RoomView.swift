@@ -16,32 +16,22 @@ struct RoomView: View {
     
     var body: some View {
         ZStack{
-            VStack{
-                Spacer()
-                HStack{
-                    Button {
-                        router = .play
-                    } label: {
-                        Image("backButton")
-                            .padding(.leading, 28)
-                            .padding(.top, 28)
-                    }
-
-                    Spacer()
-                }
-            }
             Image("purpleBackground")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
             
-          
-                if multipeerSession.host {
-                    
-                    VStack{
-                        Spacer()
+            if multipeerSession.host {
+                VStack{
+                    ZStack{
                         
-                        HStack{
+                        Text("Waiting for players to join...")
+                            .font(.custom("TorukSC-Regular", size: 34, relativeTo: .title2))
+                            .multilineTextAlignment(.center)
+                            .foregroundStyle(.white)
+                        
+                        
+                        HStack {
                             Button {
                                 multipeerSession.mcSession.disconnect()
                                 router = .play
@@ -85,13 +75,40 @@ struct RoomView: View {
                             } label: {
                                 OrangeButtonPhone(text: "Continue", sizeFont: 20)
                             }
-                            .frame(height: UIScreen.main.bounds.height * 0.1)
-                            
+                            .padding(.leading, 16)
+                            Spacer()
                         }
+                    }
+                    .padding(.leading, 35)
+                    .padding(.top, 35)
+                    Spacer()
+                    HStack{
+                        ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
+                            MMPhone(playerName: player, sizePadding: 0)
+                        }
+                    }
+                    .padding(.top, 30)
+                    Spacer()
+                    
+                }
+                
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Button {
+                            router = .storyBoard
+                        } label: {
+                            OrangeButtonPhone(text: "Continue", sizeFont: 20)
+                                .frame(width: 110, height: 45)
+                        }
+                        .padding(.trailing, 40)
+                        .padding(.bottom, 12)
                         
                     }
                 }
-          }
+            }
+        }
         .scrollContentBackground(.hidden)
         
         .task{
@@ -109,9 +126,6 @@ struct RoomView: View {
     }
 }
 
-//#Preview {
-//    RoomView(router: .constant(.matchmaking), multipeerSession: MPCSession(service: "banana", identity: "maça", maxPeers: 5, matchManager: ChallengeManager()))
-//}
 
 #Preview {
     let matchManager = ChallengeManager()

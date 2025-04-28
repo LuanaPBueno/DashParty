@@ -16,6 +16,8 @@ struct NarrativePassingView: View {
     var hubManager = HUBPhoneManager.instance
     //    @State private var navigate: Bool = false
     @State private var isActive = false
+    @State private var showAlert = false
+    @State private var showAlert2 = false
     
     var body: some View {
         ZStack{
@@ -23,20 +25,33 @@ struct NarrativePassingView: View {
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
+            HStack {
+                Spacer()
+                VStack{
+                    Button {
+                        showAlert2 = true
+                        
+                    } label: {
+                        Image("skip")
+                    }
+                    .padding(.top, 40)
+                    Spacer()
+                }
+                
+            }
+            .padding(.trailing, 40)
             
             VStack {
                 
                 Spacer()
                 
-                Text("FOLLOW THE STORY ON THE BIG SCREEN!")
+                Text("Look at the screen and enjoy the story!")
                     .multilineTextAlignment(.center)
                     .font(.custom("TorukSC-Regular", size: 30))
                     .padding(40)
                     .foregroundColor(.white)
                 Image("decorativeRectCream")
-                //.resizable()
-                //.scaledToFit()
-                //.frame(maxWidth: 350) // ajuste conforme o tamanho do seu rect
+                
                     .overlay(
                         HStack {
                             Spacer()
@@ -46,17 +61,15 @@ struct NarrativePassingView: View {
                                 }
                                 else {
                                     print("entrou aq no else no back ")
-                                    router = .matchmaking
+                                    //                                    router = .matchmaking
                                 }
                             }) {
                                 Image("backNarrativeButton")
                                 
-                                //.resizable()
-                                //.frame(width: 40, height: 40)
-                                // .opacity(hubManager.actualPage == 0 ? 0.2 : 1.0)
+                                
                                 
                             }
-                            // .disabled(hubManager.actualPage == 0)
+                            
                             
                             Spacer()
                             Spacer()
@@ -68,31 +81,24 @@ struct NarrativePassingView: View {
                                     hubManager.actualPage += 1
                                 } else {
                                     print("entrou aqui no pass")
-                                    router = .tutorial
+                                    //router = .tutorial
+                                    showAlert = true
                                 }
                             }) {
                                 Image("passNarrativeButton")
                                 
-                                //.opacity(hubManager.actualPage == hubManager.narrativeText.count - 1 ? 0.2 : 1.0)
+                                
                             }
-                            //.disabled(hubManager.actualPage == hubManager.narrativeText.count - 1)
+                            
                             Spacer()
                         }
                             .padding(.horizontal, 24)
                     )
                 Spacer()
                 
-                Button {
-                    hubManager.actualPage = hubManager.narrativeText.count - 1
-                    //   navigate = true
-                    router = .tutorial
-                    
-                } label: {
-                    Image("skip")
-                }
                 
                 
-                Spacer()
+                //Spacer()
             }
             .task{
                 HUBPhoneManager.instance.users = HUBPhoneManager.instance.allPlayers.map { player in
@@ -102,11 +108,28 @@ struct NarrativePassingView: View {
                     )
                 }
             }
+            .alert("The narrative has ended. Do you want to start the tutorial?", isPresented: $showAlert) {
+                Button("OK") {
+                    router = .tutorial
+                }
+                Button("Cancel", role: .cancel) {
+                    
+                }
+            }
+            .alert("Are you sure you want to skip the narrative?", isPresented: $showAlert2) {
+                Button("OK") {
+                    hubManager.actualPage = hubManager.narrativeText.count - 1
+                    router = .tutorial
+                }
+                Button("Cancel", role: .cancel) { }
+                
+            }
             
             
             
         }
     }
+    
 }
 
 #Preview {

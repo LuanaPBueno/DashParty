@@ -172,41 +172,43 @@ struct CharacterView: View {
                     
                     Spacer()
                     
-                    HStack{
+                    HStack {
+                        
                         ForEach(Clan.allCases) { clan in
                             ClanCard(clan: clan, isSelected: tempSelection == clan)
                                 .onTapGesture {
                                     tempSelection = clan
                                 }
                         }
+                        
                     }
+                    
                     
                     Spacer()
-                    
+                    HStack{
+                        Spacer()
                     Button(action: {
-//                        if let chosenClan = tempSelection,
-//                        let session = multipeerSession {
-//                            session.selectedClans[session.myDisplayName] = chosenClan
-//                                navigateToNext = true
-//                            }
                         multipeerSession.selectedClans[multipeerSession.myDisplayName] = tempSelection
-                        navigateToNext = true
+                        //router = .algumCasoAi
                     }) {
-                        Text("DONE")
-                            .font(.custom("TorukSC-Regular", size: 20))
-                            .padding()
-                            .frame(width: 120)
-                            .background(Image("decorativeRectOrange"))
-                            .foregroundColor(.white)
+                        
+                        ZStack {
+                                Image("decorativeRectOrange")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 160, height: 55) // 📏 tamanho só do botão, sem afetar o resto
+                                Text("Done")
+                                    .font(.custom("TorukSC-Regular", size: 20))
+                                    .foregroundColor(.white)
+                            }
+                    
+                }
+                      
                     }
+                    .padding(.trailing, 20)
                     .disabled(tempSelection == nil)
                     .opacity(tempSelection == nil ? 0.5 : 1.0)
-                    
-//                    NavigationLink(destination: ReadyView(multipeerSession: multipeerSession), isActive: $navigateToNext) {
-//                        EmptyView()
-//                    }
                 }
-                .padding()
             }
         
     }

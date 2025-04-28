@@ -27,13 +27,19 @@ struct RoomListView: View {
                 .ignoresSafeArea()
             
             VStack {
-                Button {
-                    router = .play
-                } label: {
-                    Image("backButton")
-                        .padding(.leading, 28)
-                        .padding(.top, 28)
+                HStack {
+                    Button {
+                        router = .play
+                    } label: {
+                        Image("backButton")
+                        
+                    }
+                    .padding(.leading, 16)
+                    Spacer()
                 }
+                .padding(.leading, 35)
+                .padding(.top, 35)
+                
                 if multipeerSession.host {
                     Text("Você é o Host")
                 } else {
