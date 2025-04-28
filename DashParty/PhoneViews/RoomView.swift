@@ -68,16 +68,6 @@ struct RoomView: View {
                         
                         
                         Spacer()
-                        
-                        HStack{
-                            Button {
-                                router = .storyBoard
-                            } label: {
-                                OrangeButtonPhone(text: "Continue", sizeFont: 20)
-                            }
-                            .padding(.leading, 16)
-                            Spacer()
-                        }
                     }
                     .padding(.leading, 35)
                     .padding(.top, 35)
