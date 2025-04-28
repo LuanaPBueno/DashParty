@@ -31,6 +31,7 @@ struct WaitingView: View {
                             Text("Waiting for players to join...")
                                 .font(.custom("TorukSC-Regular", size: 34, relativeTo: .title2))
                                 .multilineTextAlignment(.center)
+                                .foregroundStyle(.white)
                             
                             
                             HStack {
