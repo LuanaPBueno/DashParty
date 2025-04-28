@@ -22,24 +22,26 @@ struct ReadyView: View {
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
-            
             VStack{
                 HStack{
                     Button {
-                        router = .play
+                        router = .storyBoard
                     } label: {
                         Image("backButton")
-                            .padding(.leading, 56)
-                            .padding(.top, 44)
-                        
+                            .padding(.leading, 35)
+                            .padding(.top, 35)
                     }
                     Spacer()
                 }
+                Spacer()
+            }
+            VStack{
+                Spacer()
                 Text("Ready?")
                     .font(.custom("TorukSC-Regular", size: 45, relativeTo: .title))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.center)
-                Spacer()
+                //Spacer()
                 HStack (spacing: 20){
                     Image("hub")
                     Text("To set up your game, share your screen via AirPlay!")
@@ -49,11 +51,13 @@ struct ReadyView: View {
                 }
                 .padding(.horizontal, 80)
                 .multilineTextAlignment(.center)
-                Spacer()
+                //Spacer()
                 Text("We recommend these screens")
                     .font(.custom("TorukSC-Regular", size: 15))
                     .foregroundColor(.white)
+                    .padding(.top, 20)
                 Image("hubs")
+                Spacer()
             }
                
                // .padding(.vertical, 40)

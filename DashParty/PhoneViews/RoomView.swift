@@ -28,6 +28,7 @@ struct RoomView: View {
                         Text("Waiting for players to join...")
                             .font(.custom("TorukSC-Regular", size: 34, relativeTo: .title2))
                             .multilineTextAlignment(.center)
+                            .foregroundStyle(.white)
                         
                         
                         HStack {
@@ -53,7 +54,7 @@ struct RoomView: View {
                     Spacer()
                     
                 }
-                .foregroundColor(.white)
+                
                 VStack {
                     Spacer()
                     HStack {

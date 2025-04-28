@@ -25,17 +25,36 @@ struct WaitingView: View {
                     .ignoresSafeArea()
                 
                 VStack {
-                    HStack{
-                        
-                        Button {
-                            router = .play
-                        } label: {
-                            Image("backButton")
-                                .padding(.leading, 35)
-                                .padding(.top, 35)
+                    VStack{
+                        ZStack{
+                            
+                            Text("Waiting for players to join...")
+                                .font(.custom("TorukSC-Regular", size: 34, relativeTo: .title2))
+                                .multilineTextAlignment(.center)
+                            
+                            
+                            HStack {
+                                Button {
+                                    router = .play
+                                } label: {
+                                    Image("backButton")
+                                    
+                                }
+                                .padding(.leading, 16)
+                                Spacer()
+                            }
                         }
-                       
+                        .padding(.leading, 35)
+                        .padding(.top, 35)
                         Spacer()
+                        HStack{
+                            ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
+                                MMPhone(playerName: player, sizePadding: 0)
+                            }
+                        }
+                        .padding(.top, 30)
+                        Spacer()
+                        
                     }
                     Spacer()
                     
