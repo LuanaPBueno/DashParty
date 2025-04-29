@@ -96,9 +96,6 @@ struct NarrativePassingView: View {
                     )
                 Spacer()
                 
-                
-                
-                //Spacer()
             }
             .task{
                 HUBPhoneManager.instance.users = HUBPhoneManager.instance.allPlayers.map { player in

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SendingPlayer: Codable {
+struct SendingPlayer: Codable, Equatable {
     var id: UUID
     var name: String
     var currentSituation: Bool

@@ -18,7 +18,7 @@ struct MatchViewHub: View {
     var currentChallenge: Challenge { HUBPhoneManager.instance.allPlayers[index].currentChallenge }
     @State var startTime = Date.now
     @State var finishTime: Date?
-    @State var characterImage: String = "characterFront"
+    @State var characterImage: Image = Image("characterFront")
     
     var body: some View {
         ZStack {
@@ -65,11 +65,11 @@ struct MatchViewHub: View {
                                 if let data = message.data(using: .utf8) {
                                     multipeerSession.sendDataToAllPeers(data: data)
                                 }
-                            characterImage = "characterBack"
+                            characterImage = HUBPhoneManager.instance.allPlayers[index].userClan?.image ?? Image("characterFront")
                             HUBPhoneManager.instance.newGame = false
                         }
                         }
-                    Image("\(characterImage)")
+                    characterImage
                     Text(HUBPhoneManager.instance.allPlayers[index].name)
                         .font(.custom("TorukSC-Regular", size: 64, relativeTo: .title))
                         .foregroundColor(.black)

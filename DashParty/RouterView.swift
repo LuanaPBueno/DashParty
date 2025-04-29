@@ -40,6 +40,12 @@ struct RouterView: View {
             WaitingView(router: $router, multipeerSession: multipeerSession)
         case .matchmaking:
             RoomView(router: $router, multipeerSession: multipeerSession)
+                .task {
+                   
+                        multipeerSession.startSendingUserDataContinuously()
+
+                    
+                }
         case .storyBoard:
             if multipeerSession.host {
                 NarrativePassingView(router: $router)

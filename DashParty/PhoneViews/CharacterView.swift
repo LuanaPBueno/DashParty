@@ -43,6 +43,7 @@ struct CharacterView: View {
                         ForEach(Clan.allCases) { clan in
                             ClanCard(clan: clan, isSelected: tempSelection == clan)
                                 .onTapGesture {
+                                    HUBPhoneManager.instance.allPlayers[0].userClan = clan
                                     tempSelection = clan
                                 }
                         }
@@ -54,12 +55,15 @@ struct CharacterView: View {
                     HStack{
                         Spacer()
                     Button(action: {
-                        HUBPhoneManager.instance.allPlayers[0].userClan = tempSelection
                         if MPCSessionManager.shared.host{
+                            print("É host, deveria começar a história")
                             router =  .storyBoard
+                            MPCSessionManager.shared.stopSendingUserData()
                         }else{
                             router = .waitingRoom
+                            print("É player, deveria seguir para a sala de espera")
                         }
+                        
                     }) {
                         
                         ZStack {

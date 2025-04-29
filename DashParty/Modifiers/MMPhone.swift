@@ -16,23 +16,93 @@ struct MMPhone: View {
             let fontSize = geometry.size.width * 0.07 < 20 ? 20 : geometry.size.width * 0.07
             
             ZStack {
-                Image("phone")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: geometry.size.width)
-                    .overlay(
-                        VStack {
-                            Spacer()
-                            Text(playerName)
-                                .font(.custom("TorukSC-Regular", size: fontSize))
-                                .foregroundColor(Color(red: 126/255, green: 97/255, blue: 46/255))
-                                .padding(.bottom, CGFloat(sizePadding))
-                                .minimumScaleFactor(0.5)
-                                .lineLimit(1)
-                        }
-                        .padding(.vertical, geometry.size.height * 0.05)
-                    )
-            }
+
+                if MPCSessionManager.shared.host{
+                    if let playerCharacter = HUBPhoneManager.instance.allPlayers.first(where: { $0.name == playerName }),
+                       let imageName = playerCharacter.userClan?.image {
+                        imageName
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: geometry.size.width)
+                            .overlay(
+                                VStack {
+                                    Spacer()
+                                    Text(playerName)
+                                        .font(.custom("TorukSC-Regular", size: fontSize))
+                                        .foregroundColor(Color(red: 126/255, green: 97/255, blue: 46/255))
+                                        .padding(.bottom, CGFloat(sizePadding))
+                                        .minimumScaleFactor(0.5)
+                                        .lineLimit(1)
+                                    
+                                    
+                                }
+                                    .padding(.vertical, geometry.size.height * 0.05)
+                            )
+                        
+                    } else{
+                        Image("phone")
+                        
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: geometry.size.width)
+                            .overlay(
+                                VStack {
+                                    Spacer()
+                                    Text(playerName)
+                                        .font(.custom("TorukSC-Regular", size: fontSize))
+                                        .foregroundColor(Color(red: 126/255, green: 97/255, blue: 46/255))
+                                        .padding(.bottom, CGFloat(sizePadding))
+                                        .minimumScaleFactor(0.5)
+                                        .lineLimit(1)
+                                    
+                                    
+                                }
+                                    .padding(.vertical, geometry.size.height * 0.05)
+                            )
+                    }
+                }
+                else{
+                    if let playerCharacter = HUBPhoneManager.instance.receivedPlayers.first(where: { $0.name == playerName }),
+                       let imageName = playerCharacter.userClan?.image {
+                        imageName
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: geometry.size.width)
+                            .overlay(
+                                VStack {
+                                    Spacer()
+                                    Text(playerName)
+                                        .font(.custom("TorukSC-Regular", size: fontSize))
+                                        .foregroundColor(Color(red: 126/255, green: 97/255, blue: 46/255))
+                                        .padding(.bottom, CGFloat(sizePadding))
+                                        .minimumScaleFactor(0.5)
+                                        .lineLimit(1)
+                                }
+                                    .padding(.vertical, geometry.size.height * 0.05)
+                            )
+                        
+                    } else{
+                        Image("phone")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: geometry.size.width)
+                            .overlay(
+                                VStack {
+                                    Spacer()
+                                    Text(playerName)
+                                        .font(.custom("TorukSC-Regular", size: fontSize))
+                                        .foregroundColor(Color(red: 126/255, green: 97/255, blue: 46/255))
+                                        .padding(.bottom, CGFloat(sizePadding))
+                                        .minimumScaleFactor(0.5)
+                                        .lineLimit(1)
+                                    
+                                    
+                                }
+                                    .padding(.vertical, geometry.size.height * 0.05)
+                            )
+                    }
+                }
+             }
         }
         .aspectRatio(9/16, contentMode: .fit)
     }

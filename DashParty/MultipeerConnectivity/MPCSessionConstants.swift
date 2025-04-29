@@ -15,6 +15,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     
     // Novas variaveis para nova lógica de communicação
     var nearbyPeers: [MCPeerID] = []
+    var dataSendTimer: Timer?
     var connectedPeersNames: [String] = [] {
         didSet {
             print("Lista de peers atualizada: \(connectedPeersNames)")
@@ -184,12 +185,36 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         }
     }
     
+    //MARK: ENVIANDO DADOS PARA OS USUÁRIOS
     // MARK: - Data Transfer
     func sendDataToAllPeers(data: Data) {
         sendData(data: data, peers: mcSession.connectedPeers, mode: .reliable)
         print("Enviei a mensagem para o usuário")
     }
+    
+    func startSendingUserDataContinuously(interval: TimeInterval = 1.0) {
+        print("estou enviando todos os meus dados")
+        dataSendTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            print("passei do guardlet")
+            let userData: [SendingPlayer] = HUBPhoneManager.instance.allPlayers
+            print("criei o userData")
+            do {
+                print("entrei no DO")
+                let encodedData = try JSONEncoder().encode(userData)
+                print("vou chamar o sendingData")
+                self.sendDataToAllPeers(data: encodedData)
+            } catch {
+                print("to no catch")
+                print("Erro ao codificar os dados do usuário: \(error)")
+            }
+        }
+    }
 
+    func stopSendingUserData() {
+        dataSendTimer?.invalidate()
+        dataSendTimer = nil
+    }
     
     func sendData(data: Data, peers: [MCPeerID], mode: MCSessionSendDataMode) {
         let connectedPeers = mcSession.connectedPeers.filter { peers.contains($0) }
@@ -275,6 +300,57 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         }
     }
     
+    
+    func sendAllPlayersToPlayers() {
+        guard !host else { return }
+        guard let hostPeer = mcSession.connectedPeers.first else {
+            print("Host não encontrado.")
+            return
+        }
+        
+        guard !isSendingMessages else { return }
+        isSendingMessages = true
+        shouldStopSending = false
+        
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            guard let self else { return }
+            while self.shouldStopSending == false {
+                    
+                    do {
+                        let encoder = JSONEncoder()
+                        encoder.dateEncodingStrategy = .iso8601
+                        let data = try encoder.encode(
+                            EventMessage.playerUpdate(
+                                SendingPlayer(
+                                    id: HUBPhoneManager.instance.user.id ,
+                                    name: HUBPhoneManager.instance.playername,
+                                    currentSituation: HUBPhoneManager.instance.allPlayers[0].currentSituation,
+                                    currentChallenge: HUBPhoneManager.instance.allPlayers[0].currentChallenge,
+                                    youWon: HUBPhoneManager.instance.allPlayers[0].youWon,
+                                    interval: HUBPhoneManager.instance.allPlayers[0].interval,
+                                    progress: HUBPhoneManager.instance.allPlayers[0].progress,
+                                    userClan: HUBPhoneManager.instance.allPlayers[0].userClan ?? nil
+                                    
+                                )
+                                
+                                
+                            )
+                        )
+                       
+                        self.sendData(data: data, peers: [hostPeer], mode: .reliable)
+                        
+                    } catch {
+                        print("Erro ao codificar dados de aceleração:", error)
+                        break
+                    }
+                
+                
+                Thread.sleep(forTimeInterval: 0.01) // Ajuste conforme necessário
+            }
+            self.isSendingMessages = false
+        }
+    }
+    
     func stopSendingMessages() {
         shouldStopSending = true
     }
@@ -311,28 +387,42 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-        print("📥 Dados recebidos de \(peerID.displayName): \(String(data: data, encoding: .utf8) ?? "Não foi possível decodificar")")
+        //print("📥 Dados recebidos de \(peerID.displayName): \(String(data: data, encoding: .utf8) ?? "Não foi possível decodificar")")
+        print("Sou host")
         
-        let receivedString = String(data: data, encoding: .utf8)
-                if receivedString == "StartTime" {
-                    HUBPhoneManager.instance.matchManager.players[0].startTime = true
-                    HUBPhoneManager.instance.matchManager.atualizaStart()
-                    }
-                    
-                if receivedString == "Reset" {
-                    HUBPhoneManager.instance.matchManager.players[0].startTime = false
-                    for index in HUBPhoneManager.instance.allPlayers.indices {
-                        HUBPhoneManager.instance.allPlayers[index].youWon = false
-                    }
-                    print("Recebi a func de reset")
-                    HUBPhoneManager.instance.matchManager.reset()
+        if let receivedString = String(data: data, encoding: .utf8){
+            if receivedString == "StartTime" {
+                HUBPhoneManager.instance.matchManager.players[0].startTime = true
+                HUBPhoneManager.instance.matchManager.atualizaStart()
+            }
+            
+            if receivedString == "Reset" {
+                HUBPhoneManager.instance.matchManager.players[0].startTime = false
+                for index in HUBPhoneManager.instance.allPlayers.indices {
+                    HUBPhoneManager.instance.allPlayers[index].youWon = false
                 }
+                print("Recebi a func de reset")
+                HUBPhoneManager.instance.matchManager.reset()
+            }
+        }
+        else{
+            do {
+                    let players = try JSONDecoder().decode([SendingPlayer].self, from: data)
+                    print("✅ Recebido array de jogadores: \(players)")
+                    HUBPhoneManager.instance.receivedPlayers = players
+                } catch {
+                    print("❌ Erro ao decodificar jogadores: \(error)")
+                }
+        }
         
+        //MARK: QUERO VOLTAR AQUI
         if let handler = peerDataHandler {
             DispatchQueue.main.async {
                 handler(data, peerID)
             }
         }
+        
+       
     }
     
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
@@ -458,7 +548,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                             HUBPhoneManager.instance.allPlayers[existingPlayerIndex].userClan = receivedData.userClan
                         }
                         
-                        print("Mudando o status: \(receivedData)")
+                      //  print("Mudando o status: \(receivedData)")
                     } else {
                         HUBPhoneManager.instance.allPlayers.append(receivedData)
                         print("appendando: \(receivedData)")
