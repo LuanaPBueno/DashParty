@@ -116,7 +116,7 @@ struct TutorialPassingView: View {
                     HUBPhoneManager.instance.startMatch = true
                     router = .game
                     HUBPhoneManager.instance.matchManager.atualizaStart()
-                },
+                }
                
             )
         }
