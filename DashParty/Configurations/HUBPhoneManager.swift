@@ -70,6 +70,8 @@ class HUBPhoneManager {
                    youWon: false,
                    interval: 0.0,
                    progress: 0.0
+                   
+                   //MARK: ATUALIZAR O MEU BUNNY
                )
            ]
        }

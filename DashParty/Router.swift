@@ -32,6 +32,8 @@ enum Router: Codable {
     //case chooseCharacter
     case storyBoard
     
+    case chooseCharacter
+    
     case tutorial
     
     case game

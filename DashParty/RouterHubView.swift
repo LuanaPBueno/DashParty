@@ -14,6 +14,8 @@ struct RouterHubView: View {
     @State var matchManager = HUBPhoneManager.instance.matchManager
     var body: some View {
         switch router {
+        case .chooseCharacter:
+            MatchmakingHubView(router: $router, multipeerSession: multipeerSession)
         case .start:
             InitialView()
         case .options:

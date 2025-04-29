@@ -40,8 +40,7 @@ struct WaitingView: View {
                     }
                     Spacer()
                     
-                    // Lista de jogadores conectados
-                    
+                  
                     HStack{
                         Text(multipeerSession.hostPeerID!.displayName)
                         
@@ -56,6 +55,18 @@ struct WaitingView: View {
                             }
                         }
                     }
+                    
+                    Button {
+                        
+//                        router = .play
+                        router = .chooseCharacter
+                       
+                    } label: {
+                        OrangeButtonPhone(text: "Continue", sizeFont: 28)
+                            .frame(width: 150, height: 45)
+                            
+                    }
+                    
                     Spacer()
                 }
                 .padding()

@@ -99,10 +99,6 @@ struct MatchmakingHubView: View {
     }
 }
 
-//#Preview {
-//    RoomView(router: .constant(.matchmaking), multipeerSession: MPCSession(service: "banana", identity: "maça", maxPeers: 5, matchManager: ChallengeManager()))
-//}
-
 #Preview {
     let matchManager = ChallengeManager()
     let session = MPCSession(service: "banana", identity: "maçã", maxPeers: 5, matchManager: matchManager)

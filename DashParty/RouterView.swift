@@ -85,6 +85,8 @@ struct RouterView: View {
             Text("Victory")
         case .ranking:
             YouWonView(router: $router)
+        case .chooseCharacter:
+            CharacterView(router: $router)
         }
     }
 }

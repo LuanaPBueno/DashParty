@@ -253,9 +253,12 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                                     currentChallenge: HUBPhoneManager.instance.allPlayers[0].currentChallenge,
                                     youWon: HUBPhoneManager.instance.allPlayers[0].youWon,
                                     interval: HUBPhoneManager.instance.allPlayers[0].interval,
-                                    progress: HUBPhoneManager.instance.allPlayers[0].progress
+                                    progress: HUBPhoneManager.instance.allPlayers[0].progress,
+                                    userClan: HUBPhoneManager.instance.allPlayers[0].userClan ?? nil
                                     
                                 )
+                                
+                                
                             )
                         )
                        
@@ -355,29 +358,6 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                 }
             }
         }
-        
-//        print("👀 Peer encontrado: \(peerID.displayName), \(host)")
-//        guard let identityValue = info?[MPCSessionConstants.kKeyIdentity] else {
-//            print("⚠️ Peer sem identidade válida")
-//            return
-//        }
-//
-//        if identityValue == identityString {
-//            if host {
-//                if mcSession.connectedPeers.count < maxNumPeers {
-//                    print("📡 Host enviando convite para \(peerID.displayName)")
-//                    browser.invitePeer(peerID, to: mcSession, withContext: nil, timeout: 10)
-//                }
-//            } else {
-//                // Apenas os jogadores recebem as convites, mas não enviam
-//                DispatchQueue.main.async {
-//                    self.pendingInvitations[peerID.displayName] = { accept, session in
-//                        // Não permite o envio de convite
-//                    }
-//                    self.invitationReceivedHandler?(peerID.displayName)
-//                }
-//            }
-//        }
     }
 
     
@@ -473,6 +453,10 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                         HUBPhoneManager.instance.allPlayers[existingPlayerIndex].currentChallenge = receivedData.currentChallenge
                         HUBPhoneManager.instance.allPlayers[existingPlayerIndex].youWon = receivedData.youWon
                         HUBPhoneManager.instance.allPlayers[existingPlayerIndex].interval = receivedData.interval
+                        
+                        if receivedData.userClan != nil {
+                            HUBPhoneManager.instance.allPlayers[existingPlayerIndex].userClan = receivedData.userClan
+                        }
                         
                         print("Mudando o status: \(receivedData)")
                     } else {
