@@ -26,7 +26,7 @@ struct RoomListView: View {
                 .scaledToFill()
                 .ignoresSafeArea()
             
-            VStack {
+            VStack{
                 HStack {
                     Button {
                         router = .play
@@ -34,34 +34,74 @@ struct RoomListView: View {
                         Image("backButton")
                         
                     }
-                    .padding(.leading, 16)
                     Spacer()
                 }
                 .padding(.leading, 35)
                 .padding(.top, 35)
+                Spacer()
+            }
+            VStack {
+                
                 
                 if multipeerSession.host {
                     Text("Você é o Host")
                 } else {
                     
-                    
-                    List(multipeerSession.nearbyPeers, id: \.self) { peerID in
-                        Button(action: {
-                            //print(peerID)
-                            invitationToHost = peerID
-                            showingButtonInvitationAlert = true
-                            
-                            
-                        }, label: {
-                            HStack {
-                                Text(peerID.displayName)
-                                Spacer()
-                                Image(systemName: "chevron.right")
+                    //Spacer()
+                    Text("Rooms")
+                        .font(.custom("TorukSC-Regular", size: 40))
+                        .foregroundStyle(.white)
+                    ZStack{
+                        Image("roomRect")
+                            .overlay{
+                                ScrollView {
+                                    VStack(spacing: 20) {
+                                        ForEach(multipeerSession.nearbyPeers, id: \.self) { peerID in
+                                            
+                                            HStack(spacing: 20) {
+                                                Text(peerID.displayName)
+                                                    .font(.custom("TorukSC-Regular", size: 32))
+                                                    .foregroundColor(.black)
+                                                
+                                                Spacer()
+                                                Button(action: {
+                                                    invitationToHost = peerID
+                                                    showingButtonInvitationAlert = true
+                                                }) {
+                                                    OrangeButtonPhone(text: "Join", sizeFont: 20)
+                                                    
+                                                }
+                                                .frame(width: 100)
+                                            }
+                                            .padding(.horizontal, 100)
+                                        }
+                                        
+//                                        List(multipeerSession.nearbyPeers, id: \.self) { peerID in
+//                                            Button(action: {
+//                                                //print(peerID)
+//                                                invitationToHost = peerID
+//                                                showingButtonInvitationAlert = true
+//                                                
+//                                                
+//                                            }, label: {
+//                                                HStack {
+//                                                    Text(peerID.displayName)
+//                                                    Spacer()
+//                                                    Image(systemName: "chevron.right")
+//                                                }
+//                                            })
+//                                        }
+//                                        .navigationTitle("Salas Disponíveis")
+//                                        .scrollContentBackground(.hidden)
+                                    }
+                                    .padding(.vertical, 20)
+                                }
+                                
                             }
-                        })
+                        Spacer()
+
                     }
-                    .navigationTitle("Salas Disponíveis")
-                    .scrollContentBackground(.hidden)
+                    
                     
                     
                     .onChange(of: multipeerSession.isConnected){ old, value in
@@ -69,28 +109,6 @@ struct RoomListView: View {
                             router = .waitingRoom
                         }
                     }
-                    
-                    
-//                    List(multipeerSession.pendingInvitations.keys.sorted(), id: \.self) { peerName in
-//                        Button(action: {
-//                            invitationFromPeer = peerName
-//                               if let handler = multipeerSession.pendingInvitations[peerName] {
-//                                   multipeerSession.invitationHandler = multipeerSession.pendingInvitations[peerName]
-//                                  
-//                                   showingButtonInvitationAlert = true
-//                               }
-//                          
-//                        
-//                        }) {
-//                            HStack {
-//                                Text(peerName)
-//                                Spacer()
-//                                Image(systemName: "chevron.right")
-//                            }
-//                        }
-//                    }
-                    
-
                 }
             }
             .alert("Are you sure you want to join?", isPresented: $showingButtonInvitationAlert) {
@@ -107,14 +125,6 @@ struct RoomListView: View {
                     .font(.custom("TorukSC-Regular", size: 24))
                     .foregroundColor(.white)
             }
-           
-//            .onAppear {
-//                multipeerSession.invitationReceivedHandler = { peerName in
-////                    invitationFromPeer = peerName
-//                    showingInvitationAlert = true
-//                }
-//                multipeerSession.start()
-//            }
         }
     }
 }
