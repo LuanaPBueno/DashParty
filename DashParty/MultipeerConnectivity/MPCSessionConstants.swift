@@ -193,19 +193,13 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     }
     
     func startSendingUserDataContinuously(interval: TimeInterval = 1.0) {
-        print("estou enviando todos os meus dados")
         dataSendTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
             guard let self = self else { return }
-            print("passei do guardlet")
             let userData: [SendingPlayer] = HUBPhoneManager.instance.allPlayers
-            print("criei o userData")
             do {
-                print("entrei no DO")
                 let encodedData = try JSONEncoder().encode(userData)
-                print("vou chamar o sendingData")
                 self.sendDataToAllPeers(data: encodedData)
             } catch {
-                print("to no catch")
                 print("Erro ao codificar os dados do usuário: \(error)")
             }
         }
@@ -388,7 +382,14 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         //print("📥 Dados recebidos de \(peerID.displayName): \(String(data: data, encoding: .utf8) ?? "Não foi possível decodificar")")
-        print("Sou host")
+        do {
+                let players = try JSONDecoder().decode([SendingPlayer].self, from: data)
+                print("✅ Recebido array de jogadores: \(players)")
+                HUBPhoneManager.instance.receivedPlayers = players
+                return // Sai da função após sucesso
+            } catch {
+                print("❌ Não é um array de jogadores: \(error.localizedDescription)")
+            }
         
         if let receivedString = String(data: data, encoding: .utf8){
             if receivedString == "StartTime" {
@@ -405,15 +406,9 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                 HUBPhoneManager.instance.matchManager.reset()
             }
         }
-        else{
-            do {
-                    let players = try JSONDecoder().decode([SendingPlayer].self, from: data)
-                    print("✅ Recebido array de jogadores: \(players)")
-                    HUBPhoneManager.instance.receivedPlayers = players
-                } catch {
-                    print("❌ Erro ao decodificar jogadores: \(error)")
-                }
-        }
+      
+          
+        
         
         //MARK: QUERO VOLTAR AQUI
         if let handler = peerDataHandler {
