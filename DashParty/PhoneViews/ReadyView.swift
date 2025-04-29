@@ -25,7 +25,7 @@ struct ReadyView: View {
             VStack{
                 HStack{
                     Button {
-                        router = .storyBoard
+                        router = .matchmaking
                     } label: {
                         Image("backButton")
                             .padding(.leading, 35)

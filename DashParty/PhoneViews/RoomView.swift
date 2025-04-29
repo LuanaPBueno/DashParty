@@ -42,13 +42,13 @@ struct RoomView: View {
                             }
                             
                             Spacer()
-                            
-                            Text("Waiting for players to join...")
-                                .font(.custom("TorukSC-Regular", size: 30, relativeTo: .title))
-                                .multilineTextAlignment(.center)
-                                .foregroundColor(.white)
-                            
-                            Spacer()
+//                            
+//                            Text("Waiting for players to join...")
+//                                .font(.custom("TorukSC-Regular", size: 30, relativeTo: .title))
+//                                .multilineTextAlignment(.center)
+//                                .foregroundColor(.white)
+//                            
+//                            Spacer()
                             
                         }
                         
