@@ -27,7 +27,8 @@ struct WaitingView: View {
                 ZStack {
                     HStack {
                         Button {
-                            router = .start
+                            multipeerSession.mcSession.disconnect()
+                            router = .chooseRoom
                         } label: {
                             Image("backButton")
                         }
