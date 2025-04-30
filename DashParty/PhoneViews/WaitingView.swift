@@ -36,6 +36,7 @@ struct WaitingView: View {
                         
                         Spacer()
                     }
+                    .ignoresSafeArea()
                     
                     Text(multipeerSession.hostPeerID?.displayName ?? "")
                         .font(.custom("TorukSC-Regular", size: 34, relativeTo: .title))

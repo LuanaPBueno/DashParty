@@ -16,23 +16,24 @@ struct RoomView: View {
     
     var body: some View {
         ZStack{
-            
             VStack {
                 HStack {
                     Button {
                         multipeerSession.mcSession.disconnect()
-                        router = .play
+                        router = .airplayInstructions
                     } label: {
                         Image("backButton")
+                            .padding(.leading, 35)
+                            .padding(.top, 35)
                         
                     }
                     Spacer()
                 }
-                .padding(.leading, 35)
-                .padding(.top, 35)
+                
                 
                 Spacer()
             }
+            .ignoresSafeArea()
             
 //            if multipeerSession.host {
                 VStack{
