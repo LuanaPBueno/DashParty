@@ -36,7 +36,7 @@ struct MMPhone: View {
                                     
                                     
                                 }
-                                    .padding(.vertical, geometry.size.height * 0.05)
+                                    .padding(.vertical, geometry.size.height * 0.15)
                             )
                         
                     } else{
@@ -104,7 +104,7 @@ struct MMPhone: View {
                 }
              }
         }
-        .aspectRatio(9/16, contentMode: .fit)
+        .aspectRatio(1, contentMode: .fit)
     }
 }
 

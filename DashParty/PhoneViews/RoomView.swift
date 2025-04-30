@@ -16,50 +16,36 @@ struct RoomView: View {
     
     var body: some View {
         ZStack{
-            Image("purpleBackground")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
-            
-            if multipeerSession.host {
-                VStack{
-                    ZStack{
+            VStack {
+                HStack {
+                    Button {
+                        multipeerSession.mcSession.disconnect()
+                        router = .airplayInstructions
+                    } label: {
+                        Image("backButton")
+                            .padding(.leading, 35)
+                            .padding(.top, 35)
                         
-                        Text("Waiting for players to join...")
+                    }
+                    Spacer()
+                }
+                
+                
+                Spacer()
+            }
+            .ignoresSafeArea()
+            
+//            if multipeerSession.host {
+                VStack{
+//                    ZStack{
+                        Text(HUBPhoneManager.instance.roomName)
                             .font(.custom("TorukSC-Regular", size: 34, relativeTo: .title2))
                             .multilineTextAlignment(.center)
                             .foregroundStyle(.white)
+                            .padding(.top, 35)
+                        Spacer()
                         
-                        
-                        HStack {
-                            Button {
-                                multipeerSession.mcSession.disconnect()
-                                router = .play
-                            } label: {
-                                Image("backButton")
-                                    .padding(.leading, 28)
-                                    .padding(.top, 28)
-                            }
-                            
-                            Spacer()
-                            
-                            Text("Waiting for players to join...")
-                                .font(.custom("TorukSC-Regular", size: 30, relativeTo: .title))
-                                .multilineTextAlignment(.center)
-                                .foregroundColor(.white)
-                            
-                            Spacer()
-                            
-                        }
-                        
-                        Text("Connected Players:")
-                            .font(.custom("TorukSC-Regular", size: 20))
-                            .foregroundColor(.white)
-                            .multilineTextAlignment(.center)
-                            .padding()
-                         
                         HStack{
-                            Text(HUBPhoneManager.instance.roomName)
                             MMPhone(playerName: HUBPhoneManager.instance.playername , sizePadding: 0)
                             ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
                                 MMPhone(playerName: player, sizePadding: 0)
@@ -92,12 +78,38 @@ struct RoomView: View {
                             OrangeButtonPhone(text: "Continue", sizeFont: 20)
                                 .frame(width: 110, height: 45)
                         }
-                        .padding(.trailing, 40)
-                        .padding(.bottom, 12)
+                        .frame(height: UIScreen.main.bounds.height * 0.55)
+//                        .background {
+//                            Color.red
+//                        }
+                    Spacer()
                         
+//                    }
+                }
+            VStack{
+                Spacer()
+                HStack{
+                    Spacer()
+                    Button {
+                        router = .chooseCharacter
+                    } label: {
+                        OrangeButtonPhone(text: "Continue", sizeFont: 20)
+                            .frame(width: 110, height: 45)
                     }
+                    .padding(.trailing, 40)
+                    .padding(.bottom, 12)
+                    
+                    
                 }
             }
+//            }
+        }
+        .background {
+            Image("purpleBackground")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .scrollContentBackground(.hidden)
         

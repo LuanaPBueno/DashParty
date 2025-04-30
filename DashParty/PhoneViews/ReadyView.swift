@@ -25,7 +25,8 @@ struct ReadyView: View {
             VStack{
                 HStack{
                     Button {
-                        router = .storyBoard
+                        multipeerSession.mcSession.disconnect()
+                        router = .matchmaking
                     } label: {
                         Image("backButton")
                             .padding(.leading, 35)
