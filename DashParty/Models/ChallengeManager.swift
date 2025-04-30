@@ -272,6 +272,25 @@ class ChallengeManager {
            }
        }
     
+    //Pega quem está ganhando o match naquele momento, ou seja, quem está com o maior progress
+    func getMatchCurrentWinner() -> SendingPlayer? {
+        var currentWinner: SendingPlayer? = nil
+
+        for player in HUBPhoneManager.instance.allPlayers {
+            if let winner = currentWinner {
+                if player.progress > winner.progress {
+                    currentWinner = player
+                    print("entrei aqui")
+                    print(currentWinner?.name)
+                }
+            } else {
+                currentWinner = player
+                print("entrei aqui")
+                print(currentWinner?.name)
+            }
+        }
+        return currentWinner
+    }
  
     func finishMatch() {
         AccelerationManager.accelerationInstance.stop()
