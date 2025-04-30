@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Acts as a Bluetooth LE accessory</key>
+	<string></string>
+	<key>Background fetch</key>
+	<string></string>
+	<key>External accessory communication</key>
+	<string></string>
 	<key>INIntentsRestrictedWhileLocked</key>
 	<array/>
 	<key>NSBonjourServices</key>
@@ -34,5 +40,12 @@
 			</array>
 		</dict>
 	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>bluetooth-central</string>
+		<string>bluetooth-peripheral</string>
+	</array>
+	<key>Uses Bluetooth LE accessories</key>
+	<string></string>
 </dict>
 </plist>
