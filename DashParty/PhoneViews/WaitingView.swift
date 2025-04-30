@@ -31,18 +31,19 @@ struct WaitingView: View {
                         } label: {
                             Image("backButton")
                         }
-                        .padding(.leading, 20)
+                        .padding(.leading, 35)
+                        .padding(.top, 35)
                         
                         Spacer()
                     }
                     
                     Text(multipeerSession.hostPeerID?.displayName ?? "")
-                        .font(.custom("TorukSC-Regular", size: 30, relativeTo: .title))
+                        .font(.custom("TorukSC-Regular", size: 34, relativeTo: .title))
                         .multilineTextAlignment(.center)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
+                        .padding(.top, 35)
                 }
-                .padding(.top, 35)
                 .padding(.horizontal, 20)
                 
                 // Espaço de 134 até os MMPhones
@@ -64,7 +65,7 @@ struct WaitingView: View {
                         }
                     }
                 }
-                .frame(maxWidth: .infinity)
+                .frame(height: UIScreen.main.bounds.height * 0.55)
                 .padding(.horizontal)
                 
                 // Espaço de 100 até o final da tela

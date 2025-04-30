@@ -16,65 +16,48 @@ struct MatchmakingHubView: View {
     
     var body: some View {
         ZStack{
-            VStack{
-                Spacer()
-                HStack{
-                    Button {
-                        router = .play
-                    } label: {
-                        Image("backButton")
-                    }
-
-                    Spacer()
-                }
-            }
+//            VStack{
+//                Spacer()
+//                HStack{
+//                    Button {
+//                        router = .play
+//                    } label: {
+//                        Image("backButton")
+//                    }
+//
+//                    Spacer()
+//                }
+//            }
             Image("purpleBackground")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
-            
-          
-                if multipeerSession.host {
+            VStack {
+                Text(HUBPhoneManager.instance.roomName)
+                    .font(.custom("TorukSC-Regular", size: 150, relativeTo: .largeTitle))
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.white)
+                Spacer()
+            }
+            .padding(.top, 60)
+                //if multipeerSession.host {
                     VStack{
-                       
                         Spacer()
-                        
                         HStack{
-                            
-                            Button {
-                                router = .play
-                            } label: {
-                                Image("backButton")
-                            }
-                            
-                            Spacer()
-                            
-                            Text("Waiting for players to join...")
-                                .font(.custom("TorukSC-Regular", size: 100, relativeTo: .largeTitle))
-                                .multilineTextAlignment(.center)
-                                .foregroundColor(.white)
-                            
-                            Spacer()
-                        }
-                        
-                        Text("Connected Players:")
-                            .font(.custom("TorukSC-Regular", size: 70, relativeTo: .title))
-                            .foregroundColor(.white)
-                            .multilineTextAlignment(.center)
-                            .padding()
-                        HStack{
-                            Text(HUBPhoneManager.instance.roomName)
+                           // Text(HUBPhoneManager.instance.roomName)
                             MMPhone(playerName: HUBPhoneManager.instance.playername , sizePadding: 0)
                             ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
                                 MMPhone(playerName: player, sizePadding: 0)
                             }
                         }
+                        .frame(height: UIScreen.main.bounds.height * 2.55)
+
                       
                         
                         Spacer()
                         
                     }
-                }
+                //}
           }
         .scrollContentBackground(.hidden)
         

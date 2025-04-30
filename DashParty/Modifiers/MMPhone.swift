@@ -30,11 +30,11 @@ struct MMPhone: View {
                                 .minimumScaleFactor(0.5)
                                 .lineLimit(1)
                         }
-                        .padding(.vertical, geometry.size.height * 0.05)
+                        .padding(.vertical, geometry.size.height * 0.15)
                     )
             }
         }
-        .aspectRatio(9/16, contentMode: .fit)
+        .aspectRatio(1, contentMode: .fit)
     }
 }
 
