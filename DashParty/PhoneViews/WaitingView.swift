@@ -55,17 +55,17 @@ struct WaitingView: View {
                             }
                         }
                     }
-                    
-                    Button {
-                        
-//                        router = .play
-                        router = .chooseCharacter
-                       
-                    } label: {
-                        OrangeButtonPhone(text: "Continue", sizeFont: 28)
-                            .frame(width: 150, height: 45)
-                            
-                    }
+//                    
+//                    Button {
+//                        
+////                        router = .play
+//                        router = .chooseCharacter
+//                       
+//                    } label: {
+//                        OrangeButtonPhone(text: "Continue", sizeFont: 28)
+//                            .frame(width: 150, height: 45)
+//                            
+//                    }
                     
                     Spacer()
                 }

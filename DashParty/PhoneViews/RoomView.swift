@@ -87,7 +87,6 @@ struct RoomView: View {
                     HStack {
                         Spacer()
                         Button {
-//                            router = .storyBoard
                             router = .chooseCharacter
                         } label: {
                             OrangeButtonPhone(text: "Continue", sizeFont: 20)

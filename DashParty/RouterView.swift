@@ -92,8 +92,16 @@ struct RouterView: View {
         case .ranking:
             YouWonView(router: $router)
         case .chooseCharacter:
-            CharacterView(router: $router)
-        }
+            CharacterView(router: $router)                    .onAppear {
+                        do {
+                            let data = try JSONEncoder().encode(EventMessage.navigation(.chooseCharacter))
+                            multipeerSession.sendDataToAllPeers(data: data)
+                        }
+                        catch {
+                            print(error)
+                        }
+                    }
+            }
     }
 }
 
