@@ -54,8 +54,8 @@ struct WaitingView: View {
                 Spacer()
                 Spacer()
                 Spacer()
-                Spacer()
-                Spacer()
+                //Spacer()
+                //Spacer()
                 
                 // MMPhones
                 HStack(spacing: 20) {
