@@ -16,6 +16,7 @@ class ChallengeManager {
     var balancingResult : [String] = []
     var players: [Player] = []
     var currentPlayerIndex = 0
+    
     var tolerancia: Double = 0.03
     var startTime = Date.now
     private var observationToken: Any?
@@ -272,24 +273,34 @@ class ChallengeManager {
            }
        }
     
-    //Pega quem está ganhando o match naquele momento, ou seja, quem está com o maior progress
+    //MARK: Pega quem está ganhando o match naquele momento, ou seja, quem está com o maior progress
     func getMatchCurrentWinner() -> SendingPlayer? {
         var currentWinner: SendingPlayer? = nil
-
         for player in HUBPhoneManager.instance.allPlayers {
             if let winner = currentWinner {
                 if player.progress > winner.progress {
                     currentWinner = player
-                    print("entrei aqui")
-                    print(currentWinner?.name)
+                    print(currentWinner?.name ?? "sem nome")
                 }
             } else {
                 currentWinner = player
-                print("entrei aqui")
-                print(currentWinner?.name)
+                print(currentWinner?.name ?? "sem nome")
             }
         }
         return currentWinner
+    }
+    
+    func startRankingUpdates() -> [SendingPlayer] {
+            var ranking = self.getMatchCurrentRanking()
+            print("Ranking atualizado:")
+            for (index, player) in ranking.enumerated() {
+                print("\(index + 1). \(player.name ?? "sem nome") - progresso: \(player.progress)")
+            }
+        return ranking
+    }
+    
+    func getMatchCurrentRanking() -> [SendingPlayer] {
+        return HUBPhoneManager.instance.allPlayers.sorted { $0.progress > $1.progress }
     }
  
     func finishMatch() {

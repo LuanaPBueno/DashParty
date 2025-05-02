@@ -15,11 +15,9 @@ struct TutorialPassingView: View {
     var hubManager = HUBPhoneManager.instance
     
     
-    //MARK: TIRAR
-    let user = HUBPhoneManager.instance.user
+   
     @State var matchManager = HUBPhoneManager.instance.matchManager
-    var users: [User] = [User(name: "A"), User(name: "B")]
-    //MARK: TIRAR
+   
     
     @State var pass : Bool = false
     

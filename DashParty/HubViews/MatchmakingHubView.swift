@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MatchmakingHubView: View {
-    //MARK: Deixar observable
     @Binding var router:Router
     @ObservedObject var multipeerSession: MPCSession
     @State var navigateHost: Bool = false
@@ -65,6 +64,8 @@ struct MatchmakingHubView: View {
             if !multipeerSession.host {
                 navigateToPlayerDisplayView = true
             }
+            
+           
         }
         //        .navigationDestination(isPresented: $navigateHost, destination: {
         //            WaitingView(multipeerSession: multipeerSession)
@@ -88,6 +89,7 @@ struct MatchmakingHubView: View {
     
     // Simular host e jogadores conectados para visualização
     session.host = true
+    
     
     
     return MatchmakingHubView(router: .constant(.matchmaking), multipeerSession: session)

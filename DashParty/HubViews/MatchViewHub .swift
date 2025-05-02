@@ -12,6 +12,7 @@ struct MatchViewHub: View {
     var users: [User]
     var index: Int
     var multipeerSession = MPCSessionManager.shared
+    @State var rankingTimer: Timer?
     @State private var timer = Timer.publish(every: 0.01, on: .main, in: .common).autoconnect()
     @State var matchManager: ChallengeManager
     var currentSituation: Bool { HUBPhoneManager.instance.allPlayers[index].currentSituation }
@@ -19,6 +20,7 @@ struct MatchViewHub: View {
     @State var startTime = Date.now
     @State var finishTime: Date?
     @State var characterImage: Image = Image("characterFront")
+    @State var winnerTimer: Timer?
     
     var body: some View {
         ZStack {
@@ -61,12 +63,20 @@ struct MatchViewHub: View {
                         .task {
                             matchManager.startMatch(users: users, myUserID: HUBPhoneManager.instance.allPlayers[index].id, index: index)
                             startTime = .now
+                            
+                            rankingTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+                                matchManager.startRankingUpdates()
+                            }
+                                
                             let message = "StartTime"
                                 if let data = message.data(using: .utf8) {
                                     multipeerSession.sendDataToAllPeers(data: data)
                                 }
                             characterImage = HUBPhoneManager.instance.allPlayers[index].userClan?.image ?? Image("characterFront")
                             HUBPhoneManager.instance.newGame = false
+                            winnerTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+                                    matchManager.getMatchCurrentWinner()
+                                }
                         }
                         }
                     characterImage
@@ -74,8 +84,17 @@ struct MatchViewHub: View {
                         .font(.custom("TorukSC-Regular", size: 64, relativeTo: .title))
                         .foregroundColor(.black)
                         .background(.white)
+                
+                    
+                   
                 }
             }
+        .onDisappear {
+            winnerTimer?.invalidate()
+            winnerTimer = nil
+            rankingTimer?.invalidate()
+            rankingTimer = nil
+           }
             
             
     }
