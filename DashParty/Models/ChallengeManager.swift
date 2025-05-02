@@ -294,7 +294,7 @@ class ChallengeManager {
             var ranking = self.getMatchCurrentRanking()
             print("Ranking atualizado:")
             for (index, player) in ranking.enumerated() {
-                print("\(index + 1). \(player.name ?? "sem nome") - progresso: \(player.progress)")
+                print("\(index + 1). \(player.name) - progresso: \(player.progress)")
             }
         return ranking
     }

@@ -10,6 +10,8 @@ import SwiftUI
 
 struct MatchViewHub: View {
     var users: [User]
+    @State var currentWinner : SendingPlayer?
+    @State var ranking: [SendingPlayer]?
     var index: Int
     var multipeerSession = MPCSessionManager.shared
     @State var rankingTimer: Timer?
@@ -32,6 +34,8 @@ struct MatchViewHub: View {
             VStack{
                 VStack{
                     
+                    
+                    
                     Image("warning")
                         .resizable()
                         .scaledToFit()
@@ -39,8 +43,7 @@ struct MatchViewHub: View {
                         .overlay {
                             
                             let displayedChallenge = HUBPhoneManager.instance.allPlayers[index].currentChallenge
-                            let displayedSituation = HUBPhoneManager.instance.allPlayers[index].currentSituation
-                            let playerID = HUBPhoneManager.instance.allPlayers[index].id
+                           
                             
                             if matchManager.players.isEmpty == false {
                                 if displayedChallenge == .stopped {
@@ -65,7 +68,7 @@ struct MatchViewHub: View {
                             startTime = .now
                             
                             rankingTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
-                                matchManager.startRankingUpdates()
+                                ranking = matchManager.startRankingUpdates()
                             }
                                 
                             let message = "StartTime"
@@ -75,7 +78,7 @@ struct MatchViewHub: View {
                             characterImage = HUBPhoneManager.instance.allPlayers[index].userClan?.image ?? Image("characterFront")
                             HUBPhoneManager.instance.newGame = false
                             winnerTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-                                    matchManager.getMatchCurrentWinner()
+                                    self.currentWinner = matchManager.getMatchCurrentWinner()
                                 }
                         }
                         }
