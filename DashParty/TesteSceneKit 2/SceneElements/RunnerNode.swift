@@ -45,7 +45,7 @@ class RunnerNode:SCNNode {
         abs(self.speedFactorY.current(in: self.presentation.worldPosition.y)) > 0.05
     }
 
-    var ontrot:(_ distance: Float, _ speed: Float)->Void = {_, _ in }
+    var ontrot:(_ distance: Float)->Void = {_ in }
     
     
     init(color:RunnerColor = .red) {
@@ -114,7 +114,7 @@ class RunnerNode:SCNNode {
     
     func startAnimation() {
         Timer.scheduledTimer(withTimeInterval: 1/10, repeats: true) { _ in
-            self.ontrot(self.runnedDistance, self.speed)
+            self.ontrot(self.runnedDistance)
 //            print(self.speed, self.vSpeed, self.isJumping, self.runnerState)
             
             self.setFrame()

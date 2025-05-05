@@ -10,6 +10,8 @@ import CoreMotion
 
 @Observable
 class ChallengeManager {
+    var scenes: [SCNRunPathScene] = []
+    
     var multipeerSession: MPCSession?
     var receivedMotionData: [UUID: MotionData] = [:]
     var debugText: String = ""
@@ -32,7 +34,39 @@ class ChallengeManager {
     var tempo: TimeInterval = 10
     
     init() {
-           
+         
+        
+        
+    }
+    
+    
+    var previousChallenge: Challenge?
+    func checkAddChallenge(distance: Float) {
+        guard let currentChallenge = players[currentPlayerIndex].currentChallenge else {
+            fatalError()
+            return
+        }
+        guard currentChallenge != previousChallenge else {
+            return
+        }
+        print("Mudou para: \(currentChallenge)")
+        switch currentChallenge {
+        case .running:
+            break
+        case .jumping:
+            let obstacle = StoneNode(at: distance)
+            self.scenes[currentPlayerIndex].rootNode.addChildNode(obstacle)
+            //chamar funcao de surgir pedra
+        case .openingDoor:
+            let obstacle = VineNode(at: distance)
+            self.scenes[currentPlayerIndex].rootNode.addChildNode(obstacle)
+        case .balancing:
+            let obstacle = BridgeNode(at: distance)
+            self.scenes[currentPlayerIndex].rootNode.addChildNode(obstacle)
+        case .stopped:
+            print("nao tem como!")
+        }
+        previousChallenge = currentChallenge
     }
     
     //MARK: Setting up multipeer session
@@ -67,13 +101,17 @@ class ChallengeManager {
             Player(
                 user: users[0],
                 
-                challenges: [Challenge /*.jumping,*/ .openingDoor, .balancing ]
+                challenges: [Challenge .jumping, .openingDoor, .balancing ]
                     .flatMap { Array(repeating: $0, count: 1) }
                     .shuffled()
                     .flatMap { [$0, .running] }
                 )
             
         }
+        self.scenes = users.map { _ in
+            SCNRunPathScene()
+        }
+        scenes[currentPlayerIndex].runner.ontrot = checkAddChallenge
         if players[0].startTime == true{
             startTime = Date.now
         }
@@ -255,7 +293,7 @@ class ChallengeManager {
             case .none:
                 print("None")
             }
-            
+                self.scenes[currentPlayerIndex].runner.position.z = Float(players[currentPlayerIndex].progress)
         })
     }
     

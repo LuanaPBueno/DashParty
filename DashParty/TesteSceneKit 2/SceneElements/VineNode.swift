@@ -1,22 +1,22 @@
 //
-//  RockNode.swift
+//  VineNode.swift
 //  TesteSceneKit
 //
-//  Created by Ricardo Almeida Venieris on 03/05/25.
+//  Created by Fernanda Auler on 03/05/25.
 //
 
 import Foundation
 import SceneKit
 
 
-class StoneNode: SCNNode {
+class VineNode: SCNNode {
     static let stoneHeight:CGFloat = 1.2
     static var stoneCount:Int = 0
     
     init(at zPosition:Float) {
         super.init()
         
-        let image = UIImage(named: "stoneMoon")!
+        let image = UIImage(named: "vineMoon")!
         let imageSize = image.size
         let imageScale = Self.stoneHeight / imageSize.height
         let planeSize = imageSize * imageScale
@@ -53,7 +53,7 @@ class StoneNode: SCNNode {
 //        // ❌ Impede rotações em qualquer eixo
 //        self.physicsBody?.angularVelocityFactor = SCNVector3(0, 0, 0)
 
-        position.y = Float(planeSize.height/2) - Float(planeSize.height)
+        position.y = Float(planeSize.height/2) - Float(planeSize.height) //vai mudar o x nao o y
         position.z = zPosition
         
         
@@ -61,7 +61,7 @@ class StoneNode: SCNNode {
 
         runAction(
             SCNAction.move(by: SCNVector3(0, Float(planeSize.height), 0), duration: 0.5)
-        )        
+        )
     }
     
     

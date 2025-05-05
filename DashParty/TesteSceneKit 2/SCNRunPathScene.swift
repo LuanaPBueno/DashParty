@@ -86,8 +86,6 @@ class SCNRunPathScene: SCNScene {
         
         self.rootNode.addChildNode(TreesNodes(cameraNode: cameraNode))
 
-
-        addVine(at: 30)
         
         
         for i in 1...50 {
@@ -96,15 +94,6 @@ class SCNRunPathScene: SCNScene {
         
     }
 
-
-    
-    func addVine(at metro: Float) {
-        let newVine = vine.clone()
-        newVine.position.z = metro
-        newVine.isHidden = false
-        self.rootNode.addChildNode(newVine)
-        print("🌿 Vine adicionada no metro \(metro)")
-    }
 
 //    func addTroncos() {
 //        

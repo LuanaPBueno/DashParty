@@ -7,52 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "9FA51398-6853-48B0-AA94-CFD51E7C98CF"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DashParty/Models/ChallengeManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "ChallengeManager"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  uuid = "9FA51398-6853-48B0-AA94-CFD51E7C98CF - 37f2d8721f45898b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "DashParty.ChallengeManager.setupMultipeerSession(DashParty.MPCSession) -&gt; ()"
-                  moduleName = "DashParty.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/fernandaauler/Developer/DashParty/DashParty/Models/ChallengeManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "33"
-                  endingLineNumber = "33">
-               </Location>
-               <Location
-                  uuid = "9FA51398-6853-48B0-AA94-CFD51E7C98CF - 27bf40783fed8d98"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Foundation.Data, __C.MCPeerID) -&gt; () in DashParty.ChallengeManager.setupMultipeerSession(DashParty.MPCSession) -&gt; ()"
-                  moduleName = "DashParty.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/fernandaauler/Developer/DashParty/DashParty/Models/ChallengeManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "33"
-                  endingLineNumber = "33">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "F3A45D36-015B-49A7-AB6B-535894C3163D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"

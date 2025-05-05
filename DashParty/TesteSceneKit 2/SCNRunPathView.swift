@@ -55,9 +55,9 @@ class SCNRunPathView: SCNView {
 
         addSubview(distanceLabel)
         
-        runPathScene.runner.ontrot = { distance, speed in
+        runPathScene.runner.ontrot = { distance in
             DispatchQueue.main.async {
-                self.distanceLabel.text = String(format: " %.1fm    %.1fm/s ", distance, speed)
+                self.distanceLabel.text = String(format: " %.1fm    %.1fm/s ", distance)
             }
             
         }
