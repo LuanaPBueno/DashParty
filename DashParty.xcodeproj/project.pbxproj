@@ -437,6 +437,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DashParty/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MoonDash;
+				INFOPLIST_KEY_LSApplicationCategoryType = "Uses Bluetooth LE accessories";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Necessário para manter conexão multiplayer com tela desligada";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Necessário para manter conexão multiplayer";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Precisamos acessar a rede local para conectar dispositivos próximos";
 				INFOPLIST_KEY_NSNearbyInteractionAllowOnceUsageDescription = "This app demonstrates the NearbyInteraction framework. Supply a value for this string to explain how the user benefits when they allow the app to use NearbyInteraction.";
 				INFOPLIST_KEY_NSNearbyInteractionUsageDescription = "This app demonstrates the NearbyInteraction framework. Supply a value for this string to explain how the user benefits when they allow the app to use NearbyInteraction.";
@@ -473,6 +476,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DashParty/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MoonDash;
+				INFOPLIST_KEY_LSApplicationCategoryType = "Uses Bluetooth LE accessories";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Necessário para manter conexão multiplayer com tela desligada";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Necessário para manter conexão multiplayer";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Precisamos acessar a rede local para conectar dispositivos próximos";
 				INFOPLIST_KEY_NSNearbyInteractionAllowOnceUsageDescription = "This app demonstrates the NearbyInteraction framework. Supply a value for this string to explain how the user benefits when they allow the app to use NearbyInteraction.";
 				INFOPLIST_KEY_NSNearbyInteractionUsageDescription = "This app demonstrates the NearbyInteraction framework. Supply a value for this string to explain how the user benefits when they allow the app to use NearbyInteraction.";
