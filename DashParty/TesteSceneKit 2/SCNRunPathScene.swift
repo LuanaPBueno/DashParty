@@ -88,9 +88,9 @@ class SCNRunPathScene: SCNScene {
 
         
         
-        for i in 1...50 {
-            self.rootNode.addChildNode(StoneNode(at: Float(i*20)))
-        }
+//        for i in 1...50 {
+//            self.rootNode.addChildNode(StoneNode(at: Float(i*20)))
+//        }
         
     }
 

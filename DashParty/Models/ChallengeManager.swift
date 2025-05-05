@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreMotion
+import SceneKit
 
 @Observable
 class ChallengeManager {
@@ -34,8 +35,6 @@ class ChallengeManager {
     var tempo: TimeInterval = 10
     
     init() {
-         
-        
         
     }
     
@@ -54,7 +53,7 @@ class ChallengeManager {
         case .running:
             break
         case .jumping:
-            let obstacle = StoneNode(at: distance)
+            let obstacle = StoneNode(at: distance + 45)
             self.scenes[currentPlayerIndex].rootNode.addChildNode(obstacle)
             //chamar funcao de surgir pedra
         case .openingDoor:
@@ -293,7 +292,7 @@ class ChallengeManager {
             case .none:
                 print("None")
             }
-                self.scenes[currentPlayerIndex].runner.position.z = Float(players[currentPlayerIndex].progress)
+                self.scenes[currentPlayerIndex].runner.runAction(SCNAction.move(to: SCNVector3(x: 0, y: 0, z: Float(players[currentPlayerIndex].progress * 0.2)), duration: 0.1))
         })
     }
     

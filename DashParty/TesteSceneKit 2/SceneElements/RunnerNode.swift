@@ -90,7 +90,7 @@ class RunnerNode:SCNNode {
         let physicsGeometry = SCNBox(width: plane.width/4, height: plane.height/1.7, length: 0.1, chamferRadius: 100)
         
         let physicsShape = SCNPhysicsShape(geometry: physicsGeometry, options: nil)
-        self.physicsBody = SCNPhysicsBody(type: .dynamic, shape: physicsShape)
+//        self.physicsBody = SCNPhysicsBody(type: .dynamic, shape: physicsShape)
         self.physicsBody?.isAffectedByGravity = true
         self.physicsBody?.categoryBitMask = 1
         self.physicsBody?.contactTestBitMask = BitMasks.allMasks
