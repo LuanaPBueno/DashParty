@@ -8,10 +8,19 @@ enum Clan: String, CaseIterable, Identifiable, Codable, Hashable {
 
     var image: Image {
         switch self {
-        case .bunny: return Image("clanBunny")
-        case .monkey: return Image("clanMonkey")
-        case .feline: return Image("clanFeline")
-        case .frog: return Image("clanFrog")
+        case .bunny: return Image("bunnyGreen")
+        case .monkey: return Image("bunnyRed")
+        case .feline: return Image("bunnyYellow")
+        case .frog: return Image("bunnyBlue")
+        }
+    }
+    
+    var alternateImage: Image {
+        switch self {
+        case .bunny: return Image("bunnyGreenGlow")
+        case .monkey: return Image("bunnyRedGlow")
+        case .feline: return Image("bunnyYellowGlow")
+        case .frog: return Image("bunnyBlueGlow")
         }
     }
 }
@@ -38,21 +47,24 @@ struct CharacterView: View {
                     
                     Spacer()
                     
-                    HStack {
-                        
-                        ForEach(Clan.allCases) { clan in
-                            ClanCard(clan: clan, isSelected: tempSelection == clan)
-                                .onTapGesture {
-                                    HUBPhoneManager.instance.allPlayers[0].userClan = clan
-                                    tempSelection = clan
-                                }
+                    HStack(spacing: 16) {
+                        ForEach(Clan.allCases, id: \.self) { clan in
+                            ClanCard(
+                                clan: clan,
+                                isSelected: clan == tempSelection
+                            )
+                            .onTapGesture {
+                                HUBPhoneManager.instance.allPlayers[0].userClan = clan
+                                tempSelection = clan
+                            }
                         }
-                        
                     }
+
                     
+                Spacer()
                     
-                    Spacer()
                     HStack{
+                        
                         Spacer()
                         if MPCSessionManager.shared.host{
                             Button(action: {
@@ -87,14 +99,29 @@ struct ClanCard: View {
     let isSelected: Bool
 
     var body: some View {
-        ZStack {
-            clan.image
-              
-                
-            if isSelected {
-                Image("faixaAmarela")
-                    .padding(.top, 133)
-            }
-        }
+        let displayedImage = isSelected ? clan.alternateImage : clan.image
+
+        displayedImage
+            .resizable()
+            .scaledToFit()
+//            .frame(width: 100, height: 100)
     }
 }
+
+
+    
+//    var body: some View {
+////        ZStack {
+//            clan.image
+//            .resizable()
+//            .scaledToFit()
+//            .frame(width: 140, height: 180)
+               // .frame(width: 120, height: 120)
+              
+                
+//            if isSelected {
+//                Image("faixaAmarela")
+//                    .padding(.top, 133)
+//            }
+//        }
+    

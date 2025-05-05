@@ -5,6 +5,13 @@
 //  Created by Fernanda Auler on 15/04/25.
 //
 
+//
+//  MatchmakingHubView.swift
+//  DashParty
+//
+//  Created by Fernanda Auler on 15/04/25.
+//
+
 import SwiftUI
 
 struct MatchmakingHubView: View {
@@ -34,12 +41,12 @@ struct MatchmakingHubView: View {
                 .ignoresSafeArea()
             VStack {
                 Text(HUBPhoneManager.instance.roomName)
-                    .font(.custom("TorukSC-Regular", size: 150, relativeTo: .largeTitle))
+                    .font(.custom("TorukSC-Regular", size: 120, relativeTo: .largeTitle))
                     .multilineTextAlignment(.center)
                     .foregroundColor(.white)
                 Spacer()
             }
-            .padding(.top, 60)
+            .padding(.top, 40)
                 //if multipeerSession.host {
                     VStack{
                         Spacer()
@@ -50,7 +57,7 @@ struct MatchmakingHubView: View {
                                 MMPhone(playerName: player, sizePadding: 0)
                             }
                         }
-                        .frame(height: UIScreen.main.bounds.height * 2.55)
+                        .frame(height: UIScreen.main.bounds.height * 1.3)
 
                       
                         

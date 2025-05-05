@@ -53,6 +53,7 @@ struct TutorialHubView: View {
                            .ignoresSafeArea()
             if !hubManager.startMatch {
                 VStack {
+                    //Spacer()
                     if let tutorialImage = tutorialImageNames[safe: hubManager.actualTutorialIndex],
                        let tutorialText = tutorialTexts[safe: hubManager.actualTutorialIndex],
                        let tutorialTitle = tutorialTitles[safe: hubManager.actualTutorialIndex] {
