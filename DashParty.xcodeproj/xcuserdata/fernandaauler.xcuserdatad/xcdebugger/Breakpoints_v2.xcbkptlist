@@ -16,8 +16,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "33"
             endingLineNumber = "33"
-            landmarkName = "setupMultipeerSession(_:)"
-            landmarkType = "7">
+            landmarkName = "ChallengeManager"
+            landmarkType = "3">
             <Locations>
                <Location
                   uuid = "9FA51398-6853-48B0-AA94-CFD51E7C98CF - 37f2d8721f45898b"
