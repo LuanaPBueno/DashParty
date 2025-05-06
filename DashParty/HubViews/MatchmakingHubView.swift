@@ -57,7 +57,7 @@ struct MatchmakingHubView: View {
                                 MMPhone(playerName: player, sizePadding: 0)
                             }
                         }
-                        .frame(height: UIScreen.main.bounds.height * 1.3)
+                        .frame(height: UIScreen.main.bounds.height * 1.4)
 
                       
                         

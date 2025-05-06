@@ -18,19 +18,7 @@ struct TutorialSheet: View {
 //                .scaledToFill()
 //                .ignoresSafeArea()
             VStack {
-                VStack(spacing: 5) {
-                    Text("Heads Up!")
-                        .font(.custom("TorukSC-Regular", size: 70, relativeTo: .largeTitle))
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(.white)
-
-                    Text("Things make way more sense after the tutorial...")
-                        .font(.custom("TorukSC-Regular", size: 50, relativeTo: .title))
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(.white)
-                }
-                .padding(.top, 5) // esse valor ajusta o quão para cima o título vai
-
+                
                 //Spacer(minLength: 20)
 
                 Image("tutorialRectangle")
