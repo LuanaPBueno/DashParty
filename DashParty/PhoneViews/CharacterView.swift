@@ -102,9 +102,9 @@ struct ClanCard: View {
         let displayedImage = isSelected ? clan.alternateImage : clan.image
 
         displayedImage
-            .resizable()
+           .resizable()
             .scaledToFit()
-//            .frame(width: 100, height: 100)
+ //           .frame(width: 100, height: 100)
     }
 }
 

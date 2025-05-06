@@ -66,6 +66,9 @@ struct MatchViewHub: View {
                             HUBPhoneManager.instance.newGame = false
                         }
                     characterImage
+                          .resizable()
+                          .scaledToFit()
+                          .frame(width: 300, height: 300)
                     Text(HUBPhoneManager.instance.allPlayers[index].name)
                         .font(.custom("TorukSC-Regular", size: 64, relativeTo: .title))
                         .foregroundColor(.white)
@@ -74,7 +77,7 @@ struct MatchViewHub: View {
                 }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background {
-                Image("gameBackground")
+                Image("cenario2")
                     .resizable()
                     .scaledToFill()
             }
