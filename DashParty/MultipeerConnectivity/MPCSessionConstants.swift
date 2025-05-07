@@ -88,17 +88,25 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             serviceType: serviceString
         )
         
+        
         super.init()
         
         self.mcSession.delegate = self
         self.mcAdvertiser.delegate = self
         self.mcBrowser = MCNearbyServiceBrowser(peer: localPeerID, serviceType: serviceString)
         self.mcBrowser?.delegate = self
-        
+
         // Configurações para funcionar em background
         setupBackgroundHandling()
         startConnectionMonitor()
+       // checkAdvertising()
     }
+    
+//    func checkAdvertising(){
+//        if mcSession.myPeerID.displayName == UIDevice.current.name {
+//            mcAdvertiser.stopAdvertisingPeer()
+//        }
+//    }
     
     // MARK: - Gerenciamento de Sessão
     
@@ -145,6 +153,11 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         } else {
             mcBrowser?.startBrowsingForPeers()
         }
+    }
+    
+    func stopAdvertising(){
+        print("chamei a stopAdvertising")
+        mcAdvertiser.stopAdvertisingPeer()
     }
     
     private func resetBrowser() {

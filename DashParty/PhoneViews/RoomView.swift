@@ -74,6 +74,7 @@ struct RoomView: View {
                         Spacer()
                         Button {
                             router = .chooseCharacter
+                            multipeerSession.stopAdvertising()
                         } label: {
                             OrangeButtonPhone(text: "Continue", sizeFont: 20)
                                 .frame(width: 110, height: 45)
@@ -92,6 +93,7 @@ struct RoomView: View {
                     Spacer()
                     Button {
                         router = .chooseCharacter
+                        multipeerSession.stopAdvertising()
                     } label: {
                         OrangeButtonPhone(text: "Continue", sizeFont: 20)
                             .frame(width: 110, height: 45)
