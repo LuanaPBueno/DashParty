@@ -279,25 +279,8 @@ class ChallengeManager {
            }
        }
     
-    //MARK: Pega quem está ganhando o match naquele momento, ou seja, quem está com o maior progress
-    func getMatchCurrentWinner() -> SendingPlayer? {
-        var currentWinner: SendingPlayer? = nil
-        for player in HUBPhoneManager.instance.allPlayers {
-            if let winner = currentWinner {
-                if player.progress > winner.progress {
-                    currentWinner = player
-                    print(currentWinner?.name ?? "sem nome")
-                }
-            } else {
-                currentWinner = player
-                print(currentWinner?.name ?? "sem nome")
-            }
-        }
-        return currentWinner
-    }
-    
     func startRankingUpdates() -> [SendingPlayer] {
-            var ranking = self.getMatchCurrentRanking()
+            let ranking = self.getMatchCurrentRanking()
             print("Ranking atualizado:")
             for (index, player) in ranking.enumerated() {
                 print("\(index + 1). \(player.name) - progresso: \(player.progress)")
@@ -307,7 +290,7 @@ class ChallengeManager {
     }
     
     func getMatchCurrentRanking() -> [SendingPlayer] {
-        var allProgress = HUBPhoneManager.instance.allPlayers.sorted { $0.progress > $1.progress }
+        let allProgress = HUBPhoneManager.instance.allPlayers.sorted { $0.progress > $1.progress }
         print(allProgress)
         return allProgress
     }

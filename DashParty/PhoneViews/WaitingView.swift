@@ -82,9 +82,9 @@ struct WaitingView: View {
                 }
             }
         }
-        .onChange(of: multipeerSession.mcSession.connectedPeers.map { $0.displayName }) { newValue in
-            print("Peers conectados: \(newValue)")
-        }
+//        .onChange(of: multipeerSession.mcSession.connectedPeers.map { $0.displayName }) { newValue in
+//            print("Peers conectados: \(newValue)")
+//        }
         .task {
             print("Host? \(multipeerSession.host)")
             print("Meu PeerID: \(multipeerSession.mcSession.myPeerID)")

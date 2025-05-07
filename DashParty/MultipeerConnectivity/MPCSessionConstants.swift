@@ -586,12 +586,12 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                         }
                     } else {
                         HUBPhoneManager.instance.allPlayers.append(receivedData)
-                        print("appendando: \(receivedData)")
+                      //  print("appendando: \(receivedData)")
                     }
                 }
             }
         } catch {
-            print("Erro ao decodificar dados recebidos:", error)
+          //  print("Erro ao decodificar dados recebidos:", error)
         }
     }
     

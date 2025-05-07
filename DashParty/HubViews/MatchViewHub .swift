@@ -68,7 +68,11 @@ struct MatchViewHub: View {
                             startTime = .now
                             
                             rankingTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
-                                ranking = matchManager.startRankingUpdates()
+                                DispatchQueue.main.async {
+                                    ranking = matchManager.startRankingUpdates()
+                                    self.currentWinner = ranking?.first
+                                    print("Current winner: \(currentWinner?.name ?? "None")")
+                                }
                             }
                                 
                             let message = "StartTime"
@@ -77,9 +81,6 @@ struct MatchViewHub: View {
                                 }
                             characterImage = HUBPhoneManager.instance.allPlayers[index].userClan?.image ?? Image("characterFront")
                             HUBPhoneManager.instance.newGame = false
-                            winnerTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-                                    self.currentWinner = matchManager.getMatchCurrentWinner()
-                                }
                         }
                         }
                     characterImage
@@ -93,8 +94,6 @@ struct MatchViewHub: View {
                 }
             }
         .onDisappear {
-            winnerTimer?.invalidate()
-            winnerTimer = nil
             rankingTimer?.invalidate()
             rankingTimer = nil
            }
