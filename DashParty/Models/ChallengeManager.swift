@@ -56,6 +56,8 @@ class ChallengeManager {
         players[0].interval = 0.0
         HUBPhoneManager.instance.allPlayers[0].youWon = false
         HUBPhoneManager.instance.allPlayers[0].interval = 0.0
+        HUBPhoneManager.instance.allPlayers[0].progress = 0.0
+        
         
       
         HUBPhoneManager.instance.matchManager.startMatch(users: [HUBPhoneManager.instance.user], myUserID: HUBPhoneManager.instance.allPlayers[0].id, index: 0)
@@ -135,6 +137,7 @@ class ChallengeManager {
                         HUBPhoneManager.instance.allPlayers[0].currentSituation = true
                             }
                     players[currentPlayerIndex].progress += magnitude
+                    HUBPhoneManager.instance.allPlayers[0].progress += magnitude
                     
                 } else {
                     //TODO: muda a animação pra uma parada
@@ -168,6 +171,7 @@ class ChallengeManager {
                                 }
                         print(currentY, lastThreeY.min()!, lastThreeY.max()!)
                         players[currentPlayerIndex].progress += 100
+                        HUBPhoneManager.instance.allPlayers[0].progress += 100
                     } else {
                         currentSituation = false
                         DispatchQueue.main.async {
@@ -193,6 +197,7 @@ class ChallengeManager {
                         HUBPhoneManager.instance.allPlayers[0].currentSituation = true
                             }
                     players[currentPlayerIndex].progress += 100
+                    HUBPhoneManager.instance.allPlayers[0].progress += 100
                 } else {
                     currentSituation = false
                     DispatchQueue.main.async {
@@ -234,6 +239,7 @@ class ChallengeManager {
                             }
                     balancingResult = []
                     players[currentPlayerIndex].progress += 100
+                    HUBPhoneManager.instance.allPlayers[0].progress += 100
                 }
                 
             
@@ -296,11 +302,14 @@ class ChallengeManager {
             for (index, player) in ranking.enumerated() {
                 print("\(index + 1). \(player.name) - progresso: \(player.progress)")
             }
+      
         return ranking
     }
     
     func getMatchCurrentRanking() -> [SendingPlayer] {
-        return HUBPhoneManager.instance.allPlayers.sorted { $0.progress > $1.progress }
+        var allProgress = HUBPhoneManager.instance.allPlayers.sorted { $0.progress > $1.progress }
+        print(allProgress)
+        return allProgress
     }
  
     func finishMatch() {

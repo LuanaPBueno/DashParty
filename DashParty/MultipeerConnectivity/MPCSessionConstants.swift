@@ -439,7 +439,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             HUBPhoneManager.instance.receivedPlayers = players
             return
         } catch {
-            print("❌ Não é um array de jogadores: \(error.localizedDescription)")
+         //   print("❌ Não é um array de jogadores: \(error.localizedDescription)")
         }
         
         if let receivedString = String(data: data, encoding: .utf8) {
@@ -579,6 +579,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                         HUBPhoneManager.instance.allPlayers[existingPlayerIndex].currentChallenge = receivedData.currentChallenge
                         HUBPhoneManager.instance.allPlayers[existingPlayerIndex].youWon = receivedData.youWon
                         HUBPhoneManager.instance.allPlayers[existingPlayerIndex].interval = receivedData.interval
+                        HUBPhoneManager.instance.allPlayers[existingPlayerIndex].progress =  receivedData.progress
                         
                         if receivedData.userClan != nil {
                             HUBPhoneManager.instance.allPlayers[existingPlayerIndex].userClan = receivedData.userClan
