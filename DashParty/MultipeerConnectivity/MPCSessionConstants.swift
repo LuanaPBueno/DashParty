@@ -78,7 +78,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         self.maxNumPeers = maxPeers
         self.matchManager = matchManager
         
-        let peerID = MCPeerID(displayName: UIDevice.current.name)
+        let peerID = MCPeerID(displayName: "Default Room")
         
         self.localPeerID = peerID
         self.mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
@@ -99,14 +99,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         // Configurações para funcionar em background
         setupBackgroundHandling()
         startConnectionMonitor()
-       // checkAdvertising()
     }
-    
-//    func checkAdvertising(){
-//        if mcSession.myPeerID.displayName == UIDevice.current.name {
-//            mcAdvertiser.stopAdvertisingPeer()
-//        }
-//    }
     
     // MARK: - Gerenciamento de Sessão
     
@@ -114,7 +107,9 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         self.host = asHost
         if host {
             print("🧑‍💼 Iniciando como HOST")
-            mcAdvertiser.startAdvertisingPeer()
+            if mcSession.myPeerID.displayName != "Default Room" {
+                mcAdvertiser.startAdvertisingPeer()
+            }
         } else {
             print("🎮 Iniciando como PLAYER")
             mcBrowser?.startBrowsingForPeers()
