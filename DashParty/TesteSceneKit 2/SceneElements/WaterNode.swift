@@ -9,14 +9,14 @@ import Foundation
 import SceneKit
 
 
-class BridgeNode: SCNNode {
+class WaterNode: SCNNode {
     static let stoneHeight:CGFloat = 1.2
     static var stoneCount:Int = 0
     
     init(at zPosition:Float) {
         super.init()
         
-        let image = UIImage(named: "bridge")!
+        let image = UIImage(named: "riverMoon")!
         let imageSize = image.size
         let imageScale = Self.stoneHeight / imageSize.height
         let planeSize = imageSize * imageScale
