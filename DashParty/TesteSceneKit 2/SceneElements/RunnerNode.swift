@@ -103,7 +103,7 @@ class RunnerNode:SCNNode {
         self.physicsBody?.angularVelocityFactor = SCNVector3(0, 0, 0)
 
         
-        position.y = floorHeight
+        position.y = floorHeight - 0.2
         startAnimation()
     }
     

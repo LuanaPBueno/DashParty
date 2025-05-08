@@ -60,6 +60,7 @@ class ChallengeManager {
             let obstacle = VineNode(at: distance * 0.2 + 1)
             self.scenes[currentPlayerIndex].rootNode.addChildNode(obstacle)
         case .balancing:
+            //let obstacle = Water(at: distance * 0.2)
             let obstacle = BridgeNode(at: distance * 0.2)
             self.scenes[currentPlayerIndex].rootNode.addChildNode(obstacle)
         case .stopped:
@@ -109,7 +110,7 @@ class ChallengeManager {
         }
         //MARK: TIRAR ISSO
         for index in players.indices {
-            players[index].challenges[1] = .jumping
+            players[index].challenges[1] = .balancing
         }
         self.scenes = users.map { _ in
             SCNRunPathScene()
@@ -297,9 +298,10 @@ class ChallengeManager {
                     print("None")
                 }
                 
-                
                 self.scenes[currentPlayerIndex].runner.runAction(
-                    SCNAction.move(to: SCNVector3(x: 0, y: 0, z: Float(players[currentPlayerIndex].progress * 0.2)),
+                    SCNAction.move(to: SCNVector3(x: self.scenes[currentPlayerIndex].runner.position.x,
+                                                  y: self.scenes[currentPlayerIndex].runner.position.y,
+                                                  z: Float(players[currentPlayerIndex].progress * 0.2)),
                                    duration: 0.1)
                 )
             })

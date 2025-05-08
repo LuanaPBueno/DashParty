@@ -13,7 +13,7 @@ class FollowCameraNode: SCNNode {
     
     let target: SCNNode
     
-    init(target: SCNNode, elevation: Float = 1.5, distance: Float = 2.5) {
+    init(target: SCNNode, elevation: Float = 1, distance: Float = 2.5) {
         self.target = target
         super.init()
         
@@ -22,7 +22,7 @@ class FollowCameraNode: SCNNode {
         self.camera = SCNCamera()
         // place the camera
         let startPosition = SCNVector3(x: 0,
-                                       y: target.position.y * elevation,
+                                       y: target.position.y * elevation + 1,
                                        z: -distance)
         self.transform = SCNMatrix4MakeRotation(Float.pi, 0, 1, 0)
         self.position = startPosition
