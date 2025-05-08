@@ -437,12 +437,16 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DashParty/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MoonDash;
+				INFOPLIST_KEY_LSApplicationCategoryType = "Uses Bluetooth LE accessories";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Necessário para manter conexão multiplayer com tela desligada";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Necessário para manter conexão multiplayer";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Precisamos acessar a rede local para conectar dispositivos próximos";
 				INFOPLIST_KEY_NSNearbyInteractionAllowOnceUsageDescription = "This app demonstrates the NearbyInteraction framework. Supply a value for this string to explain how the user benefits when they allow the app to use NearbyInteraction.";
 				INFOPLIST_KEY_NSNearbyInteractionUsageDescription = "This app demonstrates the NearbyInteraction framework. Supply a value for this string to explain how the user benefits when they allow the app to use NearbyInteraction.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -473,12 +477,16 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DashParty/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MoonDash;
+				INFOPLIST_KEY_LSApplicationCategoryType = "Uses Bluetooth LE accessories";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Necessário para manter conexão multiplayer com tela desligada";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Necessário para manter conexão multiplayer";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Precisamos acessar a rede local para conectar dispositivos próximos";
 				INFOPLIST_KEY_NSNearbyInteractionAllowOnceUsageDescription = "This app demonstrates the NearbyInteraction framework. Supply a value for this string to explain how the user benefits when they allow the app to use NearbyInteraction.";
 				INFOPLIST_KEY_NSNearbyInteractionUsageDescription = "This app demonstrates the NearbyInteraction framework. Supply a value for this string to explain how the user benefits when they allow the app to use NearbyInteraction.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -539,7 +547,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = L32Y78HJTU;
+				DEVELOPMENT_TEAM = BW6U8TXQTN;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Luana-Bueno.DashPartyUITests";
@@ -556,7 +564,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = L32Y78HJTU;
+				DEVELOPMENT_TEAM = BW6U8TXQTN;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Luana-Bueno.DashPartyUITests";

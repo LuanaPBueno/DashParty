@@ -16,7 +16,7 @@ class BridgeNode: SCNNode {
     init(at zPosition:Float) {
         super.init()
         
-        let image = UIImage(named: "vineMoon")!
+        let image = UIImage(named: "bridge")!
         let imageSize = image.size
         let imageScale = Self.stoneHeight / imageSize.height
         let planeSize = imageSize * imageScale
@@ -31,11 +31,12 @@ class BridgeNode: SCNNode {
         material.isDoubleSided = true
 
         // Create geometry
-        let plane = SCNPlane(width: planeSize.width*2, height: planeSize.height)
+        let plane = SCNPlane(width: planeSize.width*5.2, height: planeSize.height)
         plane.firstMaterial = material
 
         // add geometry
         self.geometry = plane
+        self.localRotate(by: SCNQuaternion(x:  .pi/4, y: 0, z: 0, w: 0))
         
         
         // add PhysicsSBody
@@ -63,9 +64,7 @@ class BridgeNode: SCNNode {
             SCNAction.move(by: SCNVector3(0, Float(planeSize.height), 0), duration: 0.5)
         )
     }
-    
-    
-    
+        
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
