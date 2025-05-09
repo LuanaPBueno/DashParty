@@ -33,7 +33,7 @@ struct CharacterView: View {
     var body: some View {
      
             ZStack {
-                Image("purpleBackground")
+                Image("backgroundPhone")
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()

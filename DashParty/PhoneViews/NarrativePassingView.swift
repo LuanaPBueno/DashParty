@@ -21,7 +21,7 @@ struct NarrativePassingView: View {
     
     var body: some View {
         ZStack{
-            Image("blurForest")
+            Image("illustrationTitle")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
@@ -61,7 +61,7 @@ struct NarrativePassingView: View {
                                 }
                                 else {
                                     print("entrou aq no else no back ")
-                                    //                                    router = .matchmaking
+                                    router = .matchmaking
                                 }
                             }) {
                                 Image("backNarrativeButton")
@@ -81,8 +81,8 @@ struct NarrativePassingView: View {
                                     hubManager.actualPage += 1
                                 } else {
                                     print("entrou aqui no pass")
-                                    //router = .tutorial
                                     showAlert = true
+                                    
                                 }
                             }) {
                                 Image("passNarrativeButton")

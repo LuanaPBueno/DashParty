@@ -13,19 +13,14 @@ struct NarrativeView: View {
     
     
     var narrativeImages = [
-        "narrativeImage1",
-        "narrativeImage2",
-        "narrativeImage3",
-        "narrativeImage4",
-        "narrativeImage5",
-        "narrativeImage6",
-        "narrativeImage7",
-        "narrativeImage8",
-        "narrativeImage9",
-        "narrativeImage10",
-        "narrativeImage11",
-        "narrativeImage12",
+        "CENA_1",
+        "CENA_2",
+        "CENA_3",
+        "CENA_4",
+        "CENA_5",
     ]
+    
+  
     
     
     var body: some View {
@@ -35,38 +30,36 @@ struct NarrativeView: View {
                 .resizable()
                 .scaledToFill()
                 .frame(maxWidth: .infinity)
-                .background{
-                    Image("decorativeRectCream")
-                        .resizable()
-                        .scaledToFill()
-                        .padding(.horizontal, 30)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    
-                    
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                .background{
             
-            #if DEBUG
-            //MARK: REMOVER
             VStack {
                 Spacer()
-                Button(action: {
-                    if hubManager.actualPage < hubManager.narrativeText.count - 1 {
-                        hubManager.actualPage += 1
-                    }
-                }) {
-                    Text("Próximo")
-                        .font(.custom("TorukSC-Light", size: 24, relativeTo: .title))
-                        .foregroundColor(.blue)
-                }
-            }
-            #endif
+            
+                    Image("caixinha1234")
+                    .resizable()
+                                      .aspectRatio(5, contentMode: .fit)
+                                      .frame(height: 170)
+                                      .padding(.horizontal, 30)
+                                      .overlay(
+                                        Text(HUBPhoneManager.instance.narrativeText[hubManager.actualPage])
+                                              .font(.custom("TorukSC-Light", size: 20))
+                                              .foregroundColor(.black)
+                                              .multilineTextAlignment(.center)
+                                              .padding(.horizontal, 40) // margem interna à esquerda e direita
+                                                      .padding(.vertical, 20)                                      )
+                              }
+                          }
+                    
+                
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+           
         }
         
         }
-        
-    }
 
-
+#Preview {
+    NarrativeView()
+}
 
 

@@ -26,19 +26,17 @@ class HUBPhoneManager {
     
     var receivedPlayers : [SendingPlayer] = []
     
-    var narrativeText: [[String : Bool]] = [
-        ["Each generation, the Aru forest chooses its leader...": false],
-        ["This leadership is not won with speeches or promises...": false],
-        ["But with a race!": false],
-        ["The trail challenges all who dare to compete. It is not just a path – it is alive. Full of traps, challenges, and mysteries.": false],
-        ["Time for the great race! Who's ready to lose?": true],
-        ["The race is not just about speed, Bongo. It's about strategy, intelligence, and—": true],
-        ["—And not getting crushed by a giant bear?": true],
-        ["Hey! Maybe the secret is… running over the competition!": true],
-        ["I'd rather be eaten by a wolf!": true],
-        ["If you're done arguing, can we start? The forest awaits us.": true],
-        ["Four competitors, a single throne. The ground shakes. The leaves whisper. The race begins...": false],
-        ["Now!": false]
+    var narrativeText: [String] = [
+       
+        "I will tell you a story, the story of FOLOI.",
+        
+        "Many moons ago, in a magic forest -there was a good and just leader who guided all the clans in harmony.",
+
+        "One day, this leader vanished UNEXPECTEDLY. With FOLOI without protection a new tradition was born…",
+
+        "At each new lunar cycle, every clan selects its best runner to compete for the Staff of the Leader and claim the role of the Guardian FOLOI needs.",
+
+        "Which one will take the lead?"
     ]
     
     var passToTutorialView: Bool = false

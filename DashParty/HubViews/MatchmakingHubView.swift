@@ -35,7 +35,7 @@ struct MatchmakingHubView: View {
 //                    Spacer()
 //                }
 //            }
-            Image("purpleBackground")
+            Image("backgroundNewHUB")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()

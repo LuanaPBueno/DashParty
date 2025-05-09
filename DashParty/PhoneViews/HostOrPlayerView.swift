@@ -24,7 +24,7 @@ struct HostOrPlayerView: View {
     
     var body: some View {
         ZStack{
-            Image("darkblueBackground")
+            Image("backgroundPhone")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
