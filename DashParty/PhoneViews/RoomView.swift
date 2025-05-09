@@ -105,7 +105,7 @@ struct RoomView: View {
 //            }
         }
         .background {
-            Image("purpleBackground")
+            Image("darkblueBackground")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()

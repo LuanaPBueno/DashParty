@@ -17,18 +17,21 @@ struct ContentView: View {
     
     var body: some View {
             ZStack{
-                Image("titleScreen")
+                Image("illustrationTitle")
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
 
                 VStack {
-                    Spacer()
+                   // Spacer()
+                    
                     Image("logoBranca")
                         .resizable()
                         .scaledToFit()
-                        //.frame(maxWidth: 500)
+                        .frame(maxWidth: 600)
                         .padding(.top, 40)
+                    
+                    Spacer().frame(height: 20)
                     
                     HStack(alignment: .center){
                         Spacer()
@@ -36,10 +39,11 @@ struct ContentView: View {
                             router = .play
                         }) {
                             OrangeButtonPhone(text: "Play", sizeFont: 28)
-                                .padding(.vertical, 60)
                                 
                         }
-                        .padding(.trailing, 10)
+                        .padding(.vertical, 60)
+                        //.padding(.trailing, 10)
+                        
                         
 //                        HStack(alignment: .center){
 //                            Button(action: {
@@ -54,7 +58,7 @@ struct ContentView: View {
 //                        }
                         Spacer()
                     }
-                    Spacer()
+                   // Spacer()
                 }
             }
             

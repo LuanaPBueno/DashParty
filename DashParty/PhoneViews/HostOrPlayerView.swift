@@ -24,7 +24,7 @@ struct HostOrPlayerView: View {
     
     var body: some View {
         ZStack{
-            Image("darkblueBackground")
+            Image("backgroundPurple")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
@@ -47,7 +47,7 @@ struct HostOrPlayerView: View {
                     askForHostName = true
                 }) {
                     OrangeButtonPhone(text: "Host", sizeFont: 40)
-                        .padding(.vertical, 30)
+                        .padding(.vertical, 10)
                 }
                 
                 
@@ -64,7 +64,7 @@ struct HostOrPlayerView: View {
                   
                 }) {
                     BlueButtonPhone(text: "Join", sizeFont: 40)
-                        .padding(.vertical, 30)
+                        .padding(.vertical, 10)
                     
                 }
             }
@@ -78,7 +78,7 @@ struct HostOrPlayerView: View {
                     HUBPhoneManager.instance.playername = userName
 
 //                    navigateToHost = true
-//                    router = .matchmaking
+                    //router = .matchmaking
                     showRoomAlert = true
                    
                 } label: {

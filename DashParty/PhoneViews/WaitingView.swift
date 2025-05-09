@@ -17,7 +17,7 @@ struct WaitingView: View {
     
     var body: some View {
         ZStack {
-            Image("purpleBackground")
+            Image("darkblueBackground")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()

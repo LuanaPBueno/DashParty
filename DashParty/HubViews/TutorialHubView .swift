@@ -47,7 +47,7 @@ struct TutorialHubView: View {
 
     var body: some View {
         ZStack {
-            Image("backgroundPurple")
+            Image("darkblueBackground")
                           .resizable()
                            .scaledToFill()
                            .ignoresSafeArea()
