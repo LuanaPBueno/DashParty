@@ -23,9 +23,9 @@ class VineNode: SCNNode {
 
         // Create material
         let material = SCNMaterial ()
-        material.lightingModel = .physicallyBased
-        material.metalness.contents = 0.5
-        material.roughness.contents = 0.2
+        material.lightingModel = .constant
+        material.metalness.contents = 0
+        material.roughness.contents = 0
         material.diffuse.contents = image
         // #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
         material.isDoubleSided = true

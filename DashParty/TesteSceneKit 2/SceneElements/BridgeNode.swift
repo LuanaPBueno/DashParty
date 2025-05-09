@@ -23,9 +23,9 @@ class BridgeNode: SCNNode {
 
         // Create material
         let material = SCNMaterial ()
-        material.lightingModel = .physicallyBased
-        material.metalness.contents = 0.5
-        material.roughness.contents = 0.2
+        material.lightingModel = .constant
+        material.metalness.contents = 0
+        material.roughness.contents = 0
         material.diffuse.contents = image
         // #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
         material.isDoubleSided = true
@@ -55,7 +55,7 @@ class BridgeNode: SCNNode {
 //        // ❌ Impede rotações em qualquer eixo
 //        self.physicsBody?.angularVelocityFactor = SCNVector3(0, 0, 0)
 
-        position.y = Float(planeSize.height/2) - Float(planeSize.height) - 0.2 //vai mudar o x nao o y
+        position.y = Float(planeSize.height/2) - Float(planeSize.height) - 0.18 //vai mudar o x nao o y
         position.z = zPosition
         
         

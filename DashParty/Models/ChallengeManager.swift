@@ -60,9 +60,9 @@ class ChallengeManager {
             let obstacle = VineNode(at: distance * 0.2 + 1)
             self.scenes[currentPlayerIndex].rootNode.addChildNode(obstacle)
         case .balancing:
-          //  let obstacle = WaterNode(at: distance * 0.2)
-            let obstacle2 = BridgeNode(at: distance * 0.2 + 1)
-         //   self.scenes[currentPlayerIndex].rootNode.addChildNode(obstacle)
+            let obstacle = WaterNode(at: distance * 0.2 + 4)
+            let obstacle2 = BridgeNode(at: distance * 0.2 + 4)
+            self.scenes[currentPlayerIndex].rootNode.addChildNode(obstacle)
             self.scenes[currentPlayerIndex].rootNode.addChildNode(obstacle2)
         case .stopped:
             print("nao tem como!")
@@ -110,9 +110,9 @@ class ChallengeManager {
             
         }
         //MARK: TIRAR ISSO
-        for index in players.indices {
-            players[index].challenges[1] = .balancing
-        }
+//        for index in players.indices {
+//            players[index].challenges[1] = .balancing
+//        }
         self.scenes = users.map { _ in
             SCNRunPathScene()
         }
