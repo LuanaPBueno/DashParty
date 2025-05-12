@@ -113,8 +113,29 @@ class ChallengeManager {
 //        for index in players.indices {
 //            players[index].challenges[1] = .balancing
 //        }
-        self.scenes = users.map { _ in
-            SCNRunPathScene()
+//        self.scenes = users.map { _ in
+//            SCNRunPathScene()
+//        }
+        for userIndex in users.indices {
+            let newScene = SCNRunPathScene()
+            var color = "red"
+            switch HUBPhoneManager.instance.allPlayers[userIndex].userClan {
+            case .bunny:
+                color = "green"
+            case .monkey:
+                    color = "red"
+            case .feline:
+                color = "yellow"
+            case .frog:
+                color = "blue"
+            default:
+                color = "red"
+            }
+            var images = (1...RunnerNode.totalImages).map{UIImage(named:"\(color)Bunny\($0).png")!}
+            let flipped = images.compactMap{ $0.flipped }
+            images.append(contentsOf: flipped)
+            newScene.runner.animationImages = images
+            self.scenes.append(newScene)
         }
 //        scenes[currentPlayerIndex].runner.ontrot = checkAddChallenge
         if players[0].startTime == true{

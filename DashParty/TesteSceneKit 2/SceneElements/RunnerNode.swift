@@ -26,7 +26,7 @@ class RunnerNode:SCNNode {
     let stepSliceFactor:Float
 
     private let runnerColor:RunnerColor
-    private let animationImages:[UIImage]
+    var animationImages:[UIImage]
     var runnerState:RunnerState = .running
     
     
@@ -49,7 +49,7 @@ class RunnerNode:SCNNode {
     
     
     init(color:RunnerColor = .red) {
-        var images = (1...RunnerNode.totalImages).map{UIImage(named:"\(color)Bunny\($0).png")!}
+        var images = (0...RunnerNode.totalImages).map{UIImage(named:"\(color)Bunny\($0).png")!}
         let flipped = images.compactMap{ $0.flipped }
         images.append(contentsOf: flipped)
         
