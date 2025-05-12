@@ -35,7 +35,7 @@ struct CharacterView: View {
             ZStack {
                 Image("purpleBackground")
                     .resizable()
-                    .scaledToFill()
+                    .scaledToFit() //MARK: MUDAR PRA IMAGEM DA MALU 
                     .ignoresSafeArea()
                 
                 VStack {

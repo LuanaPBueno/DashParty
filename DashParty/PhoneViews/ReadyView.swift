@@ -20,7 +20,7 @@ struct ReadyView: View {
         ZStack{
             Image("purpleBackground")
                 .resizable()
-                .scaledToFill()
+                .scaledToFit() //MARK: BOTAR SCALEDTOFILL E CHAMAR A MALU
                 .ignoresSafeArea()
             VStack{
                 HStack{

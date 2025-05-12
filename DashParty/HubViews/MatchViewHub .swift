@@ -20,7 +20,6 @@ struct MatchViewHub: View {
     @State var startTime = Date.now
     @State var finishTime: Date?
     @State var characterImage: Image = Image("characterFront")
-
     
     
     var body: some View {
@@ -35,11 +34,6 @@ struct MatchViewHub: View {
                         .frame(width: 1000, height: 1000)
                         .background(.brown)
                 }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background {
-                Image("cenario2")
-                    .resizable()
-                    .scaledToFill()
             }
 //        }
 //        .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -61,34 +55,34 @@ struct MatchViewHub: View {
 //                .resizable()
 //                .scaledToFill()
 //                .edgesIgnoringSafeArea(.all)
-//            
+//
 //            VStack{
 //                VStack{
-//                    
+//
 //                    Image("warning")
 //                        .resizable()
 //                        .scaledToFit()
 //                        .frame(width: 600) // tamanho base
 //                        .overlay {
-//                            
+//
 //                            let displayedChallenge = HUBPhoneManager.instance.allPlayers[index].currentChallenge
 //                            let displayedSituation = HUBPhoneManager.instance.allPlayers[index].currentSituation
 //                            let playerID = HUBPhoneManager.instance.allPlayers[index].id
-//                            
+//
 //                            if matchManager.players.isEmpty == false {
 //                                if displayedChallenge == .stopped {
 //                                    Text("Wait for the ranking")
 //                                        //.background(Color.white)
 //                                        .font(.custom("TorukSC-Regular", size: 64, relativeTo: .title))
 //                                        .foregroundColor(.black)
-//                                    
+//
 //                                } else {
 //                                    VStack{
 //                                        Text("\(displayedChallenge.name)!")
 //                                            .font(.custom("TorukSC-Regular", size: 64, relativeTo: .title))
 //                                            .foregroundColor(.black)
-//                                
-//                                       
+//
+//
 //                                    }
 //                                }
 //                            }
@@ -115,4 +109,5 @@ struct MatchViewHub: View {
             
     }
 }
+
 
