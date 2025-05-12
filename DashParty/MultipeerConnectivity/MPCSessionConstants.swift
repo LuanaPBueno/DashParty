@@ -389,7 +389,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                                 youWon: HUBPhoneManager.instance.allPlayers[0].youWon,
                                 interval: HUBPhoneManager.instance.allPlayers[0].interval,
                                 progress: HUBPhoneManager.instance.allPlayers[0].progress,
-                                userClan: HUBPhoneManager.instance.allPlayers[0].userClan 
+                                userClan: HUBPhoneManager.instance.allPlayers[0].userClan ?? nil
                             )
                         )
                     )
@@ -588,14 +588,13 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                         HUBPhoneManager.instance.allPlayers[existingPlayerIndex].youWon = receivedData.youWon
                         HUBPhoneManager.instance.allPlayers[existingPlayerIndex].interval = receivedData.interval
                         HUBPhoneManager.instance.allPlayers[existingPlayerIndex].progress =  receivedData.progress
+                        
                         if receivedData.userClan != nil {
                             HUBPhoneManager.instance.allPlayers[existingPlayerIndex].userClan = receivedData.userClan
                         }
-                        
-                        print("atualizando: \(receivedData)")
                     } else {
                         HUBPhoneManager.instance.allPlayers.append(receivedData)
-                        print("appendando: \(receivedData)")
+                      //  print("appendando: \(receivedData)")
                     }
                 }
             }

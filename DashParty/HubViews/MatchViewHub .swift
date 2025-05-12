@@ -31,21 +31,19 @@ struct MatchViewHub: View {
             ZStack {
                 if index < matchManager.scenes.count {
                     SceneView(scene: matchManager.scenes[index])
-                        .onChange(of: HUBPhoneManager.instance.allPlayers[index].progress, { oldValue, newValue in
-                            print("PROGRESS OF \(index) IS \(newValue)")
+                        .onChange(of: matchManager.players[matchManager.currentPlayerIndex].progress, { oldValue, newValue in
+                            print("PROGRESS IS \(newValue)")
                             matchManager.checkAddChallenge(distance: Float(newValue))
                         })
                         .frame(width: 1000, height: 1000)
                         .background(.brown)
                 }
-                    
             }
 //        }
 //        .frame(maxWidth: .infinity, maxHeight: .infinity)
 //        .id(matchManager.scenes.count)
         .task {
 //            matchManager.startMatch(users: users, myUserID: HUBPhoneManager.instance.allPlayers[index].id, index: index)
-            print("Sou o jogador: \(index), meu nome é \(HUBPhoneManager.instance.allPlayers[index])")
             startTime = .now
             let message = "StartTime"
             if let data = message.data(using: .utf8) {

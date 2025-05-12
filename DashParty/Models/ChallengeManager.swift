@@ -119,7 +119,6 @@ class ChallengeManager {
         self.scenes = users.map { _ in
             SCNRunPathScene()
         }
-        
 //        scenes[currentPlayerIndex].runner.ontrot = checkAddChallenge
         if players[0].startTime == true{
             startTime = Date.now
@@ -181,7 +180,6 @@ class ChallengeManager {
                             HUBPhoneManager.instance.allPlayers[0].currentSituation = true
                         }
                         players[currentPlayerIndex].progress += magnitude
-                        HUBPhoneManager.instance.allPlayers[0].progress += magnitude
                         
                     } else {
                         //TODO: muda a animação pra uma parada
@@ -215,7 +213,6 @@ class ChallengeManager {
                             }
                             print(currentY, lastThreeY.min()!, lastThreeY.max()!)
                             players[currentPlayerIndex].progress += 100
-                            HUBPhoneManager.instance.allPlayers[0].progress += 100
                         } else {
                             currentSituation = false
                             DispatchQueue.main.async {
@@ -241,7 +238,6 @@ class ChallengeManager {
                             HUBPhoneManager.instance.allPlayers[0].currentSituation = true
                         }
                         players[currentPlayerIndex].progress += 100
-                        HUBPhoneManager.instance.allPlayers[0].progress += 100
                     } else {
                         currentSituation = false
                         DispatchQueue.main.async {
@@ -283,7 +279,6 @@ class ChallengeManager {
                         }
                         balancingResult = []
                         players[currentPlayerIndex].progress += 100
-                        HUBPhoneManager.instance.allPlayers[0].progress += 100
                     }
                     
                     
@@ -291,7 +286,6 @@ class ChallengeManager {
                     print("YOU WON")
                     let finishTime = Date()
                     players[currentPlayerIndex].progress += 100
-                    HUBPhoneManager.instance.allPlayers[0].progress += 100
                     currentChallenge = .stopped
                     youWon = true
                     interval = finishTime.timeIntervalSince(self.startTime)
@@ -308,11 +302,10 @@ class ChallengeManager {
                     print("None")
                 }
                 
-                //MARK: SE MOVE AQUI
                 self.scenes[currentPlayerIndex].runner.runAction(
                     SCNAction.move(to: SCNVector3(x: self.scenes[currentPlayerIndex].runner.position.x,
                                                   y: self.scenes[currentPlayerIndex].runner.position.y,
-                                                  z: Float(HUBPhoneManager.instance.allPlayers[0].progress * 0.2)),
+                                                  z: Float(players[currentPlayerIndex].progress * 0.2)),
                                    duration: 0.1)
                 )
             })
