@@ -64,9 +64,10 @@ struct HostOrPlayerView: View {
                   
                 }) {
                     BlueButtonPhone(text: "Join", sizeFont: 40)
-                        .padding(.vertical, 30)
+                        
                     
                 }
+                .padding(.vertical, 30)
             }
             
             .alert("Insert your name", isPresented: $askForHostName) {

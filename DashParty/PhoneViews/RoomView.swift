@@ -90,8 +90,6 @@ struct RoomView: View {
             if !multipeerSession.host {
                 navigateToPlayerDisplayView = true
             }
-            print("vou mandar todos os meus dados")
-            
         }
         .onChange(of: multipeerSession.mcSession.connectedPeers.map { $0.displayName }) {
             print(multipeerSession.mcSession.connectedPeers.map { $0.displayName })

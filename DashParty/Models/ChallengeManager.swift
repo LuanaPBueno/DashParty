@@ -7,9 +7,12 @@
 
 import Foundation
 import CoreMotion
+import SceneKit
 
 @Observable
 class ChallengeManager {
+    var scenes: [SCNRunPathScene] = []
+    
     var multipeerSession: MPCSession?
     var receivedMotionData: [UUID: MotionData] = [:]
     var debugText: String = ""
@@ -32,7 +35,39 @@ class ChallengeManager {
     var tempo: TimeInterval = 10
     
     init() {
-           
+        
+    }
+    
+    
+    var previousChallenge: Challenge?
+    func checkAddChallenge(distance: Float) {
+        guard let currentChallenge = players[currentPlayerIndex].currentChallenge else {
+            fatalError()
+            return
+        }
+        guard currentChallenge != previousChallenge else {
+            return
+        }
+        print("Mudou para: \(currentChallenge)")
+        switch currentChallenge {
+        case .running:
+            break
+        case .jumping:
+            let obstacle = StoneNode(at: distance * 0.2 + 1)
+            self.scenes[currentPlayerIndex].rootNode.addChildNode(obstacle)
+            //chamar funcao de surgir pedra
+        case .openingDoor:
+            let obstacle = VineNode(at: distance * 0.2 + 1)
+            self.scenes[currentPlayerIndex].rootNode.addChildNode(obstacle)
+        case .balancing:
+            let obstacle = WaterNode(at: distance * 0.2 + 4)
+            let obstacle2 = BridgeNode(at: distance * 0.2 + 4)
+            self.scenes[currentPlayerIndex].rootNode.addChildNode(obstacle)
+            self.scenes[currentPlayerIndex].rootNode.addChildNode(obstacle2)
+        case .stopped:
+            print("nao tem como!")
+        }
+        previousChallenge = currentChallenge
     }
     
     //MARK: Setting up multipeer session
@@ -74,6 +109,14 @@ class ChallengeManager {
                 )
             
         }
+        //MARK: TIRAR ISSO
+//        for index in players.indices {
+//            players[index].challenges[1] = .balancing
+//        }
+        self.scenes = users.map { _ in
+            SCNRunPathScene()
+        }
+//        scenes[currentPlayerIndex].runner.ontrot = checkAddChallenge
         if players[0].startTime == true{
             startTime = Date.now
         }
@@ -84,11 +127,11 @@ class ChallengeManager {
                 
                 
                 let accumulatedElementCount: Int =
-                    switch players[currentPlayerIndex].currentChallenge {
-                    case .jumping: 20
-                    default: 15
-                    }
-                                
+                switch players[currentPlayerIndex].currentChallenge {
+                case .jumping: 20
+                default: 15
+                }
+                
                 if recentDeviceMotion.count >= accumulatedElementCount {
                     recentDeviceMotion = Array(recentDeviceMotion.dropFirst())
                 }
@@ -108,155 +151,161 @@ class ChallengeManager {
                     y: accumulatedAcceleration.1/Double(recentDeviceMotion.count),
                     z: accumulatedAcceleration.2/Double(recentDeviceMotion.count)
                 )
-              //  print(averageAcceleration)
-            let magnitude = sqrt(pow(averageAcceleration.x, 2) + pow(averageAcceleration.y, 2) + pow(averageAcceleration.z, 2))
-               // print(magnitude.formatted(.number.precision(.fractionLength(2))))
-            debugText = """
+                //  print(averageAcceleration)
+                let magnitude = sqrt(pow(averageAcceleration.x, 2) + pow(averageAcceleration.y, 2) + pow(averageAcceleration.z, 2))
+                // print(magnitude.formatted(.number.precision(.fractionLength(2))))
+                debugText = """
             \(averageAcceleration.x.formatted(.number.precision(.fractionLength(2))))\n
             \(averageAcceleration.y.formatted(.number.precision(.fractionLength(2))))\n
             \(averageAcceleration.z.formatted(.number.precision(.fractionLength(2))))\n
             \(magnitude.formatted(.number.precision(.fractionLength(2))))
             """
-            
-            switch players[currentPlayerIndex].currentChallenge {
                 
-            case .running:
-                currentChallenge = .running
-                DispatchQueue.main.async {
-                    HUBPhoneManager.instance.allPlayers[0].currentChallenge = .running
-                        }
-                if abs(magnitude) > 0.8
-                    && abs(averageAcceleration.y) > abs(averageAcceleration.x)
-                    && abs(averageAcceleration.y) > abs(averageAcceleration.z) {
-                   
-                    currentSituation = true
-                    DispatchQueue.main.async {
-                        HUBPhoneManager.instance.allPlayers[0].currentSituation = true
-                            }
-                    players[currentPlayerIndex].progress += magnitude
+                switch players[currentPlayerIndex].currentChallenge {
                     
-                } else {
-                    //TODO: muda a animação pra uma parada
-                   
-                    currentSituation = false
+                case .running:
+                    currentChallenge = .running
                     DispatchQueue.main.async {
-                        HUBPhoneManager.instance.allPlayers[0].currentSituation = false
-                            }
-                }
-                
-                
-            case .jumping:
-                currentChallenge = .jumping
-                
-                DispatchQueue.main.async {
-                    HUBPhoneManager.instance.allPlayers[0].currentChallenge = .jumping
-                        }
-                if recentDeviceMotion.count >= 3 {
-                    let lastThreeY = recentDeviceMotion.suffix(7).map { $0.userAcceleration.y }
-                    let currentY = averageAcceleration.y
-
-                    if currentY - lastThreeY.max()! >= 1.5
+                        HUBPhoneManager.instance.allPlayers[0].currentChallenge = .running
+                    }
+                    if abs(magnitude) > 0.8
                         && abs(averageAcceleration.y) > abs(averageAcceleration.x)
                         && abs(averageAcceleration.y) > abs(averageAcceleration.z) {
                         
-                       
+                        currentSituation = true
+                        DispatchQueue.main.async {
+                            HUBPhoneManager.instance.allPlayers[0].currentSituation = true
+                        }
+                        players[currentPlayerIndex].progress += magnitude
+                        
+                    } else {
+                        //TODO: muda a animação pra uma parada
+                        
+                        currentSituation = false
+                        DispatchQueue.main.async {
+                            HUBPhoneManager.instance.allPlayers[0].currentSituation = false
+                        }
+                    }
+                    
+                    
+                case .jumping:
+                    currentChallenge = .jumping
+                    
+                    DispatchQueue.main.async {
+                        HUBPhoneManager.instance.allPlayers[0].currentChallenge = .jumping
+                    }
+                    if recentDeviceMotion.count >= 3 {
+                        let lastThreeY = recentDeviceMotion.suffix(7).map { $0.userAcceleration.y }
+                        let currentY = averageAcceleration.y
+                        
+                        if currentY - lastThreeY.max()! >= 1.5
+                            && abs(averageAcceleration.y) > abs(averageAcceleration.x)
+                            && abs(averageAcceleration.y) > abs(averageAcceleration.z) {
+                            
+                            
+                            currentSituation = true
+                            
+                            DispatchQueue.main.async {
+                                HUBPhoneManager.instance.allPlayers[0].currentSituation = true
+                            }
+                            print(currentY, lastThreeY.min()!, lastThreeY.max()!)
+                            players[currentPlayerIndex].progress += 100
+                        } else {
+                            currentSituation = false
+                            DispatchQueue.main.async {
+                                HUBPhoneManager.instance.allPlayers[0].currentSituation = false
+                            }
+                            
+                            
+                        }
+                    }
+                    
+                case .openingDoor:
+                    currentChallenge = .openingDoor
+                    DispatchQueue.main.async {
+                        HUBPhoneManager.instance.allPlayers[0].currentChallenge = .openingDoor
+                    }
+                    
+                    if abs(averageAcceleration.y) < 1
+                        && abs(averageAcceleration.y) < abs(averageAcceleration.x)
+                        && abs(averageAcceleration.y) < abs(averageAcceleration.z) {
                         currentSituation = true
                         
                         DispatchQueue.main.async {
                             HUBPhoneManager.instance.allPlayers[0].currentSituation = true
-                                }
-                        print(currentY, lastThreeY.min()!, lastThreeY.max()!)
+                        }
                         players[currentPlayerIndex].progress += 100
                     } else {
                         currentSituation = false
                         DispatchQueue.main.async {
                             HUBPhoneManager.instance.allPlayers[0].currentSituation = false
-                                }
+                        }
                         
                         
                     }
-                }
-
-            case .openingDoor:
-                currentChallenge = .openingDoor
-                DispatchQueue.main.async {
-                    HUBPhoneManager.instance.allPlayers[0].currentChallenge = .openingDoor
-                        }
-               
-                if abs(averageAcceleration.y) < 1
-                    && abs(averageAcceleration.y) < abs(averageAcceleration.x)
-                    && abs(averageAcceleration.y) < abs(averageAcceleration.z) {
-                    currentSituation = true
+                    
+                case .balancing:
+                    currentChallenge = .balancing
                     
                     DispatchQueue.main.async {
-                        HUBPhoneManager.instance.allPlayers[0].currentSituation = true
-                            }
-                    players[currentPlayerIndex].progress += 100
-                } else {
-                    currentSituation = false
-                    DispatchQueue.main.async {
-                        HUBPhoneManager.instance.allPlayers[0].currentSituation = false
-                            }
-                   
+                        HUBPhoneManager.instance.allPlayers[0].currentChallenge = .balancing
+                    }
+                    balancingCount["x"] = deviceMotion.attitude.roll
+                    balancingCount["y"] = deviceMotion.attitude.pitch
+                    balancingCount["z"] = deviceMotion.attitude.yaw
                     
-                }
-                
-            case .balancing:
-                currentChallenge = .balancing
-               
-                DispatchQueue.main.async {
-                    HUBPhoneManager.instance.allPlayers[0].currentChallenge = .balancing
+                    
+                    if balancingCount["x"]! >= -0.01 && balancingCount["y"]! <= 0.2 {
+                        balancingResult.append("true")
+                        currentSituation = true
+                        DispatchQueue.main.async {
+                            HUBPhoneManager.instance.allPlayers[0].currentSituation = true
                         }
-                balancingCount["x"] = deviceMotion.attitude.roll
-                balancingCount["y"] = deviceMotion.attitude.pitch
-                balancingCount["z"] = deviceMotion.attitude.yaw
-                
-                
-                if balancingCount["x"]! >= -0.01 && balancingCount["y"]! <= 0.2 {
-                    balancingResult.append("true")
-                    currentSituation = true
-                    DispatchQueue.main.async {
-                        HUBPhoneManager.instance.allPlayers[0].currentSituation = true
-                            }
-                }
-                else{
-                    currentSituation = false
-                    DispatchQueue.main.async {
-                        HUBPhoneManager.instance.allPlayers[0].currentSituation = false
-                            }
-                }
-                
-                if balancingResult.count == 30 { //para dar 3 segundos, não necessariamente continuos.
-                    currentSituation = true
-                    DispatchQueue.main.async {
-                        HUBPhoneManager.instance.allPlayers[0].currentSituation = true
-                            }
-                    balancingResult = []
+                    }
+                    else{
+                        currentSituation = false
+                        DispatchQueue.main.async {
+                            HUBPhoneManager.instance.allPlayers[0].currentSituation = false
+                        }
+                    }
+                    
+                    if balancingResult.count == 30 { //para dar 3 segundos, não necessariamente continuos.
+                        currentSituation = true
+                        DispatchQueue.main.async {
+                            HUBPhoneManager.instance.allPlayers[0].currentSituation = true
+                        }
+                        balancingResult = []
+                        players[currentPlayerIndex].progress += 100
+                    }
+                    
+                    
+                case .stopped:
+                    print("YOU WON")
+                    let finishTime = Date()
                     players[currentPlayerIndex].progress += 100
-                }
-                
-            
-            case .stopped:
-                print("YOU WON")
-                let finishTime = Date()
-                players[currentPlayerIndex].progress += 100
-                currentChallenge = .stopped
-                youWon = true
-                interval = finishTime.timeIntervalSince(self.startTime)
-                HUBPhoneManager.instance.allPlayers[0].interval = finishTime.timeIntervalSince(self.startTime)
-                print("MEU INTERVALO: \(interval)")
-                DispatchQueue.main.async {
-                    HUBPhoneManager.instance.allPlayers[0].youWon = true
+                    currentChallenge = .stopped
+                    youWon = true
+                    interval = finishTime.timeIntervalSince(self.startTime)
                     HUBPhoneManager.instance.allPlayers[0].interval = finishTime.timeIntervalSince(self.startTime)
-                    HUBPhoneManager.instance.allPlayers[0].currentChallenge = .stopped
-                        }
-                finishMatch()
-
-            case .none:
-                print("None")
-            }
-            
-        })
+                    print("MEU INTERVALO: \(interval)")
+                    DispatchQueue.main.async {
+                        HUBPhoneManager.instance.allPlayers[0].youWon = true
+                        HUBPhoneManager.instance.allPlayers[0].interval = finishTime.timeIntervalSince(self.startTime)
+                        HUBPhoneManager.instance.allPlayers[0].currentChallenge = .stopped
+                    }
+                    finishMatch()
+                    
+                case .none:
+                    print("None")
+                }
+                
+                self.scenes[currentPlayerIndex].runner.runAction(
+                    SCNAction.move(to: SCNVector3(x: self.scenes[currentPlayerIndex].runner.position.x,
+                                                  y: self.scenes[currentPlayerIndex].runner.position.y,
+                                                  z: Float(players[currentPlayerIndex].progress * 0.2)),
+                                   duration: 0.1)
+                )
+            })
     }
     
     private func handleReceivedMotionData(_ data: Data) {

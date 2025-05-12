@@ -85,6 +85,10 @@ struct MatchGridView: View {
             //            }
             .task{
                 print("number of players: \(players.count)")
+                for (index, player) in Array(HUBPhoneManager.instance.allPlayers.enumerated()) {
+                    matchManager.startMatch(users: users, myUserID: HUBPhoneManager.instance.allPlayers[index].id, index: index)
+                }
+                print("Created matches")
                 startCheckingForAllWinners()
             }
             .onDisappear {
