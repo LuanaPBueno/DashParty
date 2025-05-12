@@ -19,6 +19,7 @@ struct MatchViewHub: View {
     @State var startTime = Date.now
     @State var finishTime: Date?
     @State var characterImage: Image = Image("characterFront")
+    @State var audioManager: AudioManager = AudioManager()
 
     
     var body: some View {
@@ -75,6 +76,11 @@ struct MatchViewHub: View {
                         .background(Color.red.opacity(0.7))
 
                 }
+        .onAppear {
+            audioManager.playSound(named: "forest", volume: 0.0)
+            audioManager.playSound(named: "run music", volume: 0.0)
+        }
+
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background {
                 Image("cenario2")

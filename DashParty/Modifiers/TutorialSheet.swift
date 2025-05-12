@@ -22,9 +22,13 @@ struct TutorialSheet: View {
                 //Spacer(minLength: 20)
 
                 Image("tutorialRectangle")
+//                    .resizable()
+                    .scaledToFit()
                     .overlay(
                         HStack(alignment: .top, spacing: 20) {
                             Image(tutorialImage)
+//                               .resizable()
+                                .scaledToFit()
                             VStack(alignment: .leading, spacing: 12) {
                                 Text(tutorialTextTitle)
                                     .font(.custom("TorukSC-Regular", size: 50, relativeTo: .title))
@@ -34,11 +38,13 @@ struct TutorialSheet: View {
                                     .font(.custom("Wonder-Light", size: 34, relativeTo: .body))
                                     .multilineTextAlignment(.leading)
                                     .foregroundStyle(.text)
+                                    
                             }
                             .padding(.leading, 40)
                         }
+                            .padding()
                     )
-
+                    .clipped()
                // Spacer()
             }
        // }

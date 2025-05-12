@@ -10,7 +10,8 @@ import SwiftUI
 
 struct NarrativeView: View {
     var hubManager = HUBPhoneManager.instance
-    
+    @State var audioManager: AudioManager = AudioManager()
+
     
     var narrativeImages = [
         "narrativeImage1",
@@ -35,6 +36,9 @@ struct NarrativeView: View {
                 .resizable()
                 .scaledToFill()
                 .frame(maxWidth: .infinity)
+                .onAppear {
+                    audioManager.playSound(named: "music")
+                            }
                 .background{
                     Image("decorativeRectCream")
                         .resizable()

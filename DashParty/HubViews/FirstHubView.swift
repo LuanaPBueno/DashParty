@@ -10,6 +10,8 @@ import SwiftUI
 
 struct FirstHubView: View {
     @State var hubManager = HUBPhoneManager.instance
+    @State var audioManager: AudioManager = AudioManager()
+
 
     var body: some View {
         ZStack {

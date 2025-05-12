@@ -12,6 +12,8 @@ struct TutorialHubView: View {
     @Binding var router: Router
     var multipeerSession = MPCSessionManager.shared
 
+    @State var audioManager: AudioManager = AudioManager()
+
     let user = HUBPhoneManager.instance.user
     @State var matchManager = HUBPhoneManager.instance.matchManager
     var hubManager = HUBPhoneManager.instance
@@ -29,10 +31,10 @@ struct TutorialHubView: View {
 
     let tutorialTitles = [
         "Run",
-        "Breathe",
-        "Balance",
+        "Run",
         "Jump",
-        "React",
+        "Balance",
+        "Puch",
         "Win"
     ]
 
@@ -51,6 +53,9 @@ struct TutorialHubView: View {
                           .resizable()
                            .scaledToFill()
                            .ignoresSafeArea()
+                           .onAppear {
+                               audioManager.playSound(named: "music")
+                                       }
 //            VStack(spacing: 5) {
 //                Text("Heads Up!")
 //                    .font(.custom("TorukSC-Regular", size: 150, relativeTo: .largeTitle))
@@ -65,11 +70,11 @@ struct TutorialHubView: View {
 //            }
             // Garante que fique na frente
             if !hubManager.startMatch {
-                VStack (spacing: 80) {
+                VStack  {
                     //Spacer()
-                    VStack(spacing: 10) {
+                    VStack {
                                 Text("Heads Up!")
-                                    .font(.custom("TorukSC-Regular", size: 120, relativeTo: .largeTitle))
+                                    .font(.custom("TorukSC-Regular", size: 80, relativeTo: .largeTitle))
                                     .multilineTextAlignment(.center)
                                     .foregroundColor(.white)
 
@@ -78,18 +83,18 @@ struct TutorialHubView: View {
 //                                    .multilineTextAlignment(.center)
 //                                    .foregroundColor(.white)
                             }
-                    .padding(.bottom, 50)
+//                    .padding(.bottom, 50)
                      // esse valor ajusta o quão para cima o título vai
                     if let tutorialImage = tutorialImageNames[safe: hubManager.actualTutorialIndex],
                        let tutorialText = tutorialTexts[safe: hubManager.actualTutorialIndex],
                        let tutorialTitle = tutorialTitles[safe: hubManager.actualTutorialIndex] {
 
                         TutorialSheet(
-                            tutorialImage: tutorialImage,
-                            tutorialText: tutorialText,
-                            tutorialTextTitle: tutorialTitle
+                         tutorialImage: tutorialImage,
+                         tutorialText: tutorialText,
+                         tutorialTextTitle: tutorialTitle
                         )
-                        .scaleEffect(1.5)
+//                        .scaleEffect(1.5)
                        // .frame(maxWidth: 1000, maxHeight: 600)
                         
                     }

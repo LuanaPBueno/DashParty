@@ -5,6 +5,13 @@
 //  Created by Luana Bueno on 11/03/25.
 //
 
+//
+//  ContentView.swift
+//  DashParty
+//
+//  Created by Luana Bueno on 11/03/25.
+//
+
 import SwiftUI
 import CoreMotion
 
@@ -17,7 +24,7 @@ struct ContentView: View {
     
     var body: some View {
             ZStack{
-                Image("titleScreen")
+                Image("titleScreen") // "titleScreen"
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
@@ -47,10 +54,10 @@ struct ContentView: View {
 //                            }) {
 //                                OrangeButtonPhone(text: "Options", sizeFont: 28)
 //                                    .padding(.vertical, 60)
-//                                    
+//
 //
 //                            }
-//                            
+//
 //                        }
                         Spacer()
                     }

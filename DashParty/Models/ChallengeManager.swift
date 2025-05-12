@@ -10,6 +10,7 @@ import CoreMotion
 
 @Observable
 class ChallengeManager {
+    var audioManager = AudioManager()
     var multipeerSession: MPCSession?
     var receivedMotionData: [UUID: MotionData] = [:]
     var debugText: String = ""
@@ -22,6 +23,7 @@ class ChallengeManager {
     var currentSituation: Bool = false
     
     var currentChallenge: Challenge = .running
+    
     var youWon: Bool = false
     var interval: TimeInterval = 0.0
     func getPlayer(forUser userID: UUID) -> Player? {
@@ -125,6 +127,10 @@ class ChallengeManager {
                 DispatchQueue.main.async {
                     HUBPhoneManager.instance.allPlayers[0].currentChallenge = .running
                         }
+                
+                audioManager.stopAllSounds() // Para qualquer som anterior
+                audioManager.playSound(named: "Run", volume: 1.0) // Nome do arquivo de som
+                
                 if abs(magnitude) > 0.8
                     && abs(averageAcceleration.y) > abs(averageAcceleration.x)
                     && abs(averageAcceleration.y) > abs(averageAcceleration.z) {
@@ -134,6 +140,9 @@ class ChallengeManager {
                         HUBPhoneManager.instance.allPlayers[0].currentSituation = true
                             }
                     players[currentPlayerIndex].progress += magnitude
+                    
+                    audioManager.stopAllSounds() // Para qualquer som anterior
+                    audioManager.playSound(named: "Run", volume: 1.0) // Nome do arquivo de som
                     
                 } else {
                     //TODO: muda a animação pra uma parada
@@ -151,6 +160,8 @@ class ChallengeManager {
                 DispatchQueue.main.async {
                     HUBPhoneManager.instance.allPlayers[0].currentChallenge = .jumping
                         }
+    
+                
                 if recentDeviceMotion.count >= 3 {
                     let lastThreeY = recentDeviceMotion.suffix(7).map { $0.userAcceleration.y }
                     let currentY = averageAcceleration.y
@@ -159,14 +170,18 @@ class ChallengeManager {
                         && abs(averageAcceleration.y) > abs(averageAcceleration.x)
                         && abs(averageAcceleration.y) > abs(averageAcceleration.z) {
                         
-                       
+                        
                         currentSituation = true
                         
                         DispatchQueue.main.async {
                             HUBPhoneManager.instance.allPlayers[0].currentSituation = true
-                                }
+                        }
                         print(currentY, lastThreeY.min()!, lastThreeY.max()!)
                         players[currentPlayerIndex].progress += 100
+                        
+                        audioManager.stopAllSounds() // Para qualquer som anterior
+                        audioManager.playSound(named: "Jump", volume: 1.0) // Nome do arquivo de som
+                        
                     } else {
                         currentSituation = false
                         DispatchQueue.main.async {
@@ -182,6 +197,9 @@ class ChallengeManager {
                 DispatchQueue.main.async {
                     HUBPhoneManager.instance.allPlayers[0].currentChallenge = .openingDoor
                         }
+                
+                audioManager.stopAllSounds() // Para qualquer som anterior
+                audioManager.playSound(named: "vine") // Nome do arquivo de som
                
                 if abs(averageAcceleration.y) < 1
                     && abs(averageAcceleration.y) < abs(averageAcceleration.x)
