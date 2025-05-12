@@ -14,9 +14,9 @@ struct MMPhone: View {
         GeometryReader { geometry in
             
             let fontSize = geometry.size.width * 0.07 < 20 ? 20 : geometry.size.width * 0.07
-
+            
             ZStack {
-
+                
                 if MPCSessionManager.shared.host{
                     if let playerCharacter = HUBPhoneManager.instance.allPlayers.first(where: { $0.name == playerName }),
                        let imageName = playerCharacter.userClan?.alternateImage {
@@ -42,14 +42,17 @@ struct MMPhone: View {
                             .overlay(
                                 VStack {
                                     Spacer()
+                                    Spacer()
+                                    Spacer()
+                                    Spacer()
+                                    Spacer()
                                     Text(playerName)
                                         .font(.custom("TorukSC-Regular", size: fontSize))
                                         .foregroundColor(Color(red: 126/255, green: 97/255, blue: 46/255))
                                         .padding(.bottom, CGFloat(sizePadding))
                                         .minimumScaleFactor(0.5)
                                         .lineLimit(1)
-                                    
-                                    
+                                    Spacer()
                                 }
                                     .padding(.vertical, geometry.size.height * 0.05)
                             )
@@ -66,12 +69,17 @@ struct MMPhone: View {
                                 .overlay(
                                     VStack {
                                         Spacer()
+                                        Spacer()
+                                        Spacer()
+                                        Spacer()
+                                        Spacer()
                                         Text(playerName)
                                             .font(.custom("TorukSC-Regular", size: fontSize))
                                             .foregroundColor(Color(red: 126/255, green: 97/255, blue: 46/255))
                                             .padding(.bottom, CGFloat(sizePadding))
                                             .minimumScaleFactor(0.5)
                                             .lineLimit(1)
+                                        Spacer()
                                     }
                                         .padding(.vertical, geometry.size.height * 0.05)
                                 )
@@ -85,20 +93,23 @@ struct MMPhone: View {
                             .overlay(
                                 VStack {
                                     Spacer()
+                                    Spacer()
+                                    Spacer()
+                                    Spacer()
+                                    Spacer()
                                     Text(playerName)
                                         .font(.custom("TorukSC-Regular", size: fontSize))
                                         .foregroundColor(Color(red: 126/255, green: 97/255, blue: 46/255))
                                         .padding(.bottom, CGFloat(sizePadding))
                                         .minimumScaleFactor(0.5)
                                         .lineLimit(1)
-                                    
-                                    
+                                    Spacer()
                                 }
                                     .padding(.vertical, geometry.size.height * 0.05)
                             )
                     }
                 }
-             }
+            }
         }
         .aspectRatio(1, contentMode: .fit)
     }

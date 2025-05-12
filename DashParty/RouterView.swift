@@ -90,7 +90,8 @@ struct RouterView: View {
         case .victoryStory:
             Text("Victory")
         case .ranking:
-            YouWonView(router: $router)
+            YouWonPhoneView(router: $router, isWinner: true, kikoType: .red)
+//            YouWonPhoneView(router: $router)
         case .chooseCharacter:
             CharacterView(router: $router)                    .onAppear {
                         do {

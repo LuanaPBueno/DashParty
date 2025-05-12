@@ -18,19 +18,28 @@ struct YouWonView: View {
     var rankedPlayers: [(player: SendingPlayer, formattedTime: String)] {
         guard !players.isEmpty else { return [] }
         
-        return players.sorted { $0.interval < $1.interval }
+        let finishedPlayers = players.filter { $0.interval > 0.0 }
+        let unfinishedPlayers = players.filter { $0.interval == 0.0 }
+        
+        let sortedFinished = finishedPlayers.sorted { $0.interval < $1.interval }
             .map { player in
                 let formattedTime = formatTimeInterval(player.interval)
                 return (player, formattedTime)
             }
+        
+        let sortedUnfinished = unfinishedPlayers.map { player in
+            (player, "Did not finish")
+        }
+        
+        return sortedFinished + sortedUnfinished
     }
     
     private func formatTimeInterval(_ interval: TimeInterval) -> String {
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.minute, .second]
-        formatter.unitsStyle = .positional
-        formatter.zeroFormattingBehavior = .pad
-        return formatter.string(from: interval) ?? "00:00"
+        let minutes = Int(interval) / 60
+        let seconds = Int(interval) % 60
+        let milliseconds = Int((interval - Double(Int(interval))) * 100)
+        
+        return String(format: "%02d:%02d:%02d", minutes, seconds, milliseconds)
     }
     
     var hubManager = HUBPhoneManager.instance
@@ -38,7 +47,10 @@ struct YouWonView: View {
     var body: some View {
         
         ZStack{
-            Image("purpleBackground")
+            Rectangle()
+                .fill(.black)
+            
+            Image("patternBackground")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
@@ -46,60 +58,62 @@ struct YouWonView: View {
             VStack {
                 Spacer()
                 
-                Text("RACE COMPLETE!")
-                    .font(.custom("TorukSC-Regular", size: 60))
+                Text("Race Complete!")
+                    .font(.custom("TorukSC-Regular", size: 72))
                     .foregroundColor(.white)
-                
-                
-                Text("FINAL RANKING:\n")
-                    .font(.custom("TorukSC-Regular", size: 30))
-                    .foregroundColor(.white)
-                
-                ForEach(Array(rankedPlayers.enumerated()), id: \.offset) { index, ranked in
-                    HStack {
-                        Text("#\(index + 1)")
-                            .font(.title3)
-                            .frame(width: 30, alignment: .leading)
-                        
-                        Text(ranked.player.name)
-                        
-                        Text(ranked.formattedTime)
-                            .font(.title3)
-                        
-                    }
-                    .padding(.horizontal)
-                    .foregroundColor(.white)
-                }
                 
                 Spacer()
                 
-                Button {
-                    DispatchQueue.main.async {
-                        HUBPhoneManager.instance.allPlayersFinished = false
-                        HUBPhoneManager.instance.ranking = false
-                        for i in 0..<HUBPhoneManager.instance.allPlayers.count {
-                            HUBPhoneManager.instance.allPlayers[i].youWon = false
-                            HUBPhoneManager.instance.allPlayers[i].interval = 0.0
-                        }
-
-                            }
+                ForEach(Array(rankedPlayers.enumerated()), id: \.offset) { index, ranked in
+                    HStack(spacing: 30) {
+                        CharacterRankView(
+                            frameType: CharacterFrameType(status: .winner, color: .red),
+                            kikoColor: .red,
+                            bannerType: .winner,
+                            playerName: ranked.player.name,
+                            time: ranked.formattedTime
+                        )
+                    }
+                   
+                }
+                
+                
+                Spacer()
+                
+                VStack(spacing:34) {
+                    Text("Come on! Think you can beat that time?")
+                        .font(.custom("TorukSC-Regular", size: 30))
+                        .foregroundColor(.white)
                     
-                    HUBPhoneManager.instance.startMatch = false
-                    let message = "Reset"
+                    Button {
+                        DispatchQueue.main.async {
+                            HUBPhoneManager.instance.allPlayersFinished = false
+                            HUBPhoneManager.instance.ranking = false
+                            for i in 0..<HUBPhoneManager.instance.allPlayers.count {
+                                HUBPhoneManager.instance.allPlayers[i].youWon = false
+                                HUBPhoneManager.instance.allPlayers[i].interval = 0.0
+                            }
+                            
+                        }
+                        
+                        HUBPhoneManager.instance.startMatch = false
+                        let message = "Reset"
                         if let data = message.data(using: .utf8) {
                             MPCSessionManager.shared.sendDataToAllPeers(data: data)
                             
                         }
-                    router = .tutorial
-                    HUBPhoneManager.instance.matchManager.reset()
-                    
-                } label: {
-                    Text("Play again")
-                        .font(.custom("TorukSC-Regular", size: 25))
-                        .foregroundColor(.white)
-                        .background(
-                            Image("decorativeRectOrange")
-                        )
+                        router = .tutorial
+                        HUBPhoneManager.instance.matchManager.reset()
+                        
+                    } label: {
+                        Text("PLAY AGAIN")
+                            .font(.custom("TorukSC-Regular", size: 32))
+                            .foregroundColor(.white)
+                            .background(
+                                Image("decorativeRectOrange")
+                                    .resizable()
+                                    .scaleEffect(1.5)                            )
+                    }
                 }
                 
                 Spacer()
@@ -117,7 +131,7 @@ struct YouWonView: View {
         }
     }
 }
-#Preview {
-   YouWonView(router: .constant(.start))
 
+#Preview {
+    YouWonView(router: .constant(.start))
 }

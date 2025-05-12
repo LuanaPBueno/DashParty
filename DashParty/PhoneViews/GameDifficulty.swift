@@ -24,7 +24,7 @@ struct GameDifficulty: View {
      
             
             ZStack{
-                Image("purpleBackground")
+                Image("patternBackground")
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()

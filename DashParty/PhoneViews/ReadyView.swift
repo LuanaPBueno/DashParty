@@ -18,7 +18,7 @@ struct ReadyView: View {
     
     var body: some View {
         ZStack{
-            Image("purpleBackground")
+            Image("patternBackground")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
