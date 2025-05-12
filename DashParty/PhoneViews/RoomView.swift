@@ -51,6 +51,34 @@ struct RoomView: View {
                                 MMPhone(playerName: player, sizePadding: 0)
                             }
                         }
+                        
+                        
+                        Spacer()
+                    }
+                    .padding(.leading, 35)
+                    .padding(.top, 35)
+                    Spacer()
+                    HStack{
+                        ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
+                            MMPhone(playerName: player, sizePadding: 0)
+                        }
+                    }
+                    .padding(.top, 30)
+                    Spacer()
+                    
+                }
+                
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Button {
+                            router = .chooseCharacter
+                            multipeerSession.stopAdvertising()
+                        } label: {
+                            OrangeButtonPhone(text: "Continue", sizeFont: 20)
+                                .frame(width: 110, height: 45)
+                        }
                         .frame(height: UIScreen.main.bounds.height * 0.55)
 //                        .background {
 //                            Color.red
@@ -65,6 +93,7 @@ struct RoomView: View {
                     Spacer()
                     Button {
                         router = .chooseCharacter
+                        multipeerSession.stopAdvertising()
                     } label: {
                         OrangeButtonPhone(text: "Continue", sizeFont: 20)
                             .frame(width: 110, height: 45)

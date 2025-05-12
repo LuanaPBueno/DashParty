@@ -78,7 +78,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         self.maxNumPeers = maxPeers
         self.matchManager = matchManager
         
-        let peerID = MCPeerID(displayName: UIDevice.current.name)
+        let peerID = MCPeerID(displayName: "Default Room")
         
         self.localPeerID = peerID
         self.mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
@@ -88,13 +88,14 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             serviceType: serviceString
         )
         
+        
         super.init()
         
         self.mcSession.delegate = self
         self.mcAdvertiser.delegate = self
         self.mcBrowser = MCNearbyServiceBrowser(peer: localPeerID, serviceType: serviceString)
         self.mcBrowser?.delegate = self
-        
+
         // Configurações para funcionar em background
         setupBackgroundHandling()
         startConnectionMonitor()
@@ -106,7 +107,9 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         self.host = asHost
         if host {
             print("🧑‍💼 Iniciando como HOST")
-            mcAdvertiser.startAdvertisingPeer()
+            if mcSession.myPeerID.displayName != "Default Room" {
+                mcAdvertiser.startAdvertisingPeer()
+            }
         } else {
             print("🎮 Iniciando como PLAYER")
             mcBrowser?.startBrowsingForPeers()
@@ -145,6 +148,11 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         } else {
             mcBrowser?.startBrowsingForPeers()
         }
+    }
+    
+    func stopAdvertising(){
+        print("chamei a stopAdvertising")
+        mcAdvertiser.stopAdvertisingPeer()
     }
     
     private func resetBrowser() {
@@ -439,7 +447,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             HUBPhoneManager.instance.receivedPlayers = players
             return
         } catch {
-            print("❌ Não é um array de jogadores: \(error.localizedDescription)")
+         //   print("❌ Não é um array de jogadores: \(error.localizedDescription)")
         }
         
         if let receivedString = String(data: data, encoding: .utf8) {
@@ -579,18 +587,19 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                         HUBPhoneManager.instance.allPlayers[existingPlayerIndex].currentChallenge = receivedData.currentChallenge
                         HUBPhoneManager.instance.allPlayers[existingPlayerIndex].youWon = receivedData.youWon
                         HUBPhoneManager.instance.allPlayers[existingPlayerIndex].interval = receivedData.interval
+                        HUBPhoneManager.instance.allPlayers[existingPlayerIndex].progress =  receivedData.progress
                         
                         if receivedData.userClan != nil {
                             HUBPhoneManager.instance.allPlayers[existingPlayerIndex].userClan = receivedData.userClan
                         }
                     } else {
                         HUBPhoneManager.instance.allPlayers.append(receivedData)
-                        print("appendando: \(receivedData)")
+                      //  print("appendando: \(receivedData)")
                     }
                 }
             }
         } catch {
-            print("Erro ao decodificar dados recebidos:", error)
+          //  print("Erro ao decodificar dados recebidos:", error)
         }
     }
     

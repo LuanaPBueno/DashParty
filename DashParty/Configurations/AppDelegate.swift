@@ -21,7 +21,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
         
         if !isSupported {
-            print("Device doesn't support Nearby Interaction")
+            //print("Device doesn't support Nearby Interaction")
             // You might want to show an alert or switch to a different view here
             // For SwiftUI, you could set up a state variable to trigger an alert
         }

@@ -19,6 +19,7 @@ class ChallengeManager {
     var balancingResult : [String] = []
     var players: [Player] = []
     var currentPlayerIndex = 0
+    
     var tolerancia: Double = 0.03
     var startTime = Date.now
     private var observationToken: Any?
@@ -90,6 +91,8 @@ class ChallengeManager {
         players[0].interval = 0.0
         HUBPhoneManager.instance.allPlayers[0].youWon = false
         HUBPhoneManager.instance.allPlayers[0].interval = 0.0
+        HUBPhoneManager.instance.allPlayers[0].progress = 0.0
+        
         
       
         HUBPhoneManager.instance.matchManager.startMatch(users: [HUBPhoneManager.instance.user], myUserID: HUBPhoneManager.instance.allPlayers[0].id, index: 0)
@@ -321,24 +324,20 @@ class ChallengeManager {
            }
        }
     
-    //Pega quem está ganhando o match naquele momento, ou seja, quem está com o maior progress
-    func getMatchCurrentWinner() -> SendingPlayer? {
-        var currentWinner: SendingPlayer? = nil
-
-        for player in HUBPhoneManager.instance.allPlayers {
-            if let winner = currentWinner {
-                if player.progress > winner.progress {
-                    currentWinner = player
-                    print("entrei aqui")
-                    print(currentWinner?.name)
-                }
-            } else {
-                currentWinner = player
-                print("entrei aqui")
-                print(currentWinner?.name)
+    func startRankingUpdates() -> [SendingPlayer] {
+            let ranking = self.getMatchCurrentRanking()
+            print("Ranking atualizado:")
+            for (index, player) in ranking.enumerated() {
+                print("\(index + 1). \(player.name) - progresso: \(player.progress)")
             }
-        }
-        return currentWinner
+      
+        return ranking
+    }
+    
+    func getMatchCurrentRanking() -> [SendingPlayer] {
+        let allProgress = HUBPhoneManager.instance.allPlayers.sorted { $0.progress > $1.progress }
+        print(allProgress)
+        return allProgress
     }
  
     func finishMatch() {

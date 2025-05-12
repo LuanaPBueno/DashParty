@@ -100,18 +100,31 @@ struct MatchGridView: View {
             
         
     }
+    
+    //MARK: Agora, quando tiver só com um jogador final correndo, o jogo já passa pra tela de ranking
     private func startCheckingForAllWinners() {
-           timer?.invalidate()
-           
-           timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-               let allWon = HUBPhoneManager.instance.allPlayers.allSatisfy { $0.youWon == true }
-               if allWon {
-                   HUBPhoneManager.instance.allPlayersFinished = true
-                   HUBPhoneManager.instance.ranking = true
-                   router = .ranking
-                   timer?.invalidate()
-               }
-           }
-       }
-   
+        timer?.invalidate()
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+            let players = HUBPhoneManager.instance.allPlayers
+            let winnersCount = players.filter { $0.youWon == true }.count
+            
+            if players.count == 1 {
+                if winnersCount == 1 {
+                    HUBPhoneManager.instance.allPlayersFinished = true
+                    HUBPhoneManager.instance.ranking = true
+                    router = .ranking
+                    timer?.invalidate()
+                }
+             
+            } else {
+                if winnersCount == players.count - 1 {
+                    HUBPhoneManager.instance.allPlayersFinished = true
+                    HUBPhoneManager.instance.ranking = true
+                    router = .ranking
+                    timer?.invalidate()
+                }
+            }
+        }
+    }
 }

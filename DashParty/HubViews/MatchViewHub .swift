@@ -11,8 +11,11 @@ import SceneKit
 
 struct MatchViewHub: View {
     var users: [User]
-    @State var index: Int
+    @State var currentWinner : SendingPlayer?
+    @State var ranking: [SendingPlayer]?
+    var index: Int
     var multipeerSession = MPCSessionManager.shared
+    @State var rankingTimer: Timer?
     @State private var timer = Timer.publish(every: 0.01, on: .main, in: .common).autoconnect()
     @State var matchManager: ChallengeManager
     var currentSituation: Bool { HUBPhoneManager.instance.allPlayers[index].currentSituation }
@@ -20,6 +23,7 @@ struct MatchViewHub: View {
     @State var startTime = Date.now
     @State var finishTime: Date?
     @State var characterImage: Image = Image("characterFront")
+    @State var winnerTimer: Timer?
     
     
     var body: some View {
