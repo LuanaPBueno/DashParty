@@ -49,7 +49,7 @@ struct TutorialHubView: View {
         ZStack {
             Image("backgroundNewHUB")
                           .resizable()
-                           .scaledToFill()
+                           .scaledToFit()
                            .ignoresSafeArea()
 //            VStack(spacing: 5) {
 //                Text("Heads Up!")
@@ -89,7 +89,7 @@ struct TutorialHubView: View {
                             tutorialText: tutorialText,
                             tutorialTextTitle: tutorialTitle
                         )
-                        .scaleEffect(1.5)
+//                        .scaleEffect(1)
                        // .frame(maxWidth: 1000, maxHeight: 600)
                         
                     }
