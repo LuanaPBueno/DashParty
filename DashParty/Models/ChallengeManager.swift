@@ -40,13 +40,10 @@ class ChallengeManager {
     }
     
     
-    var previousChallenge: Challenge?
-    func checkAddChallenge(distance: Float) {
-        guard let currentChallenge = players[currentPlayerIndex].currentChallenge else {
-            fatalError()
-            return
-        }
-        guard currentChallenge != previousChallenge else {
+    var previousChallenge: [Int:Challenge] = [:]
+    func checkAddChallenge(distance: Float, playerIndex: Int) {
+        let currentChallenge = HUBPhoneManager.instance.allPlayers[playerIndex].currentChallenge
+        guard currentChallenge != previousChallenge[playerIndex] else {
             return
         }
         print("Mudou para: \(currentChallenge)")
@@ -55,20 +52,20 @@ class ChallengeManager {
             break
         case .jumping:
             let obstacle = StoneNode(at: distance * 0.2 + 1)
-            self.scenes[currentPlayerIndex].rootNode.addChildNode(obstacle)
+            self.scenes[playerIndex].rootNode.addChildNode(obstacle)
             //chamar funcao de surgir pedra
         case .openingDoor:
             let obstacle = VineNode(at: distance * 0.2 + 1)
-            self.scenes[currentPlayerIndex].rootNode.addChildNode(obstacle)
+            self.scenes[playerIndex].rootNode.addChildNode(obstacle)
         case .balancing:
             let obstacle = WaterNode(at: distance * 0.2 + 4)
             let obstacle2 = BridgeNode(at: distance * 0.2 + 4)
-            self.scenes[currentPlayerIndex].rootNode.addChildNode(obstacle)
-            self.scenes[currentPlayerIndex].rootNode.addChildNode(obstacle2)
+            self.scenes[playerIndex].rootNode.addChildNode(obstacle)
+            self.scenes[playerIndex].rootNode.addChildNode(obstacle2)
         case .stopped:
             print("nao tem como!")
         }
-        previousChallenge = currentChallenge
+        previousChallenge[playerIndex] = currentChallenge
     }
     
     //MARK: Setting up multipeer session
@@ -180,6 +177,7 @@ class ChallengeManager {
                             HUBPhoneManager.instance.allPlayers[0].currentSituation = true
                         }
                         players[currentPlayerIndex].progress += magnitude
+                        HUBPhoneManager.instance.allPlayers[0].progress += magnitude
                         
                     } else {
                         //TODO: muda a animação pra uma parada
@@ -213,6 +211,7 @@ class ChallengeManager {
                             }
                             print(currentY, lastThreeY.min()!, lastThreeY.max()!)
                             players[currentPlayerIndex].progress += 100
+                            HUBPhoneManager.instance.allPlayers[0].progress += 100
                         } else {
                             currentSituation = false
                             DispatchQueue.main.async {
@@ -238,6 +237,7 @@ class ChallengeManager {
                             HUBPhoneManager.instance.allPlayers[0].currentSituation = true
                         }
                         players[currentPlayerIndex].progress += 100
+                        HUBPhoneManager.instance.allPlayers[0].progress += 100
                     } else {
                         currentSituation = false
                         DispatchQueue.main.async {
@@ -279,6 +279,7 @@ class ChallengeManager {
                         }
                         balancingResult = []
                         players[currentPlayerIndex].progress += 100
+                        HUBPhoneManager.instance.allPlayers[0].progress += 100
                     }
                     
                     
@@ -286,6 +287,7 @@ class ChallengeManager {
                     print("YOU WON")
                     let finishTime = Date()
                     players[currentPlayerIndex].progress += 100
+                    HUBPhoneManager.instance.allPlayers[0].progress += 100
                     currentChallenge = .stopped
                     youWon = true
                     interval = finishTime.timeIntervalSince(self.startTime)
@@ -302,12 +304,16 @@ class ChallengeManager {
                     print("None")
                 }
                 
-                self.scenes[currentPlayerIndex].runner.runAction(
-                    SCNAction.move(to: SCNVector3(x: self.scenes[currentPlayerIndex].runner.position.x,
-                                                  y: self.scenes[currentPlayerIndex].runner.position.y,
-                                                  z: Float(players[currentPlayerIndex].progress * 0.2)),
-                                   duration: 0.1)
-                )
+                
+                for playerIndex in players.indices {
+                    self.scenes[playerIndex].runner.runAction(
+                        SCNAction.move(to: SCNVector3(x: self.scenes[playerIndex].runner.position.x,
+                                                      y: self.scenes[playerIndex].runner.position.y,
+                                                      z: Float(HUBPhoneManager.instance.allPlayers[playerIndex].progress * 0.2)),
+                                       duration: 0.1)
+                    )
+                }
+                
             })
     }
     

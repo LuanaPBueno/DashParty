@@ -31,9 +31,9 @@ struct MatchViewHub: View {
             ZStack {
                 if index < matchManager.scenes.count {
                     SceneView(scene: matchManager.scenes[index])
-                        .onChange(of: matchManager.players[matchManager.currentPlayerIndex].progress, { oldValue, newValue in
+                        .onChange(of: HUBPhoneManager.instance.allPlayers[index].progress, { oldValue, newValue in
                             print("PROGRESS IS \(newValue)")
-                            matchManager.checkAddChallenge(distance: Float(newValue))
+                            matchManager.checkAddChallenge(distance: Float(newValue), playerIndex: index)
                         })
                         .frame(width: 1000, height: 1000)
                         .background(.brown)
