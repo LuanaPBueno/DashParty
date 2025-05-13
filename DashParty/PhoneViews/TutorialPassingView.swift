@@ -27,7 +27,7 @@ struct TutorialPassingView: View {
     var body: some View {
         ZStack {
             
-            Image("purpleBackground")
+            Image("backgroundPhone")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
@@ -58,7 +58,7 @@ struct TutorialPassingView: View {
                     Spacer()
                     //Spacer()
                     
-                    Text("Look at the screen and enjoy the story!")
+                    Text("Heads Up! Things make way more sense after the tutorial.")
                         .multilineTextAlignment(.center)
                         .font(.custom("TorukSC-Regular", size: 30))
                         .padding(40)

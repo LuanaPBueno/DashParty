@@ -18,9 +18,9 @@ struct ReadyView: View {
     
     var body: some View {
         ZStack{
-            Image("purpleBackground")
+            Image("backgroundPhone")
                 .resizable()
-                .scaledToFit() //MARK: BOTAR SCALEDTOFILL E CHAMAR A MALU
+                .scaledToFill()
                 .ignoresSafeArea()
             VStack{
                 HStack{

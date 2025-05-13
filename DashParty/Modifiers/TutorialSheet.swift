@@ -12,36 +12,38 @@ struct TutorialSheet: View {
     var tutorialText:String
     var tutorialTextTitle:String
     var body: some View {
-       // ZStack {
-//            Image("backgroundPurple")
-//                .resizable()
-//                .scaledToFill()
-//                .ignoresSafeArea()
+    
             VStack {
-                
-                //Spacer(minLength: 20)
 
                 Image("tutorialRectangle")
                     .overlay(
-                        HStack(alignment: .top, spacing: 20) {
+                        HStack(alignment: .top, spacing: 0) {
                             Image(tutorialImage)
-                            VStack(alignment: .leading, spacing: 12) {
+                               
+                                .frame(width: 400, height: 500) // ou o tamanho desejado
+                               
+                            
+                            VStack(alignment: .leading, spacing: 30) {
                                 Text(tutorialTextTitle)
                                     .font(.custom("TorukSC-Regular", size: 50, relativeTo: .title))
                                     .foregroundStyle(.lowOpacityText)
+                                   
+                                    .padding(.top, 120)
+                                
+                            
                                 Image("tutorialLine")
+                                
                                 Text(tutorialText)
                                     .font(.custom("Wonder-Light", size: 34, relativeTo: .body))
                                     .multilineTextAlignment(.leading)
                                     .foregroundStyle(.text)
+                                 
+                                    .frame(width: 500, height: 100)
                             }
-                            .padding(.leading, 40)
+                            .padding(.leading, 0)
                         }
                     )
-
-               // Spacer()
             }
-       // }
     }
 }
 

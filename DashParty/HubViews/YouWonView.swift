@@ -38,7 +38,7 @@ struct YouWonView: View {
     var body: some View {
         
         ZStack{
-            Image("purpleBackground")
+            Image("backgroundNewHUB")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()

@@ -17,7 +17,7 @@ struct ContentView: View {
     
     var body: some View {
             ZStack{
-                Image("titleScreen")
+                Image("illustrationTitle")
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()

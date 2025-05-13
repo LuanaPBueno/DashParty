@@ -20,19 +20,19 @@ struct TutorialHubView: View {
 
     let tutorialTexts = [
         "Keep your phone in a vertical position throughout the race.",
-        "Shake your phone up and down, fast. This keeps you moving forward!",
-        "Keep running and throw your arms in the air! That’s how you jump over obstacles!",
-        "Hold your phone still ,  like balancing on a tightrope! Stay calm. Stay steady.",
-        "Push your phone forward , like opening a heavy door! Clear the way. Keep moving.",
+        "Shake your phone up and down, fast. \nThis keeps you moving forward!",
+        "Keep running and throw your arms in the air! \nThat’s how you jump over obstacles!",
+        "Hold your phone still in a horizontal \nposition, like balancing on a bridge! \nStay calm and stay steady.",
+        "Push your phone forward to push away the vines! \nClear the way and keep moving!",
         "It’s game time! Have fun and go for the win!"
     ]
 
     let tutorialTitles = [
         "Run",
-        "Breathe",
-        "Balance",
+        "Run",
         "Jump",
-        "React",
+        "Bridge",
+        "Vines",
         "Win"
     ]
 
@@ -47,7 +47,7 @@ struct TutorialHubView: View {
 
     var body: some View {
         ZStack {
-            Image("backgroundPurple")
+            Image("backgroundNewHUB")
                           .resizable()
                            .scaledToFill()
                            .ignoresSafeArea()
@@ -61,7 +61,7 @@ struct TutorialHubView: View {
 //                    .font(.custom("TorukSC-Regular", size: 130, relativeTo: .title))
 //                    .multilineTextAlignment(.center)
 //                    .foregroundColor(.white)
-//               
+//
 //            }
             // Garante que fique na frente
             if !hubManager.startMatch {
@@ -78,7 +78,7 @@ struct TutorialHubView: View {
 //                                    .multilineTextAlignment(.center)
 //                                    .foregroundColor(.white)
                             }
-                    .padding(.bottom, 50)
+                    .padding(.bottom, 100)
                      // esse valor ajusta o quão para cima o título vai
                     if let tutorialImage = tutorialImageNames[safe: hubManager.actualTutorialIndex],
                        let tutorialText = tutorialTexts[safe: hubManager.actualTutorialIndex],
@@ -123,6 +123,4 @@ extension Array {
     }
 }
 
-#Preview {
-    TutorialHubView(router: .constant(.victoryStory), multipeerSession: MPCSessionManager.shared)
-}
+

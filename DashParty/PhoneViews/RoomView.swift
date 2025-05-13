@@ -51,34 +51,6 @@ struct RoomView: View {
                                 MMPhone(playerName: player, sizePadding: 0)
                             }
                         }
-                        
-                        
-                        Spacer()
-                    }
-                    .padding(.leading, 35)
-                    .padding(.top, 35)
-                    Spacer()
-                    HStack{
-                        ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
-                            MMPhone(playerName: player, sizePadding: 0)
-                        }
-                    }
-                    .padding(.top, 30)
-                    Spacer()
-                    
-                }
-                
-                VStack {
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        Button {
-                            router = .chooseCharacter
-                            multipeerSession.stopAdvertising()
-                        } label: {
-                            OrangeButtonPhone(text: "Continue", sizeFont: 20)
-                                .frame(width: 110, height: 45)
-                        }
                         .frame(height: UIScreen.main.bounds.height * 0.55)
 //                        .background {
 //                            Color.red
@@ -93,7 +65,6 @@ struct RoomView: View {
                     Spacer()
                     Button {
                         router = .chooseCharacter
-                        multipeerSession.stopAdvertising()
                     } label: {
                         OrangeButtonPhone(text: "Continue", sizeFont: 20)
                             .frame(width: 110, height: 45)
@@ -107,7 +78,7 @@ struct RoomView: View {
 //            }
         }
         .background {
-            Image("purpleBackground")
+            Image("backgroundPhone")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
@@ -119,6 +90,8 @@ struct RoomView: View {
             if !multipeerSession.host {
                 navigateToPlayerDisplayView = true
             }
+            print("vou mandar todos os meus dados")
+            
         }
         .onChange(of: multipeerSession.mcSession.connectedPeers.map { $0.displayName }) {
             print(multipeerSession.mcSession.connectedPeers.map { $0.displayName })
@@ -130,15 +103,3 @@ struct RoomView: View {
     }
 }
 
-
-#Preview {
-    let matchManager = ChallengeManager()
-    let session = MPCSession(service: "banana", identity: "maçã", maxPeers: 5, matchManager: matchManager)
-    
-    // Simular host e jogadores conectados para visualização
-    session.host = true
-    session.connectedPeersNames = ["Alice", "Bob", "Charlie"]
-    
-    
-    return RoomView(router: .constant(.matchmaking), multipeerSession: session)
-}

@@ -1,9 +1,8 @@
+
 //
 //  NarrativeView.swift
 //  DashParty
-//
 //  Created by Luana Bueno on 24/03/25.
-//
 
 import Foundation
 import SwiftUI
@@ -11,62 +10,49 @@ import SwiftUI
 struct NarrativeView: View {
     var hubManager = HUBPhoneManager.instance
     
-    
     var narrativeImages = [
-        "narrativeImage1",
-        "narrativeImage2",
-        "narrativeImage3",
-        "narrativeImage4",
-        "narrativeImage5",
-        "narrativeImage6",
-        "narrativeImage7",
-        "narrativeImage8",
-        "narrativeImage9",
-        "narrativeImage10",
-        "narrativeImage11",
-        "narrativeImage12",
+        "CENA_1",
+        "CENA_2",
+        "CENA_3",
+        "CENA_4",
+        "CENA_5",
     ]
-    
     
     var body: some View {
         ZStack {
             
             Image(narrativeImages[hubManager.actualPage])
                 .resizable()
-                .scaledToFill()
-                .frame(maxWidth: .infinity)
-                .background{
-                    Image("decorativeRectCream")
-                        .resizable()
-                        .scaledToFill()
-                        .padding(.horizontal, 30)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    
-                    
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .aspectRatio(contentMode: .fill)
+//                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .ignoresSafeArea()
+                    .clipped()
             
-            #if DEBUG
-            //MARK: REMOVER
             VStack {
                 Spacer()
-                Button(action: {
-                    if hubManager.actualPage < hubManager.narrativeText.count - 1 {
-                        hubManager.actualPage += 1
+
+                Image("caixinha12345")
+                    .resizable()
+                    .scaledToFit()
+                    .padding(.horizontal, 80)
+                    .overlay {
+                        // O texto dentro da caixinha, centralizado e com margens internas
+                        Text(HUBPhoneManager.instance.narrativeText[hubManager.actualPage])
+                            .font(.custom("TorukSC-Regular", size: 120, relativeTo: .largeTitle))
+                            .foregroundColor(.black)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 300) // margem interna dentro da caixinha
+                            .padding(.vertical, 20)
                     }
-                }) {
-                    Text("Próximo")
-                        .font(.custom("TorukSC-Light", size: 24, relativeTo: .title))
-                        .foregroundColor(.blue)
-                }
+                    .padding(.bottom, 320)
             }
-            #endif
+            //.frame(maxWidth: .infinity,/* maxHeight: .infinity,*/ alignment: .bottom)
+                          }
+           
         }
         
         }
-        
-    }
 
-
-
-
+#Preview {
+    NarrativeView()
+}

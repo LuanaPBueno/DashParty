@@ -19,7 +19,7 @@ enum Clan: String, CaseIterable, Identifiable, Codable, Hashable {
         switch self {
         case .bunny: return Image("bunnyGreenGlow")
         case .monkey: return Image("bunnyRedGlow")
-        case .feline: return Image("bunnyYellowGlow")
+        case .feline: return Image("bunnyYellowglow")
         case .frog: return Image("bunnyBlueGlow")
         }
     }
@@ -33,9 +33,9 @@ struct CharacterView: View {
     var body: some View {
      
             ZStack {
-                Image("purpleBackground")
+                Image("backgroundPhone")
                     .resizable()
-                    .scaledToFit() //MARK: MUDAR PRA IMAGEM DA MALU 
+                    .scaledToFill() 
                     .ignoresSafeArea()
                 
                 VStack {

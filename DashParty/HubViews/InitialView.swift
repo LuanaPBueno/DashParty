@@ -14,7 +14,7 @@ struct InitialView: View {
     var body: some View {
         ZStack {
             // Fundo
-            Image("backgroundFill")
+            Image("backgroundTitle")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
@@ -25,8 +25,8 @@ struct InitialView: View {
                 Image("logoBranca")
                     .resizable()
                     .scaledToFit()
-                    //.frame(maxWidth: 300)
-                    .padding(.horizontal, 46) // respeita laterais
+//                    .frame(maxWidth: 100)
+                    .padding(.horizontal, 50) // respeita laterais
                     //.padding(.top, 16) // respeita topo
                     //.padding(.bottom, 32) // respeita base
                     .scaleEffect(breathe ? 1.1 : 0.95)

@@ -21,7 +21,7 @@ struct NarrativePassingView: View {
     
     var body: some View {
         ZStack{
-            Image("blurForest")
+            Image("illustrationTitle")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
