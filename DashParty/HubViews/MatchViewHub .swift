@@ -41,6 +41,17 @@ struct MatchViewHub: View {
                         .background(.brown)
                         .ignoresSafeArea()
                 }
+                VStack{
+                    
+                    if currentWinner?.name == HUBPhoneManager.instance.allPlayers[index].name{
+                        Text("You are winning")
+                            .font(.custom("TorukSC-Regular", size: 28 /*,relativeTo: .largeTitle*/))
+                            .foregroundColor(.white)
+                            .padding(.top)
+                        Spacer()
+                    }
+                  
+                }
             }
             .onDisappear{
                 rankingTimer?.invalidate()
