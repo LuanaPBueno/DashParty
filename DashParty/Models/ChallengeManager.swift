@@ -195,9 +195,9 @@ class ChallengeManager {
                         && abs(averageAcceleration.y) > abs(averageAcceleration.z) {
                         
                         currentSituation = true
-                        DispatchQueue.main.async {
+                      //  DispatchQueue.main.async {
                             HUBPhoneManager.instance.allPlayers[0].currentSituation = true
-                        }
+                      //  }
                         players[currentPlayerIndex].progress += magnitude
                         HUBPhoneManager.instance.allPlayers[0].progress += magnitude
                         
@@ -207,9 +207,9 @@ class ChallengeManager {
                         //TODO: muda a animação pra uma parada
                         
                         currentSituation = false
-                        DispatchQueue.main.async {
+                     //   DispatchQueue.main.async {
                             HUBPhoneManager.instance.allPlayers[0].currentSituation = false
-                        }
+                      //  }
                     }
                     
                     
@@ -231,19 +231,16 @@ class ChallengeManager {
                             
                             currentSituation = true
                             
-                            DispatchQueue.main.async {
+                      //      DispatchQueue.main.async {
                                 HUBPhoneManager.instance.allPlayers[0].currentSituation = true
-                            }
+                       //     }
                             print(currentY, lastThreeY.min()!, lastThreeY.max()!)
                             players[currentPlayerIndex].progress += 100
                             HUBPhoneManager.instance.allPlayers[0].progress += 100
                         } else {
                             currentSituation = false
-                            DispatchQueue.main.async {
+                         //   DispatchQueue.main.async {
                                 HUBPhoneManager.instance.allPlayers[0].currentSituation = false
-                            }
-                            
-                            
                         }
                     }
                     
@@ -262,16 +259,17 @@ class ChallengeManager {
                         && abs(averageAcceleration.y) < abs(averageAcceleration.z) {
                         currentSituation = true
                         
-                        DispatchQueue.main.async {
+                  //      DispatchQueue.main.async {
                             HUBPhoneManager.instance.allPlayers[0].currentSituation = true
                             
-                        }
+                      //  }
                         players[currentPlayerIndex].progress += 100
+                        HUBPhoneManager.instance.allPlayers[0].progress += 100
                     } else {
                         currentSituation = false
-                        DispatchQueue.main.async {
+                      //  DispatchQueue.main.async {
                             HUBPhoneManager.instance.allPlayers[0].currentSituation = false
-                        }
+                      //  }
                         
                         
                     }
@@ -292,22 +290,22 @@ class ChallengeManager {
                     if balancingCount["x"]! >= -0.01 && balancingCount["y"]! <= 0.2 {
                         balancingResult.append("true")
                         currentSituation = true
-                        DispatchQueue.main.async {
+                       // DispatchQueue.main.async {
                             HUBPhoneManager.instance.allPlayers[0].currentSituation = true
-                        }
+                      //  }
                     }
                     else{
                         currentSituation = false
-                        DispatchQueue.main.async {
+                      //  DispatchQueue.main.async {
                             HUBPhoneManager.instance.allPlayers[0].currentSituation = false
-                        }
+                     //   }
                     }
                     
                     if balancingResult.count == 30 { //para dar 3 segundos, não necessariamente continuos.
                         currentSituation = true
-                        DispatchQueue.main.async {
+                       // DispatchQueue.main.async {
                             HUBPhoneManager.instance.allPlayers[0].currentSituation = true
-                        }
+                     //   }
                         balancingResult = []
                         players[currentPlayerIndex].progress += 100
                         HUBPhoneManager.instance.allPlayers[0].progress += 100
@@ -324,11 +322,11 @@ class ChallengeManager {
                     interval = finishTime.timeIntervalSince(self.startTime)
                     HUBPhoneManager.instance.allPlayers[0].interval = finishTime.timeIntervalSince(self.startTime)
                     print("MEU INTERVALO: \(interval)")
-                    DispatchQueue.main.async {
+                  //  DispatchQueue.main.async {
                         HUBPhoneManager.instance.allPlayers[0].youWon = true
                         HUBPhoneManager.instance.allPlayers[0].interval = finishTime.timeIntervalSince(self.startTime)
                         HUBPhoneManager.instance.allPlayers[0].currentChallenge = .stopped
-                    }
+                  //  }
                     finishMatch()
                     
                 case .none:
