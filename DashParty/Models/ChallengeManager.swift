@@ -128,8 +128,8 @@ class ChallengeManager {
                     HUBPhoneManager.instance.allPlayers[0].currentChallenge = .running
                         }
                 
-                audioManager.stopAllSounds() // Para qualquer som anterior
-                audioManager.playSound(named: "Run", volume: 1.0) // Nome do arquivo de som
+//                audioManager.stopAllSounds() // Para qualquer som anterior
+//                audioManager.playSound(named: "Run", volume: 1.0) // Nome do arquivo de som
                 
                 if abs(magnitude) > 0.8
                     && abs(averageAcceleration.y) > abs(averageAcceleration.x)
@@ -141,8 +141,8 @@ class ChallengeManager {
                             }
                     players[currentPlayerIndex].progress += magnitude
                     
-                    audioManager.stopAllSounds() // Para qualquer som anterior
-                    audioManager.playSound(named: "Run", volume: 1.0) // Nome do arquivo de som
+//                    audioManager.stopAllSounds() // Para qualquer som anterior
+//                    audioManager.playSound(named: "Run", volume: 1.0) // Nome do arquivo de som
                     
                 } else {
                     //TODO: muda a animação pra uma parada
@@ -179,8 +179,8 @@ class ChallengeManager {
                         print(currentY, lastThreeY.min()!, lastThreeY.max()!)
                         players[currentPlayerIndex].progress += 100
                         
-                        audioManager.stopAllSounds() // Para qualquer som anterior
-                        audioManager.playSound(named: "Jump", volume: 1.0) // Nome do arquivo de som
+//                        audioManager.stopAllSounds() // Para qualquer som anterior
+//                        audioManager.playSound(named: "Jump", volume: 1.0) // Nome do arquivo de som
                         
                     } else {
                         currentSituation = false

@@ -77,8 +77,7 @@ struct MatchViewHub: View {
 
                 }
         .onAppear {
-            audioManager.playSound(named: "forest", volume: 0.0)
-            audioManager.playSound(named: "run music", volume: 0.0)
+            audioManager.playSound(named: "Run Music 2", volume: 1.0)
         }
 
             .frame(maxWidth: .infinity, maxHeight: .infinity)

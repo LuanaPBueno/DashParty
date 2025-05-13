@@ -20,6 +20,8 @@
 		571FA5682DCD4467008818DB /* Walk + Run.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 571FA55E2DCD4467008818DB /* Walk + Run.mp3 */; };
 		571FA5692DCD4467008818DB /* forest 2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 571FA5532DCD4467008818DB /* forest 2.mp3 */; };
 		571FA56A2DCD4467008818DB /* Walk.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 571FA55D2DCD4467008818DB /* Walk.mp3 */; };
+		57345A7B2DD3E35400BAEA8E /* Run Music .mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 57345A7A2DD3E35400BAEA8E /* Run Music .mp3 */; };
+		57345A7C2DD3E35400BAEA8E /* Narrative Music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 57345A792DD3E35400BAEA8E /* Narrative Music.mp3 */; };
 		5760A6C62DA47C5600A76F64 /* Wonder-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5760A6C42DA47C5600A76F64 /* Wonder-Light.otf */; };
 		579476F42DA59AC800B39A10 /* TorukSC-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 579476F12DA59AC800B39A10 /* TorukSC-Light.otf */; };
 		579476F52DA59AC800B39A10 /* TorukSC-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 579476F22DA59AC800B39A10 /* TorukSC-Regular.otf */; };
@@ -56,6 +58,8 @@
 		571FA55C2DCD4467008818DB /* Vine 2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Vine 2.mp3"; sourceTree = "<group>"; };
 		571FA55D2DCD4467008818DB /* Walk.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Walk.mp3; sourceTree = "<group>"; };
 		571FA55E2DCD4467008818DB /* Walk + Run.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Walk + Run.mp3"; sourceTree = "<group>"; };
+		57345A792DD3E35400BAEA8E /* Narrative Music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Narrative Music.mp3"; sourceTree = "<group>"; };
+		57345A7A2DD3E35400BAEA8E /* Run Music .mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Run Music .mp3"; sourceTree = "<group>"; };
 		5760A6C42DA47C5600A76F64 /* Wonder-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Wonder-Light.otf"; sourceTree = "<group>"; };
 		579476F12DA59AC800B39A10 /* TorukSC-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TorukSC-Light.otf"; sourceTree = "<group>"; };
 		579476F22DA59AC800B39A10 /* TorukSC-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TorukSC-Regular.otf"; sourceTree = "<group>"; };
@@ -147,12 +151,14 @@
 				571FA5572DCD4467008818DB /* Run.mp3 */,
 				571FA5582DCD4467008818DB /* run music.mp3 */,
 				571FA5592DCD4467008818DB /* Tree.mp3 */,
+				57345A792DD3E35400BAEA8E /* Narrative Music.mp3 */,
+				57345A7A2DD3E35400BAEA8E /* Run Music .mp3 */,
 				571FA55A2DCD4467008818DB /* Tree Steps.mp3 */,
 				571FA55B2DCD4467008818DB /* Vine.mp3 */,
 				571FA55C2DCD4467008818DB /* Vine 2.mp3 */,
+				571923D62DCE7C7C0080D3AB /* forest.mp3 */,
 				571FA55D2DCD4467008818DB /* Walk.mp3 */,
 				571FA55E2DCD4467008818DB /* Walk + Run.mp3 */,
-				571923D62DCE7C7C0080D3AB /* forest.mp3 */,
 				5760A6B02DA47B7D00A76F64 /* Fonts */,
 				E4BC27C12D80B642007C3116 /* DashParty */,
 				E4BC27D22D80B644007C3116 /* DashPartyTests */,
@@ -300,6 +306,8 @@
 				571FA5682DCD4467008818DB /* Walk + Run.mp3 in Resources */,
 				571FA5692DCD4467008818DB /* forest 2.mp3 in Resources */,
 				571FA56A2DCD4467008818DB /* Walk.mp3 in Resources */,
+				57345A7B2DD3E35400BAEA8E /* Run Music .mp3 in Resources */,
+				57345A7C2DD3E35400BAEA8E /* Narrative Music.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

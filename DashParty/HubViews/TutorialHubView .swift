@@ -54,7 +54,7 @@ struct TutorialHubView: View {
                            .scaledToFill()
                            .ignoresSafeArea()
                            .onAppear {
-                               audioManager.playSound(named: "music")
+                               audioManager.playSound(named: "Narrative Music")
                                        }
 //            VStack(spacing: 5) {
 //                Text("Heads Up!")

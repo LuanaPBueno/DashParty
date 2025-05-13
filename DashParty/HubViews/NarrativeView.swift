@@ -37,7 +37,7 @@ struct NarrativeView: View {
                 .scaledToFill()
                 .frame(maxWidth: .infinity)
                 .onAppear {
-                    audioManager.playSound(named: "music")
+                    audioManager.playSound(named: "Narrative Music")
                             }
                 .background{
                     Image("decorativeRectCream")
