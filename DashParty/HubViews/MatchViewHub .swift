@@ -13,6 +13,7 @@ struct MatchViewHub: View {
     var users: [User]
     @State var currentWinner : SendingPlayer?
     @State var ranking: [SendingPlayer]?
+    @State var audioManager: AudioManager = AudioManager()
     var index: Int
     var multipeerSession = MPCSessionManager.shared
     @State var rankingTimer: Timer?
@@ -44,6 +45,7 @@ struct MatchViewHub: View {
 //        .id(matchManager.scenes.count)
         .task {
 //            matchManager.startMatch(users: users, myUserID: HUBPhoneManager.instance.allPlayers[index].id, index: index)
+            audioManager.playSound(named: "Run Music")
             startTime = .now
             let message = "StartTime"
             if let data = message.data(using: .utf8) {

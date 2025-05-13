@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct InitialView: View {
+    @State var audioManager: AudioManager = AudioManager()
     @State private var breathe = true
     @State private var showCustomAlert = true
 
@@ -18,6 +19,9 @@ struct InitialView: View {
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
+                .onAppear {
+                    audioManager.playSound(named: "forest")
+                }
 
             // Logo centralizada com animação e dentro da safe area
             VStack {
@@ -29,7 +33,7 @@ struct InitialView: View {
                     .padding(.horizontal, 50) // respeita laterais
                     //.padding(.top, 16) // respeita topo
                     //.padding(.bottom, 32) // respeita base
-                    .scaleEffect(breathe ? 1.1 : 0.95)
+                    .scaleEffect(breathe ? 0.9 : 0.95)
                     .opacity(breathe ? 1.0 : 0.8)
                     .onAppear {
                         withAnimation(

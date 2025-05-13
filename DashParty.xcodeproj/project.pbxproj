@@ -10,6 +10,9 @@
 		5760A6C62DA47C5600A76F64 /* Wonder-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5760A6C42DA47C5600A76F64 /* Wonder-Light.otf */; };
 		579476F42DA59AC800B39A10 /* TorukSC-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 579476F12DA59AC800B39A10 /* TorukSC-Light.otf */; };
 		579476F52DA59AC800B39A10 /* TorukSC-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 579476F22DA59AC800B39A10 /* TorukSC-Regular.otf */; };
+		E4F03C192DD3ED1900E6AB5F /* Narrative Music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E4F03C182DD3ED1900E6AB5F /* Narrative Music.mp3 */; };
+		E4F03C1D2DD3EDF500E6AB5F /* Run Music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E4F03C1C2DD3EDF500E6AB5F /* Run Music.mp3 */; };
+		E4F03C1F2DD3EE2700E6AB5F /* forest.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E4F03C1E2DD3EE2700E6AB5F /* forest.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +39,9 @@
 		57B263252D9C5D08000E00EE /* DashParty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DashParty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57B263262D9C5D08000E00EE /* DashPartyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DashPartyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		57B263272D9C5D08000E00EE /* DashPartyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DashPartyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4F03C182DD3ED1900E6AB5F /* Narrative Music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Narrative Music.mp3"; sourceTree = "<group>"; };
+		E4F03C1C2DD3EDF500E6AB5F /* Run Music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Run Music.mp3"; sourceTree = "<group>"; };
+		E4F03C1E2DD3EE2700E6AB5F /* forest.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = forest.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -122,6 +128,9 @@
 				57B263262D9C5D08000E00EE /* DashPartyTests.xctest */,
 				57B263272D9C5D08000E00EE /* DashPartyUITests.xctest */,
 				579476F32DA59AC800B39A10 /* TorukSC_2021-10 */,
+				E4F03C182DD3ED1900E6AB5F /* Narrative Music.mp3 */,
+				E4F03C1C2DD3EDF500E6AB5F /* Run Music.mp3 */,
+				E4F03C1E2DD3EE2700E6AB5F /* forest.mp3 */,
 			);
 			sourceTree = "<group>";
 		};
@@ -246,8 +255,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				5760A6C62DA47C5600A76F64 /* Wonder-Light.otf in Resources */,
+				E4F03C192DD3ED1900E6AB5F /* Narrative Music.mp3 in Resources */,
 				579476F42DA59AC800B39A10 /* TorukSC-Light.otf in Resources */,
 				579476F52DA59AC800B39A10 /* TorukSC-Regular.otf in Resources */,
+				E4F03C1D2DD3EDF500E6AB5F /* Run Music.mp3 in Resources */,
+				E4F03C1F2DD3EE2700E6AB5F /* forest.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

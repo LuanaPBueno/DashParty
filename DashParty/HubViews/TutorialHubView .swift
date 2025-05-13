@@ -11,6 +11,7 @@ import SwiftUI
 struct TutorialHubView: View {
     @Binding var router: Router
     var multipeerSession = MPCSessionManager.shared
+    @State var audioManager: AudioManager = AudioManager()
 
     let user = HUBPhoneManager.instance.user
     @State var matchManager = HUBPhoneManager.instance.matchManager
@@ -51,6 +52,7 @@ struct TutorialHubView: View {
                           .resizable()
                            .scaledToFill()
                            .ignoresSafeArea()
+                          
 //            VStack(spacing: 5) {
 //                Text("Heads Up!")
 //                    .font(.custom("TorukSC-Regular", size: 150, relativeTo: .largeTitle))
@@ -112,6 +114,7 @@ struct TutorialHubView: View {
        }
         .onAppear {
             hubManager.actualTutorialIndex = 0
+            audioManager.playSound(named: "Narrative Music")
         }
     }
 }

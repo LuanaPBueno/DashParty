@@ -12,7 +12,9 @@ import SwiftUI
 struct DashPartyApp: App {
     
     
+    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @State var audioManager = AudioManager()
     
 //    init() {
 //        if let fontURL = Bundle.main.url(forResource: "TorukscRegular-z8MA1", withExtension: "ttf") {
@@ -23,6 +25,7 @@ struct DashPartyApp: App {
         WindowGroup {
             @Bindable var manager = HUBPhoneManager.instance
             RouterView(router: $manager.router)
+                .environmentObject(audioManager)
         }
     }
 }

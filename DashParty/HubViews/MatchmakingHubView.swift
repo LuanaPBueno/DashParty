@@ -19,6 +19,7 @@ struct MatchmakingHubView: View {
     @ObservedObject var multipeerSession: MPCSession
     @State var navigateHost: Bool = false
     @State var navigateToPlayerDisplayView: Bool = false
+    @State var audioManager: AudioManager = AudioManager()
     
     var body: some View {
         ZStack{
@@ -44,6 +45,9 @@ struct MatchmakingHubView: View {
                     .multilineTextAlignment(.center)
                     .foregroundColor(.white)
                 Spacer()
+            }
+            .onAppear{
+                audioManager.playSound(named: "forest")
             }
             .padding(.top, 40)
                 //if multipeerSession.host {
