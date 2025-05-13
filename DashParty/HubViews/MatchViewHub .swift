@@ -27,6 +27,7 @@ struct MatchViewHub: View {
     @State var winnerTimer: Timer?
     
     
+    
     var body: some View {
 //        GeometryReader { proxy in
             ZStack {
@@ -41,6 +42,10 @@ struct MatchViewHub: View {
                         .ignoresSafeArea()
                 }
             }
+            .onDisappear{
+                rankingTimer?.invalidate()
+                rankingTimer = nil
+            }
 //        }
 //        .frame(maxWidth: .infinity, maxHeight: .infinity)
 //        .id(matchManager.scenes.count)
@@ -48,6 +53,13 @@ struct MatchViewHub: View {
 //            matchManager.startMatch(users: users, myUserID: HUBPhoneManager.instance.allPlayers[index].id, index: index)
             audioManager.playSound(named: "Run Music")
             startTime = .now
+            rankingTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+                DispatchQueue.main.async {
+                    ranking = matchManager.startRankingUpdates()
+                    self.currentWinner = ranking?.first
+                    print("Current winner: \(currentWinner?.name ?? "None")")
+                }
+            }
             let message = "StartTime"
             if let data = message.data(using: .utf8) {
                 multipeerSession.sendDataToAllPeers(data: data)
@@ -55,6 +67,8 @@ struct MatchViewHub: View {
             characterImage = HUBPhoneManager.instance.allPlayers[index].userClan?.image ?? Image("characterFront")
             HUBPhoneManager.instance.newGame = false
         }
+        
+        
 //    }
 
 //        ZStack {

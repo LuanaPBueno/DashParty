@@ -38,7 +38,7 @@ struct NarrativeView: View {
                     .overlay {
                         // O texto dentro da caixinha, centralizado e com margens internas
                         Text(HUBPhoneManager.instance.narrativeText[hubManager.actualPage])
-                            .font(.custom("TorukSC-Regular", size: 120, relativeTo: .largeTitle))
+                            .font(.custom("TorukSC-Regular", size: 65 /*,relativeTo: .largeTitle*/))
                             .foregroundColor(.black)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 300) // margem interna dentro da caixinha
@@ -46,8 +46,7 @@ struct NarrativeView: View {
                     }
                     .padding(.bottom, 320)
             }
-            .frame(maxWidth: .infinity,/* maxHeight: .infinity,*/ alignment: .bottom)
-                          }
+            .frame(maxWidth: .infinity,/* maxHeight: .infinity,*/ alignment: .bottom)}
            
         }
         

@@ -88,6 +88,7 @@ struct MatchGridView: View {
                 for (index, player) in Array(HUBPhoneManager.instance.allPlayers.enumerated()) {
                     matchManager.startMatch(users: users, myUserID: HUBPhoneManager.instance.allPlayers[index].id, index: index)
                 }
+                
                 print("Created matches")
                 startCheckingForAllWinners()
             }
