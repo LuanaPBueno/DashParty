@@ -199,11 +199,11 @@ struct YouWonView: View {
                 
                 Spacer()
                 
+                HStack(spacing: 30) {
                 ForEach(Array(rankedPlayers.enumerated()), id: \.offset) { index, ranked in
-                    HStack(spacing: 30) {
                         CharacterRankView(
                             frameType: CharacterFrameType(status: .winner, color: .red),
-                            kikoColor: .red,
+                            kikoColor: ranked.player.userClan?.color ?? .red,
                             bannerType: .winner,
                             playerName: ranked.player.name,
                             time: ranked.formattedTime

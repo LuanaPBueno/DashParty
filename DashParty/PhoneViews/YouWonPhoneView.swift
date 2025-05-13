@@ -26,7 +26,7 @@ struct YouWonPhoneView: View {
                 .scaledToFill()
                 .ignoresSafeArea()
             
-            Image(kikoType.rawValue)
+            Image(HUBPhoneManager.instance.allPlayers[0].userClan?.color.rawValue ?? kikoType.rawValue)
                 .resizable()
                 .scaledToFit()
                 .scaleEffect(0.5)
@@ -51,27 +51,27 @@ struct YouWonPhoneView: View {
             HStack {
                 VStack(spacing: 25) {
                     VStack(spacing: 5) {
-                        if isWinner {
-                            Text("You've won the race!")
-                                .font(.custom("TorukSC-Regular", size: 22))
-                                .foregroundColor(Color("customyellow"))
-                                .multilineTextAlignment(.center)
-                            
-                            Text("The forest has\n chosen its new leader")
-                                .font(.custom("TorukSC-Regular", size: 22))
-                                .foregroundColor(.white)
-                                .multilineTextAlignment(.center)
-                        } else {
-                            Text("Not this time!")
-                                .font(.custom("TorukSC-Regular", size: 22))
-                                .foregroundColor(Color("customyellow"))
-                                .multilineTextAlignment(.center)
-                            
-                            Text("Run again. \nThe moon awaits.")
-                                .font(.custom("TorukSC-Regular", size: 22))
-                                .foregroundColor(.white)
-                                .multilineTextAlignment(.center)
-                        }
+//                        if isWinner {
+//                            Text("You've won the race!")
+//                                .font(.custom("TorukSC-Regular", size: 22))
+//                                .foregroundColor(Color("customyellow"))
+//                                .multilineTextAlignment(.center)
+//                            
+//                            Text("The forest has\n chosen its new leader")
+//                                .font(.custom("TorukSC-Regular", size: 22))
+//                                .foregroundColor(.white)
+//                                .multilineTextAlignment(.center)
+//                        } else {
+//                            Text("Not this time!")
+//                                .font(.custom("TorukSC-Regular", size: 22))
+//                                .foregroundColor(Color("customyellow"))
+//                                .multilineTextAlignment(.center)
+//                            
+//                            Text("Run again. \nThe moon awaits.")
+//                                .font(.custom("TorukSC-Regular", size: 22))
+//                                .foregroundColor(.white)
+//                                .multilineTextAlignment(.center)
+//                        }
                     }
                     
                     Button {

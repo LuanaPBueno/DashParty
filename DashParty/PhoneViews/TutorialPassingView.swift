@@ -34,6 +34,7 @@ struct TutorialPassingView: View {
             if !multipeerSession.host{
                 Image("eyesOnTheHub")
                     .resizable()
+                    .frame(width: UIScreen.main.bounds.width * 1.1)
                     .scaledToFill()
                     .ignoresSafeArea()
             }

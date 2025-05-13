@@ -11,6 +11,7 @@ struct EyesOnTheHub: View {
     var body: some View {
         Image("eyesOnTheHub")
             .resizable()
+            .frame(width: UIScreen.main.bounds.width * 1.1)
             .scaledToFill()
             .ignoresSafeArea()
     }
