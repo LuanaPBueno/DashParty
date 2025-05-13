@@ -20,7 +20,7 @@ enum RunnerState: String, CaseIterable {
 class RunnerNode:SCNNode {
     
     static let runnerHeight:CGFloat = 1.5
-    static let totalImages = 5
+    static let totalImages = 18
     static let stepSize:CGFloat = 0.7
 
     let stepSliceFactor:Float
@@ -49,7 +49,7 @@ class RunnerNode:SCNNode {
     
     
     init(color:RunnerColor = .red) {
-        var images = (0...RunnerNode.totalImages).map{UIImage(named:"\(color)Bunny\($0).png")!}
+        var images = (1...RunnerNode.totalImages).map{UIImage(named:"\(color)Bunny\($0).png")!}
         let flipped = images.compactMap{ $0.flipped }
         images.append(contentsOf: flipped)
         
