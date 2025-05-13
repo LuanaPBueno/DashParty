@@ -43,9 +43,9 @@ class ChallengeManager {
     var previousChallenge: [Int:Challenge] = [:]
     func checkAddChallenge(distance: Float, playerIndex: Int) {
         let currentChallenge = HUBPhoneManager.instance.allPlayers[playerIndex].currentChallenge
-        guard currentChallenge != previousChallenge[playerIndex] else {
-            return
-        }
+//        guard currentChallenge != previousChallenge[playerIndex] else {
+//            return
+//        }
         print("Mudou para: \(currentChallenge)")
         switch currentChallenge {
         case .running:
@@ -53,8 +53,8 @@ class ChallengeManager {
         case .jumping:
             let obstacle = StoneNode(at: distance * 0.2 + 1)
             self.scenes[playerIndex].rootNode.addChildNode(obstacle)
-            //chamar funcao de surgir pedra
         case .openingDoor:
+            print("entrei no case")
             let obstacle = VineNode(at: distance * 0.2 + 1)
             self.scenes[playerIndex].rootNode.addChildNode(obstacle)
         case .balancing:
@@ -110,9 +110,9 @@ class ChallengeManager {
             
         }
         //MARK: TIRAR ISSO
-//        for index in players.indices {
-//            players[index].challenges[1] = .balancing
-//        }
+        for index in players.indices {
+            players[index].challenges[1] = .openingDoor
+        }
 //        self.scenes = users.map { _ in
 //            SCNRunPathScene()
 //        }
@@ -186,9 +186,10 @@ class ChallengeManager {
                     
                 case .running:
                     currentChallenge = .running
-                    DispatchQueue.main.async {
+                    
                         HUBPhoneManager.instance.allPlayers[0].currentChallenge = .running
-                    }
+                    
+                    print(HUBPhoneManager.instance.allPlayers[0].currentChallenge)
                     if abs(magnitude) > 0.8
                         && abs(averageAcceleration.y) > abs(averageAcceleration.x)
                         && abs(averageAcceleration.y) > abs(averageAcceleration.z) {
@@ -199,6 +200,8 @@ class ChallengeManager {
                         }
                         players[currentPlayerIndex].progress += magnitude
                         HUBPhoneManager.instance.allPlayers[0].progress += magnitude
+                        
+                        
                         
                     } else {
                         //TODO: muda a animação pra uma parada
@@ -212,10 +215,11 @@ class ChallengeManager {
                     
                 case .jumping:
                     currentChallenge = .jumping
-                    
-                    DispatchQueue.main.async {
+                  //  DispatchQueue.main.async {
                         HUBPhoneManager.instance.allPlayers[0].currentChallenge = .jumping
-                    }
+                  //  }
+                    print(HUBPhoneManager.instance.allPlayers[0].currentChallenge)
+
                     if recentDeviceMotion.count >= 3 {
                         let lastThreeY = recentDeviceMotion.suffix(7).map { $0.userAcceleration.y }
                         let currentY = averageAcceleration.y
@@ -245,9 +249,13 @@ class ChallengeManager {
                     
                 case .openingDoor:
                     currentChallenge = .openingDoor
-                    DispatchQueue.main.async {
-                        HUBPhoneManager.instance.allPlayers[0].currentChallenge = .openingDoor
-                    }
+                    HUBPhoneManager.instance.allPlayers[0].currentChallenge = .openingDoor
+                    print(HUBPhoneManager.instance.allPlayers[0].currentChallenge)
+                    print("\(HUBPhoneManager.instance.allPlayers[0].currentChallenge)")
+//                    DispatchQueue.main.async {
+//                        HUBPhoneManager.instance.allPlayers[0].currentChallenge = .openingDoor
+//                        print("\(HUBPhoneManager.instance.allPlayers[0].currentChallenge)")
+//                    }
                     
                     if abs(averageAcceleration.y) < 1
                         && abs(averageAcceleration.y) < abs(averageAcceleration.x)
@@ -256,9 +264,9 @@ class ChallengeManager {
                         
                         DispatchQueue.main.async {
                             HUBPhoneManager.instance.allPlayers[0].currentSituation = true
+                            
                         }
                         players[currentPlayerIndex].progress += 100
-                        HUBPhoneManager.instance.allPlayers[0].progress += 100
                     } else {
                         currentSituation = false
                         DispatchQueue.main.async {
@@ -271,9 +279,11 @@ class ChallengeManager {
                 case .balancing:
                     currentChallenge = .balancing
                     
-                    DispatchQueue.main.async {
+                 //   DispatchQueue.main.async {
                         HUBPhoneManager.instance.allPlayers[0].currentChallenge = .balancing
-                    }
+                //    }
+                    print(HUBPhoneManager.instance.allPlayers[0].currentChallenge)
+
                     balancingCount["x"] = deviceMotion.attitude.roll
                     balancingCount["y"] = deviceMotion.attitude.pitch
                     balancingCount["z"] = deviceMotion.attitude.yaw
