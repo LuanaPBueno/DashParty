@@ -36,8 +36,9 @@ struct MatchViewHub: View {
                            // print("PROGRESS IS \(newValue)")
                             matchManager.checkAddChallenge(distance: Float(HUBPhoneManager.instance.allPlayers[index].progress), playerIndex: index)
                         })
-                        .frame(width: 1000, height: 1000)
+                        .frame(width: .infinity, height: .infinity)
                         .background(.brown)
+                        .ignoresSafeArea()
                 }
             }
 //        }

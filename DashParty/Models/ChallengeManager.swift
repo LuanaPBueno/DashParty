@@ -55,7 +55,7 @@ class ChallengeManager {
             self.scenes[playerIndex].rootNode.addChildNode(obstacle)
         case .openingDoor:
             print("entrei no case")
-            let obstacle = VineNode(at: distance * 0.2 + 1)
+            let obstacle = VineNode(at: distance * 0.2 + 1.2)
             self.scenes[playerIndex].rootNode.addChildNode(obstacle)
         case .balancing:
             let obstacle = WaterNode(at: distance * 0.2 + 4)

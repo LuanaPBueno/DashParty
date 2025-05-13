@@ -9,7 +9,6 @@ import SwiftUI
 
 struct NarrativeView: View {
     var hubManager = HUBPhoneManager.instance
-    @State var audioManager: AudioManager = AudioManager()
     
     var narrativeImages = [
         "CENA_1",
@@ -28,9 +27,6 @@ struct NarrativeView: View {
 //                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .ignoresSafeArea()
                     .clipped()
-                    .onAppear{
-                        audioManager.playSound(named: "Narrative Music")
-                    }
             
             VStack {
                 Spacer()
@@ -50,7 +46,7 @@ struct NarrativeView: View {
                     }
                     .padding(.bottom, 320)
             }
-            //.frame(maxWidth: .infinity,/* maxHeight: .infinity,*/ alignment: .bottom)
+            .frame(maxWidth: .infinity,/* maxHeight: .infinity,*/ alignment: .bottom)
                           }
            
         }

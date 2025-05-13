@@ -31,7 +31,7 @@ class VineNode: SCNNode {
         material.isDoubleSided = true
 
         // Create geometry
-        let plane = SCNPlane(width: planeSize.width*2, height: planeSize.height)
+        let plane = SCNPlane(width: planeSize.width*2, height: planeSize.height + 4)
         plane.firstMaterial = material
 
         // add geometry
