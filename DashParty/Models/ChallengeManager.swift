@@ -102,8 +102,9 @@ class ChallengeManager {
             Player(
                 user: users[0],
                 
-                challenges: [Challenge .jumping, .openingDoor, .balancing ]
-                    .flatMap { Array(repeating: $0, count: 4) }
+                //MARK: CHANGE
+                challenges: [Challenge /*.jumping, */.openingDoor/*, .balancing*/ ]
+                    .flatMap { Array(repeating: $0, count: 1) }
                     .shuffled()
                     .flatMap { [$0, .running] }
                 )
