@@ -29,39 +29,38 @@ struct MatchViewHub: View {
     
     
     var body: some View {
-//        GeometryReader { proxy in
-            ZStack {
-                if index < matchManager.scenes.count {
-                    SceneView(scene: matchManager.scenes[index])
-                        .onChange(of: HUBPhoneManager.instance.allPlayers[index].currentChallenge, { oldValue, newValue in
-                           // print("PROGRESS IS \(newValue)")
-                            matchManager.checkAddChallenge(distance: Float(HUBPhoneManager.instance.allPlayers[index].progress), playerIndex: index)
-                        })
-                        .frame(width: .infinity, height: .infinity)
-                        .background(.brown)
-                        .ignoresSafeArea()
-                }
-                VStack{
-                    
-                    if currentWinner?.name == HUBPhoneManager.instance.allPlayers[index].name{
-                        Text("You are winning")
-                            .font(.custom("TorukSC-Regular", size: 28 /*,relativeTo: .largeTitle*/))
-                            .foregroundColor(.white)
-                            .padding(.top)
-                        Spacer()
+        ZStack {
+            if index < matchManager.scenes.count {
+                SceneView(scene: matchManager.scenes[index])
+                    .onChange(of: HUBPhoneManager.instance.allPlayers[index].currentChallenge, { oldValue, newValue in
+                        matchManager.checkAddChallenge(distance: Float(HUBPhoneManager.instance.allPlayers[index].progress), playerIndex: index)
+                    })
+                    .frame(width: .infinity, height: .infinity)
+                    .background(.brown)
+                    .ignoresSafeArea()
+            }
+            VStack{
+                HStack{
+                    Text("")
+                    if let ranking = ranking,
+                       let position = ranking.firstIndex(where: { $0.name == HUBPhoneManager.instance.allPlayers[index].name}) {
+                        Image("ranking\(index+1)")
+                            .resizable()
+                            .frame(width: 80, height: 80)
+                            .padding(.top, 70)
+                            .padding(.leading, 70)
                     }
-                  
+                    Spacer()
                 }
+                Spacer()
+                
             }
-            .onDisappear{
-                rankingTimer?.invalidate()
-                rankingTimer = nil
-            }
-//        }
-//        .frame(maxWidth: .infinity, maxHeight: .infinity)
-//        .id(matchManager.scenes.count)
+        }
+        .onDisappear{
+            rankingTimer?.invalidate()
+            rankingTimer = nil
+        }
         .task {
-//            matchManager.startMatch(users: users, myUserID: HUBPhoneManager.instance.allPlayers[index].id, index: index)
             audioManager.playSound(named: "Run Music")
             startTime = .now
             rankingTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
@@ -80,66 +79,5 @@ struct MatchViewHub: View {
         }
         
         
-//    }
-
-//        ZStack {
-//            Image("backgroundFill")
-//                .resizable()
-//                .scaledToFill()
-//                .edgesIgnoringSafeArea(.all)
-//
-//            VStack{
-//                VStack{
-//
-//                    Image("warning")
-//                        .resizable()
-//                        .scaledToFit()
-//                        .frame(width: 600) // tamanho base
-//                        .overlay {
-//
-//                            let displayedChallenge = HUBPhoneManager.instance.allPlayers[index].currentChallenge
-//                            let displayedSituation = HUBPhoneManager.instance.allPlayers[index].currentSituation
-//                            let playerID = HUBPhoneManager.instance.allPlayers[index].id
-//
-//                            if matchManager.players.isEmpty == false {
-//                                if displayedChallenge == .stopped {
-//                                    Text("Wait for the ranking")
-//                                        //.background(Color.white)
-//                                        .font(.custom("TorukSC-Regular", size: 64, relativeTo: .title))
-//                                        .foregroundColor(.black)
-//
-//                                } else {
-//                                    VStack{
-//                                        Text("\(displayedChallenge.name)!")
-//                                            .font(.custom("TorukSC-Regular", size: 64, relativeTo: .title))
-//                                            .foregroundColor(.black)
-//
-//
-//                                    }
-//                                }
-//                            }
-//                        }
-//                        .task {
-//                            matchManager.startMatch(users: users, myUserID: HUBPhoneManager.instance.allPlayers[index].id, index: index)
-//                            startTime = .now
-//                            let message = "StartTime"
-//                                if let data = message.data(using: .utf8) {
-//                                    multipeerSession.sendDataToAllPeers(data: data)
-//                                }
-//                            characterImage = HUBPhoneManager.instance.allPlayers[index].userClan?.image ?? Image("characterFront")
-//                            HUBPhoneManager.instance.newGame = false
-//                        }
-//                        }
-//                    characterImage
-//                    Text(HUBPhoneManager.instance.allPlayers[index].name)
-//                        .font(.custom("TorukSC-Regular", size: 64, relativeTo: .title))
-//                        .foregroundColor(.black)
-//                        .background(.white)
-//                }
-//            }
-            
-            
     }
 }
-
-
