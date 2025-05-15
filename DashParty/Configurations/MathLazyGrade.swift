@@ -65,24 +65,9 @@ struct MatchGridView: View {
                         MatchViewHub(users: users, index: 3, matchManager: matchManager)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .clipped()
-                        
-//                        ZStack{
-//                            VStack {
-//                                HStack {
-//                                    TimerLabel()
-//                                }
-//                            }
-//                        }
                     }
                 }
             }
-            //        LazyVGrid(columns: 4 == 1 ? [GridItem()] : columns, spacing: 10) {
-            //                ForEach(0..<4, id: \.self) { i in
-            //                    MatchViewHub(users: users, index: 0, matchManager: matchManager)
-            //                        .border(Color.red)
-            //
-            //                }
-            //            }
             .task{
                 print("number of players: \(players.count)")
                 for (index, player) in Array(HUBPhoneManager.instance.allPlayers.enumerated()) {
