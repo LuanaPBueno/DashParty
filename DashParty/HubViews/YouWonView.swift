@@ -64,73 +64,51 @@ struct YouWonView: View {
                 
                 Spacer()
                 
-                ForEach(Array(rankedPlayers.enumerated()), id: \.offset) { index, ranked in
-                    HStack(spacing: 30) {
-                        CharacterRankView(
-                            frameType: CharacterFrameType(status: .winner, color: .red),
-                            kikoColor: .red,
-                            bannerType: .winner,
-                            playerName: ranked.player.name,
-                            time: ranked.formattedTime
-                        )
-                    }
-                   
-                }
-                
-                
-                Spacer()
-                
-                VStack(spacing:34) {
-                    Text("Come on! Think you can beat that time?")
-                        .font(.custom("TorukSC-Regular", size: 30))
-                        .foregroundColor(.white)
+                HStack(spacing: 30) {
+                    CharacterRankView(
+                        frameType: CharacterFrameType(status: .winner, color: .red),
+                        kikoColor: .red,
+                        bannerType: .winner,
+                        playerName: "Luanafc",
+                        time: "01:05:67"
+                    )
                     
-                    Button {
-                        DispatchQueue.main.async {
-                            HUBPhoneManager.instance.allPlayersFinished = false
-                            HUBPhoneManager.instance.ranking = false
-                            for i in 0..<HUBPhoneManager.instance.allPlayers.count {
-                                HUBPhoneManager.instance.allPlayers[i].youWon = false
-                                HUBPhoneManager.instance.allPlayers[i].interval = 0.0
-                            }
-                            
-                        }
-                        
-                        HUBPhoneManager.instance.startMatch = false
-                        let message = "Reset"
-                        if let data = message.data(using: .utf8) {
-                            MPCSessionManager.shared.sendDataToAllPeers(data: data)
-                            
-                        }
-                        router = .tutorial
-                        HUBPhoneManager.instance.matchManager.reset()
-                        
-                    } label: {
-                        Text("PLAY AGAIN")
-                            .font(.custom("TorukSC-Regular", size: 32))
-                            .foregroundColor(.white)
-                            .background(
-                                Image("decorativeRectOrange")
-                                    .resizable()
-                                    .scaleEffect(1.5)                            )
-                    }
+                    CharacterRankView(
+                        frameType: CharacterFrameType(status: .regular, color: .blue),
+                        kikoColor: .blue,
+                        bannerType: .regular,
+                        playerName: "Luanafc",
+                        time: "01:05:67"
+                    )
+                    
+                    CharacterRankView(
+                        frameType: CharacterFrameType(status: .regular, color: .yellow),
+                        kikoColor: .yellow,
+                        bannerType: .regular,
+                        playerName: "Luanafc",
+                        time: "01:05:67"
+                    )
+                    
+                    CharacterRankView(
+                        frameType: CharacterFrameType(status: .didnotfinish, color: .green),
+                        kikoColor: .green,
+                        bannerType: .regular,
+                        playerName: "Luanafc",
+                        time: ""
+                    )
                 }
                 
                 Spacer()
-            }
-            
-            .onAppear {
-                HUBPhoneManager.instance.endedGame = true
                 
-                if hubManager.newGame {
-                    DispatchQueue.main.async {
-                        dismiss()
-                    }
-                }
+                Text("Come on! Think you can beat that time?")
+                    .font(.custom("TorukSC-Regular", size: 30))
+                    .foregroundColor(.white)
+                Spacer()
             }
         }
     }
 }
+
 
 #Preview {
     YouWonView(router: .constant(.start))
