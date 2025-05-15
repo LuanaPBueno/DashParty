@@ -44,7 +44,7 @@ struct MatchViewHub: View {
                     Text("")
                     if let ranking = ranking,
                        let position = ranking.firstIndex(where: { $0.name == HUBPhoneManager.instance.allPlayers[index].name}) {
-                        Image("ranking\(index+1)")
+                        Image("ranking\(position+1)")
                             .resizable()
                             .frame(width: 80, height: 80)
                             .padding(.top, 70)
