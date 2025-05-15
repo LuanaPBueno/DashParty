@@ -62,7 +62,7 @@ struct MatchViewHub: View {
 //        .id(matchManager.scenes.count)
         .task {
 //            matchManager.startMatch(users: users, myUserID: HUBPhoneManager.instance.allPlayers[index].id, index: index)
-            audioManager.playSound(named: "Run Music")
+//            audioManager.playSound(named: "Run Music")
             startTime = .now
             rankingTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
                 DispatchQueue.main.async {

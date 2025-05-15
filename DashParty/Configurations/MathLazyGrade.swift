@@ -17,7 +17,8 @@ struct MatchGridView: View {
     @State private var timer: Timer?
      var ranking = HUBPhoneManager.instance.ranking
      var allPlayersFinished = HUBPhoneManager.instance.allPlayersFinished
-    
+    @State var audioManager: AudioManager = AudioManager()
+
 
 //    private let columns = [
 //        GridItem(.flexible()),
@@ -30,6 +31,7 @@ struct MatchGridView: View {
             VStack(spacing: 0){
                 
                 HStack(spacing: 0) {
+                    
                     MatchViewHub(users: users, index: 0, matchManager: matchManager) //SOU EU
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .clipped()
@@ -84,6 +86,7 @@ struct MatchGridView: View {
             //                }
             //            }
             .task{
+                audioManager.playSound(named: "Run Music")
                 print("number of players: \(players.count)")
                 for (index, player) in Array(HUBPhoneManager.instance.allPlayers.enumerated()) {
                     matchManager.startMatch(users: users, myUserID: HUBPhoneManager.instance.allPlayers[index].id, index: index)

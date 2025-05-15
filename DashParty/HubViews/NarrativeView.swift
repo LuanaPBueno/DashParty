@@ -9,6 +9,8 @@ import SwiftUI
 
 struct NarrativeView: View {
     var hubManager = HUBPhoneManager.instance
+    @State var audioManager: AudioManager = AudioManager()
+
     
     var narrativeImages = [
         "CENA_1",
@@ -35,6 +37,9 @@ struct NarrativeView: View {
                     .resizable()
                     .scaledToFit()
                     .padding(.horizontal, 80)
+                    .onAppear{
+                        audioManager.playSound(named: "Narrative Music")
+                    }
                     .overlay {
                         // O texto dentro da caixinha, centralizado e com margens internas
                         Text(HUBPhoneManager.instance.narrativeText[hubManager.actualPage])
