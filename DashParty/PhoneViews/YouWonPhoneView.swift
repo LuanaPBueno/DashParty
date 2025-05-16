@@ -16,7 +16,7 @@ enum KikoType: String {
 
 struct YouWonPhoneView: View {
     @Binding var router: Router
-    var isWinner: Bool
+    var isWinner: Bool = false
     var kikoType: KikoType
     
     var body: some View {
@@ -55,6 +55,11 @@ struct YouWonPhoneView: View {
             HStack {
                 VStack(spacing: 25) {
                     VStack(spacing: 5) {
+                        Text("Good job!")
+                            .font(.custom("TorukSC-Regular", size: 22))
+                            .foregroundColor(Color("customyellow"))
+                            .multilineTextAlignment(.center)
+                        
                         if isWinner {
                             Text("You've won the race!")
                                 .font(.custom("TorukSC-Regular", size: 22))
@@ -65,17 +70,17 @@ struct YouWonPhoneView: View {
                                 .font(.custom("TorukSC-Regular", size: 22))
                                 .foregroundColor(.white)
                                 .multilineTextAlignment(.center)
-                        } else {
-                            Text("Not this time!")
-                                .font(.custom("TorukSC-Regular", size: 22))
-                                .foregroundColor(Color("customyellow"))
-                                .multilineTextAlignment(.center)
-                            
-                            Text("Run again. \nThe moon awaits.")
-                                .font(.custom("TorukSC-Regular", size: 22))
-                                .foregroundColor(.white)
-                                .multilineTextAlignment(.center)
-                        }
+                        } //else {
+//                            Text("Not this time!")
+//                                .font(.custom("TorukSC-Regular", size: 22))
+//                                .foregroundColor(Color("customyellow"))
+//                                .multilineTextAlignment(.center)
+//                            
+//                            Text("Run again. \nThe moon awaits.")
+//                                .font(.custom("TorukSC-Regular", size: 22))
+//                                .foregroundColor(.white)
+//                                .multilineTextAlignment(.center)
+//                        }
                     }
                     if MPCSessionManager.shared.host {
                         Button {
@@ -115,9 +120,15 @@ struct YouWonPhoneView: View {
             }
             .offset(x: 140)
         }
+        .task{
+            let rankingData: [String] = HUBPhoneManager.instance.allRank
+            do {
+                let encodedData = try JSONEncoder().encode(rankingData)
+                MPCSessionManager.shared.sendDataToAllPeers(data: encodedData)
+            } catch {
+                print("Erro ao codificar os dados do usuário: \(error)")
+            }
+        }
     }
 }
 
-#Preview {
-    YouWonPhoneView(router: .constant(.ranking), isWinner: false, kikoType: .red)
-}

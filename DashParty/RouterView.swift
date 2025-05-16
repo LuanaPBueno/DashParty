@@ -90,7 +90,16 @@ struct RouterView: View {
         case .victoryStory:
             Text("Victory")
         case .ranking:
-                    YouWonPhoneView(router: $router, isWinner: true, kikoType: .red)
+                    YouWonPhoneView(router: $router, kikoType: .red)
+                .onAppear {
+                           do {
+                               let data = try JSONEncoder().encode(EventMessage.navigation(.ranking))
+                               multipeerSession.sendDataToAllPeers(data: data)
+                           }
+                           catch {
+                               print(error)
+                           }
+                       }
         case .chooseCharacter:
             CharacterView(router: $router)                    .onAppear {
                         do {

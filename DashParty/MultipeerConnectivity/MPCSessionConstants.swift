@@ -450,6 +450,15 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
          //   print("❌ Não é um array de jogadores: \(error.localizedDescription)")
         }
         
+        do {
+            let players = try JSONDecoder().decode([String].self, from: data)
+            print("✅ Recebido array de jogadores: \(players)")
+            HUBPhoneManager.instance.allRank = players
+            return
+        } catch {
+         //   print("❌ Não é um array de jogadores: \(error.localizedDescription)")
+        }
+        
         if let receivedString = String(data: data, encoding: .utf8) {
             if receivedString == "StartTime" {
                 HUBPhoneManager.instance.matchManager.players[0].startTime = true

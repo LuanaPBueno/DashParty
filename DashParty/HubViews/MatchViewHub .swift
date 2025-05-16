@@ -77,6 +77,12 @@ struct MatchViewHub: View {
             rankingTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
                 DispatchQueue.main.async {
                     ranking = matchManager.startRankingUpdates()
+                    if let ranking = ranking {
+                        for player in ranking {
+                            HUBPhoneManager.instance.allRank.append(player.name)
+                        }
+                    }
+                   
                     self.currentWinner = ranking?.first
                     print("Current winner: \(currentWinner?.name ?? "None")")
                 }
