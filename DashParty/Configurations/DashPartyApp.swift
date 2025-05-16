@@ -11,16 +11,10 @@ import SwiftUI
 
 struct DashPartyApp: App {
     
-    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @State var audioManager = AudioManager()
     @State var manager = HUBPhoneManager.instance
     
-//    init() {
-//        if let fontURL = Bundle.main.url(forResource: "TorukscRegular-z8MA1", withExtension: "ttf") {
-//            CTFontManagerRegisterFontsForURL(fontURL as CFURL, .process, nil)
-//        }
-//    }
     var body: some Scene {
         WindowGroup {
 //            @Bindable var manager = HUBPhoneManager.instance
@@ -29,6 +23,3 @@ struct DashPartyApp: App {
         }
     }
 }
-
-
-
