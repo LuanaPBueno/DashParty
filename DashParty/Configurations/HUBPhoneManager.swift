@@ -16,6 +16,8 @@ class HUBPhoneManager {
     
     var roomName : String = ""
     
+    var allRank: [String] = []
+    
     var user = User(name: "Eu")
     
     var playername: String = ""
