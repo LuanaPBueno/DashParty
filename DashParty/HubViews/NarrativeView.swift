@@ -17,6 +17,7 @@ struct NarrativeView: View {
         "CENA_2",
         "CENA_3",
         "CENA_4",
+        "CENA_4",
         "CENA_5",
     ]
     
@@ -25,33 +26,31 @@ struct NarrativeView: View {
             
             Image(narrativeImages[hubManager.actualPage])
                 .resizable()
-                .aspectRatio(contentMode: .fill)
-//                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .ignoresSafeArea()
-                    .clipped()
+                .scaledToFill()
+                .ignoresSafeArea()
             
             VStack {
                 Spacer()
 
-                Image("caixinha12345")
-                    .resizable()
-                    .scaledToFit()
-                    .padding(.horizontal, 80)
-                    .onAppear{
-                        audioManager.playSound(named: "Narrative Music")
-                    }
-                    .overlay {
-                        // O texto dentro da caixinha, centralizado e com margens internas
-                        Text(HUBPhoneManager.instance.narrativeText[hubManager.actualPage])
-                            .font(.custom("TorukSC-Regular", size: 65 /*,relativeTo: .largeTitle*/))
-                            .foregroundColor(.black)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal, 300) // margem interna dentro da caixinha
-                            .padding(.vertical, 20)
-                    }
-                    .padding(.bottom, 320)
+                ZStack {
+                    Image("caixinha12345")
+                        .resizable()
+                        .scaledToFit()
+                    
+                    Text(HUBPhoneManager.instance.narrativeText[hubManager.actualPage])
+                        .font(.custom("TorukSC-Regular", size: 60)) // tamanho ajustado para não estourar a caixa
+                        .foregroundColor(.black)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 30)
+                }
+                .padding(.bottom, 200) // distância da parte inferior da tela
+                .onAppear {
+                    audioManager.playSound(named: "Narrative Music")
+                }
             }
-            .frame(maxWidth: .infinity,/* maxHeight: .infinity,*/ alignment: .bottom)}
+            .padding(.horizontal, 50)
+
+        }
            
         }
         
