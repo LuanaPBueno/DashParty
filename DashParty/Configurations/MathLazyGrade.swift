@@ -67,24 +67,9 @@ struct MatchGridView: View {
                         MatchViewHub(users: users, index: 3, matchManager: matchManager)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .clipped()
-                        
-//                        ZStack{
-//                            VStack {
-//                                HStack {
-//                                    TimerLabel()
-//                                }
-//                            }
-//                        }
                     }
                 }
             }
-            //        LazyVGrid(columns: 4 == 1 ? [GridItem()] : columns, spacing: 10) {
-            //                ForEach(0..<4, id: \.self) { i in
-            //                    MatchViewHub(users: users, index: 0, matchManager: matchManager)
-            //                        .border(Color.red)
-            //
-            //                }
-            //            }
             .task{
                 audioManager.playSound(named: "Run Music")
                 print("number of players: \(players.count)")
