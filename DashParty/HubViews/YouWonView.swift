@@ -1,137 +1,3 @@
-////
-////  YouWonView.swift
-////  DashParty
-////
-////  Created by Luana Bueno on 28/03/25.
-////
-//
-//import Foundation
-//import SwiftUI
-//
-//struct YouWonView: View {
-//    @State var matchManager = HUBPhoneManager.instance.matchManager
-//    @Binding var router:Router
-//    @Environment(\.dismiss) var dismiss
-//    
-//    var players: [SendingPlayer] = HUBPhoneManager.instance.allPlayers
-//    
-//    var rankedPlayers: [(player: SendingPlayer, formattedTime: String)] {
-//            guard !players.isEmpty else { return [] }
-//            
-//            let finishedPlayers = players.filter { $0.interval > 0.0 }
-//            let unfinishedPlayers = players.filter { $0.interval == 0.0 }
-//            
-//            let sortedFinished = finishedPlayers.sorted { $0.interval < $1.interval }
-//                .map { player in
-//                    let formattedTime = formatTimeInterval(player.interval)
-//                    return (player, formattedTime)
-//                }
-//            
-//            let sortedUnfinished = unfinishedPlayers.map { player in
-//                (player, "Did not finish")
-//            }
-//            
-//            return sortedFinished + sortedUnfinished
-//        }
-//    
-//    private func formatTimeInterval(_ interval: TimeInterval) -> String {
-//        let formatter = DateComponentsFormatter()
-//        formatter.allowedUnits = [.minute, .second]
-//        formatter.unitsStyle = .positional
-//        formatter.zeroFormattingBehavior = .pad
-//        return formatter.string(from: interval) ?? "00:00"
-//    }
-//    
-//    var hubManager = HUBPhoneManager.instance
-//    
-//    var body: some View {
-//        
-//        ZStack{
-//            Image("backgroundNewHUB")
-//                .resizable()
-//                .scaledToFill()
-//                .ignoresSafeArea()
-//            
-//            VStack {
-//                Spacer()
-//                
-//                Text("RACE COMPLETE!")
-//                    .font(.custom("TorukSC-Regular", size: 60))
-//                    .foregroundColor(.white)
-//                
-//                
-//                Text("FINAL RANKING:\n")
-//                    .font(.custom("TorukSC-Regular", size: 30))
-//                    .foregroundColor(.white)
-//                
-//                ForEach(Array(rankedPlayers.enumerated()), id: \.offset) { index, ranked in
-//                    HStack {
-//                        Text("#\(index + 1)")
-//                            .font(.title3)
-//                            .frame(width: 30, alignment: .leading)
-//                        
-//                        Text(ranked.player.name)
-//                        
-//                        Text(ranked.formattedTime)
-//                            .font(.title3)
-//                        
-//                    }
-//                    .padding(.horizontal)
-//                    .foregroundColor(.white)
-//                }
-//                
-//                Spacer()
-//                
-//                Button {
-//                    DispatchQueue.main.async {
-//                        HUBPhoneManager.instance.allPlayersFinished = false
-//                        HUBPhoneManager.instance.ranking = false
-//                        for i in 0..<HUBPhoneManager.instance.allPlayers.count {
-//                            HUBPhoneManager.instance.allPlayers[i].youWon = false
-//                            HUBPhoneManager.instance.allPlayers[i].interval = 0.0
-//                        }
-//
-//                            }
-//                    
-//                    HUBPhoneManager.instance.startMatch = false
-//                    let message = "Reset"
-//                        if let data = message.data(using: .utf8) {
-//                            MPCSessionManager.shared.sendDataToAllPeers(data: data)
-//                            
-//                        }
-//                    router = .tutorial
-//                    HUBPhoneManager.instance.matchManager.reset()
-//                    
-//                } label: {
-//                    Text("Play again")
-//                        .font(.custom("TorukSC-Regular", size: 25))
-//                        .foregroundColor(.white)
-//                        .background(
-//                            Image("decorativeRectOrange")
-//                        )
-//                }
-//                
-//                Spacer()
-//            }
-//            
-//            .onAppear {
-//                HUBPhoneManager.instance.endedGame = true
-//                
-//                if hubManager.newGame {
-//                    DispatchQueue.main.async {
-//                        dismiss()
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
-//#Preview {
-//   YouWonView(router: .constant(.start))
-//
-//}
-
-
 //
 //  YouWonView.swift
 //  DashParty
@@ -143,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct YouWonView: View {
+    
     @State var matchManager = HUBPhoneManager.instance.matchManager
     @Binding var router:Router
     @Environment(\.dismiss) var dismiss
@@ -167,7 +34,8 @@ struct YouWonView: View {
         
         return sortedFinished + sortedUnfinished
     }
-    
+
+
     private func formatTimeInterval(_ interval: TimeInterval) -> String {
         let minutes = Int(interval) / 60
         let seconds = Int(interval) % 60
@@ -202,7 +70,7 @@ struct YouWonView: View {
                 HStack(spacing: 30) {
                 ForEach(Array(rankedPlayers.enumerated()), id: \.offset) { index, ranked in
                         CharacterRankView(
-                            frameType: CharacterFrameType(status: .winner, color: .red),
+                            frameType: characterFrameType(ranked: ranked),
                             kikoColor: ranked.player.userClan?.color ?? .red,
                             bannerType: .winner,
                             playerName: ranked.player.name,
@@ -232,9 +100,20 @@ struct YouWonView: View {
                         dismiss()
                     }
                 }
+                
             }
         }
     }
+    
+    func characterFrameType(ranked: (player: SendingPlayer, formattedTime: String)) -> CharacterFrameType {
+        if let kikoColor = ranked.player.userClan?.color {
+            let characterColor = CharacterColor(kikoColor: kikoColor)
+            return CharacterFrameType(status: .winner, color: characterColor)
+        } else {
+            return CharacterFrameType(status: .winner, color: .blue)
+        }
+    }
+
 }
 
 #Preview {
