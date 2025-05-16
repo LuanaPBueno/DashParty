@@ -59,8 +59,9 @@ struct MatchViewHub: View {
                 if let position = ranking?.firstIndex(where: { $0.name == HUBPhoneManager.instance.allPlayers[index].name }), position == 0 {
                     Image("youWon")
                         .resizable()
-                        .frame(width: 300, height: 300)
-                        .padding()
+                        .scaledToFit()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
                     Image("youFinished")
                 }
