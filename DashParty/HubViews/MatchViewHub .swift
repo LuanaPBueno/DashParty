@@ -53,19 +53,18 @@ struct MatchViewHub: View {
                     Spacer()
                 }
                 Spacer()
-                
             }
             if HUBPhoneManager.instance.allPlayers[index].youWon {
                 if let position = ranking?.firstIndex(where: { $0.name == HUBPhoneManager.instance.allPlayers[index].name }), position == 0 {
                     Image("youWon")
-//                        .resizable()
-//                        .aspectRatio(contentMode: .fit)
-//                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .resizable()
+                        .scaledToFit()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
 
                 } else {
                     Image("youFinished")
                 }
-
             }
         }
         .onDisappear{
@@ -89,7 +88,5 @@ struct MatchViewHub: View {
             characterImage = HUBPhoneManager.instance.allPlayers[index].userClan?.image ?? Image("characterFront")
             HUBPhoneManager.instance.newGame = false
         }
-        
-        
     }
 }
