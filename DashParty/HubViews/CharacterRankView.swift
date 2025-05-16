@@ -42,6 +42,16 @@ struct CharacterFrameType {
         }
     }
 }
+extension CharacterColor {
+    init(kikoColor: KikoColor) {
+        switch kikoColor {
+        case .red: self = .red
+        case .blue: self = .blue
+        case .yellow: self = .yellow
+        case .green: self = .green
+        }
+    }
+}
 
 struct CharacterRankView: View {
     var frameType: CharacterFrameType

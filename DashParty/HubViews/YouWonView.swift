@@ -1,14 +1,15 @@
-////
-////  YouWonView.swift
-////  DashParty
-////
-////  Created by Luana Bueno on 28/03/25.
-////
+//
+//  YouWonView.swift
+//  DashParty
+//
+//  Created by Luana Bueno on 28/03/25.
+//
 
 import Foundation
 import SwiftUI
 
 struct YouWonView: View {
+    
     @State var matchManager = HUBPhoneManager.instance.matchManager
     @Binding var router:Router
     @Environment(\.dismiss) var dismiss
@@ -33,7 +34,8 @@ struct YouWonView: View {
         
         return sortedFinished + sortedUnfinished
     }
-    
+
+
     private func formatTimeInterval(_ interval: TimeInterval) -> String {
         let minutes = Int(interval) / 60
         let seconds = Int(interval) % 60
@@ -68,7 +70,7 @@ struct YouWonView: View {
                 HStack(spacing: 30) {
                 ForEach(Array(rankedPlayers.enumerated()), id: \.offset) { index, ranked in
                         CharacterRankView(
-                            frameType: CharacterFrameType(status: .winner, color: .red),
+                            frameType: characterFrameType(ranked: ranked),
                             kikoColor: ranked.player.userClan?.color ?? .red,
                             bannerType: .winner,
                             playerName: ranked.player.name,
@@ -98,9 +100,20 @@ struct YouWonView: View {
                         dismiss()
                     }
                 }
+                
             }
         }
     }
+    
+    func characterFrameType(ranked: (player: SendingPlayer, formattedTime: String)) -> CharacterFrameType {
+        if let kikoColor = ranked.player.userClan?.color {
+            let characterColor = CharacterColor(kikoColor: kikoColor)
+            return CharacterFrameType(status: .winner, color: characterColor)
+        } else {
+            return CharacterFrameType(status: .winner, color: .blue)
+        }
+    }
+
 }
 
 #Preview {
