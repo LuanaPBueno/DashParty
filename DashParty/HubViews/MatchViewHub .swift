@@ -46,9 +46,9 @@ struct MatchViewHub: View {
                        let position = ranking.firstIndex(where: { $0.name == HUBPhoneManager.instance.allPlayers[index].name}) {
                         Image("ranking\(position+1)")
                             .resizable()
-                            .frame(width: 80, height: 80)
-                            .padding(.top, 70)
-                            .padding(.leading, 70)
+                            .frame(width: 100, height: 100)
+                            .padding(.top, 90)
+                            .padding(.leading, 90)
                     }
                     Spacer()
                 }
