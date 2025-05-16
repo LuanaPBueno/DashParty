@@ -60,12 +60,13 @@ struct TutorialHubView: View {
                                 Text("Heads Up!")
                                     .font(.custom("TorukSC-Regular", size: 120, relativeTo: .largeTitle))
                                     .multilineTextAlignment(.center)
+                 
                                     .foregroundColor(.white)
 
-                                Text("Things make way more sense after the tutorial...")
-                                    .font(.custom("TorukSC-Regular", size: 90, relativeTo: .title))
-                                    .multilineTextAlignment(.center)
-                                    .foregroundColor(.white)
+//                                Text("Things make way more sense after the tutorial...")
+//                                    .font(.custom("TorukSC-Regular", size: 90, relativeTo: .title))
+//                                    .multilineTextAlignment(.center)
+//                                    .foregroundColor(.white)
                             }
                     .padding(.bottom, 100)
                      // esse valor ajusta o quão para cima o título vai
