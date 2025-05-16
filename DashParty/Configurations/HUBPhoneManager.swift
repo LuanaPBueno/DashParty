@@ -30,13 +30,15 @@ class HUBPhoneManager {
        
         "I will tell you a story, the story of FOLOI.",
         
-        "Many moons ago, in a magic forest -there was a good and just leader who guided all the clans in harmony.",
+        "Many moons ago, in a magic forest -there was a good and fair leader who guided all clans in harmony.",
 
-        "One day, this leader vanished UNEXPECTEDLY. With FOLOI without protection a new tradition was born…",
+        "One day, this leader vanished UNEXPECTEDLY. Without protection a new tradition was born in FOLOI…",
 
-        "At each new lunar cycle, every clan selects its best runner to compete for the Staff of the Leader and claim the role of the Guardian FOLOI needs.",
+        "Every lunar cycle, each clan selects its best runner to compete for the Staff of the Leader.",
+        
+        "This champion becomes the Guardian FOLOI needs.",
 
-        "Which one will take the lead?"
+        "Who will take the lead?"
         ]
     
     var passToTutorialView: Bool = false
