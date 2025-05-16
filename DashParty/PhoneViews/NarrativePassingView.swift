@@ -81,8 +81,8 @@ struct NarrativePassingView: View {
                                     hubManager.actualPage += 1
                                 } else {
                                     print("entrou aqui no pass")
-                                    //router = .tutorial
-                                    showAlert = true
+                                    router = .tutorial
+                                    //showAlert = true
                                 }
                             }) {
                                 Image("passNarrativeButton")
@@ -105,14 +105,14 @@ struct NarrativePassingView: View {
                     )
                 }
             }
-            .alert("The narrative has ended. Do you want to start the tutorial?", isPresented: $showAlert) {
-                Button("OK") {
-                    router = .tutorial
-                }
-                Button("Cancel", role: .cancel) {
-                    
-                }
-            }
+//            .alert("The narrative has ended. Do you want to start the tutorial?", isPresented: $showAlert) {
+//                Button("OK") {
+//                    router = .tutorial
+//                }
+//                Button("Cancel", role: .cancel) {
+//                    
+//                }
+//            }
             .alert("Are you sure you want to skip the narrative?", isPresented: $showAlert2) {
                 Button("OK") {
                     hubManager.actualPage = hubManager.narrativeText.count - 1
