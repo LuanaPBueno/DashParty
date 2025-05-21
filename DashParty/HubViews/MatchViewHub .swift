@@ -36,7 +36,7 @@ struct MatchViewHub: View {
                         matchManager.checkAddChallenge(distance: Float(HUBPhoneManager.instance.allPlayers[index].progress), playerIndex: index)
                     })
                     .frame(width: .infinity, height: .infinity)
-                    .background(.brown)
+                    .background(Color(.darkblue))
                     .ignoresSafeArea()
             }
             VStack{

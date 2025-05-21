@@ -25,6 +25,12 @@ struct NarrativePassingView: View {
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
+            
+            Rectangle()
+                .tint(.black)
+                .ignoresSafeArea()
+                .opacity(0.2)
+            
             HStack {
                 Spacer()
                 VStack{
@@ -45,13 +51,13 @@ struct NarrativePassingView: View {
                 
                 Spacer()
                 
-                Text("Look at the screen and enjoy the story!")
+                Text("Don’t look away!\nThe forest’s ancient tale starts... now.")
                     .multilineTextAlignment(.center)
                     .font(.custom("TorukSC-Regular", size: 30))
-                    .padding(40)
+                    .lineSpacing(6)                 .padding(40)
                     .foregroundColor(.white)
-                Image("decorativeRectCream")
                 
+                Image("decorativeRectCream")
                     .overlay(
                         HStack {
                             Spacer()
@@ -94,6 +100,7 @@ struct NarrativePassingView: View {
                         }
                             .padding(.horizontal, 24)
                     )
+                
                 Spacer()
                 
             }
@@ -105,14 +112,14 @@ struct NarrativePassingView: View {
                     )
                 }
             }
-//            .alert("The narrative has ended. Do you want to start the tutorial?", isPresented: $showAlert) {
-//                Button("OK") {
-//                    router = .tutorial
-//                }
-//                Button("Cancel", role: .cancel) {
-//                    
-//                }
-//            }
+            //            .alert("The narrative has ended. Do you want to start the tutorial?", isPresented: $showAlert) {
+            //                Button("OK") {
+            //                    router = .tutorial
+            //                }
+            //                Button("Cancel", role: .cancel) {
+            //
+            //                }
+            //            }
             .alert("Are you sure you want to skip the narrative?", isPresented: $showAlert2) {
                 Button("OK") {
                     hubManager.actualPage = hubManager.narrativeText.count - 1

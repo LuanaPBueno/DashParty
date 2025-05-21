@@ -9,11 +9,36 @@ import SwiftUI
 
 struct EyesOnTheHub: View {
     var body: some View {
-        Image("eyesOnTheHub")
-            .resizable()
-            .frame(width: UIScreen.main.bounds.width * 1.1)
-            .scaledToFill()
-            .ignoresSafeArea()
+        ZStack {
+            Image("backgroundPhone")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+            
+            VStack {
+                Text("Ready! Set! Go!")
+                    .font(.custom("TorukSC-Regular", size: 22))
+                    .foregroundColor(.white)
+                    .textCase(.uppercase)
+                    .padding(.top, 40)
+                
+                Spacer()
+                
+                HStack(spacing: 30) {
+                    
+                    Image(systemName: "airplay.video")
+                        .font(.system(size: 48))
+                        .bold()
+                        .foregroundColor(.white)
+                    
+                    Text("Eyes on the Hub!")
+                        .font(.custom("TorukSC-Regular", size: 48))
+                        .foregroundColor(.white)
+                }
+                .padding(.bottom, 40)
+                Spacer()
+            }
+        }
     }
 }
 

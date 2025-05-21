@@ -23,51 +23,58 @@ struct HostOrPlayerView: View {
     @State var askForHostName = false
     
     var body: some View {
-        ZStack{
+        ZStack(alignment: .leading) {
             Image("backgroundPhone")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
-            VStack{
+            
+            VStack(alignment: .leading){
                 HStack{
+                    
                     Button {
                         router = .start
                     } label: {
                         Image("backButton")
                             .padding(.leading, 35)
                             .padding(.top, 35)
-
+                        
+                    }
+                }
+                HStack{
+                    Spacer()
+                    VStack(alignment: .center, spacing: 40){
+                        Spacer()
+                        
+                        Button(action: {
+                            MPCSessionManager.shared.host = true
+                            MPCSessionManager.shared.startSession(asHost: true)
+                            askForHostName = true
+                        }) {
+                            OrangeButtonPhone(text: "Host", sizeFont: 28)
+                                .frame(width:300)
+                        }
+                        
+                        
+                        Button(action: {
+                            MPCSessionManager.shared.host = false
+                            MPCSessionManager.shared.startSession(asHost: false)
+                            
+                            if userName != ""{
+                                navigateToHost = true
+                            }else{
+                                showAlert = true
+                                
+                            }
+                            
+                        }) {
+                            BlueButtonPhone(text: "Join", sizeFont: 28)
+                                .frame(width:300)
+                        }
+                        Spacer()
                     }
                     Spacer()
                 }
-                
-                Button(action: {
-                    MPCSessionManager.shared.host = true
-                    MPCSessionManager.shared.startSession(asHost: true)
-                    askForHostName = true
-                }) {
-                    OrangeButtonPhone(text: "Host", sizeFont: 40)
-                        .padding(.vertical, 30)
-                }
-                
-                
-                Button(action: {
-                    MPCSessionManager.shared.host = false
-                    MPCSessionManager.shared.startSession(asHost: false)
-
-                    if userName != ""{
-                        navigateToHost = true
-                    }else{
-                        showAlert = true
-                        
-                    }
-                  
-                }) {
-                    BlueButtonPhone(text: "Join", sizeFont: 40)
-                        
-                    
-                }
-                .padding(.vertical, 30)
             }
             
             .alert("Insert your name", isPresented: $askForHostName) {
@@ -77,11 +84,11 @@ struct HostOrPlayerView: View {
                 Button {
                     HUBPhoneManager.instance.allPlayers[0].name = userName
                     HUBPhoneManager.instance.playername = userName
-
-//                    navigateToHost = true
-//                    router = .matchmaking
+                    
+                    //                    navigateToHost = true
+                    //                    router = .matchmaking
                     showRoomAlert = true
-                   
+                    
                 } label: {
                     Text("Save")
                 }
@@ -108,27 +115,27 @@ struct HostOrPlayerView: View {
             
             .alert("Insert the room's name", isPresented: $showRoomAlert) {
                 TextField("Insert the room's name", text: $roomName)
-                    Button("Cancel", role: .cancel) { }
-
-                        Button {
-                            HUBPhoneManager.instance.roomName = roomName
-                            showAlert = false
-                            navigateToHost = true
-                            askForHostName = true
-                            multipeerSession.resetSession()
-                            router = .airplayInstructions
-
-                        } label: {
-                            Text("Save")
-                        }
-
-                   }
+                Button("Cancel", role: .cancel) { }
+                
+                Button {
+                    HUBPhoneManager.instance.roomName = roomName
+                    showAlert = false
+                    navigateToHost = true
+                    askForHostName = true
+                    multipeerSession.resetSession()
+                    router = .airplayInstructions
+                    
+                } label: {
+                    Text("Save")
+                }
+                
+            }
         }
-//        .task{
-//            multipeerSession.mcAdvertiser.stopAdvertisingPeer()
-//        }
+        //        .task{
+        //            multipeerSession.mcAdvertiser.stopAdvertisingPeer()
+        //        }
     }
- }
+}
 
 
 #Preview {

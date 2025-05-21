@@ -39,7 +39,7 @@ struct NarrativeView: View {
                     
                     Text(HUBPhoneManager.instance.narrativeText[hubManager.actualPage])
                         .font(.custom("TorukSC-Regular", size: 60)) // tamanho ajustado para não estourar a caixa
-                        .foregroundColor(.black)
+                        .foregroundColor(Color(.text))
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 30)
                 }

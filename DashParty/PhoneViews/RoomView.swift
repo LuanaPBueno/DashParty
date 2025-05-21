@@ -23,7 +23,7 @@ struct RoomView: View {
                         router = .airplayInstructions
                     } label: {
                         Image("backButton")
-                            .padding(.leading, 35)
+                            .padding(.leading, 65)
                             .padding(.top, 35)
                         
                     }
@@ -67,13 +67,12 @@ struct RoomView: View {
                         router = .chooseCharacter
                     } label: {
                         OrangeButtonPhone(text: "Continue", sizeFont: 20)
-                            .frame(width: 110, height: 45)
+                            .frame(width:200, height: 69)
                     }
+                    .frame(maxWidth: .infinity, alignment: .trailing) 
                     .padding(.trailing, 40)
-                    .padding(.bottom, 12)
-                    
-                    
                 }
+                .ignoresSafeArea()
             }
 //            }
         }
@@ -103,3 +102,6 @@ struct RoomView: View {
     }
 }
 
+#Preview {
+    RoomView(router: .constant(.matchmaking), multipeerSession: MPCSessionManager.shared)
+}

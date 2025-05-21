@@ -17,11 +17,12 @@ struct ReadyView: View {
     @State private var isActive = false
     
     var body: some View {
-        ZStack{
+        ZStack(alignment: .leading){
             Image("backgroundPhone")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
+            
             VStack{
                 HStack{
                     Button {
@@ -32,35 +33,82 @@ struct ReadyView: View {
                             .padding(.leading, 35)
                             .padding(.top, 35)
                     }
-                    Spacer()
                 }
                 Spacer()
             }
-            VStack{
+            HStack {
                 Spacer()
-                Text("Ready?")
-                    .font(.custom("TorukSC-Regular", size: 45, relativeTo: .title))
-                    .foregroundColor(.white)
-                    .multilineTextAlignment(.center)
-                //Spacer()
-                HStack (spacing: 20){
-                    Image("hub")
-                    Text("To set up your game, share your screen via AirPlay!")
-                        .font(.custom("TorukSC-Regular", size: 35))
+
+                VStack(spacing: 10){
+                    Text("Ready?")
+                        .font(.custom("TorukSC-Regular", size: 22))
                         .foregroundColor(.white)
-                        .multilineTextAlignment(.leading)
+                        .textCase(.uppercase)
+                        .padding(.top, 40)
+                    
+                    Spacer()
+                    
+                    HStack(spacing: 30) {
+                        
+                        Image(systemName: "airplay.video")
+                            .font(.system(size: 48))
+                            .bold()
+                            .foregroundColor(.white)
+                        
+                        Text("Share your screen via AirPlay to play on the big screen!")
+                            .font(.custom("TorukSC-Regular", size: 48))
+                            .foregroundColor(.white)
+                            .frame(width: 500)
+                    }
+                    Spacer()
+                    
+                    Text("We recommend these screens")
+                        .font(.custom("Wonder-Light", size: 11))
+                        .foregroundColor(.white)
+                        .textCase(.uppercase)
+                    
+                    HStack(spacing: 10){
+                        VStack(spacing: 5) {
+                            Image(systemName: "ipad.gen2.landscape")
+                                .font(.system(size: 32))
+                                .bold()
+                                .foregroundColor(.white)
+                            
+                            Text("Ipad")
+                                .font(.custom("Wonder-Light", size: 11))
+                                .foregroundColor(.white)
+                                .textCase(.uppercase)
+                        }
+                        
+                        VStack(spacing: 5) {
+                            Image(systemName: "appletv")
+                                .font(.system(size: 32))
+                                .bold()
+                                .foregroundColor(.white)
+                            
+                            Text("Apple tv")
+                                .font(.custom("Wonder-Light", size: 11))
+                                .foregroundColor(.white)
+                                .textCase(.uppercase)
+                        }
+                        
+                        VStack(spacing: 5) {
+                            Image(systemName: "tv")
+                                .font(.system(size: 32))
+                                .bold()
+                                .foregroundColor(.white)
+                            
+                            Text("Tv")
+                                .font(.custom("Wonder-Light", size: 11))
+                                .foregroundColor(.white)
+                                .textCase(.uppercase)
+                        }
+                    }
+                    .padding(.bottom, 10)
                 }
-                .padding(.horizontal, 80)
-                .multilineTextAlignment(.center)
-                //Spacer()
-                Text("We recommend these screens")
-                    .font(.custom("TorukSC-Regular", size: 15))
-                    .foregroundColor(.white)
-                    .padding(.top, 20)
-                Image("hubs")
                 Spacer()
+
             }
-               
                // .padding(.vertical, 40)
 
             VStack {
@@ -68,12 +116,12 @@ struct ReadyView: View {
                 Button {
                     router = .matchmaking
                 } label: {
-                    OrangeButtonPhone(text: "Ready", sizeFont: 20)
-                        .frame(width: 150, height: 45) // controla o tamanho do botão
+                    OrangeButtonPhone(text: "Ready", sizeFont: 24)
+                        .frame(width:200, height: 69)
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing) // joga o botão pra direita
-                .padding(.trailing, 35) // encosta ele na direita, mas com uma margem de 40
-                .padding(.bottom, 20) // opcional: dar uma afastada da borda inferior
+                .padding(.trailing, 20) // encosta ele na direita, mas com uma margem de 40
+//                .padding(.bottom, 20) // opcional: dar uma afastada da borda inferior
             }
             
         }

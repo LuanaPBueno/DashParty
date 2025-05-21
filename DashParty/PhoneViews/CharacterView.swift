@@ -5,7 +5,7 @@ enum Clan: String, CaseIterable, Identifiable, Codable, Hashable {
     case bunny, monkey, feline, frog
     
     var id: String { self.rawValue }
-
+    
     var image: Image {
         switch self {
         case .bunny: return Image("bunnyGreen")
@@ -40,65 +40,60 @@ struct CharacterView: View {
     @State private var navigateToNext = false
     
     var body: some View {
-     
-            ZStack {
-                Image("backgroundPhone")
-                    .resizable()
-                    .scaledToFill() 
-                    .ignoresSafeArea()
-                
-                VStack {
-                    Spacer()
-                    
-                    Text("Choose your guardian")
-                        .font(.custom("TorukSC-Regular", size: 28))
-                        .foregroundColor(.white)
-                    
-                    Spacer()
-                    
-                    HStack(spacing: 16) {
-                        ForEach(Clan.allCases, id: \.self) { clan in
-                            ClanCard(
-                                clan: clan,
-                                isSelected: clan == tempSelection
-                            )
-                            .onTapGesture {
-                                HUBPhoneManager.instance.allPlayers[0].userClan = clan
-                                tempSelection = clan
-                            }
-                        }
-                    }
-
-                    
+        
+        ZStack {
+            Image("backgroundPhone")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+            
+            VStack {
                 Spacer()
-                    
-                    HStack{
-                        
-                        Spacer()
-                        if MPCSessionManager.shared.host{
-                            Button(action: {
-                                router =  .storyBoard
-                                MPCSessionManager.shared.stopSendingUserData()
-                            }) {
-                                ZStack {
-                                    Image("decorativeRectOrange")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 160, height: 55) // 📏 tamanho só do botão, sem afetar o resto
-                                    Text("Done")
-                                        .font(.custom("TorukSC-Regular", size: 20))
-                                        .foregroundColor(.white)
-                                }
-                                
-                            }
+                Spacer()
+                
+                Text("Choose your guardian")
+                    .font(.custom("TorukSC-Regular", size: 34))
+                    .foregroundColor(.white)
+                
+                Spacer()
+                
+                HStack(spacing: 0) {
+                    ForEach(Clan.allCases, id: \.self) { clan in
+                        ClanCard(
+                            clan: clan,
+                            isSelected: clan == tempSelection
+                        )
+                        .onTapGesture {
+                            HUBPhoneManager.instance.allPlayers[0].userClan = clan
+                            tempSelection = clan
                         }
-                      
                     }
-                    .padding(.trailing, 20)
-                    .disabled(tempSelection == nil)
-                    .opacity(tempSelection == nil ? 0.5 : 1.0)
                 }
+                .padding(.leading, 20)
+                .padding(.trailing, 20)                    .padding(20)
+                
+                
+                Spacer()
+                
+                HStack{
+                    
+                    Spacer()
+                    if MPCSessionManager.shared.host{
+                        Button(action: {
+                            router =  .storyBoard
+                            MPCSessionManager.shared.stopSendingUserData()
+                        }) {
+                            OrangeButtonPhone(text: "Play", sizeFont: 24)
+                                .frame(width:200, height: 69)
+                        }
+                    }
+                    
+                }
+                .padding(.trailing, 20)
+                .disabled(tempSelection == nil)
+                .opacity(tempSelection == nil ? 0.5 : 1.0)
             }
+        }
         
     }
 }
@@ -106,31 +101,36 @@ struct CharacterView: View {
 struct ClanCard: View {
     let clan: Clan
     let isSelected: Bool
-
+    
     var body: some View {
         let displayedImage = isSelected ? clan.alternateImage : clan.image
-
+        
         displayedImage
-           .resizable()
+            .resizable()
             .scaledToFit()
- //           .frame(width: 100, height: 100)
+        //           .frame(width: 100, height: 100)
     }
 }
 
 
-    
+
 //    var body: some View {
 ////        ZStack {
 //            clan.image
 //            .resizable()
 //            .scaledToFit()
 //            .frame(width: 140, height: 180)
-               // .frame(width: 120, height: 120)
-              
-                
+// .frame(width: 120, height: 120)
+
+
 //            if isSelected {
 //                Image("faixaAmarela")
 //                    .padding(.top, 133)
 //            }
 //        }
-    
+
+
+#Preview {
+    CharacterView(router: .constant(.start))
+}
+

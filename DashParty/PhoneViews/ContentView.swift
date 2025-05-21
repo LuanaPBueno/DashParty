@@ -21,7 +21,19 @@ struct ContentView: View {
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
-
+                
+                Text("©2025")
+                    .font(.custom("TorukSC-Regular", size: 14))
+                    .textCase(.uppercase)
+                    .foregroundColor(.white)
+                    .offset(x: -350, y: 170)
+                
+                Text("ver. 1.2.1")
+                    .font(.custom("TorukSC-Regular", size: 14))
+                    .textCase(.uppercase)
+                    .foregroundColor(.white)
+                    .offset(x: 350, y: 170)
+                
                 VStack {
                     Spacer()
                     Image("logoBranca")
@@ -29,18 +41,19 @@ struct ContentView: View {
                         .scaledToFit()
                         //.frame(maxWidth: 500)
                         .padding(.top, 40)
+                        .padding(40)
                     
+                    Spacer()
+
                     HStack(alignment: .center){
                         Spacer()
                         Button(action: {
                             router = .play
                         }) {
                             OrangeButtonPhone(text: "Play", sizeFont: 28)
-                                .padding(.vertical, 60)
-                                
+                                .frame(width:220, height: 69)
+
                         }
-                        .padding(.trailing, 10)
-                        
 //                        HStack(alignment: .center){
 //                            Button(action: {
 //                                router = .options
@@ -54,6 +67,7 @@ struct ContentView: View {
 //                        }
                         Spacer()
                     }
+                    Spacer()
                     Spacer()
                 }
             }

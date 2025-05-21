@@ -32,7 +32,7 @@ struct WaitingView: View {
                         } label: {
                             Image("backButton")
                         }
-                        .padding(.leading, 35)
+                        .padding(.leading, 60)
                         .padding(.top, 35)
                         
                         Spacer()
@@ -58,7 +58,7 @@ struct WaitingView: View {
                 //Spacer()
                 
                 // MMPhones
-                HStack(spacing: 20) {
+                HStack() {
                     MMPhone(playerName: multipeerSession.hostName, sizePadding: 0)
                     MMPhone(playerName: HUBPhoneManager.instance.playername, sizePadding: 0)
                     ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in

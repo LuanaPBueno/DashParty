@@ -31,12 +31,9 @@ struct TutorialPassingView: View {
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
+            
             if !multipeerSession.host{
-                Image("eyesOnTheHub")
-                    .resizable()
-                    .frame(width: UIScreen.main.bounds.width * 1.1)
-                    .scaledToFill()
-                    .ignoresSafeArea()
+                EyesOnTheHub()
             }
             if multipeerSession.host{
                 VStack{
@@ -59,7 +56,7 @@ struct TutorialPassingView: View {
                     Spacer()
                     //Spacer()
                     
-                    Text("Heads Up! Things make way more sense after the tutorial.")
+                    Text("Focus on the Hub, every tip here is key to victory.")
                         .multilineTextAlignment(.center)
                         .font(.custom("TorukSC-Regular", size: 30))
                         .padding(40)

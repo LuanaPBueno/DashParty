@@ -19,7 +19,8 @@ struct OrangeButtonPhone: View {
                     .scaledToFit()
 //                    .frame(width: geo.size.width)
                 Text(text)
-                    .font(.custom("TorukSC-Light", size: CGFloat(sizeFont)))
+                    .font(.custom("TorukSC-Regular", size: CGFloat(sizeFont)))
+                    .textCase(.uppercase)
                     .foregroundColor(.white)
                     .multilineTextAlignment(.center)
                     .minimumScaleFactor(0.5)
@@ -33,27 +34,3 @@ struct OrangeButtonPhone: View {
 #Preview {
     OrangeButtonPhone(text: "Continue", sizeFont: 28)
 }
-
-
-//struct ContinueButton: View {
-//    var text: String
-//    var sizeFont: Int
-//
-//    var body: some View {
-//        ZStack {
-//            Image("decorativeRectOrange")
-//                .resizable()
-//                .scaledToFit()
-//            Text(text)
-//                .font(.custom("TorukSC-Light", size: CGFloat(sizeFont)))
-//                .foregroundColor(.white)
-//                .multilineTextAlignment(.center)
-//                .minimumScaleFactor(0.5)
-//        }
-//    }
-//}
-//
-//
-//#Preview {
-//    ContinueButton(text: "Continue", sizeFont: 34)
-//}
