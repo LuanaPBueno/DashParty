@@ -22,7 +22,7 @@ struct TutorialPassingView: View {
     @State var pass : Bool = false
     
     @State var showStartAlert = false
-    var currentTutorialImage: [String] = ["tutorialPhone1", "tutorialPhone2", "tutorialPhone3", "tutorialPhone4", "tutorialPhone5", "tutorialPhone6"]
+    var currentTutorialImage: [String] = ["tutorialPhone1", "tutorialPhone2", "tutorialPhone3", "tutorialPhone4", "tutorialPhone5"]
     
     var body: some View {
         ZStack {

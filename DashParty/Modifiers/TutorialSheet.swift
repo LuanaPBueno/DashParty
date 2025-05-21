@@ -17,30 +17,30 @@ struct TutorialSheet: View {
 
                 Image("tutorialRectangle")
                     .overlay(
-                        HStack(alignment: .top, spacing: 0) {
+                        HStack(alignment: .center, spacing: 0) {
                             Image(tutorialImage)
                                
-                                .frame(width: 400, height: 500) // ou o tamanho desejado
-                               
-                            
+                                .frame(width: 400, height: 400)
                             VStack(alignment: .leading, spacing: 30) {
                                 Text(tutorialTextTitle)
                                     .font(.custom("TorukSC-Regular", size: 50, relativeTo: .title))
                                     .foregroundStyle(.lowOpacityText)
                                    
-                                    .padding(.top, 120)
+                                    //.padding(.top, 120)
                                 
                             
                                 Image("tutorialLine")
                                 
                                 Text(tutorialText)
                                     .font(.custom("Wonder-Light", size: 34, relativeTo: .body))
-                                    .multilineTextAlignment(.leading)
+                        
                                     .foregroundStyle(.text)
-                                 
-                                    .frame(width: 500, height: 100)
+                                    
+                                    .frame(width: 580)
+                                    .offset(x: tutorialImage == "tutorialImage6" ? -30 : 0, y: 0)
+                                
                             }
-                            .padding(.leading, 0)
+                            //.padding(.leading, 0)
                         }
                     )
             }
@@ -48,5 +48,5 @@ struct TutorialSheet: View {
 }
 
 #Preview {
-    TutorialSheet(tutorialImage: "tutorialImage1", tutorialText: "Keep your phone in a vertical position throughout the race.", tutorialTextTitle: "Run")
+    TutorialSheet(tutorialImage: "tutorialImage3", tutorialText: "Keep your phone in a vertical position throughout the race.", tutorialTextTitle: "Run")
 }

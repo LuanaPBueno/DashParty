@@ -32,7 +32,7 @@ class HUBPhoneManager {
        
         "I will tell you a story, the story of FOLOI.",
         
-        "Many moons ago, in a magic forest -there was a good and fair leader who guided all clans in harmony.",
+        "Many moons ago, in a magic forest - there was a good and fair leader who guided all clans in harmony.",
 
         "One day, this leader vanished UNEXPECTEDLY. Without protection a new tradition was born in FOLOI…",
 

@@ -20,30 +20,27 @@ struct TutorialHubView: View {
     let basicTutorialImage = "phoneTV"
 
     let tutorialTexts = [
-        "Keep your phone in a vertical position throughout the race.",
-        "Shake your phone up and down, fast. \nThis keeps you moving forward!",
-        "Keep running and throw your arms in the air! \nThat’s how you jump over obstacles!",
-        "Hold your phone still in a horizontal \nposition, like balancing on a bridge! \nStay calm and stay steady.",
-        "Push your phone forward to push away the vines! \nClear the way and keep moving!",
-        "It’s game time! Have fun and go for the win!"
+        "Shake your phone up and down quickly, the faster you shake, the faster your character sprints!",
+                "While running, raise your arms high to jump. Time it right to clear passing rocks!",
+                "Hold your phone steady and level. If you tilt too much, you’ll fall, stay calm and centered!",
+                "Thrust your phone forward to knock vines aside. One quick motion opens the path!",
+                "The forest is counting on you! Race hard, trust your instincts, and claim the Staff of the Leader!"
     ]
 
     let tutorialTitles = [
-        "Run",
-        "Run",
-        "Jump",
-        "Bridge",
-        "Vines",
-        "Win"
+        "Shake to RUN!",
+                "JUMP to Clear!",
+                "Hold to BALANCE!",
+                "PUSH to Advance!",
+                "Dash to GLORY!"
     ]
 
     let tutorialImageNames = [
-        "tutorialImage1",
-        "tutorialImage2",
         "tutorialImage3",
         "tutorialImage4",
         "tutorialImage5",
-        "tutorialImage6"
+        "tutorialImage6",
+        "tutorialImage7"
     ]
 
     var body: some View {
