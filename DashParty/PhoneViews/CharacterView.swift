@@ -32,6 +32,15 @@ enum Clan: String, CaseIterable, Identifiable, Codable, Hashable {
         case .frog: return .blue
         }
     }
+    
+    var originalColor: Color {
+        switch self {
+        case .bunny: return .green
+        case .monkey: return .red
+        case .feline: return .yellow
+        case .frog: return .blue
+        }
+    }
 }
 
 struct CharacterView: View {

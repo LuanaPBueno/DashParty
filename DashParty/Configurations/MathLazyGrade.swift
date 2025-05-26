@@ -28,6 +28,7 @@ struct MatchGridView: View {
     var body: some View {
         
         let totalPlayers =  HUBPhoneManager.instance.allPlayers.count
+        ZStack{
             VStack(spacing: 0){
                 
                 HStack(spacing: 0) {
@@ -41,9 +42,9 @@ struct MatchGridView: View {
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .clipped()
                             .task{
-                                 print()
+                                print()
                             }
-
+                        
                     }
                     
                     if totalPlayers == 3 {
@@ -51,7 +52,7 @@ struct MatchGridView: View {
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .clipped()
                         
-
+                        
                     }
                 }
                 
@@ -70,6 +71,12 @@ struct MatchGridView: View {
                     }
                 }
             }
+            HStack{
+                ProgressBarView()
+                    .padding()
+                Spacer()
+            }
+        }
             .task{
                 audioManager.playSound(named: "Run Music")
                 print("number of players: \(players.count)")
