@@ -5,12 +5,6 @@
 //  Created by Fernanda Auler on 15/04/25.
 //
 
-//
-//  MatchmakingHubView.swift
-//  DashParty
-//
-//  Created by Fernanda Auler on 15/04/25.
-//
 
 import SwiftUI
 
@@ -21,70 +15,50 @@ struct MatchmakingHubView: View {
     @State var navigateToPlayerDisplayView: Bool = false
     @State var audioManager: AudioManager = AudioManager()
     
+    var size: CGSize
+    
     var body: some View {
-        ZStack{
-//            VStack{
-//                Spacer()
-//                HStack{
-//                    Button {
-//                        router = .play
-//                    } label: {
-//                        Image("backButton")
-//                    }
-//
-//                    Spacer()
-//                }
-//            }
+        
+        VStack {
+            
+            Text(HUBPhoneManager.instance.roomName)
+                .font(.custom("TorukSC-Regular", size: (size.width / 1920) * 60))             .multilineTextAlignment(.center)
+                .foregroundColor(.white)
+            
+            HStack{
+                
+                MMPhone(playerName: HUBPhoneManager.instance.playername , sizePadding: 0)
+                ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
+                    MMPhone(playerName: player, sizePadding: 0)
+                    
+                }
+                
+            }
+            .frame(height: size.height * 0.5)
+            .padding()
+            
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background{
             Image("backgroundNewHUB")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
-            VStack {
-                Text(HUBPhoneManager.instance.roomName)
-                    .font(.custom("TorukSC-Regular", size: 120, relativeTo: .largeTitle))
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.white)
-                Spacer()
-            }
-            .onAppear{
-                audioManager.playSound(named: "forest")
-            }
-            .padding(.top, 40)
-                //if multipeerSession.host {
-                    VStack{
-                        Spacer()
-                        HStack{
-                           // Text(HUBPhoneManager.instance.roomName)
-                            MMPhone(playerName: HUBPhoneManager.instance.playername , sizePadding: 0)
-                            ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
-                                MMPhone(playerName: player, sizePadding: 0)
-                            }
-                        }
-                        .frame(height: UIScreen.main.bounds.height * 1.3)
-                        //MARK: 1.3 (?)
-
-                      
-                        
-                        Spacer()
-                        
-                    }
-                //}
-          }
-        .scrollContentBackground(.hidden)
+        }
+//        .scrollContentBackground(.hidden)
+//
+        .onAppear{
+            audioManager.playSound(named:"forest")
+        }
         
         .task{
             if !multipeerSession.host {
                 navigateToPlayerDisplayView = true
-            }
             
-           
+            }
+        
         }
-        //        .navigationDestination(isPresented: $navigateHost, destination: {
-        //            WaitingView(multipeerSession: multipeerSession)
-        //        })
-        //        .navigationDestination(isPresented: $navigateToPlayerDisplayView, destination: {
-        //            ConnectInHubView()
-        //        })
+       
         .onChange(of: multipeerSession.mcSession.connectedPeers.map { $0.displayName }) {
             print(multipeerSession.mcSession.connectedPeers.map { $0.displayName })
         }
@@ -95,14 +69,26 @@ struct MatchmakingHubView: View {
     }
 }
 
+
 #Preview {
+    let hubManager = HUBPhoneManager.instance
+        hubManager.roomName = "Floresta Mística"
+    
+        hubManager.playername = "Raposa"
     let matchManager = ChallengeManager()
-    let session = MPCSession(service: "banana", identity: "maçã", maxPeers: 5, matchManager: matchManager)
+    let session = MPCSession(
+        service: "banana",
+        identity: "maçã",
+        maxPeers: 5,
+        matchManager: matchManager
+    )
     
-    // Simular host e jogadores conectados para visualização
     session.host = true
-    
-    
-    
-    return MatchmakingHubView(router: .constant(.matchmaking), multipeerSession: session)
+    session.connectedPeersNames = ["Tigre", "Coruja", "Lobo"]
+
+    return MatchmakingHubView(
+        router: .constant(.matchmaking),
+        multipeerSession: session,
+        size: CGSize(width: 2388, height: 1668)
+    )
 }

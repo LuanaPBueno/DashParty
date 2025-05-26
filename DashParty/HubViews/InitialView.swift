@@ -13,26 +13,13 @@ struct InitialView: View {
     @State private var showCustomAlert = true
 
     var body: some View {
-        ZStack {
-            // Fundo
-            Image("backgroundTitle")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
-                .onAppear {
-                    audioManager.playSound(named: "forest")
-                }
-
-            // Logo centralizada com animação e dentro da safe area
+        
             VStack {
-                Spacer()
+               
                 Image("logoBranca")
                     .resizable()
                     .scaledToFit()
-//                    .frame(maxWidth: 100)
                     .padding(.horizontal, 50) // respeita laterais
-                    //.padding(.top, 16) // respeita topo
-                    //.padding(.bottom, 32) // respeita base
                     .scaleEffect(breathe ? 0.9 : 0.95)
                     .opacity(breathe ? 1.0 : 0.8)
                     .onAppear {
@@ -42,12 +29,18 @@ struct InitialView: View {
                         ) {
                             breathe.toggle()
                         }
+                        audioManager.playSound(named: "forest")
+
                     }
-                Spacer()
+                    .background{
+                        Image("backgroundTitle")
+                            .resizable()
+                            .scaledToFill()
+                            .ignoresSafeArea()
+                }
             }
-        }
-    }
-}
+      }
+  }
 
 #Preview {
     InitialView()

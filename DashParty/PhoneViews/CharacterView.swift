@@ -19,7 +19,7 @@ enum Clan: String, CaseIterable, Identifiable, Codable, Hashable {
         switch self {
         case .bunny: return Image("bunnyGreenGlow")
         case .monkey: return Image("bunnyRedGlow")
-        case .feline: return Image("bunnyYellowglow")
+        case .feline: return Image("bunnyYellowGlow")
         case .frog: return Image("bunnyBlueGlow")
         }
     }
