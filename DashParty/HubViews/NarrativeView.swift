@@ -11,7 +11,7 @@ struct NarrativeView: View {
     var hubManager = HUBPhoneManager.instance
     @State var audioManager: AudioManager = AudioManager()
 
-    
+    var size: CGSize
     var narrativeImages = [
         "CENA_1",
         "CENA_2",
@@ -22,40 +22,53 @@ struct NarrativeView: View {
     ]
     
     var body: some View {
-        ZStack {
-            
-            Image(narrativeImages[hubManager.actualPage])
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
             
             VStack {
+                
                 Spacer()
-
-                ZStack {
-                    Image("caixinha12345")
-                        .resizable()
-                        .scaledToFit()
                     
                     Text(HUBPhoneManager.instance.narrativeText[hubManager.actualPage])
-                        .font(.custom("TorukSC-Regular", size: 60)) // tamanho ajustado para não estourar a caixa
+                    .font(.custom("TorukSC-Regular", size: (size.width / 1920) * 38)) // tamanho ajustado para não estourar a caixa
                         .foregroundColor(.text)
+                        .padding(.vertical, 80)
+                        .padding(.horizontal, 40)
                         .multilineTextAlignment(.center)
-                        .padding(.horizontal, 30)
-                }
-                .padding(.bottom, 200) // distância da parte inferior da tela
-                .onAppear {
-                    audioManager.playSound(named: "Narrative Music")
-                }
-            }
-            .padding(.horizontal, 50)
+                        .frame(width: size.width * 0.85, height: size.width * 0.15)
 
-        }
+                        .background{
+                            Image("caixinha12345")
+                                .resizable()
+                                .frame(width: size.width * 0.85, height: size.width * 0.12)
+
+                                
+
+                        }
+                
+                  }
+            .padding(.bottom, 15)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background {
+                
+                Image(narrativeImages[hubManager.actualPage])
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+                
+            }
+            .onAppear {
+                audioManager.playSound(named: "Narrative Music")
+            }
            
         }
         
-        }
+    }
 
 #Preview {
-    NarrativeView()
+    let hubManager = HUBPhoneManager.instance
+    hubManager.actualPage = 0
+   
+
+    return NarrativeView(
+        size: CGSize(width: 2388, height: 1668)
+    )
 }

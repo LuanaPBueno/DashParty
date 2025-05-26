@@ -73,7 +73,7 @@ struct MatchViewHub: View {
             rankingTimer = nil
         }
         .task {
-            audioManager.playSound(named: "Run Music")
+//            audioManager.playSound(named: "Run Music")
             startTime = .now
             rankingTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
                 DispatchQueue.main.async {

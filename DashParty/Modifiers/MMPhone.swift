@@ -13,7 +13,7 @@ struct MMPhone: View {
     var body: some View {
         GeometryReader { geometry in
             
-            let fontSize = geometry.size.width * 0.07 < 20 ? 20 : geometry.size.width * 0.07
+            let fontSize = geometry.size.width * 0.07 < 20 ? 20 : geometry.size.width * 0.09
 
             ZStack {
 
@@ -88,13 +88,12 @@ struct MMPhone: View {
                                     Text(playerName)
                                         .font(.custom("TorukSC-Regular", size: fontSize))
                                         .foregroundColor(Color(red: 126/255, green: 97/255, blue: 46/255))
-                                        .padding(.bottom, CGFloat(sizePadding))
                                         .minimumScaleFactor(0.5)
                                         .lineLimit(1)
                                     
                                     
                                 }
-                                    .padding(.vertical, geometry.size.height * 0.05)
+                                    .padding(.vertical, geometry.size.height * 0.2)
                             )
                     }
                 }
