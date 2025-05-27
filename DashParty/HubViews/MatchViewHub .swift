@@ -27,7 +27,6 @@ struct MatchViewHub: View {
     @State var winnerTimer: Timer?
     
     
-    
     var body: some View {
         ZStack {
             if index < matchManager.scenes.count {

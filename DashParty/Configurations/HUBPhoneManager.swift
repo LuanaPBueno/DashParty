@@ -24,7 +24,7 @@ class HUBPhoneManager {
     
     var users: [User] = []
     
-    var allPlayers : [SendingPlayer] = []
+    var allPlayers : [SendingPlayer] = [] //MARK: Todos os dados de todos os jogadores estão aqui!!!
     
     var receivedPlayers : [SendingPlayer] = []
     

@@ -19,12 +19,6 @@ struct MatchGridView: View {
      var allPlayersFinished = HUBPhoneManager.instance.allPlayersFinished
     @State var audioManager: AudioManager = AudioManager()
 
-
-//    private let columns = [
-//        GridItem(.flexible()),
-//        GridItem(.flexible())
-//    ]
-
     var body: some View {
         
         let totalPlayers =  HUBPhoneManager.instance.allPlayers.count
