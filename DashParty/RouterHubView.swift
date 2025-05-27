@@ -10,8 +10,8 @@ import SwiftUI
 struct RouterHubView: View {
     @Binding var router:Router
     var multipeerSession : MPCSession = MPCSessionManager.shared
-    let user = HUBPhoneManager.instance.user
-    @State var matchManager = HUBPhoneManager.instance.matchManager
+    let user = GameInformation.instance.user
+    @State var matchManager = GameInformation.instance.matchManager
     var body: some View {
         GeometryReader { proxy in
             ZStack {

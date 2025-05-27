@@ -1,5 +1,5 @@
 //
-//  HUBPhoneManager.swift
+//  GameInformation.swift
 //  DashParty
 //
 //  Created by Luana Bueno on 24/03/25.
@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 
 @Observable
-class HUBPhoneManager {
-    static let instance = HUBPhoneManager()
+class GameInformation {
+    static let instance = GameInformation()
     
     var router:Router = .start
     
@@ -24,9 +24,9 @@ class HUBPhoneManager {
     
     var users: [User] = []
     
-    var allPlayers : [SendingPlayer] = [] //MARK: Todos os dados de todos os jogadores estão aqui!!!
+    var allPlayers : [PlayerState] = [] //MARK: Todos os dados de todos os jogadores estão aqui!!!
     
-    var receivedPlayers : [SendingPlayer] = []
+    var receivedPlayers : [PlayerState] = []
     
     var narrativeText: [String] = [
        
@@ -59,14 +59,14 @@ class HUBPhoneManager {
     
     var newGame: Bool = false
     
-    var matchManager = ChallengeManager()
+    var matchManager = MatchManager()
     
    var ranking = false
    var allPlayersFinished = false
 
     private init() {
            self.allPlayers = [
-               SendingPlayer(
+               PlayerState(
                    id: self.user.id,
                    name: self.playername,
                    currentSituation: self.matchManager.currentSituation,

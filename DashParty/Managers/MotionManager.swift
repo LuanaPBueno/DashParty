@@ -1,5 +1,5 @@
 //
-//  ChallengesTrack.swift
+//  MotionManager.swift
 //  DashParty
 //
 //  Created by Luana Bueno on 11/03/25.
@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 import CoreMotion
 
-class AccelerationManager: ObservableObject {
-    static let accelerationInstance = AccelerationManager()
+class MotionManager: ObservableObject {
+    static let accelerationInstance = MotionManager()
     private init() { }
     private var motionManager = CMMotionManager() //MARK: Defino aqui o administrador do meu aceletrometro
     

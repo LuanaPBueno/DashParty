@@ -1,5 +1,5 @@
 //
-//  MotionDat.swift
+//  MotionData.swift
 //  DashParty
 //
 //  Created by Luana Bueno on 02/04/25.

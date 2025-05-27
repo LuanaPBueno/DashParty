@@ -13,7 +13,7 @@ struct ShareScreenInstructionView: View {
     var multipeerSession : MPCSession!
     
     @State var navigate : Bool = false
-    @State var changed: Bool = HUBPhoneManager.instance.changeScreen
+    @State var changed: Bool = GameInformation.instance.changeScreen
     @State private var isActive = false
     
     var body: some View {
@@ -68,7 +68,7 @@ struct ShareScreenInstructionView: View {
                 Button {
                     router = .matchmaking
                 } label: {
-                    OrangeButtonPhone(text: "Ready", sizeFont: 20)
+                    OrangeButtonLabel(text: "Ready", sizeFont: 20)
                         .frame(width: 150, height: 45) // controla o tamanho do botão
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing) // joga o botão pra direita

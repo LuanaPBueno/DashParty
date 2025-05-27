@@ -12,7 +12,7 @@ struct MoonDashLogoView: View {
     @Binding var router: Router
     
     @State var navigate : Bool = false
-    @State var changed: Bool = HUBPhoneManager.instance.changeScreen
+    @State var changed: Bool = GameInformation.instance.changeScreen
     @State private var isActive = false
     
     var body: some View {
@@ -35,7 +35,7 @@ struct MoonDashLogoView: View {
                         Button(action: {
                             router = .play
                         }) {
-                            OrangeButtonPhone(text: "Play", sizeFont: 28)
+                            OrangeButtonLabel(text: "Play", sizeFont: 28)
                                 .padding(.vertical, 60)
                                 
                         }

@@ -9,8 +9,9 @@ import Foundation
 import CoreMotion
 import SceneKit
 
+
 @Observable
-class ChallengeManager {
+class MatchManager {
     var scenes: [SCNRunPathScene] = []
     
     var multipeerSession: MPCSession?
@@ -42,7 +43,7 @@ class ChallengeManager {
     
     var previousChallenge: [Int:Challenge] = [:]
     func checkAddChallenge(distance: Float, playerIndex: Int) {
-        let currentChallenge = HUBPhoneManager.instance.allPlayers[playerIndex].currentChallenge
+        let currentChallenge = GameInformation.instance.allPlayers[playerIndex].currentChallenge
 //        guard currentChallenge != previousChallenge[playerIndex] else {
 //            return
 //        }
@@ -84,15 +85,15 @@ class ChallengeManager {
         print("resetar infos do jogo")
         players[0].startTime = false
         players[0].progress = 0.0
-        print("Após mudar o progress pra 0.0, o currentChallenge é: \(HUBPhoneManager.instance.allPlayers[0].currentChallenge), \(HUBPhoneManager.instance.allPlayers[0].currentSituation)")
+        print("Após mudar o progress pra 0.0, o currentChallenge é: \(GameInformation.instance.allPlayers[0].currentChallenge), \(GameInformation.instance.allPlayers[0].currentSituation)")
         players[0].interval = 0.0
-        HUBPhoneManager.instance.allPlayers[0].youWon = false
-        HUBPhoneManager.instance.allPlayers[0].interval = 0.0
-        HUBPhoneManager.instance.allPlayers[0].progress = 0.0
+        GameInformation.instance.allPlayers[0].youWon = false
+        GameInformation.instance.allPlayers[0].interval = 0.0
+        GameInformation.instance.allPlayers[0].progress = 0.0
         
         
       
-        HUBPhoneManager.instance.matchManager.startMatch(users: [HUBPhoneManager.instance.user], myUserID: HUBPhoneManager.instance.allPlayers[0].id, index: 0)
+        GameInformation.instance.matchManager.startMatch(users: [GameInformation.instance.user], myUserID: GameInformation.instance.allPlayers[0].id, index: 0)
         
         print("resetei tudo")
     }
@@ -111,16 +112,18 @@ class ChallengeManager {
             
         }
         //MARK: TIRAR ISSO
+        #if DEBUG
         for index in players.indices {
             players[index].challenges[1] = .openingDoor
         }
+        #endif
 //        self.scenes = users.map { _ in
 //            SCNRunPathScene()
 //        }
         for userIndex in users.indices {
             let newScene = SCNRunPathScene()
             var color = "red"
-            switch HUBPhoneManager.instance.allPlayers[userIndex].userClan {
+            switch GameInformation.instance.allPlayers[userIndex].userClan {
             case .bunny:
                 color = "green"
             case .monkey:
@@ -143,7 +146,7 @@ class ChallengeManager {
             startTime = Date.now
         }
         self.currentPlayerIndex = index
-        AccelerationManager.accelerationInstance.startAccelerometer(
+        MotionManager.accelerationInstance.startAccelerometer(
             action: { [weak self] deviceMotion in
                 guard let self else { return }
                 
@@ -188,19 +191,19 @@ class ChallengeManager {
                 case .running:
                     currentChallenge = .running
                     
-                        HUBPhoneManager.instance.allPlayers[0].currentChallenge = .running
+                        GameInformation.instance.allPlayers[0].currentChallenge = .running
                     
-                    print(HUBPhoneManager.instance.allPlayers[0].currentChallenge)
+                    print(GameInformation.instance.allPlayers[0].currentChallenge)
                     if abs(magnitude) > 0.8
                         && abs(averageAcceleration.y) > abs(averageAcceleration.x)
                         && abs(averageAcceleration.y) > abs(averageAcceleration.z) {
                         
                         currentSituation = true
                       //  DispatchQueue.main.async {
-                            HUBPhoneManager.instance.allPlayers[0].currentSituation = true
+                            GameInformation.instance.allPlayers[0].currentSituation = true
                       //  }
                         players[currentPlayerIndex].progress += magnitude
-                        HUBPhoneManager.instance.allPlayers[0].progress += magnitude
+                        GameInformation.instance.allPlayers[0].progress += magnitude
                         
                         
                         
@@ -209,7 +212,7 @@ class ChallengeManager {
                         
                         currentSituation = false
                      //   DispatchQueue.main.async {
-                            HUBPhoneManager.instance.allPlayers[0].currentSituation = false
+                            GameInformation.instance.allPlayers[0].currentSituation = false
                       //  }
                     }
                     
@@ -217,9 +220,9 @@ class ChallengeManager {
                 case .jumping:
                     currentChallenge = .jumping
                   //  DispatchQueue.main.async {
-                        HUBPhoneManager.instance.allPlayers[0].currentChallenge = .jumping
+                        GameInformation.instance.allPlayers[0].currentChallenge = .jumping
                   //  }
-                    print(HUBPhoneManager.instance.allPlayers[0].currentChallenge)
+                    print(GameInformation.instance.allPlayers[0].currentChallenge)
 
                     if recentDeviceMotion.count >= 3 {
                         let lastThreeY = recentDeviceMotion.suffix(7).map { $0.userAcceleration.y }
@@ -233,23 +236,23 @@ class ChallengeManager {
                             currentSituation = true
                             
                       //      DispatchQueue.main.async {
-                                HUBPhoneManager.instance.allPlayers[0].currentSituation = true
+                                GameInformation.instance.allPlayers[0].currentSituation = true
                        //     }
                             print(currentY, lastThreeY.min()!, lastThreeY.max()!)
                             players[currentPlayerIndex].progress += 100
-                            HUBPhoneManager.instance.allPlayers[0].progress += 100
+                            GameInformation.instance.allPlayers[0].progress += 100
                         } else {
                             currentSituation = false
                          //   DispatchQueue.main.async {
-                                HUBPhoneManager.instance.allPlayers[0].currentSituation = false
+                                GameInformation.instance.allPlayers[0].currentSituation = false
                         }
                     }
                     
                 case .openingDoor:
                     currentChallenge = .openingDoor
-                    HUBPhoneManager.instance.allPlayers[0].currentChallenge = .openingDoor
-                    print(HUBPhoneManager.instance.allPlayers[0].currentChallenge)
-                    print("\(HUBPhoneManager.instance.allPlayers[0].currentChallenge)")
+                    GameInformation.instance.allPlayers[0].currentChallenge = .openingDoor
+                    print(GameInformation.instance.allPlayers[0].currentChallenge)
+                    print("\(GameInformation.instance.allPlayers[0].currentChallenge)")
 //                    DispatchQueue.main.async {
 //                        HUBPhoneManager.instance.allPlayers[0].currentChallenge = .openingDoor
 //                        print("\(HUBPhoneManager.instance.allPlayers[0].currentChallenge)")
@@ -261,15 +264,15 @@ class ChallengeManager {
                         currentSituation = true
                         
                   //      DispatchQueue.main.async {
-                            HUBPhoneManager.instance.allPlayers[0].currentSituation = true
+                            GameInformation.instance.allPlayers[0].currentSituation = true
                             
                       //  }
                         players[currentPlayerIndex].progress += 100
-                        HUBPhoneManager.instance.allPlayers[0].progress += 100
+                        GameInformation.instance.allPlayers[0].progress += 100
                     } else {
                         currentSituation = false
                       //  DispatchQueue.main.async {
-                            HUBPhoneManager.instance.allPlayers[0].currentSituation = false
+                            GameInformation.instance.allPlayers[0].currentSituation = false
                       //  }
                         
                         
@@ -279,9 +282,9 @@ class ChallengeManager {
                     currentChallenge = .balancing
                     
                  //   DispatchQueue.main.async {
-                        HUBPhoneManager.instance.allPlayers[0].currentChallenge = .balancing
+                        GameInformation.instance.allPlayers[0].currentChallenge = .balancing
                 //    }
-                    print(HUBPhoneManager.instance.allPlayers[0].currentChallenge)
+                    print(GameInformation.instance.allPlayers[0].currentChallenge)
 
                     balancingCount["x"] = deviceMotion.attitude.roll
                     balancingCount["y"] = deviceMotion.attitude.pitch
@@ -292,24 +295,24 @@ class ChallengeManager {
                         balancingResult.append("true")
                         currentSituation = true
                        // DispatchQueue.main.async {
-                            HUBPhoneManager.instance.allPlayers[0].currentSituation = true
+                            GameInformation.instance.allPlayers[0].currentSituation = true
                       //  }
                     }
                     else{
                         currentSituation = false
                       //  DispatchQueue.main.async {
-                            HUBPhoneManager.instance.allPlayers[0].currentSituation = false
+                            GameInformation.instance.allPlayers[0].currentSituation = false
                      //   }
                     }
                     
                     if balancingResult.count == 30 { //para dar 3 segundos, não necessariamente continuos.
                         currentSituation = true
                        // DispatchQueue.main.async {
-                            HUBPhoneManager.instance.allPlayers[0].currentSituation = true
+                            GameInformation.instance.allPlayers[0].currentSituation = true
                      //   }
                         balancingResult = []
                         players[currentPlayerIndex].progress += 100
-                        HUBPhoneManager.instance.allPlayers[0].progress += 100
+                        GameInformation.instance.allPlayers[0].progress += 100
                     }
                     
                     
@@ -317,16 +320,16 @@ class ChallengeManager {
                     print("YOU WON")
                     let finishTime = Date()
                     players[currentPlayerIndex].progress += 100
-                    HUBPhoneManager.instance.allPlayers[0].progress += 100
+                    GameInformation.instance.allPlayers[0].progress += 100
                     currentChallenge = .stopped
                     youWon = true
                     interval = finishTime.timeIntervalSince(self.startTime)
-                    HUBPhoneManager.instance.allPlayers[0].interval = finishTime.timeIntervalSince(self.startTime)
+                    GameInformation.instance.allPlayers[0].interval = finishTime.timeIntervalSince(self.startTime)
                     print("MEU INTERVALO: \(interval)")
                   //  DispatchQueue.main.async {
-                        HUBPhoneManager.instance.allPlayers[0].youWon = true
-                        HUBPhoneManager.instance.allPlayers[0].interval = finishTime.timeIntervalSince(self.startTime)
-                        HUBPhoneManager.instance.allPlayers[0].currentChallenge = .stopped
+                        GameInformation.instance.allPlayers[0].youWon = true
+                        GameInformation.instance.allPlayers[0].interval = finishTime.timeIntervalSince(self.startTime)
+                        GameInformation.instance.allPlayers[0].currentChallenge = .stopped
                   //  }
                     finishMatch()
                     
@@ -339,7 +342,7 @@ class ChallengeManager {
                     self.scenes[playerIndex].runner.runAction(
                         SCNAction.move(to: SCNVector3(x: self.scenes[playerIndex].runner.position.x,
                                                       y: self.scenes[playerIndex].runner.position.y,
-                                                      z: Float(HUBPhoneManager.instance.allPlayers[playerIndex].progress * 0.2)),
+                                                      z: Float(GameInformation.instance.allPlayers[playerIndex].progress * 0.2)),
                                        duration: 0.1)
                     )
                 }
@@ -360,7 +363,7 @@ class ChallengeManager {
            }
        }
     
-    func startRankingUpdates() -> [SendingPlayer] {
+    func startRankingUpdates() -> [PlayerState] {
             let ranking = self.getMatchCurrentRanking()
             print("Ranking atualizado:")
             for (index, player) in ranking.enumerated() {
@@ -370,14 +373,14 @@ class ChallengeManager {
         return ranking
     }
     
-    func getMatchCurrentRanking() -> [SendingPlayer] {
-        let allProgress = HUBPhoneManager.instance.allPlayers.sorted { $0.progress > $1.progress }
+    func getMatchCurrentRanking() -> [PlayerState] {
+        let allProgress = GameInformation.instance.allPlayers.sorted { $0.progress > $1.progress }
         print(allProgress)
         return allProgress
     }
  
     func finishMatch() {
-        AccelerationManager.accelerationInstance.stop()
+        MotionManager.accelerationInstance.stop()
     }
 }
 

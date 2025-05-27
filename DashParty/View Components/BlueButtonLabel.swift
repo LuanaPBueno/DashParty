@@ -1,5 +1,5 @@
 //
-//  BlueButtonPhone.swift
+//  BlueButtonLabel.swift
 //  DashParty
 //
 //  Created by Fernanda Auler on 16/04/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BlueButtonPhone: View {
+struct BlueButtonLabel: View {
     var text: String
     var sizeFont: Int
     var body: some View {
@@ -31,5 +31,5 @@ struct BlueButtonPhone: View {
 
 
 #Preview {
-    BlueButtonPhone(text: "Continue", sizeFont: 28)
+    BlueButtonLabel(text: "Continue", sizeFont: 28)
 }

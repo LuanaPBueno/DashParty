@@ -38,7 +38,7 @@ struct MatchmakingHostView: View {
 //            if multipeerSession.host {
                 VStack{
 //                    ZStack{
-                        Text(HUBPhoneManager.instance.roomName)
+                        Text(GameInformation.instance.roomName)
                             .font(.custom("TorukSC-Regular", size: 34, relativeTo: .title2))
                             .multilineTextAlignment(.center)
                             .foregroundStyle(.white)
@@ -46,9 +46,9 @@ struct MatchmakingHostView: View {
                         Spacer()
                         
                         HStack{
-                            MMPhone(playerName: HUBPhoneManager.instance.playername , sizePadding: 0)
+                            ConnectedPlayerCard(playerName: GameInformation.instance.playername , sizePadding: 0)
                             ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
-                                MMPhone(playerName: player, sizePadding: 0)
+                                ConnectedPlayerCard(playerName: player, sizePadding: 0)
                             }
                         }
                         .frame(height: UIScreen.main.bounds.height * 0.55)
@@ -66,7 +66,7 @@ struct MatchmakingHostView: View {
                     Button {
                         router = .chooseCharacter
                     } label: {
-                        OrangeButtonPhone(text: "Continue", sizeFont: 20)
+                        OrangeButtonLabel(text: "Continue", sizeFont: 20)
                             .frame(width: 110, height: 45)
                     }
                     .padding(.trailing, 40)

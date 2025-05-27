@@ -72,7 +72,7 @@ struct CharacterSelectionView: View {
                                 isSelected: clan == tempSelection
                             )
                             .onTapGesture {
-                                HUBPhoneManager.instance.allPlayers[0].userClan = clan
+                                GameInformation.instance.allPlayers[0].userClan = clan
                                 tempSelection = clan
                             }
                         }

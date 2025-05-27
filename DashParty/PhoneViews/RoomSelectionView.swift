@@ -68,7 +68,7 @@ struct RoomSelectionView: View {
                                                     invitationToHost = peerID
                                                     showingButtonInvitationAlert = true
                                                 }) {
-                                                    OrangeButtonPhone(text: "Join", sizeFont: 20)
+                                                    OrangeButtonLabel(text: "Join", sizeFont: 20)
                                                     
                                                 }
                                                 .frame(width: 100)
@@ -129,6 +129,6 @@ struct RoomSelectionView: View {
     }
 }
 #Preview {
-    RoomSelectionView(router: .constant(.chooseRoom), multipeerSession: MPCSession(service: "kiwi", identity: "uva", maxPeers: 6, matchManager: ChallengeManager()))
+    RoomSelectionView(router: .constant(.chooseRoom), multipeerSession: MPCSession(service: "kiwi", identity: "uva", maxPeers: 6, matchManager: MatchManager()))
 }
 

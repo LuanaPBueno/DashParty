@@ -10,13 +10,13 @@ import SwiftUI
 
 struct RankingHubView: View {
     
-    @State var matchManager = HUBPhoneManager.instance.matchManager
+    @State var matchManager = GameInformation.instance.matchManager
     @Binding var router:Router
     @Environment(\.dismiss) var dismiss
     
-    var players: [SendingPlayer] = HUBPhoneManager.instance.allPlayers
+    var players: [PlayerState] = GameInformation.instance.allPlayers
     
-    var rankedPlayers: [(player: SendingPlayer, formattedTime: String)] {
+    var rankedPlayers: [(player: PlayerState, formattedTime: String)] {
         guard !players.isEmpty else { return [] }
         
         let finishedPlayers = players.filter { $0.interval > 0.0 }
@@ -44,7 +44,7 @@ struct RankingHubView: View {
         return String(format: "%02d:%02d:%02d", minutes, seconds, milliseconds)
     }
     
-    var hubManager = HUBPhoneManager.instance
+    var hubManager = GameInformation.instance
     
     var body: some View {
         
@@ -93,7 +93,7 @@ struct RankingHubView: View {
             }
             
             .onAppear {
-                HUBPhoneManager.instance.endedGame = true
+                GameInformation.instance.endedGame = true
                 
                 if hubManager.newGame {
                     DispatchQueue.main.async {
@@ -105,7 +105,7 @@ struct RankingHubView: View {
         }
     }
     
-    func characterFrameType(ranked: (player: SendingPlayer, formattedTime: String)) -> CharacterFrameType {
+    func characterFrameType(ranked: (player: PlayerState, formattedTime: String)) -> CharacterFrameType {
         if let kikoColor = ranked.player.userClan?.color {
             let characterColor = CharacterColor(kikoColor: kikoColor)
             return CharacterFrameType(status: .winner, color: characterColor)

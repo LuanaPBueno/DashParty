@@ -12,7 +12,7 @@ struct GameDifficulty: View {
     
     var multipeerSession : MPCSession!
     @State var navigate : Bool = false
-    @State var changed: Bool = HUBPhoneManager.instance.changeScreen
+    @State var changed: Bool = GameInformation.instance.changeScreen
     @State private var isActive = false
     @State var currentName : String = ""
     @State private var askForHostName = false
@@ -95,7 +95,7 @@ struct GameDifficulty: View {
                             Button("Cancel", role: .cancel) { }
                             
                                 Button {
-                                    HUBPhoneManager.instance.allPlayers[0].name = currentName
+                                    GameInformation.instance.allPlayers[0].name = currentName
                                     
                                 } label: {
                                     Text("Save")

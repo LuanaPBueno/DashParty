@@ -21,7 +21,7 @@ struct ProgressBarView: View {
                     .fill(Color.white)
                     .frame(width: 5, height: geometry.size.height)
 
-                ForEach(HUBPhoneManager.instance.allPlayers) { player in
+                ForEach(GameInformation.instance.allPlayers) { player in
                     let progress = min(CGFloat(player.progress) / 2500.0, 1.0)
 
                     imageForColor(player.userClan?.originalColor)

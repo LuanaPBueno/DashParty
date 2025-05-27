@@ -31,7 +31,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     
     // Motion e gerenciamento de partida
     let motionManager = CMMotionManager()
-    var matchManager: ChallengeManager
+    var matchManager: MatchManager
     var currentAcceleration: CMAcceleration?
     var pendingInvitations: [String: ((Bool, MCSession?) -> Void)] = [:]
     
@@ -72,7 +72,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     
     // MARK: - Inicialização
     
-    init(service: String, identity: String, maxPeers: Int, matchManager: ChallengeManager) {
+    init(service: String, identity: String, maxPeers: Int, matchManager: MatchManager) {
         self.serviceString = service
         self.identityString = identity
         self.maxNumPeers = maxPeers
@@ -121,9 +121,9 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         self.invalidate()
         
         if host {
-            localPeerID = MCPeerID(displayName: HUBPhoneManager.instance.roomName)
+            localPeerID = MCPeerID(displayName: GameInformation.instance.roomName)
         } else {
-            localPeerID = MCPeerID(displayName: HUBPhoneManager.instance.playername)
+            localPeerID = MCPeerID(displayName: GameInformation.instance.playername)
         }
         
         mcSession = MCSession(peer: localPeerID, securityIdentity: nil, encryptionPreference: .required)
@@ -133,7 +133,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             peer: localPeerID,
             discoveryInfo: [
                 MPCSessionConstants.kKeyIdentity: identityString,
-                "HostName": HUBPhoneManager.instance.playername
+                "HostName": GameInformation.instance.playername
             ],
             serviceType: serviceString
         )
@@ -270,7 +270,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     func startSendingUserDataContinuously(interval: TimeInterval = 1.0) {
         dataSendTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
             guard let self = self else { return }
-            let userData: [SendingPlayer] = HUBPhoneManager.instance.allPlayers
+            let userData: [PlayerState] = GameInformation.instance.allPlayers
             do {
                 let encodedData = try JSONEncoder().encode(userData)
                 self.sendDataToAllPeers(data: encodedData)
@@ -329,15 +329,15 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             encoder.dateEncodingStrategy = .iso8601
             let data = try encoder.encode(
                 EventMessage.playerUpdate(
-                    SendingPlayer(
-                        id: HUBPhoneManager.instance.user.id,
-                        name: HUBPhoneManager.instance.playername,
-                        currentSituation: HUBPhoneManager.instance.allPlayers[0].currentSituation,
-                        currentChallenge: HUBPhoneManager.instance.allPlayers[0].currentChallenge,
-                        youWon: HUBPhoneManager.instance.allPlayers[0].youWon,
-                        interval: HUBPhoneManager.instance.allPlayers[0].interval,
-                        progress: HUBPhoneManager.instance.allPlayers[0].progress,
-                        userClan: HUBPhoneManager.instance.allPlayers[0].userClan ?? nil
+                    PlayerState(
+                        id: GameInformation.instance.user.id,
+                        name: GameInformation.instance.playername,
+                        currentSituation: GameInformation.instance.allPlayers[0].currentSituation,
+                        currentChallenge: GameInformation.instance.allPlayers[0].currentChallenge,
+                        youWon: GameInformation.instance.allPlayers[0].youWon,
+                        interval: GameInformation.instance.allPlayers[0].interval,
+                        progress: GameInformation.instance.allPlayers[0].progress,
+                        userClan: GameInformation.instance.allPlayers[0].userClan ?? nil
                     )
                 )
             )
@@ -381,15 +381,15 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                     encoder.dateEncodingStrategy = .iso8601
                     let data = try encoder.encode(
                         EventMessage.playerUpdate(
-                            SendingPlayer(
-                                id: HUBPhoneManager.instance.user.id,
-                                name: HUBPhoneManager.instance.playername,
-                                currentSituation: HUBPhoneManager.instance.allPlayers[0].currentSituation,
-                                currentChallenge: HUBPhoneManager.instance.allPlayers[0].currentChallenge,
-                                youWon: HUBPhoneManager.instance.allPlayers[0].youWon,
-                                interval: HUBPhoneManager.instance.allPlayers[0].interval,
-                                progress: HUBPhoneManager.instance.allPlayers[0].progress,
-                                userClan: HUBPhoneManager.instance.allPlayers[0].userClan ?? nil
+                            PlayerState(
+                                id: GameInformation.instance.user.id,
+                                name: GameInformation.instance.playername,
+                                currentSituation: GameInformation.instance.allPlayers[0].currentSituation,
+                                currentChallenge: GameInformation.instance.allPlayers[0].currentChallenge,
+                                youWon: GameInformation.instance.allPlayers[0].youWon,
+                                interval: GameInformation.instance.allPlayers[0].interval,
+                                progress: GameInformation.instance.allPlayers[0].progress,
+                                userClan: GameInformation.instance.allPlayers[0].userClan ?? nil
                             )
                         )
                     )
@@ -442,9 +442,9 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         do {
-            let players = try JSONDecoder().decode([SendingPlayer].self, from: data)
+            let players = try JSONDecoder().decode([PlayerState].self, from: data)
             print("✅ Recebido array de jogadores: \(players)")
-            HUBPhoneManager.instance.receivedPlayers = players
+            GameInformation.instance.receivedPlayers = players
             return
         } catch {
          //   print("❌ Não é um array de jogadores: \(error.localizedDescription)")
@@ -453,7 +453,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         do {
             let players = try JSONDecoder().decode([String].self, from: data)
             print("✅ Recebido array de jogadores: \(players)")
-            HUBPhoneManager.instance.allRank = players
+            GameInformation.instance.allRank = players
             return
         } catch {
          //   print("❌ Não é um array de jogadores: \(error.localizedDescription)")
@@ -461,17 +461,17 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         
         if let receivedString = String(data: data, encoding: .utf8) {
             if receivedString == "StartTime" {
-                HUBPhoneManager.instance.matchManager.players[0].startTime = true
-                HUBPhoneManager.instance.matchManager.atualizaStart()
+                GameInformation.instance.matchManager.players[0].startTime = true
+                GameInformation.instance.matchManager.atualizaStart()
             }
             
             if receivedString == "Reset" {
-                HUBPhoneManager.instance.matchManager.players[0].startTime = false
-                for index in HUBPhoneManager.instance.allPlayers.indices {
-                    HUBPhoneManager.instance.allPlayers[index].youWon = false
+                GameInformation.instance.matchManager.players[0].startTime = false
+                for index in GameInformation.instance.allPlayers.indices {
+                    GameInformation.instance.allPlayers[index].youWon = false
                 }
                 print("Recebi a func de reset")
-                HUBPhoneManager.instance.matchManager.reset()
+                GameInformation.instance.matchManager.reset()
             }
         }
         
@@ -536,7 +536,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
 
         if !host {
             print("enviando coordenadas")
-            matchManager.startMatch(users: [HUBPhoneManager.instance.user], myUserID: HUBPhoneManager.instance.allPlayers[0].id, index: 0)
+            matchManager.startMatch(users: [GameInformation.instance.user], myUserID: GameInformation.instance.allPlayers[0].id, index: 0)
             sendMyCoordinatesToHost()
         }
         setupMessageHandler()
@@ -587,22 +587,22 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             switch receivedData {
             case .navigation(let navigationData):
                 print(Thread.isMainThread)
-                HUBPhoneManager.instance.router = navigationData
+                GameInformation.instance.router = navigationData
                 
             case .playerUpdate(let receivedData):
                 DispatchQueue.main.async {
-                    if let existingPlayerIndex = HUBPhoneManager.instance.allPlayers.firstIndex(where: { $0.id == receivedData.id }) {
-                        HUBPhoneManager.instance.allPlayers[existingPlayerIndex].currentSituation = receivedData.currentSituation
-                        HUBPhoneManager.instance.allPlayers[existingPlayerIndex].currentChallenge = receivedData.currentChallenge
-                        HUBPhoneManager.instance.allPlayers[existingPlayerIndex].youWon = receivedData.youWon
-                        HUBPhoneManager.instance.allPlayers[existingPlayerIndex].interval = receivedData.interval
-                        HUBPhoneManager.instance.allPlayers[existingPlayerIndex].progress =  receivedData.progress
+                    if let existingPlayerIndex = GameInformation.instance.allPlayers.firstIndex(where: { $0.id == receivedData.id }) {
+                        GameInformation.instance.allPlayers[existingPlayerIndex].currentSituation = receivedData.currentSituation
+                        GameInformation.instance.allPlayers[existingPlayerIndex].currentChallenge = receivedData.currentChallenge
+                        GameInformation.instance.allPlayers[existingPlayerIndex].youWon = receivedData.youWon
+                        GameInformation.instance.allPlayers[existingPlayerIndex].interval = receivedData.interval
+                        GameInformation.instance.allPlayers[existingPlayerIndex].progress =  receivedData.progress
                         
                         if receivedData.userClan != nil {
-                            HUBPhoneManager.instance.allPlayers[existingPlayerIndex].userClan = receivedData.userClan
+                            GameInformation.instance.allPlayers[existingPlayerIndex].userClan = receivedData.userClan
                         }
                     } else {
-                        HUBPhoneManager.instance.allPlayers.append(receivedData)
+                        GameInformation.instance.allPlayers.append(receivedData)
                       //  print("appendando: \(receivedData)")
                     }
                 }
@@ -626,10 +626,10 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
 
 // Singleton manager
 class MPCSessionManager {
-    static let shared = MPCSession(service: "nisample", identity: "com.dashparty.app", maxPeers: 3, matchManager: HUBPhoneManager.instance.matchManager)
+    static let shared = MPCSession(service: "nisample", identity: "com.dashparty.app", maxPeers: 3, matchManager: GameInformation.instance.matchManager)
 }
 
 enum EventMessage: Codable {
     case navigation(Router)
-    case playerUpdate(SendingPlayer)
+    case playerUpdate(PlayerState)
 }

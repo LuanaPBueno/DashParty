@@ -13,9 +13,9 @@ struct TutorialHubView: View {
     var multipeerSession = MPCSessionManager.shared
     @State var audioManager: AudioManager = AudioManager()
 
-    let user = HUBPhoneManager.instance.user
-    @State var matchManager = HUBPhoneManager.instance.matchManager
-    var hubManager = HUBPhoneManager.instance
+    let user = GameInformation.instance.user
+    @State var matchManager = GameInformation.instance.matchManager
+    var hubManager = GameInformation.instance
     
     let basicTutorialImage = "phoneTV"
 

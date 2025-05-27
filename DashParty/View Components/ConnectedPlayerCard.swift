@@ -1,5 +1,5 @@
 //
-//  MMPhone.swift
+//  ConnectedPlayerCard.swift
 //  DashParty
 //
 //  Created by Fernanda Auler on 15/04/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MMPhone: View {
+struct ConnectedPlayerCard: View {
     var playerName: String
     var sizePadding: Int
     var body: some View {
@@ -18,7 +18,7 @@ struct MMPhone: View {
             ZStack {
 
                 if MPCSessionManager.shared.host{
-                    if let playerCharacter = HUBPhoneManager.instance.allPlayers.first(where: { $0.name == playerName }),
+                    if let playerCharacter = GameInformation.instance.allPlayers.first(where: { $0.name == playerName }),
                        let imageName = playerCharacter.userClan?.alternateImage {
                         VStack {
                             imageName
@@ -56,7 +56,7 @@ struct MMPhone: View {
                     }
                 }
                 else{
-                    if let playerCharacter = HUBPhoneManager.instance.receivedPlayers.first(where: { $0.name == playerName }),
+                    if let playerCharacter = GameInformation.instance.receivedPlayers.first(where: { $0.name == playerName }),
                        let imageName = playerCharacter.userClan?.alternateImage {
                         VStack {
                             imageName
@@ -106,5 +106,5 @@ struct MMPhone: View {
 
 
 #Preview {
-    MMPhone(playerName: "Player 1", sizePadding: 0)
+    ConnectedPlayerCard(playerName: "Player 1", sizePadding: 0)
 }

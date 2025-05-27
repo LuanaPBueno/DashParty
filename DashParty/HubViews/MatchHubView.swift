@@ -10,18 +10,18 @@ import Foundation
 struct MatchHubView: View {
     @Binding var router:Router
     let count: Int
-    let players = HUBPhoneManager.instance.allPlayers
-    let users: [User] = HUBPhoneManager.instance.users
+    let players = GameInformation.instance.allPlayers
+    let users: [User] = GameInformation.instance.users
     let user: User
-    var matchManager: ChallengeManager
+    var matchManager: MatchManager
     @State private var timer: Timer?
-     var ranking = HUBPhoneManager.instance.ranking
-     var allPlayersFinished = HUBPhoneManager.instance.allPlayersFinished
+     var ranking = GameInformation.instance.ranking
+     var allPlayersFinished = GameInformation.instance.allPlayersFinished
     @State var audioManager: AudioManager = AudioManager()
 
     var body: some View {
         
-        let totalPlayers =  HUBPhoneManager.instance.allPlayers.count
+        let totalPlayers =  GameInformation.instance.allPlayers.count
         ZStack{
             VStack(spacing: 0){
                 
@@ -74,8 +74,8 @@ struct MatchHubView: View {
             .task{
                 audioManager.playSound(named: "Run Music")
                 print("number of players: \(players.count)")
-                for (index, player) in Array(HUBPhoneManager.instance.allPlayers.enumerated()) {
-                    matchManager.startMatch(users: users, myUserID: HUBPhoneManager.instance.allPlayers[index].id, index: index)
+                for (index, player) in Array(GameInformation.instance.allPlayers.enumerated()) {
+                    matchManager.startMatch(users: users, myUserID: GameInformation.instance.allPlayers[index].id, index: index)
                 }
                 
                 print("Created matches")
@@ -96,21 +96,21 @@ struct MatchHubView: View {
         timer?.invalidate()
         
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-            let players = HUBPhoneManager.instance.allPlayers
+            let players = GameInformation.instance.allPlayers
             let winnersCount = players.filter { $0.youWon == true }.count
             
             if players.count == 1 {
                 if winnersCount == 1 {
-                    HUBPhoneManager.instance.allPlayersFinished = true
-                    HUBPhoneManager.instance.ranking = true
+                    GameInformation.instance.allPlayersFinished = true
+                    GameInformation.instance.ranking = true
                     router = .ranking
                     timer?.invalidate()
                 }
              
             } else {
                 if winnersCount == players.count - 1 {
-                    HUBPhoneManager.instance.allPlayersFinished = true
-                    HUBPhoneManager.instance.ranking = true
+                    GameInformation.instance.allPlayersFinished = true
+                    GameInformation.instance.ranking = true
                     router = .ranking
                     timer?.invalidate()
                 }

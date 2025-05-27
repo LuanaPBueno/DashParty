@@ -59,11 +59,11 @@ struct MatchmakingGuestView: View {
                 
                 // MMPhones
                 HStack(spacing: 20) {
-                    MMPhone(playerName: multipeerSession.hostName, sizePadding: 0)
-                    MMPhone(playerName: HUBPhoneManager.instance.playername, sizePadding: 0)
+                    ConnectedPlayerCard(playerName: multipeerSession.hostName, sizePadding: 0)
+                    ConnectedPlayerCard(playerName: GameInformation.instance.playername, sizePadding: 0)
                     ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
                         if player != multipeerSession.hostPeerID?.displayName {
-                            MMPhone(playerName: player, sizePadding: 0)
+                            ConnectedPlayerCard(playerName: player, sizePadding: 0)
                         }
                     }
                 }

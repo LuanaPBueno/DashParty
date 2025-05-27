@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct OrangeButtonPhone: View {
+struct OrangeButtonLabel: View {
     var text: String
     var sizeFont: Int
     var body: some View {
@@ -31,7 +31,7 @@ struct OrangeButtonPhone: View {
 }
 
 #Preview {
-    OrangeButtonPhone(text: "Continue", sizeFont: 28)
+    OrangeButtonLabel(text: "Continue", sizeFont: 28)
 }
 
 

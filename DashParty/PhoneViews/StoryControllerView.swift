@@ -13,7 +13,7 @@ struct StoryControllerView: View {
     var multipeerSession : MPCSession = MPCSessionManager.shared
     
     //    var multipeerSession : MPCSession!
-    var hubManager = HUBPhoneManager.instance
+    var hubManager = GameInformation.instance
     //    @State private var navigate: Bool = false
     @State private var isActive = false
     @State private var showAlert = false
@@ -98,7 +98,7 @@ struct StoryControllerView: View {
                 
             }
             .task{
-                HUBPhoneManager.instance.users = HUBPhoneManager.instance.allPlayers.map { player in
+                GameInformation.instance.users = GameInformation.instance.allPlayers.map { player in
                     return User(
                         id: player.id,
                         name: ""

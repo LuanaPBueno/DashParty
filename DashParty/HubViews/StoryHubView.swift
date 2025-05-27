@@ -8,7 +8,7 @@ import Foundation
 import SwiftUI
 
 struct StoryHubView: View {
-    var hubManager = HUBPhoneManager.instance
+    var hubManager = GameInformation.instance
     @State var audioManager: AudioManager = AudioManager()
 
     var size: CGSize
@@ -27,7 +27,7 @@ struct StoryHubView: View {
                 
                 Spacer()
                     
-                    Text(HUBPhoneManager.instance.narrativeText[hubManager.actualPage])
+                    Text(GameInformation.instance.narrativeText[hubManager.actualPage])
                     .font(.custom("TorukSC-Regular", size: (size.width / 1920) * 38)) // tamanho ajustado para não estourar a caixa
                         .foregroundColor(.text)
                         .padding(.vertical, 80)
@@ -64,7 +64,7 @@ struct StoryHubView: View {
     }
 
 #Preview {
-    let hubManager = HUBPhoneManager.instance
+    let hubManager = GameInformation.instance
     hubManager.actualPage = 0
    
 

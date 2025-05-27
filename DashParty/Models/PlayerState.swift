@@ -1,5 +1,5 @@
 //
-//  SendingPlayer.swift
+//  PlayerState.swift
 //  DashParty
 //
 //  Created by Luana Bueno on 07/04/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SendingPlayer: Identifiable, Codable, Equatable {
+struct PlayerState: Identifiable, Codable, Equatable {
     var id: UUID
     var name: String
     var currentSituation: Bool

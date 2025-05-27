@@ -12,11 +12,11 @@ import SwiftUI
 struct TutorialControllerView: View {
     @Binding var router:Router
     var multipeerSession : MPCSession
-    var hubManager = HUBPhoneManager.instance
+    var hubManager = GameInformation.instance
     
     
    
-    @State var matchManager = HUBPhoneManager.instance.matchManager
+    @State var matchManager = GameInformation.instance.matchManager
    
     
     @State var pass : Bool = false
@@ -112,9 +112,9 @@ struct TutorialControllerView: View {
                 message: Text("As soon as you click start, the game will begin. Are you prepared?"),
                 primaryButton: .destructive(Text("Cancel")),
                 secondaryButton: .default(Text("Start")) {
-                    HUBPhoneManager.instance.startMatch = true
+                    GameInformation.instance.startMatch = true
                     router = .game
-                    HUBPhoneManager.instance.matchManager.atualizaStart()
+                    GameInformation.instance.matchManager.atualizaStart()
                 }
                
             )

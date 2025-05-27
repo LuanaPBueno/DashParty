@@ -14,7 +14,7 @@ struct SessionModeSelectionView: View {
     
     @State var navigateToHost : Bool = false
     //    @State var navigateToJoin : Bool = false
-    @State var changed: Bool = HUBPhoneManager.instance.changeScreen
+    @State var changed: Bool = GameInformation.instance.changeScreen
     @State private var isActive = false
     @State var showAlert = false
     @State var showRoomAlert = false
@@ -46,7 +46,7 @@ struct SessionModeSelectionView: View {
                     MPCSessionManager.shared.startSession(asHost: true)
                     askForHostName = true
                 }) {
-                    OrangeButtonPhone(text: "Host", sizeFont: 40)
+                    OrangeButtonLabel(text: "Host", sizeFont: 40)
                         .padding(.vertical, 30)
                 }
                 
@@ -63,7 +63,7 @@ struct SessionModeSelectionView: View {
                     }
                   
                 }) {
-                    BlueButtonPhone(text: "Join", sizeFont: 40)
+                    BlueButtonLabel(text: "Join", sizeFont: 40)
                         
                     
                 }
@@ -75,8 +75,8 @@ struct SessionModeSelectionView: View {
                 Button("Cancel", role: .cancel) { }
                 
                 Button {
-                    HUBPhoneManager.instance.allPlayers[0].name = userName
-                    HUBPhoneManager.instance.playername = userName
+                    GameInformation.instance.allPlayers[0].name = userName
+                    GameInformation.instance.playername = userName
 
 //                    navigateToHost = true
 //                    router = .matchmaking
@@ -93,7 +93,7 @@ struct SessionModeSelectionView: View {
                 Button("Cancel", role: .cancel) { }
                 
                 Button {
-                    HUBPhoneManager.instance.playername = userName
+                    GameInformation.instance.playername = userName
                     showAlert = false
                     
                     multipeerSession.resetSession()
@@ -111,7 +111,7 @@ struct SessionModeSelectionView: View {
                     Button("Cancel", role: .cancel) { }
 
                         Button {
-                            HUBPhoneManager.instance.roomName = roomName
+                            GameInformation.instance.roomName = roomName
                             showAlert = false
                             navigateToHost = true
                             askForHostName = true

@@ -21,15 +21,15 @@ struct MatchmakingHubView: View {
         
         VStack {
             
-            Text(HUBPhoneManager.instance.roomName)
+            Text(GameInformation.instance.roomName)
                 .font(.custom("TorukSC-Regular", size: (size.width / 1920) * 60))             .multilineTextAlignment(.center)
                 .foregroundColor(.white)
             
             HStack{
                 
-                MMPhone(playerName: HUBPhoneManager.instance.playername , sizePadding: 0)
+                ConnectedPlayerCard(playerName: GameInformation.instance.playername , sizePadding: 0)
                 ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
-                    MMPhone(playerName: player, sizePadding: 0)
+                    ConnectedPlayerCard(playerName: player, sizePadding: 0)
                     
                 }
                 
@@ -71,11 +71,11 @@ struct MatchmakingHubView: View {
 
 
 #Preview {
-    let hubManager = HUBPhoneManager.instance
+    let hubManager = GameInformation.instance
         hubManager.roomName = "Floresta Mística"
     
         hubManager.playername = "Raposa"
-    let matchManager = ChallengeManager()
+    let matchManager = MatchManager()
     let session = MPCSession(
         service: "banana",
         identity: "maçã",

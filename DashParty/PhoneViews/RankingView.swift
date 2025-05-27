@@ -30,7 +30,7 @@ struct RankingView: View {
                 .scaledToFill()
                 .ignoresSafeArea()
             
-            Image(HUBPhoneManager.instance.allPlayers[0].userClan?.color.rawValue ?? kikoType.rawValue)
+            Image(GameInformation.instance.allPlayers[0].userClan?.color.rawValue ?? kikoType.rawValue)
                 .resizable()
                 .scaledToFit()
                 .scaleEffect(0.5)
@@ -85,23 +85,23 @@ struct RankingView: View {
                     if MPCSessionManager.shared.host {
                         Button {
                             DispatchQueue.main.async {
-                                HUBPhoneManager.instance.allPlayersFinished = false
-                                HUBPhoneManager.instance.ranking = false
-                                for i in 0..<HUBPhoneManager.instance.allPlayers.count {
-                                    HUBPhoneManager.instance.allPlayers[i].youWon = false
-                                    HUBPhoneManager.instance.allPlayers[i].interval = 0.0
+                                GameInformation.instance.allPlayersFinished = false
+                                GameInformation.instance.ranking = false
+                                for i in 0..<GameInformation.instance.allPlayers.count {
+                                    GameInformation.instance.allPlayers[i].youWon = false
+                                    GameInformation.instance.allPlayers[i].interval = 0.0
                                 }
                                 
                             }
                             
-                            HUBPhoneManager.instance.startMatch = false
+                            GameInformation.instance.startMatch = false
                             let message = "Reset"
                             if let data = message.data(using: .utf8) {
                                 MPCSessionManager.shared.sendDataToAllPeers(data: data)
                                 
                             }
                             router = .tutorial
-                            HUBPhoneManager.instance.matchManager.reset()
+                            GameInformation.instance.matchManager.reset()
                         } label: {
                             Text("PLAY AGAIN")
                                 .font(.custom("TorukSC-Regular", size: 18, relativeTo: .body))
@@ -121,7 +121,7 @@ struct RankingView: View {
             .offset(x: 140)
         }
         .task{
-            let rankingData: [String] = HUBPhoneManager.instance.allRank
+            let rankingData: [String] = GameInformation.instance.allRank
             do {
                 let encodedData = try JSONEncoder().encode(rankingData)
                 MPCSessionManager.shared.sendDataToAllPeers(data: encodedData)

@@ -14,7 +14,7 @@ struct DashPartyApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @State var audioManager = AudioManager()
-    @State var manager = HUBPhoneManager.instance
+    @State var manager = GameInformation.instance
     
 //    init() {
 //        if let fontURL = Bundle.main.url(forResource: "TorukscRegular-z8MA1", withExtension: "ttf") {
