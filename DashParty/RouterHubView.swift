@@ -5,13 +5,6 @@
 //  Created by Fernanda Auler on 11/04/25.
 //
 
-//
-//  RouterView.swift
-//  DashParty
-//
-//  Created by Fernanda Auler on 11/04/25.
-//
-
 import SwiftUI
 
 struct RouterHubView: View {
@@ -26,29 +19,29 @@ struct RouterHubView: View {
                 case .chooseCharacter:
                     MatchmakingHubView(router: $router, multipeerSession: multipeerSession, size: proxy.size)
                 case .start:
-                    InitialView()
+                    MoonDashLogoHubView()
                 case .options:
-                    InitialView()
+                    MoonDashLogoHubView()
                 case .play:
-                    InitialView()
+                    MoonDashLogoHubView()
                 case .createRoom:
-                    InitialView()
+                    MoonDashLogoHubView()
                 case .createName:
-                    InitialView()
+                    MoonDashLogoHubView()
                 case .airplayInstructions:
-                    InitialView()
+                    MoonDashLogoHubView()
                 case .chooseRoom:
-                    InitialView()
+                    MoonDashLogoHubView()
                 case .waitingRoom:
-                    InitialView()
+                    MoonDashLogoHubView()
                 case .matchmaking:
                     MatchmakingHubView(router: $router, multipeerSession: multipeerSession, size: proxy.size)
                 case .storyBoard:
-                    NarrativeView(size: proxy.size)
+                    StoryHubView(size: proxy.size)
                 case .tutorial:
                     TutorialHubView(router: $router)
                 case .game:
-                    MatchGridView(router: $router, count: multipeerSession.mcSession.connectedPeers.count, user: user, matchManager: matchManager)
+                    MatchHubView(router: $router, count: multipeerSession.mcSession.connectedPeers.count, user: user, matchManager: matchManager)
                 case .victoryStory:
                     Text("Victory")
                 case .ranking:
@@ -58,8 +51,4 @@ struct RouterHubView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
-}
-
-#Preview {
-    RouterView(router: .constant(.start))
 }

@@ -1,5 +1,5 @@
 //
-//  MatchViewHub .swift
+//  PlayerSceneView .swift
 //  DashParty
 //
 //  Created by Luana Bueno on 27/03/25.
@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import SceneKit
 
-struct MatchViewHub: View {
+struct PlayerSceneView: View {
     var users: [User]
     @State var currentWinner : SendingPlayer?
     @State var ranking: [SendingPlayer]?

@@ -7,7 +7,7 @@
 import SwiftUI
 import Foundation
 
-struct MatchGridView: View {
+struct MatchHubView: View {
     @Binding var router:Router
     let count: Int
     let players = HUBPhoneManager.instance.allPlayers
@@ -27,12 +27,12 @@ struct MatchGridView: View {
                 
                 HStack(spacing: 0) {
                     
-                    MatchViewHub(users: users, index: 0, matchManager: matchManager) //SOU EU
+                    PlayerSceneView(users: users, index: 0, matchManager: matchManager) //SOU EU
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .clipped()
                     
                     if totalPlayers >= 2 {
-                        MatchViewHub(users: users, index: 1, matchManager: matchManager) //jogador 1
+                        PlayerSceneView(users: users, index: 1, matchManager: matchManager) //jogador 1
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .clipped()
                             .task{
@@ -42,7 +42,7 @@ struct MatchGridView: View {
                     }
                     
                     if totalPlayers == 3 {
-                        MatchViewHub(users: users, index: 2, matchManager: matchManager) //jogador 2
+                        PlayerSceneView(users: users, index: 2, matchManager: matchManager) //jogador 2
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .clipped()
                         
@@ -53,13 +53,13 @@ struct MatchGridView: View {
                 HStack(spacing: 0){
                     
                     if totalPlayers > 3 {
-                        MatchViewHub(users: users, index: 2, matchManager: matchManager) //jogador 2
+                        PlayerSceneView(users: users, index: 2, matchManager: matchManager) //jogador 2
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .clipped()
                     }
                     
                     if totalPlayers == 4 {
-                        MatchViewHub(users: users, index: 3, matchManager: matchManager)
+                        PlayerSceneView(users: users, index: 3, matchManager: matchManager)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .clipped()
                     }

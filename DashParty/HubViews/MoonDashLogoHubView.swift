@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct InitialView: View {
+struct MoonDashLogoHubView: View {
     @State var audioManager: AudioManager = AudioManager()
     @State private var breathe = true
     @State private var showCustomAlert = true
@@ -43,5 +43,5 @@ struct InitialView: View {
   }
 
 #Preview {
-    InitialView()
+    MoonDashLogoHubView()
 }

@@ -85,7 +85,7 @@ struct TutorialHubView: View {
                 }
 
             } else {
-                MatchGridView(
+                MatchHubView(
                     router: $router,
                     count: multipeerSession.mcSession.connectedPeers.count,
                     user: user,

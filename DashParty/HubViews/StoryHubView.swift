@@ -1,13 +1,13 @@
 
 //
-//  NarrativeView.swift
+//  StoryHubView.swift
 //  DashParty
 //  Created by Luana Bueno on 24/03/25.
 
 import Foundation
 import SwiftUI
 
-struct NarrativeView: View {
+struct StoryHubView: View {
     var hubManager = HUBPhoneManager.instance
     @State var audioManager: AudioManager = AudioManager()
 
@@ -68,7 +68,7 @@ struct NarrativeView: View {
     hubManager.actualPage = 0
    
 
-    return NarrativeView(
+    return StoryHubView(
         size: CGSize(width: 2388, height: 1668)
     )
 }
