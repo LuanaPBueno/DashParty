@@ -21,6 +21,13 @@ enum KikoColor: String {
     case green = "KikoGreen"
 }
 
+enum KikoType: String {
+    case red = "KikoRed"
+    case blue = "KikoBlue"
+    case yellow = "KikoYellow"
+    case green = "KikoGreen"
+}
+
 enum BannerType: String {
     case winner = "bannerGold"
     case regular = "bannerSilver"

@@ -1,5 +1,5 @@
 //
-//  YouWonView.swift
+//  RankingHubView.swift
 //  DashParty
 //
 //  Created by Luana Bueno on 28/03/25.

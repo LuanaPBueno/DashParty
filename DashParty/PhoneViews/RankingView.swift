@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-enum KikoType: String {
-    case red = "KikoRed"
-    case blue = "KikoBlue"
-    case yellow = "KikoYellow"
-    case green = "KikoGreen"
-}
-
 struct RankingView: View {
     @Binding var router: Router
     var isWinner: Bool = false
