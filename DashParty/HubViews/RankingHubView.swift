@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct YouWonView: View {
+struct RankingHubView: View {
     
     @State var matchManager = HUBPhoneManager.instance.matchManager
     @Binding var router:Router
@@ -117,5 +117,5 @@ struct YouWonView: View {
 }
 
 #Preview {
-    YouWonView(router: .constant(.start))
+    RankingHubView(router: .constant(.start))
 }

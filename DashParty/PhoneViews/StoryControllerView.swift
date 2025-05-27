@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct NarrativePassingView: View {
+struct StoryControllerView: View {
     @Binding var router:Router
     var multipeerSession : MPCSession = MPCSessionManager.shared
     
@@ -130,5 +130,5 @@ struct NarrativePassingView: View {
 }
 
 #Preview {
-    NarrativePassingView(router: .constant(.storyBoard))
+    StoryControllerView(router: .constant(.storyBoard))
 }

@@ -1,5 +1,5 @@
 //
-//  TutorialPassingView.swift
+//  TutorialControllerView.swift
 //  DashParty
 //
 //  Created by Luana Bueno on 26/03/25.
@@ -9,7 +9,7 @@ import Foundation
 
 import SwiftUI
 
-struct TutorialPassingView: View {
+struct TutorialControllerView: View {
     @Binding var router:Router
     var multipeerSession : MPCSession
     var hubManager = HUBPhoneManager.instance
@@ -124,7 +124,7 @@ struct TutorialPassingView: View {
 }
 
 #Preview {
-    TutorialPassingView(router: .constant(.tutorial), multipeerSession: MPCSessionManager.shared)
+    TutorialControllerView(router: .constant(.tutorial), multipeerSession: MPCSessionManager.shared)
 }
 
 

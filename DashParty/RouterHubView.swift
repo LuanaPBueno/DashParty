@@ -52,7 +52,7 @@ struct RouterHubView: View {
                 case .victoryStory:
                     Text("Victory")
                 case .ranking:
-                    YouWonView(router: $router)
+                    RankingHubView(router: $router)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

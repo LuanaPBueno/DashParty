@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreMotion
 
-struct ContentView: View {
+struct MoonDashLogoView: View {
     @Binding var router: Router
     
     @State var navigate : Bool = false
@@ -64,5 +64,5 @@ struct ContentView: View {
 
 
 #Preview {
-    ContentView(router: .constant(.start))
+    MoonDashLogoView(router: .constant(.start))
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreMotion
 
-struct ReadyView: View {
+struct ShareScreenInstructionView: View {
     @Binding var router:Router
     var multipeerSession : MPCSession!
     
@@ -81,5 +81,5 @@ struct ReadyView: View {
 }
 
 #Preview {
-    ReadyView(router: .constant(.airplayInstructions))
+    ShareScreenInstructionView(router: .constant(.airplayInstructions))
 }

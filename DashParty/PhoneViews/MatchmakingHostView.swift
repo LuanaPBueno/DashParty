@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RoomView: View {
+struct MatchmakingHostView: View {
     //MARK: Deixar observable
     @Binding var router:Router
     @ObservedObject var multipeerSession: MPCSession

@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-struct WaitingView: View {
+struct MatchmakingGuestView: View {
     @Binding var router: Router
     var multipeerSession: MPCSession
     
@@ -96,5 +96,5 @@ struct WaitingView: View {
 
 
 #Preview {
-    WaitingView(router: .constant(.waitingRoom), multipeerSession: MPCSessionManager.shared)
+    MatchmakingGuestView(router: .constant(.waitingRoom), multipeerSession: MPCSessionManager.shared)
 }

@@ -1,5 +1,5 @@
 //
-//  YouWonPhoneView.swift
+//  RankingView.swift
 //  DashParty
 //
 //  Created by Bennett Oliveira on 07/05/25.
@@ -14,7 +14,7 @@ enum KikoType: String {
     case green = "KikoGreen"
 }
 
-struct YouWonPhoneView: View {
+struct RankingView: View {
     @Binding var router: Router
     var isWinner: Bool = false
     var kikoType: KikoType

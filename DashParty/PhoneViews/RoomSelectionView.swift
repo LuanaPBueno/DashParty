@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import MultipeerConnectivity
 
-struct RoomListView: View {
+struct RoomSelectionView: View {
     @Binding var router:Router
     
     @ObservedObject var multipeerSession: MPCSession
@@ -129,6 +129,6 @@ struct RoomListView: View {
     }
 }
 #Preview {
-    RoomListView(router: .constant(.chooseRoom), multipeerSession: MPCSession(service: "kiwi", identity: "uva", maxPeers: 6, matchManager: ChallengeManager()))
+    RoomSelectionView(router: .constant(.chooseRoom), multipeerSession: MPCSession(service: "kiwi", identity: "uva", maxPeers: 6, matchManager: ChallengeManager()))
 }
 

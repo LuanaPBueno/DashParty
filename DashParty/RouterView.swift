@@ -13,7 +13,7 @@ struct RouterView: View {
     var body: some View {
         switch router {
         case .start:
-            ContentView(router: $router)
+            MoonDashLogoView(router: $router)
                 .onAppear {
                     do {
                         let data = try JSONEncoder().encode(EventMessage.navigation(.start))
@@ -27,19 +27,19 @@ struct RouterView: View {
         case .options:
             OptionsView()
         case .play:
-            HostOrPlayerView(router: $router)
+            SessionModeSelectionView(router: $router)
         case .createRoom:
             Text("CreateRoom")
         case .createName:
             Text("CreateName")
         case .airplayInstructions:
-            ReadyView(router: $router)
+            ShareScreenInstructionView(router: $router)
         case .chooseRoom:
-            RoomListView(router: $router, multipeerSession: multipeerSession)
+            RoomSelectionView(router: $router, multipeerSession: multipeerSession)
         case .waitingRoom:
-            WaitingView(router: $router, multipeerSession: multipeerSession)
+            MatchmakingGuestView(router: $router, multipeerSession: multipeerSession)
         case .matchmaking:
-            RoomView(router: $router, multipeerSession: multipeerSession)
+            MatchmakingHostView(router: $router, multipeerSession: multipeerSession)
                 .task {
                    
                         multipeerSession.startSendingUserDataContinuously()
@@ -48,7 +48,7 @@ struct RouterView: View {
                 }
         case .storyBoard:
             if multipeerSession.host {
-                NarrativePassingView(router: $router)
+                StoryControllerView(router: $router)
                     .onAppear {
                         do {
                             let data = try JSONEncoder().encode(EventMessage.navigation(.storyBoard))
@@ -63,7 +63,7 @@ struct RouterView: View {
                 EyesOnTheHub()
             }
         case .tutorial:
-            TutorialPassingView(router: $router, multipeerSession: multipeerSession)
+            TutorialControllerView(router: $router, multipeerSession: multipeerSession)
                 .onAppear {
                     do {
                         let data = try JSONEncoder().encode(EventMessage.navigation(.tutorial))
@@ -90,7 +90,7 @@ struct RouterView: View {
         case .victoryStory:
             Text("Victory")
         case .ranking:
-                    YouWonPhoneView(router: $router, kikoType: .red)
+            RankingView(router: $router, kikoType: .red)
                 .onAppear {
                            do {
                                let data = try JSONEncoder().encode(EventMessage.navigation(.ranking))
@@ -101,7 +101,8 @@ struct RouterView: View {
                            }
                        }
         case .chooseCharacter:
-            CharacterView(router: $router)                    .onAppear {
+            CharacterSelectionView(router: $router)
+                .onAppear {
                         do {
                             let data = try JSONEncoder().encode(EventMessage.navigation(.chooseCharacter))
                             multipeerSession.sendDataToAllPeers(data: data)

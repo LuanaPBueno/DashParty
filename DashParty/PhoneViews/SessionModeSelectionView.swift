@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreMotion
 
-struct HostOrPlayerView: View {
+struct SessionModeSelectionView: View {
     @Binding var router:Router
     var multipeerSession : MPCSession = MPCSessionManager.shared
     
@@ -132,5 +132,5 @@ struct HostOrPlayerView: View {
 
 
 #Preview {
-    HostOrPlayerView(router: .constant(.play))
+    SessionModeSelectionView(router: .constant(.play))
 }

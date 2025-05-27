@@ -67,7 +67,7 @@ struct GameDifficulty: View {
                     }
                     
 //                    NavigationLink(
-//                        destination: WaitingView(multipeerSession: multipeerSession),
+//                        destination: MatchmakingGuestView(multipeerSession: multipeerSession),
 //                        isActive: $navigate,
 //                        label: { EmptyView() }
 //                    )

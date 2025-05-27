@@ -43,7 +43,7 @@ enum Clan: String, CaseIterable, Identifiable, Codable, Hashable {
     }
 }
 
-struct CharacterView: View {
+struct CharacterSelectionView: View {
     @Binding var router:Router
     @State private var tempSelection: Clan?
     @State private var navigateToNext = false
