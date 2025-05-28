@@ -103,6 +103,13 @@ struct MatchHubView: View {
                 if winnersCount == 1 {
                     GameInformation.instance.allPlayersFinished = true
                     GameInformation.instance.ranking = true
+                    let rankingData: [String] = GameInformation.instance.allRank
+                    do {
+                        let encodedData = try JSONEncoder().encode(rankingData)
+                        MPCSessionManager.shared.sendDataToAllPeers(data: encodedData)
+                    } catch {
+                        print("Erro ao codificar os dados do usuário: \(error)")
+                    }
                     router = .ranking
                     timer?.invalidate()
                 }
@@ -111,6 +118,13 @@ struct MatchHubView: View {
                 if winnersCount == players.count - 1 {
                     GameInformation.instance.allPlayersFinished = true
                     GameInformation.instance.ranking = true
+                    let rankingData: [String] = GameInformation.instance.allRank
+                    do {
+                        let encodedData = try JSONEncoder().encode(rankingData)
+                        MPCSessionManager.shared.sendDataToAllPeers(data: encodedData)
+                    } catch {
+                        print("Erro ao codificar os dados do usuário: \(error)")
+                    }
                     router = .ranking
                     timer?.invalidate()
                 }
@@ -118,3 +132,5 @@ struct MatchHubView: View {
         }
     }
 }
+
+
