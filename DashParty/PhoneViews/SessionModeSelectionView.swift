@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import CoreMotion
 
 struct SessionModeSelectionView: View {
     @Binding var router:Router

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import CoreMotion
 
 struct MoonDashLogoView: View {
     @Binding var router: Router

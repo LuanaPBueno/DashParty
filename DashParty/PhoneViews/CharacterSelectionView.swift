@@ -1,5 +1,4 @@
 import SwiftUI
-import CoreMotion
 
 enum Clan: String, CaseIterable, Identifiable, Codable, Hashable {
     case bunny, monkey, feline, frog
