@@ -33,7 +33,7 @@ struct RouterView: View {
         case .createName:
             Text("CreateName")
         case .airplayInstructions:
-            ShareScreenInstructionView(router: $router)
+            ShareScreenInstructionView(router: $router, multipeerSession: multipeerSession)
         case .chooseRoom:
             RoomSelectionView(router: $router, multipeerSession: multipeerSession)
         case .waitingRoom:
