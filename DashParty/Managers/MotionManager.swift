@@ -7,12 +7,16 @@
 
 import Foundation
 import SwiftUI
+#if canImport(CoreMotion)
 import CoreMotion
+#endif
 
 class MotionManager: ObservableObject {
     static let accelerationInstance = MotionManager()
     private init() { }
+#if canImport(CoreMotion)
     private var motionManager = CMMotionManager() //MARK: Defino aqui o administrador do meu aceletrometro
+    #endif
     
     @Published var motionIntensity: Double = 0.0 //MARK: Intensidade atual do movimento do meu usuário
     @Published var threshold: Double = 1.3 //MARK: Intensidade da gravidade
@@ -23,7 +27,7 @@ class MotionManager: ObservableObject {
     private var yHistory: [Double] = []
     private let historyLength = 5
     
-    
+#if canImport(CoreMotion)
     func startAccelerometer(action: @escaping (CMDeviceMotion) -> Void) {
         
         guard motionManager.isDeviceMotionAvailable else {
@@ -46,5 +50,5 @@ class MotionManager: ObservableObject {
     func stop() {
         self.motionManager.stopDeviceMotionUpdates()
     }
-
+    #endif
 }

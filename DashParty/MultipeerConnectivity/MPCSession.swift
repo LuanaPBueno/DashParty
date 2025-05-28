@@ -1,6 +1,8 @@
 import Foundation
 import MultipeerConnectivity
+#if canImport(CoreMotion)
 import CoreMotion
+#endif
 import UIKit
 
 struct MPCSessionConstants {
@@ -30,9 +32,11 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     private var shouldKeepSendingInBackground = false
     
     // Motion e gerenciamento de partida
+#if canImport(CoreMotion)
     let motionManager = CMMotionManager()
-    var matchManager: MatchManager
     var currentAcceleration: CMAcceleration?
+    #endif
+    var matchManager: MatchManager
     var pendingInvitations: [String: ((Bool, MCSession?) -> Void)] = [:]
     
     // Handlers
@@ -350,6 +354,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     // MARK: - Envio de Coordenadas
     
     func setupCoreMotion() {
+#if canImport(CoreMotion)
         if motionManager.isAccelerometerAvailable {
             motionManager.accelerometerUpdateInterval = 0.01 // 100 Hz
             motionManager.startAccelerometerUpdates(to: .main) { [weak self] (data, error) in
@@ -360,6 +365,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         } else {
             print("Acelerômetro não disponível")
         }
+        #endif
     }
     
     func sendMyCoordinatesToHost() {

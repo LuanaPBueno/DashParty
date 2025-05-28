@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import CoreMotion
 
 struct ShareScreenInstructionView: View {
     @Binding var router:Router
