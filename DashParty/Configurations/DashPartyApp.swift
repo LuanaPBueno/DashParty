@@ -26,6 +26,7 @@ struct DashPartyApp: App {
 //            @Bindable var manager = HUBPhoneManager.instance
             RouterView(router: $manager.router)
                 .environmentObject(audioManager)
+                .buttonStyle(.card)
         }
     }
 }

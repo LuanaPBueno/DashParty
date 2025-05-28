@@ -23,52 +23,48 @@ struct SessionModeSelectionView: View {
     
     var body: some View {
         ZStack{
-            Image("backgroundPhone")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
+            
             VStack{
-                HStack{
-                    Button {
-                        router = .start
-                    } label: {
-                        Image("backButton")
-                            .padding(.leading, 35)
-                            .padding(.top, 35)
-
-                    }
-                    Spacer()
-                }
                 
+                #if os(tvOS)
                 Button(action: {
                     MPCSessionManager.shared.host = true
                     MPCSessionManager.shared.startSession(asHost: true)
                     askForHostName = true
                 }) {
                     OrangeButtonLabel(text: "Host", sizeFont: 40)
-                        .padding(.vertical, 30)
                 }
-                
-                
+                .padding(.vertical, 30)
+                .frame(maxWidth: 200, maxHeight: 150)
+                #else
                 Button(action: {
                     MPCSessionManager.shared.host = false
                     MPCSessionManager.shared.startSession(asHost: false)
-
                     if userName != ""{
                         navigateToHost = true
-                    }else{
+                    } else {
                         showAlert = true
-                        
                     }
-                  
                 }) {
                     BlueButtonLabel(text: "Join", sizeFont: 40)
-                        
-                    
                 }
                 .padding(.vertical, 30)
+                #endif
             }
-            
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .overlay(alignment: .topLeading) {
+                HStack{
+                    Button {
+                        router = .start
+                    } label: {
+                        Image("backButton")
+                        
+                    }
+                    .padding(.leading, 35)
+                    .padding(.top, 35)
+//                    Spacer()
+                }
+            }
             .alert("Insert your name", isPresented: $askForHostName) {
                 TextField("Insert your name", text: $userName)
                 Button("Cancel", role: .cancel) { }
@@ -122,6 +118,13 @@ struct SessionModeSelectionView: View {
                         }
 
                    }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background {
+            Image("backgroundPhone")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
         }
 //        .task{
 //            multipeerSession.mcAdvertiser.stopAdvertisingPeer()

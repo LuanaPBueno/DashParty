@@ -35,9 +35,8 @@ struct MoonDashLogoView: View {
                             router = .play
                         }) {
                             OrangeButtonLabel(text: "Play", sizeFont: 28)
-                                .padding(.vertical, 60)
-                                
                         }
+                        .padding(.vertical, 60)
                         .padding(.trailing, 10)
                         
 //                        HStack(alignment: .center){
