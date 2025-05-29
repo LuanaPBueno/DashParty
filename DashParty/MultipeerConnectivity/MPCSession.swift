@@ -14,6 +14,9 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     
     // MARK: - Propriedades
     
+    var tvPeerID: MCPeerID?
+    var mainPlayer: MCPeerID? { mcSession.connectedPeers.first }
+    
     // Variáveis para comunicação
     var nearbyPeers: [MCPeerID] = []
     var dataSendTimer: Timer?
@@ -526,6 +529,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         print("📩 Convite recebido de \(peerID.displayName)")
         let handler = invitationHandler
+        tvPeerID = peerID
         handler(true, self.mcSession)
     }
     
