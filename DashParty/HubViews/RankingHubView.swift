@@ -67,6 +67,7 @@ struct RankingHubView: View {
             }
             
             .onAppear {
+                GameInformation.instance.finalWinner = rankedPlayers[0].player.name
                 GameInformation.instance.endedGame = true
                 
                 if hubManager.newGame {
@@ -76,18 +77,17 @@ struct RankingHubView: View {
                 }
                 
             }
-        }
-        .task{
-            GameInformation.instance.finalWinner = rankedPlayers[0].player.name
-        }
-    }
+        }    }
     
     func characterFrameType(ranked: (player: PlayerState, formattedTime: String)) -> CharacterFrameType {
+        let isWinner = (GameInformation.instance.finalWinner == ranked.player.name)
+        let status: CharacterStatus = isWinner ? .winner : .regular
+        
         if let kikoColor = ranked.player.userClan?.color {
             let characterColor = CharacterColor(kikoColor: kikoColor)
-            return CharacterFrameType(status: .winner, color: characterColor)
+            return CharacterFrameType(status: status, color: characterColor)
         } else {
-            return CharacterFrameType(status: .winner, color: .blue)
+            return CharacterFrameType(status: status, color: .blue)
         }
     }
 
