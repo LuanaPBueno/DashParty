@@ -106,8 +106,6 @@ struct RankingView: View {
                                         .scaleEffect(2)
                                 )
                         }
-                    } else {
-                        
                     }
                 }
                 Spacer()
