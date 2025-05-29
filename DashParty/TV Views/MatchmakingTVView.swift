@@ -20,7 +20,8 @@ struct MatchmakingTVView: View {
     var body: some View {
         VStack {
             Text(GameInformation.instance.roomName)
-                .font(.custom("TorukSC-Regular", size: (size.width / 1920) * 60))             .multilineTextAlignment(.center)
+                .font(.custom("TorukSC-Regular", size: (size.width / 1920) * 60))
+                .multilineTextAlignment(.center)
                 .foregroundColor(.white)
             
             HStack{
@@ -28,8 +29,9 @@ struct MatchmakingTVView: View {
                 ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
                     VStack {
                         ConnectedPlayerCard(playerName: player, sizePadding: 0)
-                        if let peer = multipeerSession.mcSession.connectedPeers.first(where: {$0.displayName == player}), peer == multipeerSession.mainPlayer {
+                        if let peer = multipeerSession.mcSession.connectedPeers.first(where: {$0.displayName == player}), peer.displayName == multipeerSession.mainPlayerName {
                             Text("main")
+                                .monospaced()
                         }
                     }
                 }

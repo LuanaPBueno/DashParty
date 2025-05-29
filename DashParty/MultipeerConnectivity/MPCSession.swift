@@ -15,7 +15,12 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     // MARK: - Propriedades
     
     var tvPeerID: MCPeerID?
-    var mainPlayer: MCPeerID? { mcSession.connectedPeers.first }
+    var mainPlayerName: String?
+    var mainPlayerID: MCPeerID? {
+        peerIDHistory.filter {mcSession.connectedPeers.contains($0)}.first(where: {$0.displayName == mainPlayerName})
+//        mcSession.connectedPeers.first(where: {$0.displayName == mainPlayerName})
+    }
+    var peerIDHistory: [MCPeerID] = []
     
     // Variáveis para comunicação
     var nearbyPeers: [MCPeerID] = []
@@ -35,7 +40,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     private var shouldKeepSendingInBackground = false
     
     // Motion e gerenciamento de partida
-#if canImport(CoreMotion)
+    #if canImport(CoreMotion)
     let motionManager = CMMotionManager()
     var currentAcceleration: CMAcceleration?
     #endif
@@ -536,6 +541,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     // MARK: - Gerenciamento de Peers
     
     private func peerConnected(peerID: MCPeerID) {
+        peerIDHistory.append(peerID)
         updateConnectedPeersList()
         if let handler = peerConnectedHandler {
             DispatchQueue.main.async {
@@ -578,6 +584,12 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     private func updateConnectedPeersList() {
         DispatchQueue.main.async {
             self.connectedPeersNames = self.mcSession.connectedPeers.map { $0.displayName }
+            #if os(tvOS)
+            self.mainPlayerName = self.mcSession.connectedPeers.first?.displayName
+            if let mainPlayerName = self.mainPlayerName {
+                self.sendDataToAllPeers(data: try! JSONEncoder().encode(EventMessage.responsibilityUpdate(newMainPlayerName: mainPlayerName)))
+            }
+            #endif
         }
     }
     
@@ -616,6 +628,10 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                       //  print("appendando: \(receivedData)")
                     }
                 }
+                
+            case .responsibilityUpdate(let newMainPlayerName):
+                print("New main player name: \(newMainPlayerName)")
+                self.mainPlayerName = newMainPlayerName
             }
         } catch {
           //  print("Erro ao decodificar dados recebidos:", error)
@@ -642,4 +658,5 @@ class MPCSessionManager {
 enum EventMessage: Codable {
     case navigation(Router)
     case playerUpdate(PlayerState)
+    case responsibilityUpdate(newMainPlayerName: String)
 }
