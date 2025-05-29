@@ -12,6 +12,8 @@ import SwiftUI
 class GameInformation {
     static let instance = GameInformation()
     
+    var finalWinner:String  = ""
+    
     var router:Router = .start
     
     var roomName : String = ""
@@ -23,7 +25,7 @@ class GameInformation {
     var playername: String = ""
     
     var users: [User] = []
-    
+        
     var allPlayers : [PlayerState] = [] //MARK: Todos os dados de todos os jogadores estão aqui!!!
     
     var receivedPlayers : [PlayerState] = []

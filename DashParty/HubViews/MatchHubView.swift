@@ -103,13 +103,32 @@ struct MatchHubView: View {
                 if winnersCount == 1 {
                     GameInformation.instance.allPlayersFinished = true
                     GameInformation.instance.ranking = true
-                    let rankingData: [String] = GameInformation.instance.allRank
+                    var rankedPlayers: [(player: PlayerState, formattedTime: String)] {
+                        guard !players.isEmpty else { return [] }
+                        
+                        let finishedPlayers = players.filter { $0.interval > 0.0 }
+                        let unfinishedPlayers = players.filter { $0.interval == 0.0 }
+                        
+                        let sortedFinished = finishedPlayers.sorted { $0.interval < $1.interval }
+                            .map { player in
+                                let formattedTime = formatTimeInterval(player.interval)
+                                return (player, formattedTime)
+                            }
+                        
+                        let sortedUnfinished = unfinishedPlayers.map { player in
+                            (player, "Did not finish")
+                        }
+                        
+                        return sortedFinished + sortedUnfinished
+                    }
                     do {
-                        let encodedData = try JSONEncoder().encode(rankingData)
+                        let encodedData = try JSONEncoder().encode(rankedPlayers[0].player.name)
                         MPCSessionManager.shared.sendDataToAllPeers(data: encodedData)
                     } catch {
                         print("Erro ao codificar os dados do usuário: \(error)")
                     }
+
+                    
                     router = .ranking
                     timer?.invalidate()
                 }
@@ -118,9 +137,26 @@ struct MatchHubView: View {
                 if winnersCount == players.count - 1 {
                     GameInformation.instance.allPlayersFinished = true
                     GameInformation.instance.ranking = true
-                    let rankingData: [String] = GameInformation.instance.allRank
+                    var rankedPlayers: [(player: PlayerState, formattedTime: String)] {
+                        guard !players.isEmpty else { return [] }
+                        
+                        let finishedPlayers = players.filter { $0.interval > 0.0 }
+                        let unfinishedPlayers = players.filter { $0.interval == 0.0 }
+                        
+                        let sortedFinished = finishedPlayers.sorted { $0.interval < $1.interval }
+                            .map { player in
+                                let formattedTime = formatTimeInterval(player.interval)
+                                return (player, formattedTime)
+                            }
+                        
+                        let sortedUnfinished = unfinishedPlayers.map { player in
+                            (player, "Did not finish")
+                        }
+                        
+                        return sortedFinished + sortedUnfinished
+                    }
                     do {
-                        let encodedData = try JSONEncoder().encode(rankingData)
+                        let encodedData = try JSONEncoder().encode([rankedPlayers[0].player.name])
                         MPCSessionManager.shared.sendDataToAllPeers(data: encodedData)
                     } catch {
                         print("Erro ao codificar os dados do usuário: \(error)")
@@ -131,6 +167,15 @@ struct MatchHubView: View {
             }
         }
     }
-}
+    
+    
+    func formatTimeInterval(_ interval: TimeInterval) -> String {
+        let minutes = Int(interval) / 60
+        let seconds = Int(interval) % 60
+        let milliseconds = Int((interval - Double(Int(interval))) * 100)
+        
+        return String(format: "%02d:%02d:%02d", minutes, seconds, milliseconds)
+    }
 
+}
 

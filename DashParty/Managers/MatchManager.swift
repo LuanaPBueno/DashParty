@@ -104,8 +104,8 @@ class MatchManager {
                 user: users[0],
                 
                 //MARK: CHANGE
-                challenges: [Challenge .jumping, .openingDoor, .balancing ]
-                    .flatMap { Array(repeating: $0, count: 4) }
+                challenges: [Challenge /*.jumping,*/ .openingDoor/*, .balancing */]
+                    .flatMap { Array(repeating: $0, count: 1) }
                     .shuffled()
                     .flatMap { [$0, .running] }
                 )

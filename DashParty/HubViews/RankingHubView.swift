@@ -33,9 +33,9 @@ struct RankingHubView: View {
         }
         
         return sortedFinished + sortedUnfinished
+
     }
-
-
+ 
     private func formatTimeInterval(_ interval: TimeInterval) -> String {
         let minutes = Int(interval) / 60
         let seconds = Int(interval) % 60
@@ -102,6 +102,9 @@ struct RankingHubView: View {
                 }
                 
             }
+        }
+        .task{
+            GameInformation.instance.finalWinner = rankedPlayers[0].player.name
         }
     }
     
