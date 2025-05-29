@@ -72,7 +72,7 @@ struct RankingHubView: View {
                         CharacterRankView(
                             frameType: characterFrameType(ranked: ranked),
                             kikoColor: ranked.player.userClan?.color ?? .red,
-                            bannerType: .winner,
+                            bannerType: (GameInformation.instance.finalWinner == rankedPlayers[index].player.name ? .winner : .regular), 
                             playerName: ranked.player.name,
                             time: ranked.formattedTime
                         )
