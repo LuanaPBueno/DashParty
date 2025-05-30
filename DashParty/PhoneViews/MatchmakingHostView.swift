@@ -84,7 +84,9 @@ struct MatchmakingHostView: View {
                 .ignoresSafeArea()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+#if canImport(CoreMotion)
         .scrollContentBackground(.hidden)
+        #endif
         
         .task{
             if !multipeerSession.host {

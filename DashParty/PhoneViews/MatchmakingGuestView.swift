@@ -25,19 +25,7 @@ struct MatchmakingGuestView: View {
             VStack {
                 // TOPO: Botão de voltar à esquerda + Nome da sala centralizado
                 ZStack {
-                    HStack {
-                        Button {
-                            multipeerSession.mcSession.disconnect()
-                            router = .chooseRoom
-                        } label: {
-                            Image("backButton")
-                        }
-                        .padding(.leading, 35)
-                        .padding(.top, 35)
-                        
-                        Spacer()
-                    }
-                    .ignoresSafeArea()
+                    
                     
                     Text(multipeerSession.hostPeerID?.displayName ?? "")
                         .font(.custom("TorukSC-Regular", size: 34, relativeTo: .title))
@@ -59,11 +47,25 @@ struct MatchmakingGuestView: View {
                 
                 // MMPhones
                 HStack(spacing: 20) {
-                    ConnectedPlayerCard(playerName: multipeerSession.hostName, sizePadding: 0)
-                    ConnectedPlayerCard(playerName: GameInformation.instance.playername, sizePadding: 0)
+//                    ConnectedPlayerCard(playerName: multipeerSession.hostName, sizePadding: 0)
+                    VStack {
+                        ConnectedPlayerCard(playerName: GameInformation.instance.playername, sizePadding: 0)
+                        if GameInformation.instance.playername == multipeerSession.mainPlayerName {
+                            Text("main")
+                                .foregroundStyle(.white)
+                                .monospaced()
+                        }
+                    }
                     ForEach(multipeerSession.connectedPeersNames, id: \.self) { player in
                         if player != multipeerSession.hostPeerID?.displayName {
-                            ConnectedPlayerCard(playerName: player, sizePadding: 0)
+                            VStack {
+                                ConnectedPlayerCard(playerName: player, sizePadding: 0)
+                                if let peer = multipeerSession.mcSession.connectedPeers.first(where: {$0.displayName == player}), peer.displayName == multipeerSession.mainPlayerName {
+                                    Text("main")
+                                        .foregroundStyle(.white)
+                                        .monospaced()
+                                }
+                            }
                         }
                     }
                 }
@@ -75,6 +77,19 @@ struct MatchmakingGuestView: View {
                 //Spacer()
                 //Spacer()
                     //.frame(height: 100)
+            }
+            .overlay(alignment: .bottomTrailing) {
+                if GameInformation.instance.playername == multipeerSession.mainPlayerName {
+                    Button {
+                        router = .chooseCharacter
+                    } label: {
+                        Text("Continue")
+                            .frame(width: 110, height: 45)
+                    }
+                    .buttonStyle(.colored(.orange, fontSize: 20))
+                    .padding(.trailing, 40)
+                    .padding(.bottom, 12)
+                }
             }
             .onAppear {
                 if !multipeerSession.host {

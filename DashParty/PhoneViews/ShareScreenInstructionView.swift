@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import CoreMotion
 
 struct ShareScreenInstructionView: View {
     @Binding var router:Router
@@ -26,7 +25,7 @@ struct ShareScreenInstructionView: View {
                 HStack{
                     Button {
                         multipeerSession.mcSession.disconnect()
-                        router = .matchmaking
+                        router = .play
                     } label: {
                         Image("backButton")
                             .padding(.leading, 35)

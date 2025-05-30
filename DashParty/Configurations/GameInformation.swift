@@ -16,6 +16,8 @@ class GameInformation {
     
     var router:Router = .start
     
+    var routerTV: RouterTV = .logo
+    
     var roomName : String = ""
     
     var allRank: [String] = []
@@ -25,8 +27,12 @@ class GameInformation {
     var playername: String = ""
     
     var users: [User] = []
-        
-    var allPlayers : [PlayerState] = [] //MARK: Todos os dados de todos os jogadores estão aqui!!!
+    
+    var allPlayers : [PlayerState] = [] { //MARK: Todos os dados de todos os jogadores estão aqui!!!
+        didSet {
+            print("allPlayers: \(allPlayers)")
+        }
+    }
     
     var receivedPlayers : [PlayerState] = []
     
@@ -109,5 +115,19 @@ class GameInformation {
         let milliseconds = Int((interval - Double(Int(interval))) * 100)
         
         return String(format: "%02d:%02d:%02d", minutes, seconds, milliseconds)
+    func broadcastNavigation(to destination: Router?, onTV tvDestination: RouterTV?) {
+        do {
+            if let destination {
+                let data = try JSONEncoder().encode(EventMessage.navigation(destination))
+                MPCSessionManager.shared.sendDataToAllPeers(data: data)
+            }
+            if let tvDestination {
+                let data2 = try JSONEncoder().encode(EventMessage.navigationTV(tvDestination))
+                MPCSessionManager.shared.sendDataToAllPeers(data: data2)
+            }
+        }
+        catch {
+            print(error)
+        }
     }
 }

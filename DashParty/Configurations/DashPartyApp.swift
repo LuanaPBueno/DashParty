@@ -15,17 +15,23 @@ struct DashPartyApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @State var audioManager = AudioManager()
     @State var manager = GameInformation.instance
-    
-//    init() {
-//        if let fontURL = Bundle.main.url(forResource: "TorukscRegular-z8MA1", withExtension: "ttf") {
-//            CTFontManagerRegisterFontsForURL(fontURL as CFURL, .process, nil)
-//        }
-//    }
+//    #if os(tvOS)
+//    @State var tvRouter = RouterTV.logo
+//    #endif
+
     var body: some Scene {
         WindowGroup {
-//            @Bindable var manager = HUBPhoneManager.instance
+            //            @Bindable var manager = HUBPhoneManager.instance
+            #if !os(tvOS)
             RouterView(router: $manager.router)
+            #else
+            RouterTVView(router: $manager.routerTV)
                 .environmentObject(audioManager)
+                .overlay(alignment: .top) {
+                    Text("\(manager.routerTV)")
+                        .monospaced()
+                }
+            #endif
         }
     }
 }

@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(CoreMotion)
 import CoreMotion
+#endif
 import SceneKit
 
 
@@ -33,7 +35,9 @@ class MatchManager {
         players.first(where: { $0.user.id == userID })
     }
     var balancingCount: [String: Double] = ["x": 0.0, "y": 0.0, "z": 0.0]
+#if canImport(CoreMotion)
     var recentDeviceMotion: [CMDeviceMotion] = []
+    #endif
     var tempo: TimeInterval = 10
     
     init() {
@@ -146,6 +150,7 @@ class MatchManager {
             startTime = Date.now
         }
         self.currentPlayerIndex = index
+#if canImport(CoreMotion)
         MotionManager.accelerationInstance.startAccelerometer(
             action: { [weak self] deviceMotion in
                 guard let self else { return }
@@ -348,6 +353,8 @@ class MatchManager {
                 }
                 
             })
+        
+        #endif
     }
     
     private func handleReceivedMotionData(_ data: Data) {
@@ -380,7 +387,9 @@ class MatchManager {
     }
  
     func finishMatch() {
+#if canImport(CoreMotion)
         MotionManager.accelerationInstance.stop()
+        #endif
     }
 }
 

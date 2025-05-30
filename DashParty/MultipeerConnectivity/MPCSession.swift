@@ -1,6 +1,8 @@
 import Foundation
 import MultipeerConnectivity
+#if canImport(CoreMotion)
 import CoreMotion
+#endif
 import UIKit
 
 struct MPCSessionConstants {
@@ -12,6 +14,23 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     
     // MARK: - Propriedades
     
+    var tvPeerID: MCPeerID?
+    var mainPlayerName: String?
+    var mainPlayerID: MCPeerID? {
+        peerIDHistory.filter {mcSession.connectedPeers.contains($0)}.first(where: {$0.displayName == mainPlayerName})
+//        mcSession.connectedPeers.first(where: {$0.displayName == mainPlayerName})
+    }
+    
+    var isMainPlayer: Bool {
+        access(keyPath: \.mcSession)
+        access(keyPath: \.mainPlayerID)
+        return mainPlayerName == mcSession.myPeerID.displayName
+    }
+    
+    var peerIDHistory: [MCPeerID] = []
+    func session(_ session: MCSession, didReceiveCertificate certificate: [Any]?, fromPeer peerID: MCPeerID, certificateHandler: @escaping (Bool) -> Void) {
+        certificateHandler(true)
+    }
     // Variáveis para comunicação
     var nearbyPeers: [MCPeerID] = []
     var dataSendTimer: Timer?
@@ -30,9 +49,11 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     private var shouldKeepSendingInBackground = false
     
     // Motion e gerenciamento de partida
+    #if canImport(CoreMotion)
     let motionManager = CMMotionManager()
-    var matchManager: MatchManager
     var currentAcceleration: CMAcceleration?
+    #endif
+    var matchManager: MatchManager
     var pendingInvitations: [String: ((Bool, MCSession?) -> Void)] = [:]
     
     // Handlers
@@ -267,6 +288,10 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         print("Enviei a mensagem para o usuário")
     }
     
+    func broadcastEvent(_ event: EventMessage) {
+        sendDataToAllPeers(data: try! JSONEncoder().encode(event))
+    }
+    
     func startSendingUserDataContinuously(interval: TimeInterval = 1.0) {
         dataSendTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
             guard let self = self else { return }
@@ -297,6 +322,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         
         do {
             try mcSession.send(data, toPeers: connectedPeers, with: sendMode)
+            print("Sent \(String(data: data, encoding: .utf8))")
         } catch {
             let nsError = error as NSError
             print("❌ Failed to send data: \(nsError)")
@@ -350,6 +376,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     // MARK: - Envio de Coordenadas
     
     func setupCoreMotion() {
+#if canImport(CoreMotion)
         if motionManager.isAccelerometerAvailable {
             motionManager.accelerometerUpdateInterval = 0.01 // 100 Hz
             motionManager.startAccelerometerUpdates(to: .main) { [weak self] (data, error) in
@@ -360,6 +387,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         } else {
             print("Acelerômetro não disponível")
         }
+        #endif
     }
     
     func sendMyCoordinatesToHost() {
@@ -521,12 +549,14 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         print("📩 Convite recebido de \(peerID.displayName)")
         let handler = invitationHandler
+        tvPeerID = peerID
         handler(true, self.mcSession)
     }
     
     // MARK: - Gerenciamento de Peers
     
     private func peerConnected(peerID: MCPeerID) {
+        peerIDHistory.append(peerID)
         updateConnectedPeersList()
         if let handler = peerConnectedHandler {
             DispatchQueue.main.async {
@@ -536,9 +566,10 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         }
 
         if !host {
-            print("enviando coordenadas")
             matchManager.startMatch(users: [GameInformation.instance.user], myUserID: GameInformation.instance.allPlayers[0].id, index: 0)
             sendMyCoordinatesToHost()
+//            print("enviando coordenadas")
+            
         }
         setupMessageHandler()
         print("⚡ Host pronto para receber mensagens dos peers")
@@ -569,6 +600,12 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     private func updateConnectedPeersList() {
         DispatchQueue.main.async {
             self.connectedPeersNames = self.mcSession.connectedPeers.map { $0.displayName }
+            #if os(tvOS)
+            self.mainPlayerName = self.mcSession.connectedPeers.first?.displayName
+            if let mainPlayerName = self.mainPlayerName {
+                self.sendDataToAllPeers(data: try! JSONEncoder().encode(EventMessage.responsibilityUpdate(newMainPlayerName: mainPlayerName)))
+            }
+            #endif
         }
     }
     
@@ -589,7 +626,10 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             case .navigation(let navigationData):
                 print(Thread.isMainThread)
                 GameInformation.instance.router = navigationData
-                
+//                if navigationData == .game {
+//                    matchManager.startMatch(users: [GameInformation.instance.user], myUserID: GameInformation.instance.allPlayers[0].id, index: 0)
+//                    sendMyCoordinatesToHost()
+//                }
             case .playerUpdate(let receivedData):
                 DispatchQueue.main.async {
                     if let existingPlayerIndex = GameInformation.instance.allPlayers.firstIndex(where: { $0.id == receivedData.id }) {
@@ -607,6 +647,16 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                       //  print("appendando: \(receivedData)")
                     }
                 }
+                
+            case .responsibilityUpdate(let newMainPlayerName):
+                print("New main player name: \(newMainPlayerName)")
+                self.mainPlayerName = newMainPlayerName
+            case .navigationTV(let routerTV):
+                GameInformation.instance.routerTV = routerTV
+            case .storyNavigation(let currentIndex):
+                GameInformation.instance.actualPage = currentIndex
+            case .tutorialNavigation(let currentIndex):
+                GameInformation.instance.actualTutorialIndex = currentIndex
             }
         } catch {
           //  print("Erro ao decodificar dados recebidos:", error)
@@ -632,5 +682,9 @@ class MPCSessionManager {
 
 enum EventMessage: Codable {
     case navigation(Router)
+    case navigationTV(RouterTV)
     case playerUpdate(PlayerState)
+    case responsibilityUpdate(newMainPlayerName: String)
+    case storyNavigation(currentOffset: Int)
+    case tutorialNavigation(currentOffset: Int)
 }

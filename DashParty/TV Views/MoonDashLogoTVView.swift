@@ -7,13 +7,14 @@
 
 import SwiftUI
 
-struct MoonDashLogoView: View {
-    @Binding var router: Router
-    
+struct MoonDashLogoTVView: View {
+    @Binding var router: RouterTV
+    @State var audioManager: AudioManager = AudioManager()
     @State var navigate : Bool = false
     @State var changed: Bool = GameInformation.instance.changeScreen
     @State private var isActive = false
     
+    @State private var breathe = true
     var body: some View {
             ZStack{
                 Image("illustrationTitle")
@@ -26,30 +27,29 @@ struct MoonDashLogoView: View {
                     Image("logoBranca")
                         .resizable()
                         .scaledToFit()
-                        //.frame(maxWidth: 500)
                         .padding(.top, 40)
-                    
+                        .scaleEffect(breathe ? 0.9 : 0.95)
+                        .opacity(breathe ? 1.0 : 0.8)
+                        .onAppear {
+                            withAnimation(
+                                .easeInOut(duration: 1.6)
+                                .repeatForever(autoreverses: true)
+                            ) {
+                                breathe.toggle()
+                            }
+                            audioManager.playSound(named: "forest")
+
+                        }
                     HStack(alignment: .center){
                         Spacer()
                         Button(action: {
-                            router = .play
+                            router = .matchmaking
                         }) {
-                            OrangeButtonLabel(text: "Play", sizeFont: 28)
+                            Text("Play")
+                                .padding(150)
                         }
-                        .padding(.vertical, 60)
+                        .buttonStyle(.colored(.orange, fontSize: 70))
                         .padding(.trailing, 10)
-                        
-//                        HStack(alignment: .center){
-//                            Button(action: {
-//                                router = .options
-//                            }) {
-//                                OrangeButtonPhone(text: "Options", sizeFont: 28)
-//                                    .padding(.vertical, 60)
-//                                    
-//
-//                            }
-//                            
-//                        }
                         Spacer()
                     }
                     Spacer()

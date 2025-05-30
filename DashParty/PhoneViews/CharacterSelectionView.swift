@@ -1,5 +1,4 @@
 import SwiftUI
-import CoreMotion
 
 enum Clan: String, CaseIterable, Identifiable, Codable, Hashable {
     case bunny, monkey, feline, frog
@@ -83,11 +82,13 @@ struct CharacterSelectionView: View {
                     
                     HStack{
                         
+                        
                         Spacer()
-                        if MPCSessionManager.shared.host{
+                        if MPCSessionManager.shared.isMainPlayer {
                             Button(action: {
-                                router =  .storyBoard
-                                MPCSessionManager.shared.stopSendingUserData()
+                                router = .storyBoard
+//                                MPCSessionManager.shared.sendDataToAllPeers(data: JSONEncoder().encode(EventMessage.navigation(.)))
+//                                MPCSessionManager.shared.stopSendingUserData()
                             }) {
                                 ZStack {
                                     Image("decorativeRectOrange")
@@ -143,3 +144,74 @@ struct ClanCard: View {
 //            }
 //        }
     
+
+struct CharacterSelectionTVView: View {
+    @Binding var router:RouterTV
+    @State private var tempSelection: Clan?
+    @State private var navigateToNext = false
+    
+    var body: some View {
+        
+        ZStack {
+            Image("backgroundPhone")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+            
+            VStack {
+                Spacer()
+                
+                Text("Choose your guardian")
+                    .font(.custom("TorukSC-Regular", size: 28))
+                    .foregroundColor(.white)
+                
+                Spacer()
+                
+                HStack(spacing: 16) {
+                    ForEach(Clan.allCases, id: \.self) { clan in
+                        ClanCard(
+                            clan: clan,
+                            isSelected: clan == tempSelection
+                        )
+//                        .onTapGesture {
+//                            GameInformation.instance.allPlayers[0].userClan = clan
+//                            tempSelection = clan
+//                        }
+                    }
+                }
+                
+                
+                Spacer()
+                
+                HStack{
+                    
+                    
+                    Spacer()
+//                    if MPCSessionManager.shared.isMainPlayer {
+//                        Button(action: {
+//                            router = .storyBoard
+//                            //                                MPCSessionManager.shared.sendDataToAllPeers(data: JSONEncoder().encode(EventMessage.navigation(.)))
+//                            //                                MPCSessionManager.shared.stopSendingUserData()
+//                        }) {
+//                            ZStack {
+//                                Image("decorativeRectOrange")
+//                                    .resizable()
+//                                    .scaledToFit()
+//                                    .frame(width: 160, height: 55) // 📏 tamanho só do botão, sem afetar o resto
+//                                Text("Done")
+//                                    .font(.custom("TorukSC-Regular", size: 20))
+//                                    .foregroundColor(.white)
+//                            }
+//                            
+//                        }
+//                    }
+                    
+                }
+                .padding(.trailing, 20)
+                .disabled(tempSelection == nil)
+                .opacity(tempSelection == nil ? 0.5 : 1.0)
+            }
+        }
+        
+    }
+}
