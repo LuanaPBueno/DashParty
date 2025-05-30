@@ -131,7 +131,7 @@ class MatchManager {
             case .bunny:
                 color = "green"
             case .monkey:
-                    color = "red"
+                color = "red"
             case .feline:
                 color = "yellow"
             case .frog:

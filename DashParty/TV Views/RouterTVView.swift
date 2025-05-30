@@ -38,6 +38,14 @@ struct RouterTVView: View {
                 GeometryReader { geo in
                     StoryHubView(size: geo.size)
                 }
+                .onAppear {
+                    GameInformation.instance.users = GameInformation.instance.allPlayers.map { player in
+                            return User(
+                                id: player.id,
+                                name: ""
+                            )
+                        }
+                }
             case .tutorial:
                 TutorialHubTVView(router: $router)
             case .game:
