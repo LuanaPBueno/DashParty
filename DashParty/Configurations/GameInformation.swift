@@ -14,6 +14,8 @@ class GameInformation {
     
     var router:Router = .start
     
+    var routerTV: RouterTV = .logo
+    
     var roomName : String = ""
     
     var allRank: [String] = []

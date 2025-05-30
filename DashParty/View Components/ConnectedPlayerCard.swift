@@ -11,9 +11,9 @@ struct ConnectedPlayerCard: View {
     var playerName: String
     var sizePadding: Int
     var body: some View {
-        GeometryReader { geometry in
+//        GeometryReader { geometry in
             
-            let fontSize = geometry.size.width * 0.07 < 20 ? 20 : geometry.size.width * 0.09
+//            let fontSize = geometry.size.width * 0.07 < 20 ? 20 : geometry.size.width * 0.09
 
             ZStack {
 
@@ -24,9 +24,10 @@ struct ConnectedPlayerCard: View {
                             imageName
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: geometry.size.width)
+//                                .frame(width: geometry.size.width)
+                                .frame(maxWidth: .infinity)
                             Text(playerName)
-                                .font(.custom("TorukSC-Regular", size: fontSize))
+                                .font(.custom("TorukSC-Regular", size: 20))
                                 .foregroundColor(Color(.white))
                                 .padding(.bottom, CGFloat(sizePadding))
                                 .minimumScaleFactor(0.5)
@@ -38,12 +39,13 @@ struct ConnectedPlayerCard: View {
                         
                             .resizable()
                             .scaledToFit()
-                            .frame(width: geometry.size.width)
+                            .frame(maxWidth: .infinity)
+//                            .frame(width: geometry.size.width)
                             .overlay(
                                 VStack {
                                     Spacer()
                                     Text(playerName)
-                                        .font(.custom("TorukSC-Regular", size: fontSize))
+                                        .font(.custom("TorukSC-Regular", size: 20))
                                         .foregroundColor(Color(red: 126/255, green: 97/255, blue: 46/255))
                                         .padding(.bottom, CGFloat(sizePadding))
                                         .minimumScaleFactor(0.5)
@@ -51,7 +53,7 @@ struct ConnectedPlayerCard: View {
                                     
                                     
                                 }
-                                    .padding(.vertical, geometry.size.height * 0.05)
+                                    .padding(.vertical, 8)
                             )
                     }
                 }
@@ -62,18 +64,19 @@ struct ConnectedPlayerCard: View {
                             imageName
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: geometry.size.width)
+//                                .frame(width: geometry.size.width)
+                                .frame(maxWidth: .infinity)
                                 .overlay(
                                     VStack {
                                         Spacer()
                                         Text(playerName)
-                                            .font(.custom("TorukSC-Regular", size: fontSize))
+                                            .font(.custom("TorukSC-Regular", size: 20))
                                             .foregroundColor(Color(red: 126/255, green: 97/255, blue: 46/255))
                                             .padding(.bottom, CGFloat(sizePadding))
                                             .minimumScaleFactor(0.5)
                                             .lineLimit(1)
                                     }
-                                        .padding(.vertical, geometry.size.height * 0.05)
+                                        .padding(.vertical, 8)
                                 )
                         }
                         
@@ -81,25 +84,26 @@ struct ConnectedPlayerCard: View {
                         Image("phone")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: geometry.size.width)
+//                            .frame(width: geometry.size.width)
+                            .frame(maxWidth: .infinity)
                             .overlay(
                                 VStack {
                                     Spacer()
                                     Text(playerName)
-                                        .font(.custom("TorukSC-Regular", size: fontSize))
+                                        .font(.custom("TorukSC-Regular", size: 20))
                                         .foregroundColor(Color(red: 126/255, green: 97/255, blue: 46/255))
                                         .minimumScaleFactor(0.5)
                                         .lineLimit(1)
                                     
                                     
                                 }
-                                    .padding(.vertical, geometry.size.height * 0.2)
+                                    .padding(.vertical, 8)
                             )
                     }
                 }
              }
-        }
-        .aspectRatio(1, contentMode: .fit)
+//        }
+//        .aspectRatio(1, contentMode: .fit)
     }
 }
 

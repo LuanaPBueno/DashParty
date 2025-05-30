@@ -8,20 +8,44 @@
 import SwiftUI
 
 struct RouterView: View {
+    
     @Binding var router:Router
     var multipeerSession : MPCSession = MPCSessionManager.shared
+    
+    
+    
+    func broadcastNavigation(to destination: Router?, onTV tvDestination: RouterTV?) {
+        do {
+            if let destination {
+                let data = try JSONEncoder().encode(EventMessage.navigation(destination))
+                multipeerSession.sendDataToAllPeers(data: data)
+            }
+            if let tvDestination {
+                let data2 = try JSONEncoder().encode(EventMessage.navigationTV(tvDestination))
+                multipeerSession.sendDataToAllPeers(data: data2)
+            }
+        }
+        catch {
+            print(error)
+        }
+    }
+    @ViewBuilder
+    func backButton(_ run: @escaping () -> Void) -> some View {
+        Button {
+            run()
+        } label: {
+            Image("backButton")
+        }
+        .padding(.leading, 35)
+        .padding(.top, 35)
+        .ignoresSafeArea()
+    }
     var body: some View {
         switch router {
         case .start:
             MoonDashLogoView(router: $router)
                 .onAppear {
-                    do {
-                        let data = try JSONEncoder().encode(EventMessage.navigation(.start))
-                        multipeerSession.sendDataToAllPeers(data: data)
-                    }
-                    catch {
-                        print(error)
-                    }
+                    
                 }
             
         case .options:
@@ -38,6 +62,16 @@ struct RouterView: View {
             RoomSelectionView(router: $router, multipeerSession: multipeerSession)
         case .waitingRoom:
             MatchmakingGuestView(router: $router, multipeerSession: multipeerSession)
+                .overlay(alignment: .topLeading) {
+                    backButton({
+                        
+                        multipeerSession.mcSession.disconnect()
+                        router = .chooseRoom
+                    })
+                }
+                .onAppear {
+                    broadcastNavigation(to: nil, onTV: .matchmaking)
+                }
         case .matchmaking:
             MatchmakingHostView(router: $router, multipeerSession: multipeerSession)
                 .task {
@@ -47,7 +81,7 @@ struct RouterView: View {
                     
                 }
         case .storyBoard:
-            if multipeerSession.host {
+            if multipeerSession.isMainPlayer {
                 StoryControllerView(router: $router)
                     .onAppear {
                         do {

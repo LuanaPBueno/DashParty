@@ -25,19 +25,7 @@ struct MatchmakingGuestView: View {
             VStack {
                 // TOPO: Botão de voltar à esquerda + Nome da sala centralizado
                 ZStack {
-                    HStack {
-                        Button {
-                            multipeerSession.mcSession.disconnect()
-                            router = .chooseRoom
-                        } label: {
-                            Image("backButton")
-                        }
-                        .padding(.leading, 35)
-                        .padding(.top, 35)
-                        
-                        Spacer()
-                    }
-                    .ignoresSafeArea()
+                    
                     
                     Text(multipeerSession.hostPeerID?.displayName ?? "")
                         .font(.custom("TorukSC-Regular", size: 34, relativeTo: .title))

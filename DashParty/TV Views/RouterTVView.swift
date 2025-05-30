@@ -31,11 +31,14 @@ struct RouterTVView: View {
                         }
                 }
             case .characterSelection:
-                Text("")
+                CharacterSelectionTVView(router: $router)
+            
             case .story:
-                Text("")
+                GeometryReader { geo in
+                    StoryHubView(size: geo.size)
+                }
             case .tutorial:
-                Text("")
+                TutorialHubTVView(router: $router)
             case .game:
                 Text("")
             case .ranking:

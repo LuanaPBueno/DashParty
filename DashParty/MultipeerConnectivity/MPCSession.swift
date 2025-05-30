@@ -20,6 +20,13 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         peerIDHistory.filter {mcSession.connectedPeers.contains($0)}.first(where: {$0.displayName == mainPlayerName})
 //        mcSession.connectedPeers.first(where: {$0.displayName == mainPlayerName})
     }
+    
+    var isMainPlayer: Bool {
+        access(keyPath: \.mcSession)
+        access(keyPath: \.mainPlayerID)
+        return mainPlayerName == mcSession.myPeerID.displayName
+    }
+    
     var peerIDHistory: [MCPeerID] = []
     
     // Variáveis para comunicação
@@ -551,9 +558,8 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         }
 
         if !host {
-            print("enviando coordenadas")
-            matchManager.startMatch(users: [GameInformation.instance.user], myUserID: GameInformation.instance.allPlayers[0].id, index: 0)
-            sendMyCoordinatesToHost()
+//            print("enviando coordenadas")
+            
         }
         setupMessageHandler()
         print("⚡ Host pronto para receber mensagens dos peers")
@@ -610,7 +616,10 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             case .navigation(let navigationData):
                 print(Thread.isMainThread)
                 GameInformation.instance.router = navigationData
-                
+                if navigationData == .game {
+                    matchManager.startMatch(users: [GameInformation.instance.user], myUserID: GameInformation.instance.allPlayers[0].id, index: 0)
+                    sendMyCoordinatesToHost()
+                }
             case .playerUpdate(let receivedData):
                 DispatchQueue.main.async {
                     if let existingPlayerIndex = GameInformation.instance.allPlayers.firstIndex(where: { $0.id == receivedData.id }) {
@@ -632,6 +641,8 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             case .responsibilityUpdate(let newMainPlayerName):
                 print("New main player name: \(newMainPlayerName)")
                 self.mainPlayerName = newMainPlayerName
+            case .navigationTV(let routerTV):
+                GameInformation.instance.routerTV = routerTV
             }
         } catch {
           //  print("Erro ao decodificar dados recebidos:", error)
@@ -657,6 +668,7 @@ class MPCSessionManager {
 
 enum EventMessage: Codable {
     case navigation(Router)
+    case navigationTV(RouterTV)
     case playerUpdate(PlayerState)
     case responsibilityUpdate(newMainPlayerName: String)
 }

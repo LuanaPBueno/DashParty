@@ -15,9 +15,9 @@ struct DashPartyApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @State var audioManager = AudioManager()
     @State var manager = GameInformation.instance
-    #if os(tvOS)
-    @State var tvRouter = RouterTV.logo
-    #endif
+//    #if os(tvOS)
+//    @State var tvRouter = RouterTV.logo
+//    #endif
 
     var body: some Scene {
         WindowGroup {
@@ -25,10 +25,10 @@ struct DashPartyApp: App {
             #if !os(tvOS)
             RouterView(router: $manager.router)
             #else
-            RouterTVView(router: $tvRouter)
+            RouterTVView(router: $manager.routerTV)
                 .environmentObject(audioManager)
                 .overlay(alignment: .top) {
-                    Text("\(tvRouter)")
+                    Text("\(manager.routerTV)")
                         .monospaced()
                 }
             #endif

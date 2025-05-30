@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum RouterTV {
+enum RouterTV: Codable {
     case logo
     case matchmaking
     case characterSelection
