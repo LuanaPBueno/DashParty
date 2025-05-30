@@ -19,7 +19,7 @@ struct RouterTVView: View {
             switch router {
             case .logo:
                 MoonDashLogoTVView(router: $router)
-            case .matchmaking:
+            case .matchmaking, .characterSelection:
                 GeometryReader { geo in
                     MatchmakingTVView(router: $router, multipeerSession: multipeerSession, size: geo.size)
                         .onAppear {
@@ -31,8 +31,8 @@ struct RouterTVView: View {
                             MPCSessionManager.shared.resetSession()
                         }
                 }
-            case .characterSelection:
-                CharacterSelectionTVView(router: $router)
+//            case .characterSelection:
+//                CharacterSelectionTVView(router: $router)
             
             case .story:
                 GeometryReader { geo in
