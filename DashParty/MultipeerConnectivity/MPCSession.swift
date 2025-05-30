@@ -428,7 +428,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                     break
                 }
                 
-                Thread.sleep(forTimeInterval: 0.01)
+                Thread.sleep(forTimeInterval: 0.5)
             }
             self.isSendingMessages = false
         }

@@ -85,6 +85,8 @@ class MatchManager {
         startTime = Date.now
     }
     
+    var progressMonitoringTask: Task<Void, Never>?
+    
     func reset(){
         print("resetar infos do jogo")
         players[0].startTime = false
@@ -343,17 +345,33 @@ class MatchManager {
                 }
                 
                 
+            })
+        
+        #else
+        
+        self.progressMonitoringTask = Task {
+            print("progress monitoring started")
+            Task { @MainActor in
+                UIApplication.shared.isIdleTimerDisabled = true
+            }
+            defer { UIApplication.shared.isIdleTimerDisabled = false }
+            while true {
                 for playerIndex in players.indices {
-                    self.scenes[playerIndex].runner.runAction(
+                    await self.scenes[playerIndex].runner.runAction(
                         SCNAction.move(to: SCNVector3(x: self.scenes[playerIndex].runner.position.x,
                                                       y: self.scenes[playerIndex].runner.position.y,
                                                       z: Float(GameInformation.instance.allPlayers[playerIndex].progress * 0.2)),
-                                       duration: 0.1)
+                                       duration: 1)
                     )
                 }
-                
-            })
-        
+                do {
+                    try await Task.sleep(for: .seconds(0.01))
+                } catch {
+                    print("progress monitoring cancelled")
+                    break
+                }
+            }
+        }
         #endif
     }
     
@@ -387,7 +405,9 @@ class MatchManager {
     }
  
     func finishMatch() {
-#if canImport(CoreMotion)
+        self.progressMonitoringTask?.cancel()
+        self.progressMonitoringTask = nil
+        #if canImport(CoreMotion)
         MotionManager.accelerationInstance.stop()
         #endif
     }

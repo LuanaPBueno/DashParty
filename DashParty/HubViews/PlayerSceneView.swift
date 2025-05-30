@@ -37,6 +37,10 @@ struct PlayerSceneView: View {
                     .frame(width: .infinity, height: .infinity)
                     .background(.brown)
                     .ignoresSafeArea()
+                    .overlay(alignment: .bottom) {
+                        Text("\(GameInformation.instance.allPlayers[index].progress)")
+                            .monospaced()
+                    }
             }
             VStack{
                 HStack{
