@@ -59,13 +59,3 @@ struct CharacterRankView: View {
         }
     }
 }
-
-#Preview {
-    CharacterRankView(
-        frameType: CharacterFrameType(status: .winner, color: .red),
-        kikoColor: .red,
-        bannerType: .winner,
-        playerName: "Luanafc",
-        time: "01:05:67"
-    )
-}

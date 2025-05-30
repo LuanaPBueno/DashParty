@@ -12,6 +12,8 @@ import SwiftUI
 class GameInformation {
     static let instance = GameInformation()
     
+    var finalWinner:String  = ""
+    
     var router:Router = .start
     
     var roomName : String = ""
@@ -23,7 +25,7 @@ class GameInformation {
     var playername: String = ""
     
     var users: [User] = []
-    
+        
     var allPlayers : [PlayerState] = [] //MARK: Todos os dados de todos os jogadores estão aqui!!!
     
     var receivedPlayers : [PlayerState] = []
@@ -79,4 +81,33 @@ class GameInformation {
                )
            ]
        }
+    
+    func getRankedPlayers() -> [(player: PlayerState, formattedTime: String)] {
+        let players = self.allPlayers
+        guard !players.isEmpty else { return [] }
+        
+        let finishedPlayers = players.filter { $0.interval > 0.0 }
+        let unfinishedPlayers = players.filter { $0.interval == 0.0 }
+        
+        let sortedFinished = finishedPlayers.sorted { $0.interval < $1.interval }
+            .map { player in
+                let formattedTime = formatTimeInterval(player.interval)
+                return (player, formattedTime)
+            }
+        
+        let sortedUnfinished = unfinishedPlayers.map { player in
+            (player, "Did not finish")
+        }
+        
+        return sortedFinished + sortedUnfinished
+
+    }
+ 
+    private func formatTimeInterval(_ interval: TimeInterval) -> String {
+        let minutes = Int(interval) / 60
+        let seconds = Int(interval) % 60
+        let milliseconds = Int((interval - Double(Int(interval))) * 100)
+        
+        return String(format: "%02d:%02d:%02d", minutes, seconds, milliseconds)
+    }
 }
