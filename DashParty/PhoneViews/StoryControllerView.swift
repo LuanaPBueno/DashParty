@@ -58,6 +58,7 @@ struct StoryControllerView: View {
                             Button(action: {
                                 if hubManager.actualPage > 0 {
                                     hubManager.actualPage -= 1
+                                    multipeerSession.broadcastEvent(.storyNavigation(currentOffset: hubManager.actualPage))
                                 }
                                 else {
                                     print("entrou aq no else no back ")
@@ -79,6 +80,7 @@ struct StoryControllerView: View {
                             Button(action: {
                                 if hubManager.actualPage < hubManager.narrativeText.count - 1 {
                                     hubManager.actualPage += 1
+                                    multipeerSession.broadcastEvent(.storyNavigation(currentOffset: hubManager.actualPage))
                                 } else {
                                     print("entrou aqui no pass")
                                     router = .tutorial

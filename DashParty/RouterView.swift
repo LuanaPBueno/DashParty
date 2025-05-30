@@ -14,21 +14,7 @@ struct RouterView: View {
     
     
     
-    func broadcastNavigation(to destination: Router?, onTV tvDestination: RouterTV?) {
-        do {
-            if let destination {
-                let data = try JSONEncoder().encode(EventMessage.navigation(destination))
-                multipeerSession.sendDataToAllPeers(data: data)
-            }
-            if let tvDestination {
-                let data2 = try JSONEncoder().encode(EventMessage.navigationTV(tvDestination))
-                multipeerSession.sendDataToAllPeers(data: data2)
-            }
-        }
-        catch {
-            print(error)
-        }
-    }
+    
     @ViewBuilder
     func backButton(_ run: @escaping () -> Void) -> some View {
         Button {
@@ -70,56 +56,37 @@ struct RouterView: View {
                     })
                 }
                 .onAppear {
-                    broadcastNavigation(to: nil, onTV: .matchmaking)
+                    GameInformation.instance.broadcastNavigation(to: nil, onTV: .matchmaking)
                 }
         case .matchmaking:
             MatchmakingHostView(router: $router, multipeerSession: multipeerSession)
                 .task {
-                   
-                        multipeerSession.startSendingUserDataContinuously()
-
-                    
+                   multipeerSession.startSendingUserDataContinuously()
                 }
         case .storyBoard:
             if multipeerSession.isMainPlayer {
                 StoryControllerView(router: $router)
                     .onAppear {
-                        do {
-                            let data = try JSONEncoder().encode(EventMessage.navigation(.storyBoard))
-                            multipeerSession.sendDataToAllPeers(data: data)
-                        }
-                        catch {
-                            print(error)
-                        }
+                        GameInformation.instance.broadcastNavigation(to: .storyBoard, onTV: .story)
                     }
             }
             else {
                 EyesOnTheHub()
             }
         case .tutorial:
-            TutorialControllerView(router: $router, multipeerSession: multipeerSession)
-                .onAppear {
-                    do {
-                        let data = try JSONEncoder().encode(EventMessage.navigation(.tutorial))
-                        multipeerSession.sendDataToAllPeers(data: data)
+            if multipeerSession.isMainPlayer {
+                TutorialControllerView(router: $router, multipeerSession: multipeerSession)
+                    .onAppear {
+                        GameInformation.instance.broadcastNavigation(to: .tutorial, onTV: .tutorial)
                     }
-                    catch {
-                        print(error)
-                    }
-                }
-            
-            
-            
+            } else {
+                
+                EyesOnTheHub()
+            }
         case .game:
             EyesOnTheHub()
                 .onAppear {
-                    do {
-                        let data = try JSONEncoder().encode(EventMessage.navigation(.game))
-                        multipeerSession.sendDataToAllPeers(data: data)
-                    }
-                    catch {
-                        print(error)
-                    }
+                    GameInformation.instance.broadcastNavigation(to: .game, onTV: .game)
                 }
         case .victoryStory:
             Text("Victory")

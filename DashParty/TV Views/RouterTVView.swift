@@ -11,8 +11,9 @@ struct RouterTVView: View {
     
     @Binding var router: RouterTV
     
+    let user = GameInformation.instance.user
     @State var multipeerSession = MPCSessionManager.shared
-    
+    @State var matchManager = GameInformation.instance.matchManager
     var body: some View {
         ZStack {
             switch router {
@@ -40,7 +41,7 @@ struct RouterTVView: View {
             case .tutorial:
                 TutorialHubTVView(router: $router)
             case .game:
-                Text("")
+                MatchHubTVView(router: $router, count: multipeerSession.mcSession.connectedPeers.count, user: user, matchManager: matchManager)
             case .ranking:
                 Text("")
             }

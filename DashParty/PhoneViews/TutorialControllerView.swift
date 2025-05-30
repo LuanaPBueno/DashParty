@@ -31,14 +31,6 @@ struct TutorialControllerView: View {
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
-            if !multipeerSession.host{
-                Image("eyesOnTheHub")
-                    .resizable()
-                    .frame(width: UIScreen.main.bounds.width * 1.1)
-                    .scaledToFill()
-                    .ignoresSafeArea()
-            }
-            if multipeerSession.host{
                 VStack{
                     HStack{
                         Button {
@@ -52,9 +44,8 @@ struct TutorialControllerView: View {
                     }
                     Spacer()
                 }
-            }
+            
 
-            if multipeerSession.host{
                 VStack{
                     Spacer()
                     //Spacer()
@@ -71,6 +62,7 @@ struct TutorialControllerView: View {
                                 Button(action: {
                                     if hubManager.actualTutorialIndex > 0 {
                                         hubManager.actualTutorialIndex -= 1
+                                        multipeerSession.broadcastEvent(.tutorialNavigation(currentOffset: hubManager.actualTutorialIndex))
                                     }
                                 }) {
                                     Image("backNarrativeButton")
@@ -87,6 +79,7 @@ struct TutorialControllerView: View {
                                 Button(action: {
                                     if hubManager.actualTutorialIndex < currentTutorialImage.count - 1 {
                                         hubManager.actualTutorialIndex += 1
+                                        multipeerSession.broadcastEvent(.tutorialNavigation(currentOffset: hubManager.actualTutorialIndex))
                                     } else if hubManager.actualTutorialIndex == currentTutorialImage.count - 1 {
                                         // Quando clicar no último Next → ALERTA
                                         showStartAlert = true
@@ -101,7 +94,7 @@ struct TutorialControllerView: View {
                                 .padding(.horizontal, 24)
                         )
                     Spacer()
-                }
+                
                 
             }
                 

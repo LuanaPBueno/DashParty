@@ -28,7 +28,9 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     }
     
     var peerIDHistory: [MCPeerID] = []
-    
+    func session(_ session: MCSession, didReceiveCertificate certificate: [Any]?, fromPeer peerID: MCPeerID, certificateHandler: @escaping (Bool) -> Void) {
+        certificateHandler(true)
+    }
     // Variáveis para comunicação
     var nearbyPeers: [MCPeerID] = []
     var dataSendTimer: Timer?
@@ -286,6 +288,10 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         print("Enviei a mensagem para o usuário")
     }
     
+    func broadcastEvent(_ event: EventMessage) {
+        sendDataToAllPeers(data: try! JSONEncoder().encode(event))
+    }
+    
     func startSendingUserDataContinuously(interval: TimeInterval = 1.0) {
         dataSendTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
             guard let self = self else { return }
@@ -316,6 +322,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         
         do {
             try mcSession.send(data, toPeers: connectedPeers, with: sendMode)
+            print("Sent \(String(data: data, encoding: .utf8))")
         } catch {
             let nsError = error as NSError
             print("❌ Failed to send data: \(nsError)")
@@ -558,6 +565,8 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         }
 
         if !host {
+            matchManager.startMatch(users: [GameInformation.instance.user], myUserID: GameInformation.instance.allPlayers[0].id, index: 0)
+            sendMyCoordinatesToHost()
 //            print("enviando coordenadas")
             
         }
@@ -616,10 +625,10 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             case .navigation(let navigationData):
                 print(Thread.isMainThread)
                 GameInformation.instance.router = navigationData
-                if navigationData == .game {
-                    matchManager.startMatch(users: [GameInformation.instance.user], myUserID: GameInformation.instance.allPlayers[0].id, index: 0)
-                    sendMyCoordinatesToHost()
-                }
+//                if navigationData == .game {
+//                    matchManager.startMatch(users: [GameInformation.instance.user], myUserID: GameInformation.instance.allPlayers[0].id, index: 0)
+//                    sendMyCoordinatesToHost()
+//                }
             case .playerUpdate(let receivedData):
                 DispatchQueue.main.async {
                     if let existingPlayerIndex = GameInformation.instance.allPlayers.firstIndex(where: { $0.id == receivedData.id }) {
@@ -643,6 +652,10 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                 self.mainPlayerName = newMainPlayerName
             case .navigationTV(let routerTV):
                 GameInformation.instance.routerTV = routerTV
+            case .storyNavigation(let currentIndex):
+                GameInformation.instance.actualPage = currentIndex
+            case .tutorialNavigation(let currentIndex):
+                GameInformation.instance.actualTutorialIndex = currentIndex
             }
         } catch {
           //  print("Erro ao decodificar dados recebidos:", error)
@@ -671,4 +684,6 @@ enum EventMessage: Codable {
     case navigationTV(RouterTV)
     case playerUpdate(PlayerState)
     case responsibilityUpdate(newMainPlayerName: String)
+    case storyNavigation(currentOffset: Int)
+    case tutorialNavigation(currentOffset: Int)
 }
