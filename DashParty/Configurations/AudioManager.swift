@@ -20,7 +20,7 @@ class AudioManager: ObservableObject {
 
         do {
             let player = try AVAudioPlayer(contentsOf: url)
-            player.volume = volume
+            player.volume = 0//0.01
             player.numberOfLoops = loop ? -1 : 0
             player.prepareToPlay()
             player.play()
