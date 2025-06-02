@@ -45,7 +45,7 @@ struct RouterHubView: View {
                 case .victoryStory:
                     Text("Victory")
                 case .ranking:
-                    RankingHubView(router: $router)
+                    RankingHubView(router: $router, size: proxy.size)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

@@ -20,51 +20,43 @@ struct RankingHubView: View {
     
     var hubManager = GameInformation.instance
     
+    var size: CGSize
+    
     var body: some View {
-        
-        ZStack{
-            Rectangle()
-                .fill(.black)
-            
-            Image("backgroundNewHUB")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
-            
+
             VStack {
-                Spacer()
-                Spacer()
                 
                 Text("Race Complete!")
                     .font(.custom("TorukSC-Regular", size: 72))
                     .foregroundColor(.white)
                 
-                Spacer()
-                
                 HStack(spacing: 30) {
-                ForEach(Array(rankedPlayers.enumerated()), id: \.offset) { index, ranked in
+                    ForEach(Array(rankedPlayers.enumerated()), id: \.offset) { index, ranked in
                         CharacterRankView(
                             frameType: characterFrameType(ranked: ranked),
                             kikoColor: ranked.player.userClan?.color ?? .red,
-                            bannerType: (GameInformation.instance.finalWinner == rankedPlayers[index].player.name ? .winner : .regular), 
+                            bannerType: (GameInformation.instance.finalWinner == rankedPlayers[index].player.name ? .winner : .regular),
                             playerName: ranked.player.name,
                             time: ranked.formattedTime
                         )
                     }
-                   
                 }
+                .frame(width: size.width * 0.90, height: size.width * 0.2)
+
                 
-                
-                Spacer()
-                
-                VStack(spacing: 34){
+                VStack {
                     Text("Come on! Think you can beat that time?")
                         .font(.custom("TorukSC-Regular", size: 30))
                         .foregroundColor(.white)
-                }
-                Spacer()
-                Spacer()
+                }                .frame(width: size.width * 0.90, height: size.width * 0.04)
+
+                
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background( Image("backgroundNewHUB")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea())
             
             .onAppear {
                 GameInformation.instance.finalWinner = rankedPlayers[0].player.name
@@ -77,7 +69,8 @@ struct RankingHubView: View {
                 }
                 
             }
-        }    }
+        
+    }
     
     func characterFrameType(ranked: (player: PlayerState, formattedTime: String)) -> CharacterFrameType {
         let isWinner = (GameInformation.instance.finalWinner == ranked.player.name)
@@ -94,5 +87,5 @@ struct RankingHubView: View {
 }
 
 #Preview {
-    RankingHubView(router: .constant(.start))
+    RankingHubView(router: .constant(.start), size: CGSize(width: 2388, height: 1668))
 }
