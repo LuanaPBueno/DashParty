@@ -102,6 +102,7 @@ class GameInformation {
         catch {
             print(error)
         }
+    }
     func getRankedPlayers() -> [(player: PlayerState, formattedTime: String)] {
         let players = self.allPlayers
         guard !players.isEmpty else { return [] }

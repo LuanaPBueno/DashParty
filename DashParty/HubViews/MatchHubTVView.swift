@@ -1,24 +1,24 @@
 //
-//  MathLazyGrade.swift
+//  MatchHubTVView.swift
 //  DashParty
 //
-//  Created by Luana Bueno on 02/04/25.
+//  Created by Victor Martins on 02/06/25.
 //
-import SwiftUI
-import Foundation
 
-struct MatchHubView: View {
-    @Binding var router:Router
+import SwiftUI
+
+struct MatchHubTVView: View {
+    @Binding var router:RouterTV
     let count: Int
     let players = GameInformation.instance.allPlayers
     let users: [User] = GameInformation.instance.users
     let user: User
     var matchManager: MatchManager
     @State private var timer: Timer?
-     var ranking = GameInformation.instance.ranking
-     var allPlayersFinished = GameInformation.instance.allPlayersFinished
+    var ranking = GameInformation.instance.ranking
+    var allPlayersFinished = GameInformation.instance.allPlayersFinished
     @State var audioManager: AudioManager = AudioManager()
-
+    
     var body: some View {
         
         let totalPlayers =  GameInformation.instance.allPlayers.count
@@ -28,7 +28,7 @@ struct MatchHubView: View {
                 HStack(spacing: 0) {
                     
                     PlayerSceneView(users: users, index: 0, matchManager: matchManager) //SOU EU
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .frame(maxWidth: 1, maxHeight: .infinity)
                         .clipped()
                     
                     if totalPlayers >= 2 {
@@ -71,23 +71,23 @@ struct MatchHubView: View {
                 Spacer()
             }
         }
-            .task{
-                audioManager.playSound(named: "Run Music")
-                print("number of players: \(players.count)")
-                for (index, player) in Array(GameInformation.instance.allPlayers.enumerated()) {
-                    matchManager.startMatch(users: users, myUserID: GameInformation.instance.allPlayers[index].id, index: index)
-                }
-                
-                print("Created matches")
-                startCheckingForAllWinners()
+        .task{
+            audioManager.playSound(named: "Run Music")
+            print("number of players: \(players.count)")
+            for (index, player) in Array(GameInformation.instance.allPlayers.enumerated()) {
+                matchManager.startMatch(users: users, myUserID: GameInformation.instance.allPlayers[index].id, index: index)
             }
-            .onDisappear {
-                timer?.invalidate()
-            }
-            .frame(maxHeight: .infinity)
-            .ignoresSafeArea()
             
-            
+            print("Created matches")
+            startCheckingForAllWinners()
+        }
+        .onDisappear {
+            timer?.invalidate()
+        }
+        .frame(maxHeight: .infinity)
+        .ignoresSafeArea()
+        
+        
         
     }
     
@@ -103,37 +103,18 @@ struct MatchHubView: View {
                 if winnersCount == 1 {
                     GameInformation.instance.allPlayersFinished = true
                     GameInformation.instance.ranking = true
-                    let rankedPlayers = GameInformation.instance.getRankedPlayers()
-                    do {
-                        let encodedData = try JSONEncoder().encode(rankedPlayers[0].player.name)
-                        MPCSessionManager.shared.sendDataToAllPeers(data: encodedData)
-                    } catch {
-                        print("Erro ao codificar os dados do usuário: \(error)")
-                    }
-
-                    
                     router = .ranking
                     timer?.invalidate()
                 }
-             
+                
             } else {
-                if winnersCount == players.count - 1 {
+                if winnersCount == players.count - 2 {
                     GameInformation.instance.allPlayersFinished = true
                     GameInformation.instance.ranking = true
-                    let rankedPlayers = GameInformation.instance.getRankedPlayers()
-                    do {
-                        let encodedData = try JSONEncoder().encode([rankedPlayers[0].player.name])
-                        MPCSessionManager.shared.sendDataToAllPeers(data: encodedData)
-                    } catch {
-                        print("Erro ao codificar os dados do usuário: \(error)")
-                    }
                     router = .ranking
                     timer?.invalidate()
                 }
             }
         }
     }
-    
- 
 }
-

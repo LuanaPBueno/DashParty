@@ -73,7 +73,8 @@ struct TutorialHubTVView: View {
                         TutorialSheet(
                             tutorialImage: tutorialImage,
                             tutorialText: tutorialText,
-                            tutorialTextTitle: tutorialTitle
+                            tutorialTextTitle: tutorialTitle,
+                            size: CGSize(width: 2388, height: 1668)
                         )
                         .scaleEffect(1.5)
                        // .frame(maxWidth: 1000, maxHeight: 600)

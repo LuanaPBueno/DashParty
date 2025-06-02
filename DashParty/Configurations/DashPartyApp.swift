@@ -27,10 +27,10 @@ struct DashPartyApp: App {
             #else
             RouterTVView(router: $manager.routerTV)
                 .environmentObject(audioManager)
-                .overlay(alignment: .top) {
-                    Text("\(manager.routerTV)")
-                        .monospaced()
-                }
+//                .overlay(alignment: .top) {
+//                    Text("\(manager.routerTV)")
+//                        .monospaced()
+//                }
             #endif
         }
     }

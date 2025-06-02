@@ -49,6 +49,7 @@ struct SessionModeSelectionView: View {
                     BlueButtonLabel(text: "Join", sizeFont: 40)
                 }
                 .padding(.vertical, 30)
+                .frame(maxWidth: 200, maxHeight: 150)
                 #endif
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

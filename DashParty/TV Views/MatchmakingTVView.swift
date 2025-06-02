@@ -31,7 +31,7 @@ struct MatchmakingTVView: View {
                         ConnectedPlayerCard(playerName: player, sizePadding: 0)
                         if let peer = multipeerSession.mcSession.connectedPeers.first(where: {$0.displayName == player}), peer.displayName == multipeerSession.mainPlayerName {
                             Text("main")
-                                .monospaced()
+//                                .monospaced()
                         }
                     }
                 }
