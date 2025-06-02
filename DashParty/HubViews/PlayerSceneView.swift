@@ -34,7 +34,7 @@ struct PlayerSceneView: View {
                     .onChange(of: GameInformation.instance.allPlayers[index].currentChallenge, { oldValue, newValue in
                         matchManager.checkAddChallenge(distance: Float(GameInformation.instance.allPlayers[index].progress), playerIndex: index)
                     })
-                    .frame(width: .infinity, height: .infinity)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(.brown)
                     .ignoresSafeArea()
                     .overlay(alignment: .bottom) {
