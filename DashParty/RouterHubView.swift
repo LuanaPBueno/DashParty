@@ -39,13 +39,13 @@ struct RouterHubView: View {
                 case .storyBoard:
                     StoryHubView(size: proxy.size)
                 case .tutorial:
-                    TutorialHubView(router: $router)
+                    TutorialHubView(router: $router,  size: proxy.size)
                 case .game:
                     MatchHubView(router: $router, count: multipeerSession.mcSession.connectedPeers.count, user: user, matchManager: matchManager)
                 case .victoryStory:
                     Text("Victory")
                 case .ranking:
-                    RankingHubView(router: $router)
+                    RankingHubView(router: $router, size: proxy.size)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

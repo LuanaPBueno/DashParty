@@ -47,7 +47,9 @@ func imageForColor(_ color: Color?) -> Image {
         return Image("progressBlue")
     case .green:
         return Image("progressGreen")
+    case .yellow:
+        return Image("progressYellow")
     default:
-        return Image("default")
+        return Image("progressRed")
     }
 }

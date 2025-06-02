@@ -482,6 +482,7 @@ class MPCSession: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
             let players = try JSONDecoder().decode([String].self, from: data)
             print("✅ Recebido array de jogadores: \(players)")
             GameInformation.instance.allRank = players
+            GameInformation.instance.finalWinner = players.first ?? ""
             return
         } catch {
          //   print("❌ Não é um array de jogadores: \(error.localizedDescription)")

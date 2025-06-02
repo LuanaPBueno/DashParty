@@ -9,8 +9,9 @@ import SwiftUI
 
 struct RankingView: View {
     @Binding var router: Router
-    var isWinner: Bool = false
     var kikoType: KikoType
+    var players: [PlayerState] = GameInformation.instance.allPlayers
+    var isWinner: Bool = GameInformation.instance.finalWinner == GameInformation.instance.playername
     
     var body: some View {
         ZStack {
@@ -105,22 +106,11 @@ struct RankingView: View {
                                         .scaleEffect(2)
                                 )
                         }
-                    } else {
-                        
                     }
                 }
                 Spacer()
             }
             .offset(x: 140)
-        }
-        .task{
-            let rankingData: [String] = GameInformation.instance.allRank
-            do {
-                let encodedData = try JSONEncoder().encode(rankingData)
-                MPCSessionManager.shared.sendDataToAllPeers(data: encodedData)
-            } catch {
-                print("Erro ao codificar os dados do usuário: \(error)")
-            }
         }
     }
 }
