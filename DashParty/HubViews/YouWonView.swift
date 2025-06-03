@@ -55,21 +55,19 @@ struct YouWonView: View {
                 .scaledToFill()
                 .ignoresSafeArea()
             
-            VStack {
+            VStack(spacing: 100) {
                 Spacer()
                 
                 Text("Race Complete!")
                     .font(.custom("TorukSC-Regular", size: 72))
                     .foregroundColor(.white)
-                
-                Spacer()
-                
+                                
                 HStack(spacing: 30) {
                     CharacterRankView(
                         frameType: CharacterFrameType(status: .winner, color: .red),
                         kikoColor: .red,
                         bannerType: .winner,
-                        playerName: "Luanafc",
+                        playerName: "derbuen",
                         time: "01:05:67"
                     )
                     
@@ -77,33 +75,32 @@ struct YouWonView: View {
                         frameType: CharacterFrameType(status: .regular, color: .blue),
                         kikoColor: .blue,
                         bannerType: .regular,
-                        playerName: "Luanafc",
-                        time: "01:05:67"
+                        playerName: "ferdiler",
+                        time: "01:08:30"
                     )
                     
                     CharacterRankView(
                         frameType: CharacterFrameType(status: .regular, color: .yellow),
                         kikoColor: .yellow,
                         bannerType: .regular,
-                        playerName: "Luanafc",
-                        time: "01:05:67"
+                        playerName: "dartroro",
+                        time: "01:15:22"
                     )
                     
                     CharacterRankView(
                         frameType: CharacterFrameType(status: .didnotfinish, color: .green),
                         kikoColor: .green,
                         bannerType: .regular,
-                        playerName: "Luanafc",
-                        time: ""
+                        playerName: "madufe",
+                        time: "Did not finish"
                     )
                 }
-                
-                Spacer()
-                
+                                
                 Text("Come on! Think you can beat that time?")
                     .font(.custom("TorukSC-Regular", size: 30))
                     .foregroundColor(.white)
                 Spacer()
+
             }
         }
     }

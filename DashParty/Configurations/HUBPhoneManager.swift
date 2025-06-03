@@ -12,7 +12,7 @@ import SwiftUI
 class HUBPhoneManager {
     static let instance = HUBPhoneManager()
     
-    var router:Router = .start
+    var router:Router = .ranking
     
     var roomName : String = ""
     
